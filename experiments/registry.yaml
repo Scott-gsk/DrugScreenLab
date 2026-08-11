@@ -28,7 +28,7 @@ experiments:
       在冻结的 GSE92742 exact-978 数据契约上，使用仅来自训练数据的预处理
       vehicle-expression context representation 的低容量模型，能在 cold-context 中
       超过 global baseline，而不使用 held-out context treatment labels。
-    primary_endpoint: cold_context_paired_pearson_improvement_over_global_baseline
+    primary_endpoint: cold_context_primary_supported_drt_paired_pearson_improvement_over_matched_drt_only_baseline
     approved_by: null
     approved_on: null
     record: experiments/records/EXP-003.md

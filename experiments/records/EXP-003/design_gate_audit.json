@@ -1,0 +1,25 @@
+{
+  "artifact_type": "exp003_design_gate_metadata_audit",
+  "payload_sha256": "883b50c5069a4af151fed785e94730556b0ac2afef995492e14308d601e1bca8",
+  "required_before_execution": "freeze disjoint proxy/reference control roles and train-fit-only transform; this audit does not create a target or read expression values",
+  "scope": "metadata only; no expression matrix read",
+  "source": "GSE92742 inst_info/pert_info/cell_info; EXP-002 cold_context hash split",
+  "strata": {
+    "primary_supported_drt": {
+      "groups": 13805,
+      "treatments": 46212
+    },
+    "seen_drug_novel_dose_time": {
+      "groups": 4,
+      "treatments": 10
+    }
+  },
+  "test_context_count": 7,
+  "test_group_count": 13809,
+  "test_matching_key_count": 130,
+  "test_matching_keys_below_two_vehicles": 0,
+  "test_matching_keys_with_at_least_two_vehicles": 130,
+  "test_treatment_count": 46222,
+  "train_seen_drt_treatment_fraction": 0.9997836528060231,
+  "train_seen_drug_treatment_fraction": 1.0
+}
