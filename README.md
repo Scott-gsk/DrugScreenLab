@@ -28,6 +28,7 @@ DrugScreenLab 是一个面向 AI 药物筛选的可复现研究仓库。项目�
 数据根目录默认是仓库内的 `data/`，可通过 `DRUGSCREEN_DATA_ROOT` 覆盖。
 所有用于实验的数据集都必须在 `data/registry/` 中保留身份、版本、来源、
 相对路径、校验和与溯源信息。详细约束见 `data/README.md`。
+当前本地数据资产目录及其 Git 可用性见 `data/DATA_CATALOG.md`。
 
 ## 运行环境
 
