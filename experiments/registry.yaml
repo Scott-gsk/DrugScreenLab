@@ -23,12 +23,18 @@ experiments:
     record: experiments/records/EXP-002.md
   - id: EXP-003
     title: Proposed Learned Pre-treatment Context Generalization in Exact-978 Space
-    status: proposed_pending_approval
+    status: deferred_valid_design
     hypothesis: >
-      在冻结的 GSE92742 exact-978 数据契约上，使用仅来自训练数据的预处理
-      vehicle-expression context representation 的低容量模型，能在 cold-context 中
-      超过 global baseline，而不使用 held-out context treatment labels。
+      在冻结的 GSE92742 exact-978 数据契约上，在相同 drug/dose/time、train split、
+      target 和优化预算下，vehicle-control proxy context representation 的低容量模型
+      能在 cold-context primary-supported-DRT strata 超过 matched DRT-only baseline，
+      而不使用 held-out context treatment labels、test aggregate statistics 或 shared controls。
     primary_endpoint: cold_context_primary_supported_drt_paired_pearson_improvement_over_matched_drt_only_baseline
     approved_by: null
     approved_on: null
     record: experiments/records/EXP-003.md
+mvps:
+  - id: MVP-001
+    title: End-to-End DrugScreenLab Feasibility
+    status: proposed_pending_approval
+    record: mvp/records/MVP-001.md

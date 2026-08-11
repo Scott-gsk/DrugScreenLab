@@ -72,6 +72,19 @@ def test_github_audit_checkpoints_are_governed():
     assert "等待用户 `ACCEPT / REJECT`" in governance
 
 
+def test_coarse_to_fine_policy_distinguishes_fast_mvp_and_rigorous_loops():
+    root_rules = (ROOT / "AGENTS.md").read_text()
+    governance = (ROOT / "docs" / "AGENT_GOVERNANCE.md").read_text()
+    mvp = (ROOT / "mvp" / "records" / "MVP-001.md").read_text()
+    for text in (root_rules, governance):
+        assert "COARSE_TO_FINE_ML_RESEARCH_POLICY" in text
+        assert "FAST LOOP" in text
+        assert "MVP LOOP" in text
+        assert "RIGOROUS LOOP" in text
+    assert "不是 Formal Research EXP" in mvp
+    assert "等待 `APPROVE MVP-001`" in mvp
+
+
 def test_every_experiment_record_has_execution_manifest():
     records = sorted((ROOT / "experiments" / "records").glob("EXP-*.md"))
     assert records

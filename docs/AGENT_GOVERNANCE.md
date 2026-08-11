@@ -134,6 +134,25 @@ temporary logs 或任何 `.gitignore` 排除资产。每个未跟踪但对结论
 metadata 中提供 asset/dataset ID、local relative path、version、checksum、source、generator revision、
 config 和 reproducible command。
 
+## Coarse-to-fine ML Research Policy
+
+`COARSE_TO_FINE_ML_RESEARCH_POLICY` 的顺序是：`Explore fast -> Integrate early -> Scale only after signal`。
+严谨度应跟随 decision value，而不是默认跟随每个局部 metric。每项设计须包含 `Expected Decision Value`、
+`Expected Cost` 与 cheapest falsification。
+
+| Loop | 用途 | 允许范围 | 输出 / Review |
+| --- | --- | --- | --- |
+| FAST LOOP | 判断想法是否有信号 | Tiny/Small subset、1 seed、简单模型/metric、少量 epoch 与参数 | `PROMISING` / `NO_SIGNAL` / `BROKEN`；非正式结论，无 Reviewer |
+| MVP LOOP | 端到端系统可行性 | 真实 public data、已有 processed asset、最简单 learned baseline、MVP Full | 可复现端到端 artifact；milestone 后最多一次主要 Reviewer |
+| RIGOROUS LOOP | 正式科学证据或重大投入决策 | full data、多 seed、cold split、CI、ablation、外部验证 | Formal EXP + 完整 provenance + Independent Reviewer |
+
+Engineering Check 不创建正式 EXP。Fast Research Probe 也不自动成为 Formal EXP。MVP Integration 可以
+包含多个必要模块，因为它检验 system feasibility，不主张单因素因果归因。新模型按
+`Tiny -> Small -> MVP Full -> Formal Full` 推进；除非操作本身只能全量完成，禁止从 idea 直接进入
+65 GB full scan 与论文级统计。MVP 成功前，优先成熟模型或最简单合理 learned baseline；复杂新架构
+必须先证明简单 baseline 不够。局部 perturbation metric 的提高只有可能改变 reversal/ranking/efficacy
+决策时才应升为高优先级。
+
 ## EXP-scoped Agent Lifecycle
 
 `EXP_SCOPED_AGENT_LIFECYCLE` 是正式 research EXP 的运行时身份契约：

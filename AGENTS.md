@@ -122,3 +122,22 @@ seed 频繁 push。
 禁止向 GitHub 提交 raw dataset、大型 processed matrix、cache、checkpoint、大型 prediction、临时日志
 或其他 `.gitignore` 排除的产物。tracked metadata 必须足以定位每个本地大资产的 ID、相对路径、版本、
 checksum、source、generator revision、config 和可复现 command。
+
+## Coarse-to-fine ML Research Policy
+
+采用 `COARSE_TO_FINE_ML_RESEARCH_POLICY`：先快速探索、尽早集成、仅在信号或决策价值足够时扩大
+严谨度。Manager 必须在计划中记录 `Expected Decision Value` 与 `Expected Cost`，优先高信息增益、
+低 wall-clock 成本的工作。
+
+- `FAST LOOP`：Tiny/Small subset、单 seed、简单模型和 validation-driven debugging；输出仅为
+  `PROMISING`、`NO_SIGNAL` 或 `BROKEN`，不构成正式科学结论，无需 Reviewer。
+- `MVP LOOP`：验证 public data -> learned perturbation model -> predicted Delta978 -> reversal ranking ->
+  public efficacy evidence 的端到端可行性；允许多个必要模块一起出现，优先 working system，不追求
+  architecture novelty。整体 milestone 完成后最多一次主要 Reviewer。
+- `RIGOROUS LOOP`：仅在 MVP 有明确 positive signal、模块成为瓶颈、需要正式结论或决定大投入时，
+  才采用 full data、多 seed、严格 cold split、bootstrap、完整 ablation、外部验证与 Independent Reviewer。
+
+Engineering Check 不创建正式 EXP；Fast Research Probe 不自动走完整 Reviewer 流程；只有需要可靠
+科学结论的 Formal Research EXP 使用 single hypothesis、预注册 endpoint 和 Independent Reviewer。
+所有新方法采用 `Tiny -> Small -> MVP Full -> Formal Full`，先设计 cheapest falsification，禁止无理由
+从 idea 直接进入 65 GB full scan 与 full bootstrap。
