@@ -1,1 +1,34 @@
-experiments: []
+experiments:
+  - id: EXP-001
+    title: Phase 0 / P0 Data Readiness & Identity Harmonization
+    status: accepted
+    hypothesis: >
+      当前 DrugScreenLab 的数据资产、身份体系和预处理基础能够被整理成可审计、
+      可复现、无明显 identity leakage，且支持后续 Δ978 perturbation benchmark 的
+      Phase-0 research data foundation。
+    primary_endpoint: phase_0_readiness_verdict
+    approved_by: user
+    approved_on: 2026-08-11
+    record: experiments/records/EXP-001.md
+  - id: EXP-002
+    title: Level-3 Exact-978 Delta978 Baseline Under Leakage-Safe Cold Splits
+    status: accepted_negative_result
+    hypothesis: >
+      在冻结的 GSE92742 Level-3 exact-978 landmark space、matched vehicle、compound/context
+      identity 与 leakage-safe cold split contract 下，context-conditioned Delta978 baseline
+      能够在 cold-drug 和 cold-context 评估中稳定优于无条件简单 baseline。
+    primary_endpoint: conditional_baseline_ood_improvement_over_global_baseline
+    approved_by: user
+    approved_on: 2026-08-11
+    record: experiments/records/EXP-002.md
+  - id: EXP-003
+    title: Proposed Learned Pre-treatment Context Generalization in Exact-978 Space
+    status: proposed_pending_approval
+    hypothesis: >
+      在冻结的 GSE92742 exact-978 数据契约上，使用仅来自训练数据的预处理
+      vehicle-expression context representation 的低容量模型，能在 cold-context 中
+      超过 global baseline，而不使用 held-out context treatment labels。
+    primary_endpoint: cold_context_paired_pearson_improvement_over_global_baseline
+    approved_by: null
+    approved_on: null
+    record: experiments/records/EXP-003.md

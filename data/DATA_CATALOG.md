@@ -24,6 +24,10 @@ GitHub。
 约 41 MiB、`splits/` 约 5.4 MiB、`external/` 约 208 KiB。容量会随本地数据版本
 变化，不能替代注册表校验。
 
+`lincs_gse92742_exact978_cache_v1` 是 EXP-002 从官方 Level-3 source 一次性构建并通过
+provenance/integrity 复核的 4.9 GiB exact-978 float32 cache。它是正式的可复用 processed asset，
+不是新的 raw source；后续获批实验应复用其登记版本，避免无理由重新扫描完整 Level-3 matrix。
+
 ## 资产集合
 
 `datasets.json` 登记了 8 个资产集合，均为 version `1`：

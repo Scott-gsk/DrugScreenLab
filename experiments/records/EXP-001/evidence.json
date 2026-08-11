@@ -1,0 +1,40 @@
+{
+  "experiment_id": "EXP-001",
+  "audit_date": "2026-08-11",
+  "phase_0_readiness_verdict": "PARTIAL",
+  "gse92742_level2_direct_978_ground_truth": "OPTIONAL_RESOURCE_UNAVAILABLE",
+  "gse92742_level3_landmark_core": "READY_FOR_DERIVATION",
+  "independent_reviewer_verdict": "VALID",
+  "final_readiness_assessment": "PARTIAL",
+  "raw_data_modified": "not independently verifiable without a before/after snapshot",
+  "raw_integrity": {
+    "lincs_small_metadata_sha256": "PASS (6 files)",
+    "large_matrix_rehash": "not_run",
+    "local_checksum_manifest_self_entry": "not used; stale self-checksum"
+  },
+  "runtime": {
+    "platform": "Linux 6.6.114.1-microsoft-standard-WSL2",
+    "conda_environment": "drugscreening-gpu",
+    "python": "3.11.15",
+    "torch": "2.5.1",
+    "cuda_available": true,
+    "gpu_count": 3
+  },
+  "verification": {
+    "pytest": "17 passed",
+    "data_registry": "PASS",
+    "readiness_matrix_schema": "PASS"
+  },
+  "lincs_inventory": {
+    "raw_level_files": ["Level3", "Level4", "Level5"],
+    "interim_level_files": ["Level3", "Level4", "Level5"],
+    "level2_present": false,
+    "level3_matrix_shape": [1319138, 12328],
+    "gene_info_landmark_count": 978,
+    "gctx_column_ids_match_inst_info_set": true,
+    "chemical_instances": 672128,
+    "same_plate_vehicle_candidates": 671881,
+    "excluded_without_candidate": 247,
+    "delta_matrix_materialized": false
+  }
+}

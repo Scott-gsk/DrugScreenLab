@@ -3,6 +3,7 @@ import argparse
 import json
 from pathlib import Path
 from .root import data_root
+from .p0 import DatasetReadiness
 
 def load_registry(root: Path | None = None) -> list[dict]:
     registry_dir = (root or data_root()) / "registry"
@@ -22,6 +23,20 @@ def validate_registry(root: Path | None = None) -> list[str]:
         relative = entry.get("path", {}).get("relative")
         if relative and not (base / relative).exists():
             errors.append(f"missing asset: {relative}")
+    return errors
+
+
+def validate_readiness_matrix(path: Path) -> list[str]:
+    """Validate the Phase-0 matrix without treating unavailable datasets as present."""
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, list):
+        return ["readiness matrix must be a list"]
+    errors = []
+    for index, row in enumerate(value):
+        try:
+            DatasetReadiness.from_mapping(row)
+        except (TypeError, ValueError) as exc:
+            errors.append(f"row {index}: {exc}")
     return errors
 
 def main() -> int:

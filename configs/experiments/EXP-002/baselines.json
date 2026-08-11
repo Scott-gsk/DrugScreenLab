@@ -1,0 +1,47 @@
+{
+  "evaluation": {
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 20260811,
+    "direction_zero_epsilon": 0.0,
+    "metrics": [
+      "pearson",
+      "spearman",
+      "rmse",
+      "mae",
+      "direction_accuracy"
+    ],
+    "minimum_eligible_group_count": 2,
+    "paired_improvement_threshold": 0.0,
+    "primary_metric": "pearson",
+    "replicate_aggregation": "arithmetic_mean",
+    "seed_consistency_rule": "all_seeds_positive_paired_improvement",
+    "unseen_context_fallback": "global_train_mean"
+  },
+  "frozen_contract": {
+    "contract_artifact_sha256": "900592f841d736f3087077936b86c6f78ceb17f9a79f4485e619561d63e2ee9c",
+    "dataset_registry_id": "lincs_gse92742_raw_level3_v1",
+    "derived_storage_registry_id": "lincs_gse92742_level3_level4_level5",
+    "experiment_id": "EXP-002",
+    "gene_count": 978,
+    "ordered_gene_ids_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623",
+    "split_schemes": [
+      "cold_drug",
+      "cold_context"
+    ]
+  },
+  "model": {
+    "candidate": "context_train_mean",
+    "candidate_fit_data": "train_only",
+    "global_baseline": "global_train_mean",
+    "global_fit_data": "train_only",
+    "plate_feature_allowed": false
+  },
+  "reproducibility": {
+    "deterministic_algorithms": true,
+    "seeds": [
+      17,
+      29,
+      43
+    ]
+  }
+}

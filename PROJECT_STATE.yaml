@@ -9,10 +9,13 @@ runtime:
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
   active_experiment: null
+  last_accepted_experiment: EXP-002
+  last_completed_experiment: EXP-002
+  evidence_level: phase_1_exact978_core_ready
   accepted_model: null
   current_champion: null
   current_baseline: null
-  next_experiment_id: EXP-001
+  next_experiment_id: EXP-003
 data:
   default_root: data
   root_env: DRUGSCREEN_DATA_ROOT

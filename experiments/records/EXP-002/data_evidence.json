@@ -1,0 +1,29 @@
+{
+  "candidate_treatment_control_pairs": 671881,
+  "cold_context": {
+    "components": 67,
+    "largest_component_members": 4,
+    "members": 70,
+    "non_degenerate": true,
+    "split_component_counts": {
+      "test": 1,
+      "train": 57,
+      "validation": 9
+    }
+  },
+  "cold_drug": {
+    "components": 1,
+    "largest_component_members": 20311,
+    "members": 20311,
+    "non_degenerate": false,
+    "split_component_counts": {
+      "train": 1
+    }
+  },
+  "contract": "strict_no_raw_control_or_plate_family_cross_split",
+  "data_status": "DATA_BLOCKED",
+  "excluded_without_vehicle": 247,
+  "experiment_id": "EXP-002",
+  "replicate_families": 187184,
+  "treatment_instances": 672128
+}
