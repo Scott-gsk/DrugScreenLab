@@ -1,3 +1,7 @@
-# Quality
+# 质量规范
 
-Architecture tests must pass before merging. Reviewers check leakage, split correctness, reproducibility, metric validity, and repository pollution independently of implementation authors.
+合并前必须通过架构测试。Reviewer 应独立检查数据泄漏、数据划分正确性、复现性、
+指标有效性和仓库污染，不得仅依赖实现作者的结论。
+
+任何实验结论都应能追溯到明确的数据集版本、数据划分、配置、运行环境和产物。
+发现这些要素缺失时，应返回 `INCONCLUSIVE` 或 `INVALID`，并说明原因。

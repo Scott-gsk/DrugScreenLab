@@ -1,5 +1,12 @@
-# Data
+# 数据资产
 
-`raw/` is immutable source data. `external/` contains third-party processed assets. `interim/` contains regenerable intermediate data. `processed/` contains experiment-ready datasets. `splits/` contains versioned, metadata-backed dataset splits.
+`raw/` 保存不可修改的源数据；`external/` 保存第三方已处理资产；`interim/`
+保存可重新生成的中间数据；`processed/` 保存可供实验使用的数据；`splits/`
+保存带元数据和版本信息的数据划分。
 
-Large assets are intentionally ignored by Git. Every dataset used by an experiment must have a JSON entry under `registry/` with identity, version, source, relative path, checksum, and provenance.
+大型数据资产有意不纳入 Git。每个被实验使用的数据集都必须在 `registry/` 中有
+JSON 登记项，记录其 identity、version、source、relative path、checksum 和
+provenance。上述 schema key 保持英文，以维持程序接口稳定。
+
+原始数据目录不得被 preprocessing、训练或评估代码修改。需要生成的新数据应写入
+适当的中间或处理后目录，并与相应的实验和数据集版本建立可审计关联。

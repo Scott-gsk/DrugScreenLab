@@ -1,3 +1,8 @@
-# Reproducibility
+# 复现规范
 
-Record dataset identity and version, split ID and seed, source revision, configuration, environment, and artifact checksums for every experiment.
+每项实验必须记录数据集身份和版本、数据划分 ID、随机种子、源码 revision、
+配置、运行环境以及产物校验和。记录应与对应 `EXP-ID` 关联，使独立 Reviewer
+能够从同一输入、同一配置和同一环境重建结论。
+
+环境变更须按 `docs/ENVIRONMENT.md` 的依赖更新政策记录；不得以未登记的临时
+安装或本地路径作为可复现实验的前提。

@@ -1,5 +1,27 @@
-# Architecture
+# 架构
 
-DrugScreenLab separates dataset identity/version from model and experiment code. Data is resolved through `DRUGSCREEN_DATA_ROOT` (default: repository `data/`). Experiments use immutable EXP-IDs, and artifacts live under the matching EXP-ID. Accepted releases are created only after independent review and final validation.
+DrugScreenLab 将数据集身份和版本与模型、实验代码严格分离。数据通过
+`DRUGSCREEN_DATA_ROOT` 解析，未设置时使用仓库的 `data/`；实验使用不可变的
+`EXP-ID`，产物保存于对应实验编号下。只有经过独立审查和最终验证的结果才能
+进入接受或发布流程。
 
-No model, training, or evaluation framework is part of the bootstrap; those components are introduced by approved experiments.
+## 数据层
+
+`data/` 保存并描述项目使用的数据资产：
+
+- `raw/`：不可修改的原始数据。
+- `external/`：第三方提供的已处理资产。
+- `interim/`：可重新生成的处理中间数据。
+- `processed/`：可作为正式实验输入的数据。
+- `splits/`：带元数据、可版本化的数据划分。
+- `registry/`：数据集身份、版本、来源和校验信息。
+
+## 实验与产物层
+
+`experiments/` 维护研究问题、计划和 `EXP-ID` 登记；`artifacts/` 只保存与特定
+`EXP-ID` 绑定的输出。数据集不是模型的附属属性，模型也不能替代数据集身份。
+
+## 代码层
+
+`src/drug_screen/` 放置经多个实验复用的轻量 Python 代码。当前 bootstrap 阶段
+不包含训练、评估或模型框架；这些组件只能随已批准的实验引入。

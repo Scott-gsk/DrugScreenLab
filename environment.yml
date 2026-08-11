@@ -1,0 +1,17 @@
+name: drugscreening-gpu
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+dependencies:
+  # 运行时科学计算栈。当前 bootstrap 包仅使用标准库；以下依赖服务于已登记数据和获批研究。
+  - python=3.11.15
+  - numpy=1.26.4
+  - pandas=2.3.3
+  - rdkit=2023.9.5
+  # 训练栈。CUDA 由 `make gpu-check` 单独验证。
+  - pytorch=2.5.1
+  - pytorch-cuda=12.1
+  # 开发与测试栈。
+  - pytest=9.0.2
+  - pip

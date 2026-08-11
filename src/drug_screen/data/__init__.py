@@ -1,1 +1,1 @@
-"""Dataset root and registry utilities."""
+"""数据根目录和数据集注册表工具。"""

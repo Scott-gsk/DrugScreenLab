@@ -1,7 +1,12 @@
 project:
   name: DrugScreenLab
-  mission: AI-driven drug screening model development
+  mission: 通过可复现实验持续开发 AI 药物筛选模型
   status: active_research
+runtime:
+  platform: WSL2
+  conda_env: drugscreening-gpu
+  environment_doc: docs/ENVIRONMENT.md
+  data_root_env: DRUGSCREEN_DATA_ROOT
 research:
   active_experiment: null
   accepted_model: null
