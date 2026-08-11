@@ -432,7 +432,11 @@ DOI: `10.1126/science.aax6234`
 | **PANACEA** | **GSE186341** | 32 kinase inhibitors × 11 cancer lines；1,728 RNA-seq；matched vehicle controls；2 replicates | independent WTS gene/pathway calibration | **CALIBRATION / P0** |
 | **Lung cancer drug multi-omics** | **DRP006006 / PRJDB6952** | 23 lung cancer lines、95 compounds；3,240 RNA-seq；另有多剂量/多时间子设计 | 第二WTS external calibration；dose/time和cross-context validation | **EXTERNAL TEST / P1** |
 
-GSE92742官方同时提供直接测量978基因的 Level-2 文件和包含 inferred genes 的更高层文件，因此本项目明确把978测量空间与 inferred-gene space区分处理。 GSE70138同样直接提供978-gene Level-2 数据。
+GSE92742官方同时提供直接测量978基因的 Level-2 文件；其 Level-3 则在 invariant-set
+scaling 和 quantile normalization 后同时含直接测量 landmark transcripts 与 inferred
+genes。因此本项目从 Level-3 的 `pr_is_lm=1` 提取 978 landmark core，并严格隔离
+inferred-gene space；Level-2 可用于额外核验但不是该 Level-3 core 的硬依赖。GSE70138
+同样直接提供978-gene Level-2 数据。
 
 sci-Plex原始数据和 processed matrices均公开，且 GSE139944 中明确包含 sciPlex3 A549/MCF7/K562 screen。 PANACEA GSE186341则具有明确 drug identity、DMSO/untreated controls 和重复实验，非常适合独立 WTS calibration。
 
