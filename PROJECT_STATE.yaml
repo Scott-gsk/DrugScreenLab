@@ -1,0 +1,21 @@
+project:
+  name: DrugScreenLab
+  mission: AI-driven drug screening model development
+  status: active_research
+research:
+  active_experiment: null
+  accepted_model: null
+  current_champion: null
+  current_baseline: null
+  next_experiment_id: EXP-001
+data:
+  default_root: data
+  root_env: DRUGSCREEN_DATA_ROOT
+  registry: data/registry
+  status: migrated
+workflow:
+  orchestration: manager
+  human_approval_required: true
+legacy:
+  project: MCPIRE_PDO
+  status: retired

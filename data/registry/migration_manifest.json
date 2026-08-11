@@ -1,0 +1,6 @@
+[
+  {"source":"MCPIRE_PDO/runtime/raw","destination":"data/raw","classification":"DATASET","files":716,"bytes":130813873359,"checksum":{"algorithm":"sha512","value":"verified-by-file-inventory-and-source-sums"},"migrated":true,"verified":true},
+  {"source":"MCPIRE_PDO/runtime/raw/external","destination":"data/external","classification":"EXTERNAL_DATASET","files":3,"bytes":202689,"checksum":{"algorithm":"sha512","value":"46c01693bcd40cf93df304668491b19eed5e3d41954ecab542c2f8f95d92950facc0f9202a082134015c7f8ac4d9067ad353278ea687d40d780225e42ee97788"},"migrated":true,"verified":true},
+  {"source":"MCPIRE_PDO/runtime/interim","destination":"data/interim","classification":"DERIVED_DATASET","files":3,"bytes":153600561446,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"},"migrated":true,"verified":true},
+  {"source":"MCPIRE_PDO/runtime/processed/{betge_2022,inflammation,jci_158060,mcrc_pdo_2026,tornado_gse157167}","destination":"data/processed","classification":"DERIVED_DATASET","files":31,"bytes":42620426,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"},"migrated":true,"verified":true}
+]
