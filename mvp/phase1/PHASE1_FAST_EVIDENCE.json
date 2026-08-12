@@ -1,7 +1,7 @@
 {
   "format": "phase1_fast_evidence_v1",
   "date": "2026-08-13",
-  "checkpoint_commit": "pending-final-checkpoint",
+  "checkpoint_commit": "9d50521",
   "status": "PROMISING",
   "loop": "SMALL_FAST_SINGLE_SEED",
   "hypothesis": "At canonical 10um/6h, adding pre-treatment 978-landmark context to a chemical structure and dose/time model improves group-atomic Delta978 prediction on unseen drug and unseen context splits.",
