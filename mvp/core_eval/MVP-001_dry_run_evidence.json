@@ -1,0 +1,56 @@
+{
+  "format": "mvp001_small_scale_dry_run_evidence_v1",
+  "mvp_id": "MVP-001",
+  "purpose": "engineering path validation only; no scientific endpoint is inferred from Tiny",
+  "environment": "WSL2; conda drugscreening-gpu",
+  "phases": {
+    "tiny": {
+      "config": "configs/mvp/MVP-001/tiny.json",
+      "subset_selector": "atomic treatment groups with train support",
+      "train_rows": 115,
+      "test_rows": 15,
+      "test_groups": 5,
+      "model_stage": "MODEL_STAGE_COMPLETE",
+      "learned_mae": 0.6053708238261086,
+      "constant_mae": 0.5954226510865348,
+      "learned_spearman": 0.1306257929805418,
+      "constant_spearman": 0.18774925459556588,
+      "decision": "NO_SIGNAL_DIAGNOSTIC",
+      "interpretation": "engineering-only; not a model or biological conclusion"
+    },
+    "small": {
+      "config": "configs/mvp/MVP-001/small.json",
+      "subset_selector": "atomic treatment groups with train support",
+      "train_rows": 617,
+      "test_rows": 144,
+      "test_groups": 42,
+      "model_stage": "MODEL_STAGE_COMPLETE",
+      "learned_mae": 0.5381346154544089,
+      "constant_mae": 0.5360393918523885,
+      "drug_mean_mae": 0.5319975662713099,
+      "learned_spearman": 0.21494250679184512,
+      "constant_spearman": 0.19876880723847828,
+      "drug_mean_spearman": 0.23769269922646366,
+      "decision": "NO_SIGNAL_DIAGNOSTIC"
+    }
+  },
+  "guardrails": {
+    "input_schema": "PASS",
+    "output_schema": "PASS",
+    "function_signatures": "PASS",
+    "metric_path": "PASS",
+    "zero_vector_edge_case": "PASS",
+    "cache_metadata": "PASS",
+    "provenance_fields": "PASS",
+    "config_binding": "PASS",
+    "manifest_binding": "PASS",
+    "artifact_writing": "PASS",
+    "restart_recovery": "PASS",
+    "full_level3_rescan_before_dry_run": false
+  },
+  "commands": [
+    "PYTHONPATH=src conda run --no-capture-output -n drugscreening-gpu python scripts/modeling/run_mvp001.py --config configs/mvp/MVP-001/tiny.json --manifest artifacts/mvp/MVP-001/compact_manifest.json --output-dir /tmp/mvp001-tiny-core4 --data-root data",
+    "PYTHONPATH=src conda run --no-capture-output -n drugscreening-gpu python scripts/modeling/run_mvp001.py --config configs/mvp/MVP-001/small.json --manifest artifacts/mvp/MVP-001/compact_manifest.json --output-dir /tmp/mvp001-small-core4 --data-root data"
+  ],
+  "large_assets_not_tracked": true
+}

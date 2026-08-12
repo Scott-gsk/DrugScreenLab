@@ -1,0 +1,124 @@
+{
+  "format": "mvp001_prism_compact_response_v1",
+  "experiment_id": "MVP-001",
+  "status": "DATA_READY",
+  "source": {
+    "dataset_id": "PRISM_REPURPOSING_PRIMARY_19Q4",
+    "release": "PRISM Repurposing 19Q4",
+    "official_release_url": "https://depmap.org/repurposing/",
+    "matrix_url": "https://ndownloader.figshare.com/files/20237709",
+    "matrix_local_path": "/tmp/primaryscreenreplicatecollapsedlogfoldchange.csv",
+    "matrix_sha256": "25efc741b372b30d38629cb139a388e989663fba597e55fff5f6c2bb7cdeb75a",
+    "matrix_bytes": 41254209,
+    "readme_url": "https://ndownloader.figshare.com/files/20237700",
+    "readme_sha256": "309310719fd96580d8f211ca12d501f6624c245b268aa29d8a5286b411f0c63f",
+    "identity_metadata": [
+      {
+        "dataset_id": "PRISM_primary_screen_cell_line_info",
+        "local_path": "mvp/core_data/_source_cache/primary-screen-cell-line-info.csv",
+        "source_file_id": "20237718",
+        "sha256": "c17174f48264fea0adb3eb4b2b1f2daf61b83999b0db6e4965338e3bd6a9fde2",
+        "bytes": 46849
+      },
+      {
+        "dataset_id": "PRISM_primary_screen_replicate_collapsed_treatment_info",
+        "local_path": "mvp/core_data/_source_cache/primary-screen-replicate-collapsed-treatment-info.csv",
+        "source_file_id": "20237715",
+        "sha256": "d649f207a437c9e9910572c5023d02f68a77c946f6e972c998b057160a3505e6",
+        "bytes": 1185606
+      }
+    ],
+    "processing_rule": "stream wide primary replicate-collapsed matrix; retain frozen four candidates and primary_tissue=colorectal lines only"
+  },
+  "identity": {
+    "candidate_mapping_rule": "exact canonical structure; PRISM trametinib comma-separated duplicate components split and deduplicated",
+    "candidate_mapping_sha256": "32fb02cbc0bb09bbb0c461df28856cb54ac751ceeb8670689371afc93b7201e8",
+    "candidate_count": 4,
+    "candidates": [
+      {
+        "broad_id": "BRD-K02950022-001-02-9",
+        "drug_name": "BMS-299897",
+        "column_name": "BRD-K02950022-001-02-9::2.5::HTS",
+        "dose": "2.5",
+        "screen_id": "HTS",
+        "smiles": "C[C@@H](N(c1cc(F)ccc1F)S(=O)(=O)c1ccc(Cl)cc1)c1ccc(F)cc1CCCC(O)=O",
+        "pert_id": "BRD-K02950022",
+        "pert_iname": "BMS-299897",
+        "inchi_key": "IZAOBRWCUGOKNH-OAHLLOKOSA-N"
+      },
+      {
+        "broad_id": "BRD-K40738845-001-05-0",
+        "drug_name": "BMS-777607",
+        "column_name": "BRD-K40738845-001-05-0::2.5::HTS",
+        "dose": "2.5",
+        "screen_id": "HTS",
+        "smiles": "CCOc1ccn(-c2ccc(F)cc2)c(=O)c1C(=O)Nc1ccc(Oc2ccnc(N)c2Cl)c(F)c1",
+        "pert_id": "BRD-K40738845",
+        "pert_iname": "BMS-777607",
+        "inchi_key": "VNBRGSXVFBYQNN-UHFFFAOYSA-N"
+      },
+      {
+        "broad_id": "BRD-K49865102-001-08-4",
+        "drug_name": "PD-0325901",
+        "column_name": "BRD-K49865102-001-08-4::2.5::HTS",
+        "dose": "2.5",
+        "screen_id": "HTS",
+        "smiles": "OC[C@@H](O)CONC(=O)c1ccc(F)c(F)c1Nc1ccc(I)cc1F",
+        "pert_id": "BRD-K49865102",
+        "pert_iname": "PD-0325901",
+        "inchi_key": "SUDAHWBOROXANE-SECBINFHSA-N"
+      },
+      {
+        "broad_id": "BRD-K12343256-001-08-9",
+        "drug_name": "trametinib",
+        "column_name": "BRD-K12343256-001-08-9::2.5::HTS",
+        "dose": "2.5",
+        "screen_id": "HTS",
+        "smiles": "CC(=O)Nc1cccc(c1)-n1c2c(C)c(=O)n(C)c(Nc3ccc(I)cc3F)c2c(=O)n(C2CC2)c1=O, CC(=O)Nc1cccc(c1)-n1c2c(C)c(=O)n(C)c(Nc3ccc(I)cc3F)c2c(=O)n(C2CC2)c1=O, CC(=O)Nc1cccc(c1)-n1c2c(C)c(=O)n(C)c(Nc3ccc(I)cc3F)c2c(=O)n(C2CC2)c1=O, CC(=O)Nc1cccc(c1)-n1c2c(C)c(=O)n(C)c(Nc3ccc(I)cc3F)c2c(=O)n(C2CC2)c1=O",
+        "pert_id": "BRD-K12343256",
+        "pert_iname": "trametinib",
+        "inchi_key": "LIRYPHYGHXZJBZ-UHFFFAOYSA-N"
+      }
+    ],
+    "cell_line_unit": "depmap_id",
+    "colorectal_line_count": 35
+  },
+  "response": {
+    "rows": 135,
+    "finite_rows": 135,
+    "response_raw": "official PRISM replicate-collapsed log2 fold-change",
+    "sensitivity_score": "-response_raw; larger means more sensitive",
+    "screen_dose_rule": "one official collapsed row per frozen candidate (HTS, dose 2.5)",
+    "binary_label": null
+  },
+  "output": {
+    "local_path": "mvp/core_data/compact_prism_response.parquet",
+    "sha256": "5114e789299a794792bc44c818af98e679e8f00d6f6f3fb246781e6df2e960f1",
+    "schema": [
+      "study_id",
+      "source_revision",
+      "depmap_id",
+      "ccle_name",
+      "primary_tissue",
+      "broad_id",
+      "drug_name",
+      "pert_id",
+      "inchi_key",
+      "smiles",
+      "screen_id",
+      "dose",
+      "response_raw",
+      "response_unit",
+      "response_direction",
+      "sensitivity_score",
+      "source_row_id"
+    ]
+  },
+  "provenance": {
+    "generator": "mvp/core_data/build_prism_compact.py",
+    "generator_sha256": "ef64a469378c5775749525aaca6cce118732a3a89579df9bc103f260b4a9c184",
+    "creation_command": "curl -L --fail -o /tmp/primaryscreenreplicatecollapsedlogfoldchange.csv https://ndownloader.figshare.com/files/20237709 && python mvp/core_data/build_prism_compact.py",
+    "environment": "WSL2; conda drugscreening-gpu",
+    "large_source_not_tracked": true
+  }
+}

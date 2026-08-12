@@ -9,8 +9,11 @@ runtime:
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
   active_experiment: null
-  active_mvp: null
-  proposed_mvp: MVP-001
+  active_mvp: MVP-001
+  proposed_mvp: null
+  mvp_status: result_ready_for_review
+  mvp_result: PROMISING
+  mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
   last_accepted_experiment: EXP-002
   last_completed_experiment: EXP-002
   evidence_level: phase_1_exact978_core_ready

@@ -1,0 +1,1284 @@
+[
+  {
+    "depmap_id": "ACH-000007",
+    "ccle_name": "LS513_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9657026774897097,
+      "ndcg_at_4": 0.9659691711393147,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9989226997508825,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000249",
+    "ccle_name": "CL11_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.9948703667438108,
+      "ndcg_at_4": 0.9838827278964248,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000252",
+    "ccle_name": "LS1034_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.8880305219322409,
+      "ndcg_at_4": 0.8869792983390687,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000296",
+    "ccle_name": "OUMS23_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.7999999999999999,
+      "ndcg_at_2": 0.42385291826907767,
+      "ndcg_at_4": 0.807077629321237,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.7999999999999999,
+      "ndcg_at_2": 0.26742141727405233,
+      "ndcg_at_4": 0.6846934143788297,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000350",
+    "ccle_name": "COLO678_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -1.0,
+      "ndcg_at_2": 0.1953717816033726,
+      "ndcg_at_4": 0.616649652011958,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.6000000000000001,
+      "ndcg_at_2": 0.309656947540429,
+      "ndcg_at_4": 0.7387247929027031,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000400",
+    "ccle_name": "SKCO1_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 2,
+      "eligible": false,
+      "reason": "fewer_than_3_candidates"
+    },
+    "predicted": {
+      "candidate_count": 2,
+      "eligible": false,
+      "reason": "fewer_than_3_candidates"
+    }
+  },
+  {
+    "depmap_id": "ACH-000403",
+    "ccle_name": "NCIH747_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.9466370410630045,
+      "ndcg_at_4": 0.9409627034415405,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000421",
+    "ccle_name": "SW837_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9247557868507006,
+      "ndcg_at_4": 0.9318148167575973,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.986992853554387,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000467",
+    "ccle_name": "HCC56_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.8946404327981734,
+      "ndcg_at_4": 0.9081730660520363,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9821918646706064,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000470",
+    "ccle_name": "SW1463_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.8306422386169626,
+      "ndcg_at_4": 0.8347967520970151,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000489",
+    "ccle_name": "SW1116_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9948609085834803,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.922581958533323,
+      "ndcg_at_4": 0.9254515390195774,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000532",
+    "ccle_name": "SNU61_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9804098246396383,
+      "ndcg_at_4": 0.980555817994591,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9989667512742934,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000552",
+    "ccle_name": "HT29_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.9676113942005646,
+      "ndcg_at_4": 0.9670292111737454,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000565",
+    "ccle_name": "RCM1_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.9414433194528921,
+      "ndcg_at_4": 0.9401380385873095,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000651",
+    "ccle_name": "SW620_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9637543787325051,
+      "ndcg_at_4": 0.9646048264277354,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9967468643466304,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000680",
+    "ccle_name": "SW948_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9863066193125188,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.8395649238267691,
+      "ndcg_at_4": 0.8554102029459951,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000842",
+    "ccle_name": "SW480_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9790732043143764,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9520458736185066,
+      "ndcg_at_4": 0.9592838740493748,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000895",
+    "ccle_name": "CL34_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.8172246536850721,
+      "ndcg_at_4": 0.8190378930554894,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000926",
+    "ccle_name": "HT55_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.8744662498939842,
+      "ndcg_at_4": 0.8734235351562682,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000943",
+    "ccle_name": "RKO_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.9593896310532422,
+      "ndcg_at_4": 0.9423309170325351,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000950",
+    "ccle_name": "LOVO_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.982115796010559,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9711828166397652,
+      "ndcg_at_4": 0.9748999747272215,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000955",
+    "ccle_name": "SNU407_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.963936735866649,
+      "ndcg_at_4": 0.9545942368890209,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000957",
+    "ccle_name": "LS180_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.9017518174740962,
+      "ndcg_at_4": 0.9013443166613386,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000958",
+    "ccle_name": "SW48_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 1,
+      "eligible": false,
+      "reason": "fewer_than_3_candidates"
+    },
+    "predicted": {
+      "candidate_count": 1,
+      "eligible": false,
+      "reason": "fewer_than_3_candidates"
+    }
+  },
+  {
+    "depmap_id": "ACH-000959",
+    "ccle_name": "SNUC4_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.19999999999999998,
+      "ndcg_at_2": 0.3369229823407936,
+      "ndcg_at_4": 0.6587361451420635,
+      "top2_overlap_count": 1,
+      "top2_overlap_rate": 0.5,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K40738845"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.19999999999999998,
+      "ndcg_at_2": 0.27855961447168726,
+      "ndcg_at_4": 0.6580239604305185,
+      "top2_overlap_count": 1,
+      "top2_overlap_rate": 0.5,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K40738845"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000963",
+    "ccle_name": "CCK81_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9937520160995844,
+      "ndcg_at_4": 0.9944339263536892,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9848679616807442,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000967",
+    "ccle_name": "SNUC2A_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.6000000000000001,
+      "ndcg_at_2": 0.405995556892703,
+      "ndcg_at_4": 0.8081415389682003,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -1.0,
+      "ndcg_at_2": 0.2561546766614197,
+      "ndcg_at_4": 0.6799594788046507,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000970",
+    "ccle_name": "SNUC5_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.948913033188475,
+      "ndcg_at_4": 0.9308954101348824,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000971",
+    "ccle_name": "HCT116_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9812635346351928,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9274307678914369,
+      "ndcg_at_4": 0.9372376302324056,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000982",
+    "ccle_name": "GP2D_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.7999999999999999,
+      "ndcg_at_2": 0.273226603209261,
+      "ndcg_at_4": 0.7036316383926869,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.7999999999999999,
+      "ndcg_at_2": 0.17238679343198543,
+      "ndcg_at_4": 0.6341340162419226,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000985",
+    "ccle_name": "LS411N_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 1.0,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 1.0,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.6000000000000001,
+      "ndcg_at_2": 0.9122517796440536,
+      "ndcg_at_4": 0.9112148077913588,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000986",
+    "ccle_name": "HT115_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 1.0,
+      "ndcg_at_4": 0.9993685224981211,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.7999999999999999,
+      "ndcg_at_2": 0.9844981510461084,
+      "ndcg_at_4": 0.9845687553653679,
+      "top2_overlap_count": 2,
+      "top2_overlap_rate": 1.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000991",
+    "ccle_name": "SNU81_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.39999999999999997,
+      "ndcg_at_2": 0.25567518885129503,
+      "ndcg_at_4": 0.5844671456979663,
+      "top2_overlap_count": 1,
+      "top2_overlap_rate": 0.5,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K40738845",
+        "BRD-K49865102"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.39999999999999997,
+      "ndcg_at_2": 0.3485302366302764,
+      "ndcg_at_4": 0.7287537458924342,
+      "top2_overlap_count": 1,
+      "top2_overlap_rate": 0.5,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K40738845",
+        "BRD-K49865102"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000997",
+    "ccle_name": "HCT15_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.6000000000000001,
+      "ndcg_at_2": 0.34229553078769887,
+      "ndcg_at_4": 0.7787467189058606,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -1.0,
+      "ndcg_at_2": 0.2159644348884941,
+      "ndcg_at_4": 0.6701149201554695,
+      "top2_overlap_count": 0,
+      "top2_overlap_rate": 0.0,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K40738845"
+      ]
+    }
+  },
+  {
+    "depmap_id": "ACH-000998",
+    "ccle_name": "CW2_LARGE_INTESTINE",
+    "observed": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": 0.39999999999999997,
+      "ndcg_at_2": 0.8349207429784692,
+      "ndcg_at_4": 0.9638616300414401,
+      "top2_overlap_count": 1,
+      "top2_overlap_rate": 0.5,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K12343256"
+      ]
+    },
+    "predicted": {
+      "candidate_count": 4,
+      "eligible": true,
+      "spearman": -0.39999999999999997,
+      "ndcg_at_2": 0.5267763386191038,
+      "ndcg_at_4": 0.6459581581016008,
+      "top2_overlap_count": 1,
+      "top2_overlap_rate": 0.5,
+      "predicted_top2": [
+        "BRD-K12343256",
+        "BRD-K49865102"
+      ],
+      "response_top2": [
+        "BRD-K02950022",
+        "BRD-K12343256"
+      ]
+    }
+  }
+]

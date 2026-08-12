@@ -17,3 +17,7 @@ artifacts/**
 *.pt
 *.pth
 *.ckpt
+
+# Public-source download caches remain local; tracked audits record source IDs,
+# checksums, generator revisions and reproducible commands.
+mvp/core_data/_source_cache/**

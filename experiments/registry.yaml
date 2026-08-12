@@ -35,6 +35,14 @@ experiments:
     record: experiments/records/EXP-003.md
 mvps:
   - id: MVP-001
-    title: End-to-End DrugScreenLab Feasibility
-    status: proposed_pending_approval
+    title: End-to-End DrugScreenLab Cell-Line Core Feasibility
+    status: result_ready_for_review
+    approved_by: user
+    approved_on: 2026-08-11
+    design_checkpoint: 9e2681c
+    primary_benchmark: compact_prism_response
+    legacy_branch: DEFERRED_PDO_LEG
+    result_label: PROMISING
+    result_case: CORE_MVP_FEASIBILITY_PROMISING
+    reviewer: mvp/reviews/MVP-001_independent_reviewer.md
     record: mvp/records/MVP-001.md

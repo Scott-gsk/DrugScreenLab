@@ -1,0 +1,56 @@
+{
+  "format": "mvp001_prism_ranking_evaluation_v1",
+  "mvp_id": "MVP-001",
+  "status": "PROMISING",
+  "decision_case": "CORE_MVP_FEASIBILITY_PROMISING",
+  "frozen_signal_rule": "positive median per-line Spearman and fraction_positive_spearman > 0.5; no p-values/CI",
+  "candidate_cohort": {
+    "count": 4,
+    "pert_ids": [
+      "BRD-K02950022",
+      "BRD-K12343256",
+      "BRD-K40738845",
+      "BRD-K49865102"
+    ],
+    "mapping_sha256": "32fb02cbc0bb09bbb0c461df28856cb54ac751ceeb8670689371afc93b7201e8"
+  },
+  "prism_asset": {
+    "path": "mvp/core_data/compact_prism_response.parquet",
+    "sha256": "5114e789299a794792bc44c818af98e679e8f00d6f6f3fb246781e6df2e960f1",
+    "rows": 135,
+    "cell_lines": 35,
+    "response_direction": "lower official log2fc means more sensitive; sensitivity_score=-response_raw"
+  },
+  "observed_oracle": {
+    "line_count": 35,
+    "eligible_line_count": 33,
+    "macro_mean_spearman": 0.47878787878787876,
+    "macro_median_spearman": 0.7999999999999999,
+    "fraction_positive_spearman": 0.7878787878787878,
+    "macro_mean_top2_overlap_rate": 0.803030303030303,
+    "fraction_top2_overlap_at_least_half": 0.8484848484848485
+  },
+  "predicted_reversal": {
+    "line_count": 35,
+    "eligible_line_count": 33,
+    "macro_mean_spearman": 0.490909090909091,
+    "macro_median_spearman": 0.7999999999999999,
+    "fraction_positive_spearman": 0.8181818181818182,
+    "macro_mean_top2_overlap_rate": 0.803030303030303,
+    "fraction_top2_overlap_at_least_half": 0.8484848484848485
+  },
+  "metrics": {
+    "top_k": 2,
+    "top_k_metric": "top2_overlap_rate; continuous-response diagnostic because no binary sensitive label was registered",
+    "per_line": "mvp/core_eval/prism_evaluation/MVP-001_prism_per_line_metrics.json"
+  },
+  "artifacts": {
+    "per_line_metrics": "mvp/core_eval/prism_evaluation/MVP-001_prism_per_line_metrics.json",
+    "per_line_metrics_sha256": "5050b7249bbfc4b3a7bba40feee3cd2d0d128bafa5a4b37a4234945dcf067cc2"
+  },
+  "known_deviations": [
+    "The frozen cohort has four drugs and 33-35 finite lines per drug; top2 diagnostics are low-cost and not a paper-level benchmark.",
+    "No binary label was constructed, so AUROC/AUPRC and label-based Recall@K are not reported.",
+    "The disease signature and candidate identity were frozen before reading PRISM response values."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "exp_id": "MVP-001",
+  "audit_scope": "GSE117548 / Betge 2022 external phenotypic-activity guardrail only",
+  "data_status": "DATA_PARTIAL",
+  "status_reason": "Source AUROC definition and direction are verified; canonical LINCS/stable-structure mappings and compact-table derivation provenance are not yet supplied.",
+  "source": {
+    "paper_doi": "10.1038/s41467-022-30722-9",
+    "paper_url": "https://www.nature.com/articles/s41467-022-30722-9",
+    "geo_accession": "GSE117548",
+    "geo_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE117548",
+    "author_code_url": "https://github.com/boutroslab/Supp_BetgeRindtorff_2021"
+  },
+  "asset": {
+    "path": "data/processed/betge_2022/external_drug_activity.parquet",
+    "sha256": "c61d7d27838fcda5c923203b351c7f1e84c04be28be02fb98e982ce1333d9c5d",
+    "row_count": 66,
+    "unique_pdo_lines": 11,
+    "unique_drugs": 5,
+    "auroc_range": [0.5441928515938692, 0.9903874470152516],
+    "key": ["line", "drug", "factor"],
+    "duplicate_key_count": 0
+  },
+  "endpoint": {
+    "field": "auroc",
+    "meaning": "Logistic-regression discrimination of drug-treated organoid morphology versus DMSO/negative-control morphology.",
+    "frozen_direction": "higher_is_stronger_phenotypic_activity_or_separability",
+    "range": [0.5, 1.0],
+    "forbidden_reinterpretations": ["viability_auc", "DSS", "IC50", "drug_sensitivity", "drug_resistance", "clinical_efficacy"],
+    "post_hoc_direction_flip_forbidden": true
+  },
+  "eligible_pdo_lines": ["D004T01", "D007T01", "D010T01", "D013T01", "D018T01", "D019T01", "D020T01", "D022T01", "D027T01", "D030T01", "D046T01"],
+  "eligible_drugs": [
+    {"source_display_name": "BMS-536924", "normalized_alias": "bms536924", "source_target": "IGF-1R", "source_pathway": "Protein Tyrosine Kinase", "source_library": "KiStem", "source_concentration_uM": 7.5},
+    {"source_display_name": "OSI-420", "normalized_alias": "osi420", "source_target": "EGFR", "source_pathway": "Protein Tyrosine Kinase", "source_library": "KiStem", "source_concentration_uM": 7.5},
+    {"source_display_name": "PRI-724", "normalized_alias": "pri724", "source_target": "Wnt/beta-catenin", "source_pathway": "Stem Cells & Wnt", "source_library": "KiStem", "source_concentration_uM": 7.5},
+    {"source_display_name": "Trametinib (GSK1120212)", "normalized_alias": "trametinib", "source_target": "MEK", "source_pathway": "MAPK", "source_library": "KiStem", "source_concentration_uM": 7.5},
+    {"source_display_name": "Ulixertinib (BVD-523, VRT752271)", "normalized_alias": "ulixertinib", "source_target": "ERK", "source_pathway": "MAPK", "source_library": "KiStem", "source_concentration_uM": 7.5}
+  ],
+  "available_mapping_fields": ["id", "line", "drug", "drug_name_normalized"],
+  "required_mapping_fields_before_final_comparison": ["source_display_name", "drug_name_normalized", "lincs_pert_id_or_canonical_name", "stable_structure_identifier", "mapping_source_and_version", "mapping_decision"],
+  "forbidden_columns": ["factor1", "factor2", "factor3", "mcrc_compound_name", "mcrc_dss_mean", "mcrc_n_patients"],
+  "final_comparison_fail_gates": ["missing_canonical_lincs_or_structure_identity", "fewer_than_three_unambiguously_mapped_drugs", "ranking_not_frozen_before_label_join", "use_of_external_test_fields_for_training_or_selection", "attempt_to_claim_sensitivity_or_resistance_from_auroc"]
+}

@@ -1,0 +1,42 @@
+{
+  "format": "mvp001_model_checkpoint_provenance_v1",
+  "mvp_id": "MVP-001",
+  "phase": "small",
+  "status": "LOCAL_ASSET_WITH_TRACKED_RECIPE",
+  "checkpoint": {
+    "runtime_path": "/tmp/mvp001-small-core4/model.pt",
+    "local_relative_path": "artifacts/mvp/MVP-001/small/model.pt",
+    "sha256": "c62915e53ab9d87be7f984e37b3e80d9af47477ac5a71c7d574b14d34df1da05",
+    "tracked": false,
+    "large_asset_policy": "checkpoint remains local and is not committed"
+  },
+  "manifest": {
+    "path": "artifacts/mvp/MVP-001/compact_manifest.json",
+    "sha256": "e6321f1badf3b5d94a753f80dfe644ca7cb3354df73c4621a6480d4a0cf2acc3",
+    "tracked": true,
+    "records": 761,
+    "train_records": 617,
+    "test_records": 144,
+    "test_groups": 42,
+    "missing_test_drt_train_support": 0
+  },
+  "inputs": {
+    "cache_registry_id": "lincs_gse92742_exact978_cache_v1",
+    "cache_sha256": "04b8bb746a61ba4992e49566315327023783ec1c0448da2a9e263e0881281733",
+    "gene_count": 978
+  },
+  "generator": {
+    "model_module": "src/drug_screen/modeling/mvp001.py",
+    "model_module_sha256": "aaa946581859ce3d5f7497e673f814eb9d479c9f4c31c9b3024639227ae3e3dc",
+    "runner": "scripts/modeling/run_mvp001.py",
+    "runner_sha256": "fd3e5130f15604d03095490773120231113e4779e0bf45c0d1efaa2c229978d1",
+    "config": "configs/mvp/MVP-001/small.json",
+    "config_sha256": "1678240dc0f5d34be153148bec838443f154e11c98a7b6e723185f82c1b29edb",
+    "manifest_builder": "scripts/data/build_mvp001_manifest.py",
+    "manifest_builder_sha256": "77133d250d0a0b73eae55065a4ccd96a3278e4bca4d71101e2d7e4892ba891d8",
+    "seed": 20260811,
+    "command": "PYTHONPATH=src conda run --no-capture-output -n drugscreening-gpu python scripts/modeling/run_mvp001.py --config configs/mvp/MVP-001/small.json --manifest artifacts/mvp/MVP-001/compact_manifest.json --output-dir artifacts/mvp/MVP-001/small --data-root data",
+    "environment": "WSL2; conda drugscreening-gpu"
+  },
+  "result_summary": "mvp/core_eval/MVP-001_core_eval_evidence.json"
+}

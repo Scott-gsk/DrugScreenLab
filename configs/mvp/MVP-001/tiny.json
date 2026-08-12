@@ -1,0 +1,7 @@
+{
+  "experiment_id": "MVP-001",
+  "phase": "tiny",
+  "data": {"manifest_format": "mvp001_compact_cache_manifest_v1", "gene_count": 978, "max_records": 32},
+  "model": {"embedding_dim": 8},
+  "training": {"seed": 20260811, "batch_size": 8, "epochs": 4, "learning_rate": 0.01, "weight_decay": 0.0001}
+}

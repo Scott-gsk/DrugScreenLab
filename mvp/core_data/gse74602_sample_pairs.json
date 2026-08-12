@@ -1,0 +1,242 @@
+[
+  {
+    "pair_id": "4200270022_pair1",
+    "subject_id": "4200270022",
+    "tumor_sample": "4200270022_A",
+    "normal_sample": "4200270022_B",
+    "tumor_source_name": "Primary Tumor T1",
+    "normal_source_name": "Normal N1"
+  },
+  {
+    "pair_id": "4200270022_pair2",
+    "subject_id": "4200270022",
+    "tumor_sample": "4200270022_C",
+    "normal_sample": "4200270022_D",
+    "tumor_source_name": "Primary Tumor T2",
+    "normal_source_name": "Normal N2"
+  },
+  {
+    "pair_id": "4200270022_pair3",
+    "subject_id": "4200270022",
+    "tumor_sample": "4200270022_E",
+    "normal_sample": "4200270022_F",
+    "tumor_source_name": "Primary Tumor T3",
+    "normal_source_name": "Normal N3"
+  },
+  {
+    "pair_id": "4200270022_pair4",
+    "subject_id": "4200270022",
+    "tumor_sample": "4200270022_G",
+    "normal_sample": "4200270022_H",
+    "tumor_source_name": "Primary Tumor T4",
+    "normal_source_name": "Normal N4"
+  },
+  {
+    "pair_id": "4200270023_pair1",
+    "subject_id": "4200270023",
+    "tumor_sample": "4200270023_A",
+    "normal_sample": "4200270023_B",
+    "tumor_source_name": "Primary Tumor T5",
+    "normal_source_name": "Normal N5"
+  },
+  {
+    "pair_id": "4200270023_pair2",
+    "subject_id": "4200270023",
+    "tumor_sample": "4200270023_C",
+    "normal_sample": "4200270023_D",
+    "tumor_source_name": "Primary Tumor T6",
+    "normal_source_name": "Normal N6"
+  },
+  {
+    "pair_id": "4200270023_pair3",
+    "subject_id": "4200270023",
+    "tumor_sample": "4200270023_E",
+    "normal_sample": "4200270023_F",
+    "tumor_source_name": "Primary Tumor T7",
+    "normal_source_name": "Normal N7"
+  },
+  {
+    "pair_id": "4200270023_pair4",
+    "subject_id": "4200270023",
+    "tumor_sample": "4200270023_G",
+    "normal_sample": "4200270023_H",
+    "tumor_source_name": "Primary Tumor T8",
+    "normal_source_name": "Normal N8"
+  },
+  {
+    "pair_id": "4200270031_pair1",
+    "subject_id": "4200270031",
+    "tumor_sample": "4200270031_A",
+    "normal_sample": "4200270031_B",
+    "tumor_source_name": "Primary Tumor T9",
+    "normal_source_name": "Normal N9"
+  },
+  {
+    "pair_id": "4200270031_pair2",
+    "subject_id": "4200270031",
+    "tumor_sample": "4200270031_C",
+    "normal_sample": "4200270031_D",
+    "tumor_source_name": "Primary Tumor T10",
+    "normal_source_name": "Normal N10"
+  },
+  {
+    "pair_id": "4200270031_pair3",
+    "subject_id": "4200270031",
+    "tumor_sample": "4200270031_E",
+    "normal_sample": "4200270031_F",
+    "tumor_source_name": "Primary Tumor T11",
+    "normal_source_name": "Normal N11"
+  },
+  {
+    "pair_id": "4200270031_pair4",
+    "subject_id": "4200270031",
+    "tumor_sample": "4200270031_G",
+    "normal_sample": "4200270031_H",
+    "tumor_source_name": "Primary Tumor T12",
+    "normal_source_name": "Normal N12"
+  },
+  {
+    "pair_id": "4200270041_pair1",
+    "subject_id": "4200270041",
+    "tumor_sample": "4200270041_A",
+    "normal_sample": "4200270041_B",
+    "tumor_source_name": "Primary Tumor T13",
+    "normal_source_name": "Normal N13"
+  },
+  {
+    "pair_id": "4200270041_pair2",
+    "subject_id": "4200270041",
+    "tumor_sample": "4200270041_C",
+    "normal_sample": "4200270041_D",
+    "tumor_source_name": "Primary Tumor T14",
+    "normal_source_name": "Normal N14"
+  },
+  {
+    "pair_id": "4200270041_pair3",
+    "subject_id": "4200270041",
+    "tumor_sample": "4200270041_E",
+    "normal_sample": "4200270041_F",
+    "tumor_source_name": "Primary Tumor T15",
+    "normal_source_name": "Normal N15"
+  },
+  {
+    "pair_id": "4200270041_pair4",
+    "subject_id": "4200270041",
+    "tumor_sample": "4200270041_G",
+    "normal_sample": "4200270041_H",
+    "tumor_source_name": "Primary Tumor T16",
+    "normal_source_name": "Normal N16"
+  },
+  {
+    "pair_id": "4200270046_pair1",
+    "subject_id": "4200270046",
+    "tumor_sample": "4200270046_A",
+    "normal_sample": "4200270046_B",
+    "tumor_source_name": "Primary Tumor T17",
+    "normal_source_name": "Normal N17"
+  },
+  {
+    "pair_id": "4200270046_pair2",
+    "subject_id": "4200270046",
+    "tumor_sample": "4200270046_C",
+    "normal_sample": "4200270046_D",
+    "tumor_source_name": "Primary Tumor T18",
+    "normal_source_name": "Normal N18"
+  },
+  {
+    "pair_id": "4200270046_pair3",
+    "subject_id": "4200270046",
+    "tumor_sample": "4200270046_E",
+    "normal_sample": "4200270046_F",
+    "tumor_source_name": "Primary Tumor T19",
+    "normal_source_name": "Normal N19"
+  },
+  {
+    "pair_id": "4200270046_pair4",
+    "subject_id": "4200270046",
+    "tumor_sample": "4200270046_G",
+    "normal_sample": "4200270046_H",
+    "tumor_source_name": "Primary Tumor T20",
+    "normal_source_name": "Normal N20"
+  },
+  {
+    "pair_id": "4200270047_pair1",
+    "subject_id": "4200270047",
+    "tumor_sample": "4200270047_A",
+    "normal_sample": "4200270047_B",
+    "tumor_source_name": "Primary Tumor T21",
+    "normal_source_name": "Normal N21"
+  },
+  {
+    "pair_id": "4200270047_pair2",
+    "subject_id": "4200270047",
+    "tumor_sample": "4200270047_C",
+    "normal_sample": "4200270047_D",
+    "tumor_source_name": "Primary Tumor T22",
+    "normal_source_name": "Normal N22"
+  },
+  {
+    "pair_id": "4200270047_pair3",
+    "subject_id": "4200270047",
+    "tumor_sample": "4200270047_E",
+    "normal_sample": "4200270047_F",
+    "tumor_source_name": "Primary Tumor T23",
+    "normal_source_name": "Normal N23"
+  },
+  {
+    "pair_id": "4200270047_pair4",
+    "subject_id": "4200270047",
+    "tumor_sample": "4200270047_G",
+    "normal_sample": "4200270047_H",
+    "tumor_source_name": "Primary Tumor T24",
+    "normal_source_name": "Normal N24"
+  },
+  {
+    "pair_id": "4200270048_pair1",
+    "subject_id": "4200270048",
+    "tumor_sample": "4200270048_A",
+    "normal_sample": "4200270048_B",
+    "tumor_source_name": "Primary Tumor T25",
+    "normal_source_name": "Normal N25"
+  },
+  {
+    "pair_id": "4200270048_pair2",
+    "subject_id": "4200270048",
+    "tumor_sample": "4200270048_C",
+    "normal_sample": "4200270048_D",
+    "tumor_source_name": "Primary Tumor T26",
+    "normal_source_name": "Normal N26"
+  },
+  {
+    "pair_id": "4200270048_pair3",
+    "subject_id": "4200270048",
+    "tumor_sample": "4200270048_E",
+    "normal_sample": "4200270048_F",
+    "tumor_source_name": "Primary Tumor T27",
+    "normal_source_name": "Normal N27"
+  },
+  {
+    "pair_id": "4200270048_pair4",
+    "subject_id": "4200270048",
+    "tumor_sample": "4200270048_G",
+    "normal_sample": "4200270048_H",
+    "tumor_source_name": "Primary Tumor T28",
+    "normal_source_name": "Normal N28"
+  },
+  {
+    "pair_id": "4200270056_pair1",
+    "subject_id": "4200270056",
+    "tumor_sample": "4200270056_A",
+    "normal_sample": "4200270056_B",
+    "tumor_source_name": "Primary Tumor T29",
+    "normal_source_name": "Normal N29"
+  },
+  {
+    "pair_id": "4200270056_pair2",
+    "subject_id": "4200270056",
+    "tumor_sample": "4200270056_C",
+    "normal_sample": "4200270056_D",
+    "tumor_source_name": "Primary Tumor T31",
+    "normal_source_name": "Normal N31"
+  }
+]

@@ -1,0 +1,155 @@
+{
+  "format": "mvp001_cellline_core_evidence_v2",
+  "mvp_id": "MVP-001",
+  "approved_direction": "Cell-Line Core",
+  "role": "Evaluation & Statistics Analyst",
+  "status": "RESULT_READY_FOR_REVIEW",
+  "status_detail": {
+    "exact978_foundation": "GREEN",
+    "crc_signature": "DATA_READY",
+    "observed_oracle": "READY_FOR_PRISM_JOIN",
+    "learned_delta978": "NO_SIGNAL_DIAGNOSTIC",
+    "predicted_reversal": "READY_FOR_PRISM_JOIN",
+    "prism_compact_benchmark": "DATA_READY",
+    "overall_feasibility": "PROMISING"
+  },
+  "dataset_ids": {
+    "lincs_exact978": "lincs_gse92742_exact978_cache_v1",
+    "lincs_source": "lincs_gse92742_raw_level3_v1",
+    "crc_signature_source": "GSE74602_GPL6104_30_paired_crc_tumor_normal",
+    "prism_source": "PRISM_REPURPOSING_PRIMARY_19Q4",
+    "cell_line_identity": "PRISM_primary_screen_cell_line_info"
+  },
+  "paths": {
+    "exact978_cache": "data/processed/lincs/GSE92742/exact978_cache_v1/exact978_cache.npy",
+    "exact978_manifest": "data/processed/lincs/GSE92742/exact978_cache_v1/asset_manifest.json",
+    "lincs_inst_info": "data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_inst_info.txt.gz",
+    "lincs_pert_info": "data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_pert_info.txt.gz",
+    "lincs_gctx": "data/interim/lincs/GSE92742/GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx",
+    "signature_source_cache": "mvp/core_data/_source_cache/GSE74602_non_normalized.txt.gz",
+    "signature_platform_cache": "mvp/core_data/_source_cache/GPL6104.annot.gz",
+    "signature_pair_map": "mvp/core_data/gse74602_sample_pairs.json",
+    "signature_derived": "mvp/core_data/crc_disease_signature_exact978.tsv",
+    "signature_audit": "mvp/core_data/crc_disease_signature_audit.json",
+    "prism_response": "mvp/core_data/compact_prism_response.parquet",
+    "prism_audit": "mvp/core_data/prism_compact_audit.json",
+    "observed_ranking": "mvp/core_eval/observed_oracle/MVP-001_observed_oracle_ranking.tsv",
+    "observed_summary": "mvp/core_eval/observed_oracle/MVP-001_observed_oracle_summary.json",
+    "predicted_ranking": "mvp/core_eval/predicted_reversal/MVP-001_predicted_reversal_ranking.tsv",
+    "predicted_summary": "mvp/core_eval/predicted_reversal/MVP-001_predicted_reversal_summary.json",
+    "prism_metrics": "mvp/core_eval/prism_evaluation/MVP-001_prism_evaluation_summary.json",
+    "dry_run": "mvp/core_eval/MVP-001_dry_run_evidence.json",
+    "model_provenance": "mvp/core_eval/MVP-001_model_provenance.json",
+    "validation_log": "mvp/core_eval/MVP-001_validation_log.md",
+    "review_record": "mvp/reviews/MVP-001_independent_reviewer.md"
+  },
+  "digests": {
+    "exact978_cache_sha256": "04b8bb746a61ba4992e49566315327023783ec1c0448da2a9e263e0881281733",
+    "exact978_order_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623",
+    "signature_source_sha256": "381b6cb83e6776d7f571833001765ccfbf3143fc500f69a0e1df5b4aa264b0f6",
+    "signature_platform_sha256": "82ae57d6d9ec26ce2bcff01ccd1db498bb8055ee01471829dec0a5ab5666d518",
+    "signature_sha256": "61e95b6a6da1d4c8b91ed1a99e96471027917c7e7e2501b507875ce28cd310c3",
+    "signature_pair_map_sha256": "9c97c8ce61ce4c56b0c8160d7f6c0dc948cc6b238581b263be2d8dd345ad13c1",
+    "prism_response_sha256": "5114e789299a794792bc44c818af98e679e8f00d6f6f3fb246781e6df2e960f1",
+    "prism_source_matrix_sha256": "25efc741b372b30d38629cb139a388e989663fba597e55fff5f6c2bb7cdeb75a",
+    "prism_cell_info_sha256": "c17174f48264fea0adb3eb4b2b1f2daf61b83999b0db6e4965338e3bd6a9fde2",
+    "prism_treatment_info_sha256": "d649f207a437c9e9910572c5023d02f68a77c946f6e972c998b057160a3505e6",
+    "prism_candidate_mapping_sha256": "32fb02cbc0bb09bbb0c461df28856cb54ac751ceeb8670689371afc93b7201e8",
+    "manifest_sha256": "e6321f1badf3b5d94a753f80dfe644ca7cb3354df73c4621a6480d4a0cf2acc3",
+    "observed_ranking_sha256": "3b283ee85d4b86cd1181974a0a3089794d7f1170929e92a88147172792f3f0e8",
+    "predicted_ranking_sha256": "e9d05c4af643ac2b7b25c6f1d28b88c57449ac43a49399d17ec79ce5c4311870",
+    "prism_metrics_sha256": "4572c1b62aafdc75f211e44236c19d8a2d6f1ceb62c1c77709ea58a10f6e808e"
+  },
+  "signature": {
+    "study": "GSE74602",
+    "platform": "GPL6104",
+    "sample_count": 60,
+    "paired_subject_count": 30,
+    "transformation": "median across paired log2(tumor/normal) contrasts, then median across probes per gene",
+    "rows": 947,
+    "up": 712,
+    "down": 235,
+    "formal_gate": {"minimum_total": 20, "minimum_up": 5, "minimum_down": 5, "pass": true},
+    "prism_label_contamination": false
+  },
+  "candidate_identity": {
+    "count": 4,
+    "mapping_sha256": "32fb02cbc0bb09bbb0c461df28856cb54ac751ceeb8670689371afc93b7201e8",
+    "mapping": [
+      {"drug_name": "BMS-299897", "broad_id": "BRD-K02950022-001-02-9", "pert_id": "BRD-K02950022"},
+      {"drug_name": "BMS-777607", "broad_id": "BRD-K40738845-001-05-0", "pert_id": "BRD-K40738845"},
+      {"drug_name": "PD-0325901", "broad_id": "BRD-K49865102-001-08-4", "pert_id": "BRD-K49865102"},
+      {"drug_name": "trametinib", "broad_id": "BRD-K12343256-001-08-9", "pert_id": "BRD-K12343256"}
+    ],
+    "freeze_rule": "exact canonical structure plus unique LINCS pert_id; frozen before PRISM response access"
+  },
+  "observed_oracle": {
+    "matched_treatment_instances": 695,
+    "treatment_groups": 218,
+    "mapped_drugs": 4,
+    "lincs_cells": 60,
+    "unique_controls": 3439,
+    "missing_treatment_cache_ids": 0,
+    "missing_control_cache_ids": 0,
+    "selected_cache_values_finite": true,
+    "score": "-Spearman(signature signed_log2fc, observed median Delta978)",
+    "ranking_sha256": "3b283ee85d4b86cd1181974a0a3089794d7f1170929e92a88147172792f3f0e8"
+  },
+  "learned_delta978": {
+    "phase": "small",
+    "seed": 20260811,
+    "train_rows": 617,
+    "test_rows": 144,
+    "test_groups": 42,
+    "learned": {"mae": 0.5381346154544089, "pearson": 0.24085111233056394, "spearman": 0.21494250679184512},
+    "constant_train_mean": {"mae": 0.5360393918523885, "pearson": 0.21360504062057512, "spearman": 0.19876880723847828},
+    "train_drug_mean_diagnostic": {"mae": 0.5319975662713099, "pearson": 0.2634014883799464, "spearman": 0.23769269922646366},
+    "decision": "NO_SIGNAL_DIAGNOSTIC",
+    "known_deviation": "learned model does not dominate the train drug-mean diagnostic on all metrics"
+  },
+  "predicted_vs_observed": {
+    "same_candidate_cohort": true,
+    "drug_score_spearman": 0.6000000000000001,
+    "top2_overlap_count": 2,
+    "top2_overlap_rate": 1.0,
+    "ranking_sha256": "e9d05c4af643ac2b7b25c6f1d28b88c57449ac43a49399d17ec79ce5c4311870"
+  },
+  "prism_evaluation": {
+    "response_rows": 135,
+    "cell_lines": 35,
+    "eligible_lines": 33,
+    "response_direction": "sensitivity_score=-official log2 fold-change; larger means more sensitive",
+    "observed_oracle": {"mean_spearman": 0.47878787878787876, "median_spearman": 0.8, "fraction_positive": 0.7878787878787878, "mean_top2_overlap": 0.803030303030303},
+    "predicted_reversal": {"mean_spearman": 0.49090909090909096, "median_spearman": 0.8, "fraction_positive": 0.8181818181818182, "mean_top2_overlap": 0.803030303030303},
+    "binary_labels": false,
+    "metrics_sha256": "4572c1b62aafdc75f211e44236c19d8a2d6f1ceb62c1c77709ea58a10f6e808e",
+    "decision_case": "CORE_MVP_FEASIBILITY_PROMISING",
+    "status": "PROMISING"
+  },
+  "leakage_and_provenance": {
+    "signature_independent_of_prism": true,
+    "candidate_frozen_before_response": true,
+    "observed_and_predicted_same_candidates": true,
+    "large_source_matrix_not_tracked": true,
+    "compact_manifest_tracked": true,
+    "checkpoint_body_not_tracked": true,
+    "exact978_cache_reused": true,
+    "forbidden_data_used": false,
+    "environment": "WSL2; conda drugscreening-gpu",
+    "dry_run": "Tiny completed with atomic treatment groups; Small completed single seed; no full 65 GB rescan"
+  },
+  "tests_and_commands": [
+    {"command": "python mvp/core_data/build_crc_signature_gse74602.py", "result": "PASS: GSE74602 source/platform checksums; exact978 GCTX order; 947 rows; formal gate"},
+    {"command": "python mvp/core_data/build_prism_compact.py", "result": "PASS: 135 finite compact rows; 35 colorectal lines; four frozen candidates"},
+    {"command": "python mvp/core_eval/compute_observed_oracle.py", "result": "PASS: 695 instances; 218 groups; four finite observed rankings"},
+    {"command": "python mvp/core_eval/compute_predicted_reversal.py", "result": "PASS: four predicted rankings; same cohort; observed/predicted Spearman 0.60"},
+    {"command": "python mvp/core_eval/evaluate_prism.py", "result": "PASS: 33 eligible lines; PROMISING under frozen MVP diagnostic rule"}
+  ],
+  "known_deviations": [
+    "The four-drug cohort is deliberately small for MVP feasibility; top-2/NDCG@2 diagnostics are not paper-level evidence.",
+    "No binary sensitive label was registered; AUROC/AUPRC and label-based Recall@K are not reported.",
+    "Learned perturbation stage is a bounded single-seed within-vocabulary holdout and is not cold-drug/context generalization.",
+    "GSE117548 PDO branch remains DEFERRED_PDO_LEG."
+  ],
+  "review": {"reviewer_status": "PENDING_SINGLE_INDEPENDENT_REVIEWER", "verdict": null}
+}

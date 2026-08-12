@@ -1,0 +1,32 @@
+{
+  "mvp_id": "MVP-001",
+  "status": "DEFERRED_PDO_LEG",
+  "audit_scope": "compact metadata only; no expression values were read for the deferred branch",
+  "gse117548_series_matrix": {
+    "path": "data/raw/geo/GSE117548/GSE117548_series_matrix.txt.gz",
+    "sha256": "59783d2591af0b2613feddd4e934e127a910d7cc225b5dc4bd118b45d49e07c1",
+    "platform": "GPL570",
+    "sample_count": 25,
+    "unique_sample_ids": 16,
+    "sample_id_source": "!Sample_characteristics_ch1: sample id",
+    "sample_title_pattern": "<sample_id>_<array_date>",
+    "duplicate_sample_ids_are_independent_external_units": false
+  },
+  "external_activity": {
+    "path": "data/processed/betge_2022/external_drug_activity.parquet",
+    "sha256": "c61d7d27838fcda5c923203b351c7f1e84c04be28be02fb98e982ce1333d9c5d",
+    "rows": 66,
+    "unique_activity_ids": 11,
+    "unique_line_values": 11,
+    "unique_normalized_drugs": 5,
+    "normalized_drugs": ["bms536924", "osi420", "pri724", "trametinib", "ulixertinib"],
+    "factor_counts": {"factor1": 33, "factor2": 33},
+    "duplicate_unit": ["id", "drug_name_normalized"],
+    "duplicate_unit_count": 11,
+    "duplicate_auroc_values_identical": true,
+    "missing_required_fields": {"id": 0, "line": 0, "drug_name_normalized": 0, "auroc": 0, "factor": 0},
+    "collapse_rule": "Assert duplicate auroc equality, then retain one line-drug row and preserve contributing factors.",
+    "auroc_desirable_direction": "higher=stronger_phenotype_activity_or_separability; frozen by the Data Contract"
+  },
+  "conclusion": "The compact activity table supports at most 11 independent external PDO lines after factor-view collapse. Identity and auroc direction are frozen, but this branch was deferred and no final expression/activity comparison was run."
+}

@@ -82,7 +82,8 @@ def test_coarse_to_fine_policy_distinguishes_fast_mvp_and_rigorous_loops():
         assert "MVP LOOP" in text
         assert "RIGOROUS LOOP" in text
     assert "不是 Formal Research EXP" in mvp
-    assert "等待 `APPROVE MVP-001`" in mvp
+    assert "result_ready_for_review" in mvp
+    assert "DEFERRED_PDO_LEG" in mvp
 
 
 def test_every_experiment_record_has_execution_manifest():

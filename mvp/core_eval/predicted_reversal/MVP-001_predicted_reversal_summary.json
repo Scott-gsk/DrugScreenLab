@@ -1,0 +1,80 @@
+{
+  "format": "mvp001_predicted_reversal_ranking_v1",
+  "mvp_id": "MVP-001",
+  "status": "READY_FOR_PRISM_JOIN",
+  "model": {
+    "config_path": "configs/mvp/MVP-001/small.json",
+    "config_sha256": "1678240dc0f5d34be153148bec838443f154e11c98a7b6e723185f82c1b29edb",
+    "checkpoint_path": "/tmp/mvp001-small-core4/model.pt",
+    "checkpoint_sha256": "c62915e53ab9d87be7f984e37b3e80d9af47477ac5a71c7d574b14d34df1da05",
+    "manifest_path": "artifacts/mvp/MVP-001/compact_manifest.json",
+    "manifest_sha256": "e6321f1badf3b5d94a753f80dfe644ca7cb3354df73c4621a6480d4a0cf2acc3",
+    "seed": 20260811
+  },
+  "signature": {
+    "path": "mvp/core_data/crc_disease_signature_exact978.tsv",
+    "sha256": "61e95b6a6da1d4c8b91ed1a99e96471027917c7e7e2501b507875ce28cd310c3",
+    "rows": 947,
+    "up": 712,
+    "down": 235
+  },
+  "prediction": {
+    "split": "held_out_test_groups",
+    "test_rows": 144,
+    "test_groups": 42,
+    "drug_count": 4,
+    "aggregation": "mean within technical group; coordinate median across held-out groups",
+    "score": "-Spearman(signature signed_log2fc, predicted Delta978)"
+  },
+  "predicted_vs_observed": {
+    "same_candidate_cohort": true,
+    "candidate_count": 4,
+    "drug_score_spearman": 0.6000000000000001,
+    "top2_overlap_count": 2,
+    "top2_overlap_rate": 1.0,
+    "joined_scores": [
+      {
+        "pert_id": "BRD-K49865102",
+        "reversal_predicted": 0.26352921557849573,
+        "rank_desc_reversal_predicted": 1.0,
+        "reversal_observed": 0.1704700139,
+        "rank_desc_reversal_observed": 2
+      },
+      {
+        "pert_id": "BRD-K12343256",
+        "reversal_predicted": 0.2021611092960775,
+        "rank_desc_reversal_predicted": 2.0,
+        "reversal_observed": 0.1706464369,
+        "rank_desc_reversal_observed": 1
+      },
+      {
+        "pert_id": "BRD-K40738845",
+        "reversal_predicted": 0.11029668363535536,
+        "rank_desc_reversal_predicted": 3.0,
+        "reversal_observed": -0.06338422546,
+        "rank_desc_reversal_observed": 4
+      },
+      {
+        "pert_id": "BRD-K02950022",
+        "reversal_predicted": -0.13581595650935052,
+        "rank_desc_reversal_predicted": 4.0,
+        "reversal_observed": -0.05760450108,
+        "rank_desc_reversal_observed": 3
+      }
+    ]
+  },
+  "prism": {
+    "response_asset": "mvp/core_data/compact_prism_response.parquet",
+    "response_sha256": "5114e789299a794792bc44c818af98e679e8f00d6f6f3fb246781e6df2e960f1",
+    "metrics": null
+  },
+  "artifacts": {
+    "ranking": "mvp/core_eval/predicted_reversal/MVP-001_predicted_reversal_ranking.tsv",
+    "ranking_sha256": "e9d05c4af643ac2b7b25c6f1d28b88c57449ac43a49399d17ec79ce5c4311870",
+    "predictions_serialized": false
+  },
+  "known_deviations": [
+    "Predicted ranking uses held-out test treatment groups, while the observed oracle aggregates all eligible LINCS groups.",
+    "Only the frozen four-drug PRISM-overlap cohort is evaluated; no response-dependent cohort expansion is performed."
+  ]
+}
