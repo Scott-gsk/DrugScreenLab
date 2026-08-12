@@ -3,7 +3,7 @@
   "mvp_id": "MVP-001",
   "approved_direction": "Cell-Line Core",
   "role": "Evaluation & Statistics Analyst",
-  "status": "RESULT_READY_FOR_REVIEW",
+  "status": "RESULT_REVIEWED",
   "status_detail": {
     "exact978_foundation": "GREEN",
     "crc_signature": "DATA_READY",
@@ -151,5 +151,11 @@
     "Learned perturbation stage is a bounded single-seed within-vocabulary holdout and is not cold-drug/context generalization.",
     "GSE117548 PDO branch remains DEFERRED_PDO_LEG."
   ],
-  "review": {"reviewer_status": "PENDING_SINGLE_INDEPENDENT_REVIEWER", "verdict": null}
+  "review": {
+    "reviewer_status": "COMPLETE",
+    "verdict": "VALID",
+    "reviewer_record": "mvp/reviews/MVP-001_independent_reviewer.md",
+    "reviewed_commit": "ab7dbfd",
+    "review_scope": "MVP-001 Cell-Line Core evidence, provenance, leakage gates and checkpoint contents"
+  }
 }

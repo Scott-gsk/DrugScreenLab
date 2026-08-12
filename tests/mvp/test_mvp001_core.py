@@ -53,7 +53,11 @@ def test_mvp001_core_result_uses_one_cohort_and_frozen_direction():
             encoding="utf-8"
         )
     )
-    assert evidence["status"] in {"RESULT_READY_FOR_REVIEW", "RESULT_REVIEWED_PENDING_ACCEPTANCE"}
+    assert evidence["status"] in {
+        "RESULT_READY_FOR_REVIEW",
+        "RESULT_REVIEWED_PENDING_ACCEPTANCE",
+        "RESULT_REVIEWED",
+    }
     assert evidence["candidate_identity"]["count"] == 4
     assert evidence["predicted_vs_observed"]["same_candidate_cohort"] is True
     assert observed["status"] == "READY_FOR_PRISM_JOIN"
