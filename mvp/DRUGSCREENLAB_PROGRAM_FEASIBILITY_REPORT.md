@@ -1,6 +1,7 @@
 # DRUGSCREENLAB PROGRAM FEASIBILITY REPORT
 
 日期：2026-08-13
+代码 checkpoint：`4b17ab3`
 依据：Master Research Plan 与用户提供的 Program-Level Autonomous R&D Authorization
 本轮级别：`SMALL_FAST_SINGLE_SEED`，不是正式多 seed 研究结论
 
