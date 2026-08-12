@@ -1,0 +1,83 @@
+{
+  "format": "phase1_fast_evidence_v1",
+  "date": "2026-08-13",
+  "status": "PROMISING",
+  "loop": "SMALL_FAST_SINGLE_SEED",
+  "hypothesis": "At canonical 10um/6h, adding pre-treatment 978-landmark context to a chemical structure and dose/time model improves group-atomic Delta978 prediction on unseen drug and unseen context splits.",
+  "data_contract": "mvp/phase1/PHASE1_DATA_CONTRACT.md",
+  "condition": {
+    "dose_um": 10.0,
+    "time_h": 6.0,
+    "gene_count": 978,
+    "records": 219901,
+    "groups": 55470,
+    "valid_structure_drugs": 6382,
+    "contexts": 67,
+    "matched_controls": 917
+  },
+  "split_audit": {
+    "random_group": {"train": 175099, "validation": 22330, "test": 22472},
+    "cold_drug": {"train": 176441, "validation": 22761, "test": 20699},
+    "cold_context": {"train": 172894, "validation": 2652, "test": 44355},
+    "group_atomic": true,
+    "normalization_fit_scope": "train_only",
+    "control_policy": "pre_treatment_context_feature"
+  },
+  "small_results_group_macro_test": {
+    "random_group": {
+      "chemical_only": {"pearson": 0.071046, "spearman": 0.062451, "rmse": 1.220207, "mae": 0.942760, "direction_accuracy": 0.521599, "prediction_variance": 0.123885},
+      "chemical_context": {"pearson": 0.343906, "spearman": 0.337334, "rmse": 1.124884, "mae": 0.864964, "direction_accuracy": 0.627697, "prediction_variance": 0.830219}
+    },
+    "cold_drug": {
+      "chemical_only": {"pearson": 0.008016, "spearman": 0.007925, "rmse": 1.240088, "mae": 0.955895, "direction_accuracy": 0.494948, "prediction_variance": 0.130923},
+      "chemical_context": {"pearson": 0.332328, "spearman": 0.323599, "rmse": 1.056015, "mae": 0.805889, "direction_accuracy": 0.629609, "prediction_variance": 1.029160}
+    },
+    "cold_context": {
+      "chemical_only": {"pearson": 0.108691, "spearman": 0.101376, "rmse": 1.111065, "mae": 0.847617, "direction_accuracy": 0.531549, "prediction_variance": 0.121591},
+      "chemical_context": {"pearson": 0.288088, "spearman": 0.283082, "rmse": 1.066857, "mae": 0.815051, "direction_accuracy": 0.600317, "prediction_variance": 0.646643}
+    }
+  },
+  "cell_line_screening": {
+    "frozen_candidate_count": 4,
+    "prism_rows": 135,
+    "prism_lines": 35,
+    "eligible_lines": 33,
+    "exact_lincs_context_lines": 11,
+    "reference_context_fallback_lines": 24,
+    "predicted_reversal_all_lines": {"macro_mean_spearman": 0.139394, "median_spearman": 0.2, "fraction_positive": 0.545455, "mean_top2_overlap": 0.606061},
+    "predicted_reversal_exact_context_only": {"macro_mean_spearman": 0.418182, "median_spearman": 0.6, "fraction_positive": 0.636364, "mean_top2_overlap": 0.818182},
+    "observed_oracle_prior_mvp": {"macro_mean_spearman": 0.4788, "median_spearman": 0.8, "fraction_positive": 0.7879, "mean_top2_overlap": 0.8030},
+    "predicted_vs_observed_global": {"drug_score_spearman": 0.2, "top2_overlap_count": 1, "candidate_count": 4},
+    "interpretation": "Feasibility signal only: most PRISM lines use a reference-context fallback, and the observed oracle is not a matched-support formal test of the new predictor."
+  },
+  "cross_study": {
+    "status": "NOT_STARTED_EXTERNAL_ASSET_UNAVAILABLE",
+    "target": "one frozen CTRP or GDSC check",
+    "official_source_verified": true,
+    "source_note": "The official CTRP portal documents the public 481-compound by 860-cell-line resource, but the NCI directory endpoint redirected to studycatalog during this run; no unofficial mirror was used.",
+    "labels_used_for_phase1_tuning": false
+  },
+  "mechanism": {
+    "unipert_fast_probe": "NOT_STARTED",
+    "target_pathway_fast_probe": "NOT_STARTED",
+    "reason": "Phase-1 downstream validation remains the information bottleneck; no mechanism feature was allowed to change the backbone or endpoint."
+  },
+  "commands": [
+    "wsl.exe -- bash -lc 'cd /mnt/d/Code/DrugScreenLab && PYTHONPATH=src /home/dell/miniconda3/bin/conda run --no-capture-output -n drugscreening-gpu python scripts/data/build_phase1_manifest.py ...'",
+    "wsl.exe -- bash -lc 'cd /mnt/d/Code/DrugScreenLab && PYTHONPATH=src /home/dell/miniconda3/bin/conda run --no-capture-output -n drugscreening-gpu python scripts/modeling/run_phase1_tiny.py ...'",
+    "wsl.exe -- bash -lc 'cd /mnt/d/Code/DrugScreenLab && PYTHONPATH=src /home/dell/miniconda3/bin/conda run --no-capture-output -n drugscreening-gpu python scripts/evaluation/run_phase1_prism.py ...'"
+  ],
+  "artifacts": {
+    "random_group_summary": "artifacts/phase1/canonical_10um_6h/random_group/small_2048_candidate.json",
+    "random_group_checkpoint": "artifacts/phase1/canonical_10um_6h/random_group/candidate.pt",
+    "cold_drug_summary": "artifacts/phase1/canonical_10um_6h/cold_drug/small_2048_normalized.json",
+    "cold_context_summary": "artifacts/phase1/canonical_10um_6h/cold_context/small_2048_normalized.json",
+    "prism_summary": "artifacts/phase1/canonical_10um_6h/random_group/prism_evaluation/phase1_prism_evaluation_summary.json"
+  },
+  "known_deviations": [
+    "Single seed and bounded 2048-record subset; not a formal multi-seed claim.",
+    "PRISM candidate cohort is four drugs and 24 of 35 lines use reference-context fallback.",
+    "The stale EXP-002 data_evidence.json still contains an older DATA_BLOCKED label; the accepted EXP-002 record and registry remain unchanged and are the authoritative historical status.",
+    "External CTRP/GDSC check is pending official asset retrieval."
+  ]
+}

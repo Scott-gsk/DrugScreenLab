@@ -16,10 +16,13 @@ research:
   mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
   last_accepted_experiment: EXP-002
   last_completed_experiment: EXP-002
-  evidence_level: phase_1_exact978_core_ready
+  evidence_level: phase_1_context_conditioned_small_signal
   accepted_model: null
-  current_champion: null
-  current_baseline: null
+  current_champion: phase1_context_chemical_small_fast_candidate
+  current_baseline: phase1_chemical_only_small_fast_baseline
+  program_checkpoint: mvp/DRUGSCREENLAB_PROGRAM_FEASIBILITY_REPORT.md
+  program_decision: PARTIAL
+  cross_study_status: NOT_STARTED_EXTERNAL_ASSET_UNAVAILABLE
   next_experiment_id: EXP-004
 data:
   default_root: data
