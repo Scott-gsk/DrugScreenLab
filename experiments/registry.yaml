@@ -36,7 +36,7 @@ experiments:
 mvps:
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility
-    status: result_ready_for_review
+    status: result_reviewed
     approved_by: user
     approved_on: 2026-08-11
     design_checkpoint: 9e2681c

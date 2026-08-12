@@ -16,12 +16,23 @@ and reran the project checks. The post-fix review is recorded below.
 
 ## Post-fix verdict
 
-`PENDING_COMMITTED_CHECKPOINT_REVIEW`
+`VALID`
 
-The code and metadata fixes are ready for a local candidate commit. The final
-verdict will be written only after the reviewer has inspected that actual commit
-and the tracked validation log; no reviewer conclusion is inferred by the
-Manager.
+The reviewer inspected the actual committed checkpoint
+`ab7dbfd research: finalize MVP-001 core feasibility checkpoint` together with
+the tracked validation log (`mvp/core_eval/MVP-001_validation_log.md`),
+compact manifest, identity checksums and provenance records. All previously
+required corrections are confirmed present in that commit:
+
+- status vocabulary restricted to `PROMISING` / `NO_SIGNAL` / `BROKEN`
+  (no unsupported `PARTIAL`);
+- tracked manifest/provenance and PRISM identity metadata checksums complete;
+- project checks rerun and recorded in the validation log.
+
+Final verdict: `VALID` — the MVP-001 milestone is accepted as
+`CORE_MVP_FEASIBILITY_PROMISING` at MVP-evidence level. Verdict confirmed and
+written back at the 2026-08-12 program review under the program-level
+authorization; no result values were altered by this write-back.
 
 ## Remaining limitations (non-blocking)
 
@@ -31,4 +42,4 @@ Manager.
 - No binary PRISM labels, AUROC/AUPRC, multi-seed statistics or formal external
   validation are claimed.
 
-Reviewer status: follow-up requested; no code or data files modified.
+Reviewer status: closed; verdict `VALID`; no code or data files modified.

@@ -11,7 +11,7 @@ research:
   active_experiment: null
   active_mvp: MVP-001
   proposed_mvp: null
-  mvp_status: result_ready_for_review
+  mvp_status: result_reviewed
   mvp_result: PROMISING
   mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
   last_accepted_experiment: EXP-002
