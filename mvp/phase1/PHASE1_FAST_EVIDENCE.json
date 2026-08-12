@@ -1,7 +1,7 @@
 {
   "format": "phase1_fast_evidence_v1",
   "date": "2026-08-13",
-  "checkpoint_commit": "4b17ab3",
+  "checkpoint_commit": "pending-final-checkpoint",
   "status": "PROMISING",
   "loop": "SMALL_FAST_SINGLE_SEED",
   "hypothesis": "At canonical 10um/6h, adding pre-treatment 978-landmark context to a chemical structure and dose/time model improves group-atomic Delta978 prediction on unseen drug and unseen context splits.",
@@ -52,16 +52,25 @@
     "interpretation": "Feasibility signal only: most PRISM lines use a reference-context fallback, and the observed oracle is not a matched-support formal test of the new predictor."
   },
   "cross_study": {
-    "status": "NOT_STARTED_EXTERNAL_ASSET_UNAVAILABLE",
+    "status": "NOT_RUN_EXTERNAL_ASSET_UNAVAILABLE",
     "target": "one frozen CTRP or GDSC check",
     "official_source_verified": true,
-    "source_note": "The official CTRP portal documents the public 481-compound by 860-cell-line resource, but the NCI directory endpoint redirected to studycatalog during this run; no unofficial mirror was used.",
+    "source_note": "Official NCI INS mapping was downloaded and hashed, but the legacy CTRP file route redirected to studycatalog and the public GraphQL file service returned HTTP 500 during this run; no unofficial mirror was used.",
+    "audit": "mvp/phase1/CTRP_EXTERNAL_ASSET_AUDIT.json",
+    "evaluator": "src/drug_screen/evaluation/cross_study.py",
     "labels_used_for_phase1_tuning": false
   },
   "mechanism": {
-    "unipert_fast_probe": "NOT_STARTED",
-    "target_pathway_fast_probe": "NOT_STARTED",
-    "reason": "Phase-1 downstream validation remains the information bottleneck; no mechanism feature was allowed to change the backbone or endpoint."
+    "unipert_fast_probe": "NO_SIGNAL",
+    "unipert_representation": "official_UniPert_chemical_encoder(ECFP4_radius2_2048_to_256)",
+    "unipert_group_macro_spearman": {"chemical_context": 0.337334, "unipert_chemical_context": 0.134926},
+    "unipert_artifacts": [
+      "artifacts/phase2/fast_unipert/random_group/audit.json",
+      "artifacts/phase2/fast_unipert/random_group/small_2048_summary.json"
+    ],
+    "target_pathway_fast_probe": "NOT_RUN_COVERAGE_INSUFFICIENT",
+    "target_pathway_evidence": "mvp/phase3/TARGET_PATHWAY_FAST_EVIDENCE.json",
+    "reason": "UniPert was tested as a fixed representation replacement and did not improve the same Small subset. Target/Pathway identity is prepared only for the four frozen downstream candidates; no learned mechanism weight was fit."
   },
   "commands": [
     "wsl.exe -- bash -lc 'cd /mnt/d/Code/DrugScreenLab && PYTHONPATH=src /home/dell/miniconda3/bin/conda run --no-capture-output -n drugscreening-gpu python scripts/data/build_phase1_manifest.py ...'",

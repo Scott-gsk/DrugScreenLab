@@ -1,0 +1,20 @@
+{
+  "format": "target_pathway_fast_evidence_v1",
+  "status": "FORWARD_PREPARATION_COMPLETE",
+  "model_increment": "NOT_RUN_COVERAGE_INSUFFICIENT",
+  "reason": "The frozen downstream cohort contains four drugs; this is insufficient to fit or tune an additive target/pathway weight without turning PRISM into a tuning set.",
+  "labels_used_for_tuning": false,
+  "verified_chembl_structure_matches": [
+    {"pert_id": "BRD-K02950022", "drug_name": "BMS-299897", "chembl_id": "CHEMBL247471", "mechanism_rows_observed": 0},
+    {"pert_id": "BRD-K40738845", "drug_name": "BMS-777607", "chembl_id": "CHEMBL460702", "target_chembl_id": "CHEMBL3717", "target_name": "Hepatocyte growth factor receptor", "gene_symbol": "MET", "uniprot": "P08581"},
+    {"pert_id": "BRD-K49865102", "drug_name": "PD-0325901", "chembl_id": "CHEMBL507361", "target_chembl_ids": ["CHEMBL3587", "CHEMBL2964"], "mechanism": "MEK1/2 inhibitor"},
+    {"pert_id": "BRD-K12343256", "drug_name": "trametinib", "chembl_id": "CHEMBL2103875", "target_chembl_id": "CHEMBL2111289", "mechanism": "MEK1/2 inhibitor"}
+  ],
+  "official_sources": {
+    "chembl_api": "https://www.ebi.ac.uk/chembl/api/data",
+    "reactome_mapping_api": "https://reactome.org/ContentService/data/mapping/UniProt/P08581/pathways",
+    "chembl_target_example": "https://www.ebi.ac.uk/chembl/api/data/target/CHEMBL3717.json",
+    "unipert_reference": "https://github.com/TencentAILabHealthcare/UniPert"
+  },
+  "interpretation": "Mechanism identity is ready for forward preparation. A learned Target/Pathway increment is deliberately deferred until a larger non-test mechanism-covered training cohort and an external cross-study endpoint are available."
+}

@@ -16,6 +16,11 @@ from torch import nn
 
 GENE_COUNT = 978
 MANIFEST_FORMAT = "phase1_context_chemical_manifest_v1"
+SUPPORTED_MANIFEST_FORMATS = {
+    MANIFEST_FORMAT,
+    "phase1_context_unipert_manifest_v1",
+    "phase1_context_mechanism_manifest_v1",
+}
 
 
 class Phase1IntegrationError(RuntimeError):
@@ -117,8 +122,10 @@ def load_phase1_manifest(path: Path | str, *, root: Path | str | None = None) ->
         payload = json.loads(manifest_path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as error:
         raise Phase1IntegrationError(f"manifest is unreadable: {manifest_path}") from error
-    if payload.get("format") != MANIFEST_FORMAT:
-        raise Phase1IntegrationError(f"manifest format must be {MANIFEST_FORMAT}")
+    if payload.get("format") not in SUPPORTED_MANIFEST_FORMATS:
+        raise Phase1IntegrationError(
+            f"manifest format must be one of {sorted(SUPPORTED_MANIFEST_FORMATS)}"
+        )
     if payload.get("gene_count") != GENE_COUNT:
         raise Phase1IntegrationError("Phase-1 target must contain exactly 978 genes")
     base = Path(root) if root is not None else manifest_path.parent

@@ -1,7 +1,7 @@
 # DRUGSCREENLAB PROGRAM FEASIBILITY REPORT
 
 日期：2026-08-13
-代码 checkpoint：`4b17ab3`
+代码 checkpoint：`pending-final-checkpoint`
 依据：Master Research Plan 与用户提供的 Program-Level Autonomous R&D Authorization
 本轮级别：`SMALL_FAST_SINGLE_SEED`，不是正式多 seed 研究结论
 
@@ -15,7 +15,7 @@ DrugScreenLab 的核心 idea 仍值得继续投入，但当前证据只足以支
 | --- | --- | --- |
 | Q1 exact-978 prediction | Context+Chemical 在 random-group、cold-drug、cold-context 的 group-macro 测试集均优于 Chemical-only，且预测方差未塌缩 | `YELLOW`（PROMISING FAST signal） |
 | Q2 disease reversal / cell-line screening | 4-drug frozen cohort 的预测 reversal 在 PRISM 上有弱到中等可行性信号；exact LINCS context 子集优于 fallback 子集；尚无 CTRP/GDSC 外部 check | `YELLOW`（PARTIAL） |
-| Q3 mechanism transfer | UniPert 与 Target/Pathway 尚未加入或 FAST-probe | `NOT_STARTED` |
+| Q3 mechanism transfer | UniPert 已完成一次固定 backbone FAST 表示替换；Target/Pathway provenance 已完成但学习增量因 cohort 覆盖不足而未运行 | `YELLOW` |
 | Q4 PDO ranking | PDO branch 保持 `DEFERRED_PDO_LEG`，未使用 PDO 结论替代 cell-line evidence | `DEFERRED` |
 
 ## Phase-1
@@ -69,13 +69,13 @@ Predicted-vs-observed global drug score Spearman 为 `0.2`，Top-2 overlap 为 `
 
 ## Mechanism
 
-- UniPert increment：`NOT_STARTED`。
-- Target/Pathway increment：`NOT_STARTED`。
-- 本轮没有让 mechanism feature 改变 Phase-1 backbone、loss、split 或 endpoint；这保持了单一 Q1 hypothesis，也避免在 downstream support 尚未稳定时引入第二个解释变量。
+- UniPert increment：`NO_SIGNAL`。同一 random-group、2048-record、single-seed Small 子集上，Chemical+Context 的 group-macro Spearman 为 `0.3373`，替换为官方 UniPert 256 维 chemical encoder 后为 `0.1349`；因此不扩大 UniPert，也不把该结果解释为 UniPert 本身的生物学失败。
+- Target/Pathway increment：`NOT_RUN_COVERAGE_INSUFFICIENT`。四个冻结 PRISM 候选的 ChEMBL 结构/机制身份与 Reactome mapping 入口已形成 compact provenance，但 cohort 太小，不能拟合 additive weight 或把 PRISM 标签用于调参。见 `mvp/phase3/TARGET_PATHWAY_FAST_EVIDENCE.json`。
+- 本轮没有让 mechanism feature 改变 Phase-1 的标签、split、loss 或 endpoint；UniPert 仅作为 representation FAST 对照，Target/Pathway 保持 forward preparation。
 
 ## External cross-study
 
-目标是一次 frozen CTRP 或 GDSC check。官方 [CTRP portal](https://portals.broadinstitute.org/ctrp.v2.2/) 记录了公开的 481 compounds × 860 cancer cell lines 资源，但本轮 NCI directory URL 重定向至 `studycatalog.cancer.gov`，没有获得可审计的原始文件及 checksum；未使用 Synapse、非官方镜像或论文附带的未经核验副本替代。因此状态为 `NOT_STARTED_EXTERNAL_ASSET_UNAVAILABLE`，不对 Q2 作绿色结论。
+目标是一次 frozen CTRP 或 GDSC check。官方 [CTRP portal](https://portals.broadinstitute.org/ctrp.v2.2/) 记录了公开的 481 compounds × 860 cancer cell lines 资源；本轮已下载并审计官方 NCI INS 2.2.0 mapping，但 legacy file route 重定向至 `studycatalog.cancer.gov`，公开 GraphQL file service 返回 HTTP 500，未获得可审计的 CTRP sensitivity archive。见 `mvp/phase1/CTRP_EXTERNAL_ASSET_AUDIT.json`。冻结 evaluator 已实现于 `src/drug_screen/evaluation/cross_study.py`，但本轮状态仍为 `NOT_RUN_EXTERNAL_ASSET_UNAVAILABLE`，不对 Q2 作绿色结论。
 
 ## Overall Decision
 
@@ -97,7 +97,7 @@ Predicted-vs-observed global drug score Spearman 为 `0.2`，Top-2 overlap 为 `
 
 1. 在冻结 DATA CONTRACT 上进入 RIGOROUS Q1：registered exact978 full asset、cold-drug/cold-context、多 seed、bootstrap/CI，并保留 Chemical-only 对照。
 2. 修复 downstream support：扩大 exact LINCS context 与 canonical compound overlap，重新运行 predicted-vs-observed、Top-K 和 line-level metrics；随后完成一次官方 CTRP 或 GDSC frozen check。
-3. 仅在 Q1/Q2 support 稳定后做两个独立 FAST 增量：`Chemical+Context` vs `Chemical+Context+UniPert`，以及加入 compact、可审计的 Target/Pathway prior；任何增量都不得同时改 backbone、split 和 endpoint。
+3. 只有在 cross-study 与 mechanism coverage 形成可用 support 后，才重新评估 Target/Pathway additive prior 与 UniPert 的扩展；当前不扩大已出现 `NO_SIGNAL` 的 UniPert 分支，也不提前进入 PDO。
 
 ## Reproducibility and checkpoint
 
@@ -111,4 +111,4 @@ PYTHONPATH=src conda run --no-capture-output -n drugscreening-gpu python scripts
 
 Large manifests、cache、checkpoint、prediction tables remain local and ignored by Git. Tracked code, tests, data contract, compact metrics and this report are the audit checkpoint; local large assets are bound by path and checksum in `PHASE1_DATA_CONTRACT.md` and `PHASE1_FAST_EVIDENCE.json`.
 
-验证结果：指定环境下完整测试 `60 passed`；数据注册表命令返回 `PASS`；`git diff --check` 通过。
+验证结果：指定环境下完整测试将覆盖原有 60 项及本轮新增测试；数据注册表命令返回 `PASS`；`git diff --check` 通过。
