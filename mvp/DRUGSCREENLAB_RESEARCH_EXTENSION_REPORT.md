@@ -1,5 +1,28 @@
 # DRUGSCREENLAB RESEARCH EXTENSION REPORT
 
+> **Latest checkpoint (2026-08-13):** The XPert Foundation is `XPERT_FOUNDATION_READY`. EXP-005
+> fixed A/B/C FAST is complete and is `NO_MATERIAL_FAST_INCREMENT`; the official XPert baseline is
+> retained. The historical sections below remain provenance for earlier extension work and are not
+> interpreted as a newer XPert result.
+
+## Latest XPert / EXP-005 checkpoint
+
+Six fixed-budget runs (A/B/C × cold-cell/cold-drug; seed 2026; 3 epochs; 4,096 held-out rows per split)
+completed with finite, non-collapsed predictions. B improved cold-drug row Spearman by `+0.03207` but
+decreased cold-cell by `-0.00498`; C changed cold-cell by `-0.02993` and cold-drug by `+0.00290`.
+The pre-registered requirement was a `+0.02` gain on both splits, so no variant qualified for MEDIUM.
+Broad translation diagnostics also showed no consistent additive gain (10 exact contexts, 1,836 drugs).
+The compact audit is `mvp/foundation/xpert/EXP005_FAST_COMPARISON.json`; the full extension report is
+`DRUGSCREENLAB_XPERT_EXTENSION_REPORT.md`.
+
+The initial A cold-drug GPU1 attempt exceeded the 60-minute runtime bound and was recorded as
+`BROKEN_TIMEOUT`; an identical-protocol rerun on the same-model GPU0 completed. This is a runtime
+incident, not a scientific result.
+
+EXP-006 preparation documents are now present at `mvp/foundation/xpert/EXP006_GENETIC_CHEMICAL_PREPARATION.md`
+and `mvp/foundation/xpert/CONTEXT_ADAPTER_TRACK.md`, both explicitly `PREPARATION_ONLY / DATA_PARTIAL`;
+no EXP-006 was created or executed. `EXP-004` remains unchanged.
+
 日期：2026-08-13
 研究策略：`BUILD ON ESTABLISHED PRIORS, TEST OUR EXTENSIONS`
 运行环境：WSL2 + Conda `drugscreening-gpu`

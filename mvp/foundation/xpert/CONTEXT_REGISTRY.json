@@ -1,0 +1,1029 @@
+{
+  "contexts": [
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "A375",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 13,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 0,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "A549",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 9,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 1,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "A673",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 2,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "AGS",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 3,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "BT20",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 9,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 4,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000895"
+      ],
+      "broad_exact_context": true,
+      "context_id": "CL34",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 5,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "CORL23",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 6,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "COV644",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 7,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "DV90",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 8,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "EFO27",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 9,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "H1299",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 10,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "HA1E",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 11,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 11,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "HCC15",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 3,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 12,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "HCC515",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 10,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 13,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000971"
+      ],
+      "broad_exact_context": true,
+      "context_id": "HCT116",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 14,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "HEC108",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 3,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 15,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "HEPG2",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 9,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 16,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "HS578T",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 9,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 17,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000552"
+      ],
+      "broad_exact_context": true,
+      "context_id": "HT29",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 17,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 18,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "JHUEM2",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 19,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000950"
+      ],
+      "broad_exact_context": true,
+      "context_id": "LOVO",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 20,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "MCF7",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 23,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 22,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "MCF10A",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 8,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 21,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "MDAMB231",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 9,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 23,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "MDST8",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 24,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "NCIH508",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 1,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 28,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "NCIH596",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 29,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "NCIH1694",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 25,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "NCIH1836",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 26,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "NCIH2073",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 27,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "NOMO1",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 30,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "OV7",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 31,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "PC3",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 13,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 32,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "PL21",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 33,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000943"
+      ],
+      "broad_exact_context": true,
+      "context_id": "RKO",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 34,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "RMGI",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 35,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "RMUGS",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 3,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 36,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "SKBR3",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 9,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 37,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "SKLU1",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 38,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "SKM1",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 39,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "SKMEL1",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 40,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "SKMEL28",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 41,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "SNGM",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 42,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "SNU1040",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 1,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 43,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000959"
+      ],
+      "broad_exact_context": true,
+      "context_id": "SNUC4",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 44,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000970"
+      ],
+      "broad_exact_context": true,
+      "context_id": "SNUC5",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 45,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000842"
+      ],
+      "broad_exact_context": true,
+      "context_id": "SW480",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 46,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000651"
+      ],
+      "broad_exact_context": true,
+      "context_id": "SW620",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 4,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 47,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [
+        "ACH-000680"
+      ],
+      "broad_exact_context": true,
+      "context_id": "SW948",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 4,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 48,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "T3M10",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 1,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 49,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "THP1",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 50,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "TYKNU",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 51,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "U937",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 52,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "VCAP",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 13,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 53,
+      "xpert_tissue_idx": 0
+    },
+    {
+      "broad_depmap_ids": [],
+      "broad_exact_context": false,
+      "context_id": "WSUDLCL2",
+      "context_kind": "cell_line",
+      "future_context_adapters": [
+        "CCLE",
+        "DepMap",
+        "organoid",
+        "PDO"
+      ],
+      "matched_control_record_count": 2,
+      "platform": "LINCS_exact978_control",
+      "representative_dose_um": 10.0,
+      "representative_time_h": 6.0,
+      "xpert_cell_idx": 54,
+      "xpert_tissue_idx": 0
+    }
+  ],
+  "control_policy": "one matched exact978 LINCS control per context; no reference-context fallback",
+  "counts": {
+    "broad_exact_contexts": 10,
+    "contexts": 55
+  },
+  "format": "xpert_context_registry_v1",
+  "identity_key": "context_id",
+  "source": {
+    "adapter": "data/external/xpert_source/processed_data/xpert_phase1_adapter.h5ad",
+    "adapter_sha256": "ecfd82418a47b57af785dadad3d951792bfe6708405933a43e3343cddea1143b",
+    "prism_response": "mvp/core_data/compact_prism_response.parquet",
+    "prism_response_sha256": "5114e789299a794792bc44c818af98e679e8f00d6f6f3fb246781e6df2e960f1",
+    "response_values_used_for_context_identity": false
+  },
+  "status": "FROZEN_EXACT_LINCS_CONTEXTS"
+}

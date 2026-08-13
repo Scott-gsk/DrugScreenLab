@@ -1,0 +1,17 @@
+{
+  "availability_mask": "data/external/xpert_source/processed_data/all_drugs_idx2UniPert_available.npy",
+  "available_indices": 8312,
+  "feature_path": "data/external/xpert_source/processed_data/all_drugs_idx2UniPert.npy",
+  "feature_shape": [
+    8981,
+    256
+  ],
+  "format": "xpert_global_unipert_chemical_features_v1",
+  "labels_used": false,
+  "official_pert_ids": 8418,
+  "representation": "official_UniPert_chemical_encoder(ECFP4_radius2_2048_to_256)",
+  "source_drug_info": "data/external/xpert_source/processed_data/l1000_sdst_drugs_info_8432.csv",
+  "source_drug_info_sha256": "0d14c75da26515c9e973e7b05fa52a83734f74a7ee17d4a2c6dfe1f8e681869e",
+  "source_model": "data/external/unipert_source/current_model/unipert_model.pt",
+  "source_model_sha256": "06b065c2768b440077bdb1488f654b310f67a04c01fceb9f4791043558bfd322"
+}

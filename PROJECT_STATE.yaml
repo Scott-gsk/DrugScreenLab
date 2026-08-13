@@ -8,7 +8,7 @@ runtime:
   environment_doc: docs/ENVIRONMENT.md
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
-  active_experiment: null
+  active_experiment: EXP-005
   active_mvp: MVP-001
   proposed_mvp: null
   mvp_status: result_reviewed
@@ -16,19 +16,19 @@ research:
   mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
   last_accepted_experiment: EXP-002
   last_completed_experiment: EXP-002
-  evidence_level: phase_1_context_conditioned_medium_extension
+  evidence_level: phase_3_xpert_additive_fast_extension
   accepted_model: null
-  current_champion: phase1_context_chemical_small_fast_candidate
-  current_baseline: phase1_chemical_only_small_fast_baseline
-  program_checkpoint: mvp/DRUGSCREENLAB_RESEARCH_EXTENSION_REPORT.md
+  current_champion: official_xpert_foundation_exp005_fast_baseline_retained
+  current_baseline: official_xpert_hg_unimol_foundation
+  program_checkpoint: DRUGSCREENLAB_XPERT_EXTENSION_REPORT.md
   program_decision: CONTINUE_WITH_EXTENSIONS
-  cross_study_status: NOT_RUN_EXTERNAL_ASSET_UNAVAILABLE
-  next_experiment_id: EXP-004
+  cross_study_status: OFFICIAL_GDSC_ASSET_REACHABLE_LOCAL_FREEZE_PENDING
+  next_experiment_id: EXP-006
   extension_status:
-    foundation: SUPPORTED_FOUNDATION
-    e1_kpgt_unipert_additive: BLOCKED_KPGT_PRIOR_ASSET_UNAVAILABLE
-    e2_genetic_chemical_low_data: GENETIC_RESPONSE_ADAPTER_PENDING
-    e3_prism_identity_bridge: BRIDGE_READY_RESPONSE_BLIND
+    foundation: XPERT_FOUNDATION_READY
+    e1_kpgt_unipert_additive: NO_MATERIAL_FAST_INCREMENT_XPERT_BASELINE_RETAINED
+    e2_genetic_chemical_low_data: PROMISING_FAST_GENETIC_TO_CHEMICAL_TRANSFER
+    e3_prism_identity_bridge: BROAD_PRISM_COHORT_V1_FROZEN_RESPONSE_BLIND
     e4_target_pathway_transfer: FORWARD_PREPARATION_COMPLETE
     organoid_readiness: METADATA_READY_ADAPTATION_PENDING
 data:

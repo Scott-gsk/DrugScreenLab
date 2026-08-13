@@ -1,0 +1,208 @@
+{
+  "cache": {
+    "path": "/mnt/d/Code/DrugScreenLab/data/processed/lincs/GSE92742/exact978_cache_v1/exact978_cache.npy",
+    "sha256": "04b8bb746a61ba4992e49566315327023783ec1c0448da2a9e263e0881281733",
+    "shape": [
+      1319138,
+      978
+    ]
+  },
+  "chemical_test_frozen": true,
+  "chemical_test_manifest": "/mnt/d/Code/DrugScreenLab/artifacts/phase2/fast_unipert/random_group/manifest.json",
+  "chemical_test_manifest_sha256": "27b69fb3c3cc9f7cd57e62edb060c4537256c310dc242860805d83b2b7221a90",
+  "chemical_train_pool": {
+    "bounded_group_cap": 4000,
+    "groups": 4000,
+    "records": 15879,
+    "source_manifest": "/mnt/d/Code/DrugScreenLab/artifacts/phase2/fast_unipert/random_group/manifest.json"
+  },
+  "config": {
+    "chemical_epochs": 8,
+    "device": "cuda",
+    "fractions": [
+      1.0,
+      0.2,
+      0.1
+    ],
+    "genetic_epochs": 5,
+    "hidden_dim": 64,
+    "normalization_fit_scope": "chemical_train_subset_only",
+    "seed": 20260813
+  },
+  "format": "e2_genetic_chemical_transfer_fast_result_v1",
+  "genetic_pretraining_pool": {
+    "bounded_group_cap": 2647,
+    "groups": 2131,
+    "records": 54861,
+    "source_manifest": "/mnt/d/Code/DrugScreenLab/artifacts/phase2/e2_genetic_transfer/manifest.json",
+    "source_manifest_sha256": "38043c38080bb8219cf9961995566a611a10a8f35bfd591c99764c0a6c7fe3d9"
+  },
+  "hypothesis": "genetic supervision reduces chemical supervision required for Delta978 prediction",
+  "perturbagen_features": {
+    "path": "/mnt/d/Code/DrugScreenLab/artifacts/phase2/e2_genetic_transfer/unified_perturbagen_features.npy",
+    "sha256": "32abe5a51fbced6cd326dcf27c85966584b94e5b25df8a13b090d6842018ef21",
+    "shape": [
+      6638,
+      256
+    ]
+  },
+  "results": {
+    "0.1": {
+      "chemical_fraction": 0.1,
+      "chemical_test_frozen": true,
+      "chemical_test_group_count": 5667,
+      "chemical_train_group_count": 400,
+      "format": "genetic_chemical_transfer_fast_probe_v1",
+      "genetic_pretrain_group_count": 2131,
+      "models": {
+        "chemical_only": {
+          "prediction_variance": 0.08560983091592789,
+          "pretrained_on_genetic": false,
+          "test_metrics": {
+            "direction_accuracy": 0.5186133610079295,
+            "mae": 1.3841489553451538,
+            "pearson": 0.08776647033291829,
+            "rmse": 1.9344439506530762,
+            "spearman": 0.06624345495704324
+          },
+          "train_metrics": {
+            "direction_accuracy": 0.5270392512664313,
+            "mae": 1.3510594367980957,
+            "pearson": 0.1151860958316141,
+            "rmse": 1.8945088386535645,
+            "spearman": 0.08996137957524217
+          }
+        },
+        "genetic_pretrain_then_chemical": {
+          "prediction_variance": 0.08993349969387054,
+          "pretrained_on_genetic": true,
+          "test_metrics": {
+            "direction_accuracy": 0.522175108128939,
+            "mae": 1.3847352266311646,
+            "pearson": 0.08949957803299338,
+            "rmse": 1.9344037771224976,
+            "spearman": 0.07400918381282005
+          },
+          "train_metrics": {
+            "direction_accuracy": 0.53101473812687,
+            "mae": 1.3507171869277954,
+            "pearson": 0.11779723456262112,
+            "rmse": 1.8936917781829834,
+            "spearman": 0.09931666694609287
+          }
+        }
+      },
+      "normalization_fit_scope": "chemical_train_only",
+      "primary_endpoint": {
+        "interpretation": "FAST exploratory; positive means genetic pretraining improved frozen chemical test ranking",
+        "name": "chemical_test_spearman_gain_transfer_minus_chemical_only",
+        "value": 0.00776572885577681
+      }
+    },
+    "0.2": {
+      "chemical_fraction": 0.2,
+      "chemical_test_frozen": true,
+      "chemical_test_group_count": 5667,
+      "chemical_train_group_count": 800,
+      "format": "genetic_chemical_transfer_fast_probe_v1",
+      "genetic_pretrain_group_count": 2131,
+      "models": {
+        "chemical_only": {
+          "prediction_variance": 0.06649149954319,
+          "pretrained_on_genetic": false,
+          "test_metrics": {
+            "direction_accuracy": 0.5202923036366139,
+            "mae": 1.3819345235824585,
+            "pearson": 0.08816670684900119,
+            "rmse": 1.9324780702590942,
+            "spearman": 0.06951543233259998
+          },
+          "train_metrics": {
+            "direction_accuracy": 0.5214002333122633,
+            "mae": 1.363665223121643,
+            "pearson": 0.09663510634720786,
+            "rmse": 1.9108268022537231,
+            "spearman": 0.07502343058028503
+          }
+        },
+        "genetic_pretrain_then_chemical": {
+          "prediction_variance": 0.06388447433710098,
+          "pretrained_on_genetic": true,
+          "test_metrics": {
+            "direction_accuracy": 0.5216543028432491,
+            "mae": 1.3831872940063477,
+            "pearson": 0.084094311736563,
+            "rmse": 1.9332841634750366,
+            "spearman": 0.07191529494603878
+          },
+          "train_metrics": {
+            "direction_accuracy": 0.5229910863409545,
+            "mae": 1.3644144535064697,
+            "pearson": 0.0933138003033914,
+            "rmse": 1.9113510847091675,
+            "spearman": 0.07789531309689539
+          }
+        }
+      },
+      "normalization_fit_scope": "chemical_train_only",
+      "primary_endpoint": {
+        "interpretation": "FAST exploratory; positive means genetic pretraining improved frozen chemical test ranking",
+        "name": "chemical_test_spearman_gain_transfer_minus_chemical_only",
+        "value": 0.0023998626134388024
+      }
+    },
+    "1.0": {
+      "chemical_fraction": 1.0,
+      "chemical_test_frozen": true,
+      "chemical_test_group_count": 5667,
+      "chemical_train_group_count": 4000,
+      "format": "genetic_chemical_transfer_fast_probe_v1",
+      "genetic_pretrain_group_count": 2131,
+      "models": {
+        "chemical_only": {
+          "prediction_variance": 0.060270652174949646,
+          "pretrained_on_genetic": false,
+          "test_metrics": {
+            "direction_accuracy": 0.5190973183630524,
+            "mae": 1.381781816482544,
+            "pearson": 0.085012063071528,
+            "rmse": 1.9327260255813599,
+            "spearman": 0.06615556614625623
+          },
+          "train_metrics": {
+            "direction_accuracy": 0.5195668186270027,
+            "mae": 1.3806875944137573,
+            "pearson": 0.08795170476326417,
+            "rmse": 1.9313005208969116,
+            "spearman": 0.06749572339579314
+          }
+        },
+        "genetic_pretrain_then_chemical": {
+          "prediction_variance": 0.060236118733882904,
+          "pretrained_on_genetic": true,
+          "test_metrics": {
+            "direction_accuracy": 0.5206334413672902,
+            "mae": 1.3812026977539062,
+            "pearson": 0.09057202196323112,
+            "rmse": 1.9313476085662842,
+            "spearman": 0.0715423079801426
+          },
+          "train_metrics": {
+            "direction_accuracy": 0.5213277772009742,
+            "mae": 1.3800712823867798,
+            "pearson": 0.09348212619813588,
+            "rmse": 1.9298720359802246,
+            "spearman": 0.07329917118938005
+          }
+        }
+      },
+      "normalization_fit_scope": "chemical_train_only",
+      "primary_endpoint": {
+        "interpretation": "FAST exploratory; positive means genetic pretraining improved frozen chemical test ranking",
+        "name": "chemical_test_spearman_gain_transfer_minus_chemical_only",
+        "value": 0.005386741833886377
+      }
+    }
+  },
+  "status": "FAST_RESULT_READY"
+}

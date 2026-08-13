@@ -1,0 +1,94 @@
+{
+  "format": "exp005_xpert_additive_fast_v1",
+  "status": "COMPLETE",
+  "variant": "B",
+  "variant_definition": "XPert + KPGT token",
+  "split": "split_cold_cell_1",
+  "seed": 2026,
+  "budget": {
+    "epochs": 3,
+    "batch_size": 128,
+    "max_rows_per_partition": 4096,
+    "optimizer": "Adam",
+    "loss": "official XPert loss_weight [0.2, 0.003, 0.2, 1] including official cell-index classification branch",
+    "precision": "float32"
+  },
+  "partitions": {
+    "train": 4096,
+    "valid": 4096,
+    "test": 4096
+  },
+  "data_contract": {
+    "split_column": "split_cold_cell_1",
+    "selection": "lexicographically sorted official sample_id; first max_rows per official partition; no response labels",
+    "partitions": {
+      "train": {
+        "rows": 4096,
+        "sample_id_sha256": "62f64b0ce9fa0c0efd8a10d2850b57fc23230f8602b1bb713e37c98bc0147df2"
+      },
+      "valid": {
+        "rows": 4096,
+        "sample_id_sha256": "800f0125d6fe6b1822ecdf6d96656fc7b7ff9867d6fffd8c8b0c65ba81505daf"
+      },
+      "test": {
+        "rows": 4096,
+        "sample_id_sha256": "800f0125d6fe6b1822ecdf6d96656fc7b7ff9867d6fffd8c8b0c65ba81505daf"
+      }
+    },
+    "train_test_context_overlap_count": 0,
+    "train_test_drug_overlap_count": 1423,
+    "cold_assertion": "zero context overlap asserted"
+  },
+  "training": [
+    {
+      "epoch": 0,
+      "mean_loss": 4608.484209060669,
+      "batches": 32
+    },
+    {
+      "epoch": 1,
+      "mean_loss": 253.849871635437,
+      "batches": 32
+    },
+    {
+      "epoch": 2,
+      "mean_loss": 208.82015991210938,
+      "batches": 32
+    }
+  ],
+  "test_delta978": {
+    "rows": 4096,
+    "genes": 978,
+    "mse": 0.4647948741912842,
+    "rmse": 0.6817586421966553,
+    "pearson_flat": 0.0976718722971783,
+    "spearman_flat": 0.08226235203533462,
+    "pearson_row_mean": 0.0942029855791308,
+    "spearman_row_mean": 0.08102106941201606,
+    "prediction_std": 0.1335628777742386
+  },
+  "official_architecture_preserved": true,
+  "token_policy": "KPGT and UniPert are separate projected tokens appended after official UniMol/HG drug sequence; no external concatenation and no transformer rewrite",
+  "broad": {
+    "profile": "/mnt/d/Code/DrugScreenLab/data/external/xpert_source/experiment/exp005_fast/split_cold_cell_1_B_broad_profile.npy",
+    "evaluation": "/mnt/d/Code/DrugScreenLab/mvp/foundation/xpert/EXP005_FAST/split_cold_cell_1_B_BROAD_EVALUATION.json",
+    "line_metrics": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "macro_mean_spearman": 0.007641314847562117,
+      "macro_median_spearman": 0.007944302547137152,
+      "fraction_positive_spearman": 0.5,
+      "macro_mean_top10_overlap_rate": 0.02,
+      "macro_mean_ndcg10": 0.6015482797429176
+    },
+    "oracle_line_metrics": {
+      "line_count": 2,
+      "eligible_line_count": 2,
+      "macro_mean_spearman": 0.15389280509995112,
+      "macro_median_spearman": 0.15389280509995112,
+      "fraction_positive_spearman": 0.5,
+      "macro_mean_top10_overlap_rate": 0.3,
+      "macro_mean_ndcg10": 0.6594036230654745
+    }
+  }
+}

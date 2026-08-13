@@ -21,3 +21,7 @@ artifacts/**
 # Public-source download caches remain local; tracked audits record source IDs,
 # checksums, generator revisions and reproducible commands.
 mvp/core_data/_source_cache/**
+
+# Compact response matrices remain local; tracked audits retain schema,
+# source provenance, eligibility counts and checksums.
+mvp/foundation/xpert/BROAD_PRISM_CRC_V1.parquet

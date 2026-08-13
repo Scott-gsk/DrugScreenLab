@@ -1,6 +1,6 @@
 # Genetic→Chemical Low-Data Transfer Contract
 
-状态：`FAST_CONTRACT_READY`。该 contract 只定义下一步可证伪的扩展，不改变已冻结的 Phase-1 train/validation/test 角色、gene universe、control policy 或 Delta978 endpoint。
+状态：`FAST_RESULT_READY`。E2 FAST 已完成；该 contract 不改变已冻结的 Phase-1 train/validation/test 角色、gene universe、control policy 或 Delta978 endpoint。
 
 ## 一个主要假设
 
@@ -18,7 +18,7 @@
 
 ## FAST regimes
 
-化学监督保留比例：`100%`, `50%`, `20%`, `10%`, `5%`（若某比例无法保留 train/test group support，则记录 `BROKEN`，不回填标签）。
+首轮已执行化学监督保留比例：`100%`, `20%`, `10%`；`50%` 与 `5%` 留待信号复核后再运行。首轮结果是在 bounded chemical train pool（4,000 groups）内定义的比例，不等同于 full-data formal estimate。
 
 每个 regime 必须比较：
 
@@ -40,3 +40,15 @@
 - 若 genetic adapter 不能提供可审计的 978 维 target/control 关系：`BROKEN`，不进入 transfer。
 - 若低数据各 regime 均无增益但接口和 split 合法：`NO_SIGNAL`，保留 genetic→chemical 共享空间作为机制假设，不把一次 negative transfer 写成整体否定。
 - 只有在低数据和至少一个下游 utility endpoint 同时有方向一致信号后，才进入 Medium/MVP scaling。
+
+## E2 FAST result
+
+固定 chemical test manifest：`artifacts/phase2/fast_unipert/random_group/manifest.json`，SHA256 `27b69fb3c3cc9f7cd57e62edb060c4537256c310dc242860805d83b2b7221a90`；未读取 PRISM/GDSC response。遗传预训练池为 2,131 个 group、54,861 条记录，来自 256 gene / 16 cell 的同板同细胞 `ctl_vector` 匹配 cohort。
+
+| 化学监督 | Chemical-only Spearman | Genetic→Chemical Spearman | 增益 | Genetic→Chemical direction accuracy |
+| ---: | ---: | ---: | ---: | ---: |
+| 100% | 0.06616 | 0.07154 | +0.00539 | 0.5206 |
+| 20% | 0.06952 | 0.07192 | +0.00240 | 0.5217 |
+| 10% | 0.06624 | 0.07401 | +0.00777 | 0.5222 |
+
+判定：`PROMISING_FAST`。10% regime 的相对增益最大，但单 seed、bounded pool、未含 downstream ranking，因此只能支持进入下一轮多 seed/下游翻译检查，不能宣称正式 transfer generalization。

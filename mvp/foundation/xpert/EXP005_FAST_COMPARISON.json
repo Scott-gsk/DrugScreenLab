@@ -1,0 +1,113 @@
+{
+  "format": "exp005_xpert_additive_fast_comparison_v1",
+  "status": "COMPLETE",
+  "fixed_protocol": {
+    "splits": [
+      "split_cold_cell_1",
+      "split_cold_drug_1"
+    ],
+    "variants": [
+      "A",
+      "B",
+      "C"
+    ],
+    "gain_threshold": 0.02,
+    "min_prediction_std": 0.01,
+    "selection_rule": "Delta978 held-out metrics only; Broad PRISM remains a non-tuning translation diagnostic"
+  },
+  "rows": [
+    {
+      "split": "split_cold_cell_1",
+      "variant": "A",
+      "delta978_row_spearman": 0.0860051415352657,
+      "delta978_row_pearson": 0.10030648747851544,
+      "delta978_mse": 0.4618653357028961,
+      "prediction_std": 0.07386986911296844,
+      "broad_macro_spearman": 0.013607710433151543,
+      "broad_macro_ndcg10": 0.5708916525687269,
+      "broad_macro_top10_overlap": 0.030000000000000006,
+      "delta978_row_spearman_gain_over_A": 0.0
+    },
+    {
+      "split": "split_cold_cell_1",
+      "variant": "B",
+      "delta978_row_spearman": 0.08102106941201606,
+      "delta978_row_pearson": 0.0942029855791308,
+      "delta978_mse": 0.4647948741912842,
+      "prediction_std": 0.1335628777742386,
+      "broad_macro_spearman": 0.007641314847562117,
+      "broad_macro_ndcg10": 0.6015482797429176,
+      "broad_macro_top10_overlap": 0.02,
+      "delta978_row_spearman_gain_over_A": -0.004984072123249639
+    },
+    {
+      "split": "split_cold_cell_1",
+      "variant": "C",
+      "delta978_row_spearman": 0.056075508629530715,
+      "delta978_row_pearson": 0.0738231264143087,
+      "delta978_mse": 0.471428245306015,
+      "prediction_std": 0.14465387165546417,
+      "broad_macro_spearman": -0.009184335149989084,
+      "broad_macro_ndcg10": 0.5740959027608641,
+      "broad_macro_top10_overlap": 0.02,
+      "delta978_row_spearman_gain_over_A": -0.029929632905734985
+    },
+    {
+      "split": "split_cold_drug_1",
+      "variant": "A",
+      "delta978_row_spearman": 0.05293553711183848,
+      "delta978_row_pearson": 0.08296273995518486,
+      "delta978_mse": 0.4923568069934845,
+      "prediction_std": 0.1176208108663559,
+      "broad_macro_spearman": -0.015542678681329355,
+      "broad_macro_ndcg10": 0.5083814242717432,
+      "broad_macro_top10_overlap": 0.02,
+      "delta978_row_spearman_gain_over_A": 0.0
+    },
+    {
+      "split": "split_cold_drug_1",
+      "variant": "B",
+      "delta978_row_spearman": 0.08500087152618588,
+      "delta978_row_pearson": 0.09836759755959487,
+      "delta978_mse": 0.49121731519699097,
+      "prediction_std": 0.1562984436750412,
+      "broad_macro_spearman": -0.023888341699095105,
+      "broad_macro_ndcg10": 0.4770891543970756,
+      "broad_macro_top10_overlap": 0.01,
+      "delta978_row_spearman_gain_over_A": 0.0320653344143474
+    },
+    {
+      "split": "split_cold_drug_1",
+      "variant": "C",
+      "delta978_row_spearman": 0.055838061276397434,
+      "delta978_row_pearson": 0.0743479883700815,
+      "delta978_mse": 0.494400292634964,
+      "prediction_std": 0.1323576122522354,
+      "broad_macro_spearman": -0.030845785246398714,
+      "broad_macro_ndcg10": 0.4419791834216783,
+      "broad_macro_top10_overlap": 0.01,
+      "delta978_row_spearman_gain_over_A": 0.0029025241645589533
+    }
+  ],
+  "decision": {
+    "status": "NO_MATERIAL_FAST_INCREMENT",
+    "variants_triggering_medium": [],
+    "details": {
+      "B": {
+        "split_passes": {
+          "split_cold_cell_1": false,
+          "split_cold_drug_1": true
+        },
+        "all_required_splits_pass": false
+      },
+      "C": {
+        "split_passes": {
+          "split_cold_cell_1": false,
+          "split_cold_drug_1": false
+        },
+        "all_required_splits_pass": false
+      }
+    },
+    "next_action": "do not escalate architecture budget; retain XPert baseline and inspect error modes"
+  }
+}

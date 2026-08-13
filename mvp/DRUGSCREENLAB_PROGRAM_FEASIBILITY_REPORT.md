@@ -1,5 +1,27 @@
 # DRUGSCREENLAB PROGRAM FEASIBILITY REPORT
 
+> **Current checkpoint (2026-08-13):** Foundation status is `XPERT_FOUNDATION_READY`. The first
+> novel XPert extension, EXP-005, completed its fixed FAST comparison with
+> `NO_MATERIAL_FAST_INCREMENT`; official XPert remains the retained baseline and no MEDIUM loop was
+> started. The quantitative A/B/C audit is `mvp/foundation/xpert/EXP005_FAST_COMPARISON.json`.
+
+## Current program-level decision
+
+Overall status remains `PARTIAL` / `CONTINUE_WITH_EXTENSIONS`.
+
+| Question | Latest evidence | Status |
+| --- | --- | --- |
+| Q1 Δ978 prediction | Official XPert foundation is reproducible; six bounded EXP-005 runs are finite and non-collapsed, but KPGT/UniPert additive tokens did not meet the two-split gain rule | `YELLOW` |
+| Q2 reversal screening | Broad identity/context integration covers 1,836 drugs and 10 exact CRC contexts; predicted ranking is a diagnostic, not yet a positive cell-line gate | `YELLOW` |
+| Q3 mechanism transfer | EXP-004 genetic→chemical FAST result remains unchanged; EXP-006 data preparation is `DATA_PARTIAL` only | `YELLOW` |
+| Q4 PDO ranking | No PDO training or conclusion; context adapter track remains preparation-only | `DEFERRED` |
+
+The largest current bottleneck is matched-support downstream validation: the foundation can infer a
+large exact-context cohort, but cross-study evidence and additive extension value are not yet sufficient
+for a green cell-line gate. The next work should inspect XPert error modes and prepare the response-blind
+context/transfer contracts; it should not spend the main budget re-optimizing the historical simple model
+or launch an unqualified MEDIUM token loop.
+
 日期：2026-08-13
 代码 checkpoint：`9d50521`
 依据：Master Research Plan 与用户提供的 Program-Level Autonomous R&D Authorization

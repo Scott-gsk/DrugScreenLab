@@ -1,0 +1,51 @@
+{
+  "format": "xpert_broad_prism_crc_response_v1",
+  "status": "RESPONSE_READ_AFTER_IDENTITY_CONTEXT_FREEZE",
+  "response_values_read": true,
+  "selection": {
+    "cohort": "mvp/extension/BROAD_PRISM_COHORT_V1.json",
+    "cohort_sha256": "8c32ad136f29d8cea91bb9ba87fd60b353f72c1ca28290080b73fda969eeb35a",
+    "registry": "mvp/foundation/xpert/DRUG_REGISTRY.json",
+    "registry_sha256": "ca0765acde47ed790a399fc988380ee98b6c5bc050d6df7dd6e3686552c1ef74",
+    "identity_join": "matched bridge full prism_broad_id + extracted base ID; then registry broad_inference_eligible",
+    "context_join": "frozen eligible_crc_depmap_ids; no response-dependent context selection"
+  },
+  "source": {
+    "matrix": "/tmp/primaryscreenreplicatecollapsedlogfoldchange.csv",
+    "matrix_sha256": "25efc741b372b30d38629cb139a388e989663fba597e55fff5f6c2bb7cdeb75a",
+    "matrix_bytes": 41254209,
+    "bridge": "artifacts/extension/lincs_prism_identity_bridge.csv",
+    "treatment_info": "mvp/core_data/_source_cache/primary-screen-replicate-collapsed-treatment-info.csv",
+    "cell_info": "mvp/core_data/_source_cache/primary-screen-cell-line-info.csv"
+  },
+  "counts": {
+    "frozen_identity_base_ids": 1851,
+    "registry_eligible_base_ids": 1836,
+    "response_columns": 1916,
+    "crc_lines": 35,
+    "registry_eligible_pert_ids": 1836,
+    "finite_response_rows": 64823
+  },
+  "output": {
+    "path": "mvp/foundation/xpert/BROAD_PRISM_CRC_V1.parquet",
+    "sha256": "e72020f081a60006d4c97e17fbb9fc91bfb544ca4cc145d4460ec25727e9448c",
+    "schema": [
+      "study_id",
+      "source_revision",
+      "depmap_id",
+      "ccle_name",
+      "primary_tissue",
+      "broad_id",
+      "broad_id_base",
+      "column_name",
+      "pert_id",
+      "pert_iname",
+      "response_raw",
+      "sensitivity_score",
+      "response_unit",
+      "response_direction",
+      "source_row_id"
+    ]
+  },
+  "large_source_not_tracked": true
+}

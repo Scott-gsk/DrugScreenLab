@@ -33,6 +33,29 @@ experiments:
     approved_by: null
     approved_on: null
     record: experiments/records/EXP-003.md
+  - id: EXP-004
+    title: Genetic-to-Chemical Low-Data Transfer FAST Extension
+    status: fast_result_ready_pending_review
+    hypothesis: >
+      在共享 Context + Perturbagen -> Delta978 接口中，遗传扰动监督预训练能够在固定
+      chemical test 上降低化学监督需求，并在 20%/10% chemical supervision regime 保持
+      或提高预测 ranking quality。
+    primary_endpoint: frozen_chemical_test_spearman_transfer_minus_chemical_only
+    approved_by: user_autonomous_extension_authorization
+    approved_on: 2026-08-13
+    record: experiments/records/EXP-004.md
+  - id: EXP-005
+    title: XPert Additive KPGT and UniPert Perturbagen Tokens
+    status: fast_result_ready_no_material_increment
+    hypothesis: >
+      在固定的官方 XPert L1000 split、训练预算、loss 与评估契约下，保留官方 HG + UniMol
+      路径并将 KPGT、UniPert 作为独立投影 token 追加至官方 drug attention sequence，能够改善
+      cold-cell / cold-drug Delta978 预测，并在不使用 PRISM 标签训练或选模的前提下改善冻结的
+      CRC Disease Reversal -> Broad PRISM ranking 诊断。
+    primary_endpoint: cold_cell_and_cold_drug_heldout_delta978_row_spearman_increment_over_xpert_A
+    approved_by: user_autonomous_extension_authorization
+    approved_on: 2026-08-13
+    record: experiments/records/EXP-005.md
 mvps:
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility

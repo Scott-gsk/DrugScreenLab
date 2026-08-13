@@ -29,6 +29,11 @@ def main() -> int:
     parser.add_argument("--output-mapping", type=Path, required=True)
     parser.add_argument("--audit", type=Path, required=True)
     parser.add_argument("--max-genes", type=int, default=256)
+    parser.add_argument(
+        "--gene-list",
+        type=Path,
+        help="Optional newline-delimited gene cohort selected from matched response metadata.",
+    )
     args = parser.parse_args()
     if args.max_genes < 1:
         raise ValueError("--max-genes must be positive")
@@ -46,7 +51,17 @@ def main() -> int:
     source_root = args.unipert_source.resolve()
     reference_targets = pd.read_csv(source_root / "data" / "ref_targets.csv", low_memory=False)
     local_genes = set(reference_targets["Approved symbol"].astype(str).str.upper())
-    genes = sorted(set(genetic["gene_symbol"]).intersection(local_genes))[: args.max_genes]
+    if args.gene_list is not None:
+        requested_genes = {
+            line.strip().upper()
+            for line in args.gene_list.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        }
+        genes = sorted(requested_genes.intersection(set(genetic["gene_symbol"])).intersection(local_genes))
+        if len(genes) > args.max_genes:
+            raise ValueError("--gene-list contains more genes than --max-genes")
+    else:
+        genes = sorted(set(genetic["gene_symbol"]).intersection(local_genes))[: args.max_genes]
     if not genes:
         raise ValueError("no genetic perturbagen gene symbols are available")
 
@@ -83,6 +98,8 @@ def main() -> int:
         "unipert_model": str(args.model_dir.resolve() / "unipert_model.pt"),
         "unipert_model_sha256": _sha256(args.model_dir.resolve() / "unipert_model.pt"),
         "candidate_gene_limit": args.max_genes,
+        "gene_selection": "explicit_cohort_file" if args.gene_list is not None else "sorted_intersection",
+        "gene_list": str(args.gene_list) if args.gene_list is not None else None,
         "local_reference_only": True,
         "candidate_genes": len(genes),
         "encoded_genes": len(valid_genes),

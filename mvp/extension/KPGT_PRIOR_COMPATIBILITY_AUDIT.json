@@ -1,21 +1,44 @@
 {
-  "format": "kpgt_prior_compatibility_audit_v1",
-  "status": "BROKEN",
-  "status_meaning": "FOUNDATION asset unavailable; this is not evidence against KPGT's published representation.",
+  "format": "kpgt_prior_compatibility_audit_v2",
+  "status": "WAITING_FOR_ASSET_RECOVERY",
+  "status_meaning": "Historical prior result is verified as internal evidence; current reuse remains gated on local asset provenance review.",
   "role": "reference_architectural_prior",
   "historical_internal_evidence": {
-    "status": "PRIOR_INTERNAL_EVIDENCE_UNVERIFIED_REPOSITORY_HISTORY",
-    "search_scope": "current repository, all local git refs, and attached-file names",
-    "finding": "No auditable KPGT embedding, KPGT+UniPert fusion artifact, or historical compatibility record is present in this checkout.",
-    "action": "Do not re-prove or infer a historical result; require an auditable embedding table and provenance before reuse."
+    "status": "VERIFIED_PRIOR_INTERNAL_EVIDENCE",
+    "repository": "https://github.com/Scott-gsk/DPR_release",
+    "branch": "experiment/kpgt-unipert-fusion",
+    "checkpoint": "ee768f2909a954cd120f5240915dac25ad091c42",
+    "checkpoint_is_ancestor_of_branch_head": true,
+    "reported_representation": "KPGT2304 + UniPert256 -> 2560d",
+    "reported_feature_coverage": "8316/8316",
+    "reported_training_seeds": 3,
+    "reported_external_evaluation": "CRC/PDO 62-drug evaluation",
+    "interpretation": "Supports the additive KPGT+UniPert foundation claim; does not validate the current E2 model or current dataset split."
+  },
+  "recovered_assets": {
+    "status": "RECOVERED_LOCAL_PROVENANCE_REVIEW_REQUIRED",
+    "source_workspace": "D:/Code/DPR_release",
+    "copied_without_modifying_source": true,
+    "assets": [
+      {
+        "relative_path": "data/external/kpgt_recovered/KPGT_emb2304.pickle",
+        "bytes": 77663320,
+        "sha256": "61b2a1337c8313ecbcb95e9f797ea12caeb5d94fefc2697af810c5955ae962f4"
+      },
+      {
+        "relative_path": "data/external/kpgt_recovered/lincs_kpgt_unipert_emb2560.pickle",
+        "bytes": 87558085,
+        "sha256": "0cfcede41b96d0906a99b2233b5144fba51b22f638134451da159eb7e52e230c"
+      }
+    ],
+    "local_fusion_sidecar": "D:/Code/DPR_release/data/experimental/unipert/lincs_kpgt_unipert_manifest.json",
+    "provenance_caveat": "The specified Git commit tree does not contain the pickle files; the historical sidecar marks KPGT source and license as unverified/review_required."
   },
   "official_source": {
     "repository": "https://github.com/lihan97/KPGT",
     "repository_revision": "47dc1646c70b2138a157de481d24a1ac35d174cd",
     "pretrained_weight_share": "https://figshare.com/s/d488f30c23946cf6898f",
-    "weight_status_on_2026_08_13": "PRIVATE_SHARED_ITEM",
-    "local_source_path": "data/external/kpgt_source",
-    "local_weight_path": null
+    "weight_status_on_2026_08_13": "PRIVATE_SHARED_ITEM"
   },
   "required_compatibility_contract": {
     "alignment_key": "pert_id",
@@ -37,6 +60,5 @@
     "fusion_rule": "concatenate KPGT structural features and official UniPert chemical features after pert_id alignment",
     "labels_used": false
   },
-  "decision": "BLOCK_E1_UNTIL_KPGT_FEATURE_ASSET_IS_AUDITABLE",
-  "negative_representation_semantics": "The existing UniPert replacement result is recorded as UNIPERT_REPLACEMENT_NO_SIGNAL; it does not invalidate UniPert as an additive chemical representation or genetic-to-chemical shared-space prior."
+  "decision": "KPGT_IS_SOFT_BLOCKER_E2_CONTINUES; E1_REUSE_REQUIRES_PROVENANCE_REVIEW"
 }

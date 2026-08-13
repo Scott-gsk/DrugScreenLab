@@ -1,0 +1,384 @@
+{
+  "format": "xpert_broad_prism_evaluation_v1",
+  "status": "READY_FOR_PROGRAM_REVIEW",
+  "prediction": {
+    "profile": "data/external/xpert_source/experiment/infer/20260813_151613/l1000_sdst_broad_crc_global_adapter_split_1_test_samples_prediction_profile.npy",
+    "adapter": "data/external/xpert_source/processed_data/l1000_sdst_broad_crc_global_adapter.h5ad",
+    "records": 18360,
+    "drugs": 1836,
+    "contexts": 10,
+    "finite_reversal_scores": 18360
+  },
+  "broad_prism": {
+    "response_asset": "mvp/foundation/xpert/BROAD_PRISM_CRC_V1.parquet",
+    "response_rows_after_pair_aggregation": 62248,
+    "joined_prediction_rows": 18179,
+    "joined_drugs": 1836,
+    "joined_lines": 10,
+    "line_metrics": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "macro_mean_spearman": -0.027355865583832534,
+      "macro_median_spearman": -0.04184946176771921,
+      "fraction_positive_spearman": 0.3,
+      "macro_mean_top10_overlap_rate": 0.08,
+      "macro_mean_ndcg10": 0.7232034249473023
+    },
+    "line_rows": [
+      {
+        "depmap_id": "ACH-000552",
+        "ccle_name": "HT29_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1836,
+        "spearman": -0.06220634256517992,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 1,
+            "overlap_rate": 0.1,
+            "ndcg": 0.8022415366530858
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 3,
+            "overlap_rate": 0.15,
+            "ndcg": 0.7560350944579606
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 5,
+            "overlap_rate": 0.1,
+            "ndcg": 0.6329724975351227
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000651",
+        "ccle_name": "SW620_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1785,
+        "spearman": -0.03634287630783539,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 1,
+            "overlap_rate": 0.1,
+            "ndcg": 0.9423673466887132
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 5,
+            "overlap_rate": 0.25,
+            "ndcg": 0.9205345451799741
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 18,
+            "overlap_rate": 0.36,
+            "ndcg": 0.7928755939143495
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000680",
+        "ccle_name": "SW948_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1833,
+        "spearman": -0.04735604722760304,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 0,
+            "overlap_rate": 0.0,
+            "ndcg": 0.46016725271474584
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 1,
+            "overlap_rate": 0.05,
+            "ndcg": 0.4951402074417393
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 2,
+            "overlap_rate": 0.04,
+            "ndcg": 0.5118636286446792
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000842",
+        "ccle_name": "SW480_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1835,
+        "spearman": 0.02379011053035323,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 1,
+            "overlap_rate": 0.1,
+            "ndcg": 0.9000382474011076
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 4,
+            "overlap_rate": 0.2,
+            "ndcg": 0.8431668850463634
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 15,
+            "overlap_rate": 0.3,
+            "ndcg": 0.7014111117557749
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000895",
+        "ccle_name": "CL34_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1835,
+        "spearman": -0.050491579344192,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 0,
+            "overlap_rate": 0.0,
+            "ndcg": 0.5317591796945222
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 1,
+            "overlap_rate": 0.05,
+            "ndcg": 0.5916216072524337
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 5,
+            "overlap_rate": 0.1,
+            "ndcg": 0.5558256479914909
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000943",
+        "ccle_name": "RKO_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1836,
+        "spearman": -0.054909371422105197,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 0,
+            "overlap_rate": 0.0,
+            "ndcg": 0.5452130746997242
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 2,
+            "overlap_rate": 0.1,
+            "ndcg": 0.5971479775340951
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 8,
+            "overlap_rate": 0.16,
+            "ndcg": 0.6255337315082907
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000950",
+        "ccle_name": "LOVO_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1836,
+        "spearman": -0.06670979059401468,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 1,
+            "overlap_rate": 0.1,
+            "ndcg": 0.696520801415119
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 2,
+            "overlap_rate": 0.1,
+            "ndcg": 0.7235943104232574
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 10,
+            "overlap_rate": 0.2,
+            "ndcg": 0.6884626448499609
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000959",
+        "ccle_name": "SNUC4_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1711,
+        "spearman": 0.03259917047653902,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 1,
+            "overlap_rate": 0.1,
+            "ndcg": 0.6895827008653507
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 2,
+            "overlap_rate": 0.1,
+            "ndcg": 0.7057432024886853
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 6,
+            "overlap_rate": 0.12,
+            "ndcg": 0.6485349046663452
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000970",
+        "ccle_name": "SNUC5_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1836,
+        "spearman": -0.02239858684026749,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 0,
+            "overlap_rate": 0.0,
+            "ndcg": 0.7322852706517465
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 0,
+            "overlap_rate": 0.0,
+            "ndcg": 0.6143306536654721
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 4,
+            "overlap_rate": 0.08,
+            "ndcg": 0.5530425509376657
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000971",
+        "ccle_name": "HCT116_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 1836,
+        "spearman": 0.010466657455980159,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 3,
+            "overlap_rate": 0.3,
+            "ndcg": 0.9318588386889076
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 9,
+            "overlap_rate": 0.45,
+            "ndcg": 0.9452644766996722
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 21,
+            "overlap_rate": 0.42,
+            "ndcg": 0.8669261025005727
+          }
+        }
+      }
+    ],
+    "join_rule": "exact base ccle_name == XPert cell_iname and canonical pert_id; no reference-context fallback"
+  },
+  "observed_lincs_oracle": {
+    "available_rows": 839,
+    "available_pairs": 839,
+    "source_shape": [
+      78453,
+      978
+    ],
+    "selection": "observed LINCS XPert processed h5ad treatment rows; no response labels",
+    "status": "READY",
+    "line_metrics": {
+      "line_count": 2,
+      "eligible_line_count": 2,
+      "macro_mean_spearman": 0.15389280509995112,
+      "macro_median_spearman": 0.15389280509995112,
+      "fraction_positive_spearman": 0.5,
+      "macro_mean_top10_overlap_rate": 0.3,
+      "macro_mean_ndcg10": 0.6594036230654745
+    },
+    "line_rows": [
+      {
+        "depmap_id": "ACH-000552",
+        "ccle_name": "HT29_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 816,
+        "spearman": -0.0024910696419950112,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 1,
+            "overlap_rate": 0.1,
+            "ndcg": 0.6417634335642266
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 2,
+            "overlap_rate": 0.1,
+            "ndcg": 0.6396921408189356
+          },
+          "50": {
+            "effective_k": 50,
+            "overlap_count": 7,
+            "overlap_rate": 0.14,
+            "ndcg": 0.5902293605830308
+          }
+        }
+      },
+      {
+        "depmap_id": "ACH-000971",
+        "ccle_name": "HCT116_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 23,
+        "spearman": 0.3102766798418973,
+        "top_k": {
+          "10": {
+            "effective_k": 10,
+            "overlap_count": 5,
+            "overlap_rate": 0.5,
+            "ndcg": 0.6770438125667223
+          },
+          "20": {
+            "effective_k": 20,
+            "overlap_count": 19,
+            "overlap_rate": 0.95,
+            "ndcg": 0.8343671976285926
+          },
+          "50": {
+            "effective_k": 23,
+            "overlap_count": 23,
+            "overlap_rate": 1.0,
+            "ndcg": 0.8537465790397846
+          }
+        }
+      }
+    ],
+    "response_joined_rows": 839
+  },
+  "evaluation_contract": {
+    "disease_signature": "mvp/core_data/crc_disease_signature_exact978.tsv",
+    "reversal": "-Spearman(CRC signed disease signature, Delta978)",
+    "prism_direction": "sensitivity_score = - official PRISM log2 fold-change; larger means more sensitive",
+    "minimum_candidates_per_line": 20,
+    "prism_values_read_after_identity_context_freeze": true
+  }
+}

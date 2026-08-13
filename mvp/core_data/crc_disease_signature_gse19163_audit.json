@@ -1,0 +1,86 @@
+{
+  "format": "mvp001_crc_signature_exact978_v1",
+  "experiment_id": "MVP-001",
+  "role": "DATA_STEWARD",
+  "status": "DATA_PARTIAL",
+  "source": {
+    "study": "GSE19163",
+    "accession": "GSE19163",
+    "platform": "GPL5175",
+    "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE19nnn/GSE19163/suppl/GSE19163_tumor_vs_normal_tissue.txt.gz",
+    "local_path": "mvp/core_data/_source_cache/GSE19163_tumor_vs_normal_tissue.txt.gz",
+    "sha256": "97a706393d5d6a7e7b7050542bcb41a456638425b208c4dab1f42efce97759fb",
+    "bytes": 6430,
+    "source_field": "Fold-Change(A TUMOR vs. NORMAL)",
+    "comparison_direction": "positive=tumor_higher; negative=tumor_lower"
+  },
+  "transformation": {
+    "formula": "signed_log2fc = sign(source_fold_change_signed) * log2(abs(source_fold_change_signed))",
+    "reason": "GSE19163 reports signed linear fold-change magnitudes; negative and positive cutoffs are used in the source paper",
+    "normalization": "source supplementary summary; no additional normalization or batch correction"
+  },
+  "gene_universe": {
+    "registry_id": "lincs_gse92742_exact978_cache_v1",
+    "source": "GSE92742 gene_info pr_is_lm=1",
+    "size": 978,
+    "ordered_gene_symbols_sha256": "db4d0c230c057bba371b929a267ce4ea501a7efb94823079a36ff7b05d0d184b"
+  },
+  "source_audit": {
+    "rows": 300,
+    "unique_gene_symbols": 296,
+    "missing_gene_symbol_rows": 3,
+    "duplicate_gene_symbols": [
+      "IFIH1"
+    ],
+    "duplicate_rows_excluded": 2
+  },
+  "exact978_overlap": {
+    "rows": 15,
+    "gene_symbols": [
+      "CSRP1",
+      "MYL9",
+      "MTHFD2",
+      "TOMM34",
+      "PLK1",
+      "COL1A1",
+      "MYLK",
+      "CDC20",
+      "CDH3",
+      "MMP1",
+      "CCND1",
+      "SPP1",
+      "RAE1",
+      "CCNB1",
+      "TSTA3"
+    ],
+    "up": 12,
+    "down": 3,
+    "minimum_formal_total": 20,
+    "minimum_formal_each_direction": 5,
+    "exploratory_only": true
+  },
+  "forbidden": [
+    "GSE19163 raw CEL files",
+    "GSE19163 p-values for model/tuning selection",
+    "GSE117548 activity or factor labels",
+    "PRISM response labels",
+    "inferred/non-landmark genes to pad overlap"
+  ],
+  "output": {
+    "local_path": "mvp/core_data/crc_disease_signature_exact978.tsv",
+    "sha256": "2de283637d9419237a204c411012f810c4a0fa44b9de9625709d584fbde9be93",
+    "schema": [
+      "gene_index_978",
+      "pr_gene_id",
+      "gene_symbol",
+      "source_transcript_id",
+      "source_refseq",
+      "source_pvalue",
+      "source_fold_change_signed",
+      "signed_log2fc",
+      "direction",
+      "comparison",
+      "role"
+    ]
+  }
+}
