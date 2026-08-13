@@ -46,7 +46,7 @@ experiments:
     record: experiments/records/EXP-004.md
   - id: EXP-005
     title: XPert Additive KPGT and UniPert Perturbagen Tokens
-    status: fast_result_ready_no_material_increment
+    status: fast_complete_chemical_backbone_champion_xpert
     hypothesis: >
       在固定的官方 XPert L1000 split、训练预算、loss 与评估契约下，保留官方 HG + UniMol
       路径并将 KPGT、UniPert 作为独立投影 token 追加至官方 drug attention sequence，能够改善
@@ -56,6 +56,14 @@ experiments:
     approved_by: user_autonomous_extension_authorization
     approved_on: 2026-08-13
     record: experiments/records/EXP-005.md
+  - id: EXP-006
+    title: Genetic to Chemical Transfer Under Low Chemical Supervision
+    status: fast_result_ready_promising_low_chemical_data_signal
+    hypothesis: genetic pretraining reduces chemical perturbation supervision required for exact978 response prediction and downstream screening utility
+    primary_endpoint: frozen_chemical_test_spearman_transfer_minus_chemical_only_at_20pct_and_10pct_unique_compounds
+    approved_by: user_program_direction_reset
+    approved_on: 2026-08-13
+    record: experiments/records/EXP-006.md
 mvps:
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility

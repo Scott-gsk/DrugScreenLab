@@ -1,0 +1,83 @@
+{
+  "format": "exp005_xpert_additive_fast_v1",
+  "status": "COMPLETE",
+  "variant": "B",
+  "variant_definition": "XPert + KPGT token",
+  "split": "split_cold_cell_1",
+  "seed": 2026,
+  "budget": {
+    "epochs": 2,
+    "batch_size": 128,
+    "max_rows_per_partition": 1,
+    "optimizer": "Adam",
+    "loss": "official XPert loss_weight [0.2, 0.003, 0.2, 1] including official cell-index classification branch",
+    "precision": "float32"
+  },
+  "partitions": {
+    "train": 1,
+    "valid": 1,
+    "test": 1
+  },
+  "data_contract": {
+    "split_column": "split_cold_cell_1",
+    "selection": "lexicographically sorted official sample_id; first max_rows per official partition; no response labels",
+    "partitions": {
+      "train": {
+        "rows": 1,
+        "sample_id_sha256": "cd9b1137c78f76728ebc429c50320360fe52e09ed8cf50b393ec7aa2b085e214"
+      },
+      "valid": {
+        "rows": 1,
+        "sample_id_sha256": "8c47b818da3b799a924507fd3e793fa00790d43c8d22dd0072b463b9d1542918"
+      },
+      "test": {
+        "rows": 1,
+        "sample_id_sha256": "8c47b818da3b799a924507fd3e793fa00790d43c8d22dd0072b463b9d1542918"
+      }
+    },
+    "train_test_context_overlap_count": 0,
+    "train_test_drug_overlap_count": 0,
+    "cold_assertion": "zero context overlap asserted"
+  },
+  "training": [],
+  "test_delta978": {
+    "rows": 1,
+    "genes": 978,
+    "mse": 0.2683761715888977,
+    "rmse": 0.5180503726005554,
+    "pearson_flat": 0.698951208556001,
+    "spearman_flat": 0.5939107669945407,
+    "pearson_row_mean": 0.698951208556001,
+    "spearman_row_mean": 0.5939107669945407,
+    "prediction_std": 0.4507099688053131
+  },
+  "official_architecture_preserved": true,
+  "checkpoint_inheritance": {
+    "loaded_keys": 182,
+    "official_parameter_count": 182,
+    "missing_official": [],
+    "missing_extension": [
+      "additive_gate",
+      "perturbagen_encoder.kpgt.0.bias",
+      "perturbagen_encoder.kpgt.0.weight",
+      "perturbagen_encoder.kpgt.1.bias",
+      "perturbagen_encoder.kpgt.1.weight"
+    ],
+    "unexpected": [],
+    "strict_official": true
+  },
+  "pre_training_gate_init": [
+    0.0
+  ],
+  "baseline_equivalence": {
+    "checked": true,
+    "gate_zero": true,
+    "max_abs_delta_first_batch": 0.0,
+    "exact": true
+  },
+  "official_parameters_frozen": true,
+  "additive_gate_init": [
+    0.0
+  ],
+  "token_policy": "KPGT and UniPert are independently projected gated residuals fused into existing HG/global compound token; no new tokens, no external concatenation, no transformer rewrite"
+}

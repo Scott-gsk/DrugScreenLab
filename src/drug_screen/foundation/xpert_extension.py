@@ -1,12 +1,13 @@
-"""Additive perturbagen extensions around the official XPert implementation.
+"""Gated perturbagen residual extensions around the official XPert implementation.
 
 The module deliberately does not reimplement XPert's transformer.  It provides
 two small overlays:
 
 * ``PerturbagenEncoder`` projects KPGT and UniPert independently to the
-  official hidden size and emits one token per representation;
+  official hidden size;
 * ``build_xpert_additive_model`` creates a subclass of the official XPertNet
-  and appends those tokens through a hook on the official ``drug_emb`` output.
+  and fuses projected features as a gated residual on the existing compound
+  (HG/global) representation. Sequence length is unchanged.
 
 The hook keeps the official HG + UniMol path and all downstream attention,
 loss, and prediction heads unchanged.  The external XPert source is supplied
@@ -15,7 +16,8 @@ at runtime, so this project module remains import-safe without that checkout.
 
 from __future__ import annotations
 
-from typing import Any, Callable, Type
+from pathlib import Path
+from typing import Any, Callable, Mapping, Type
 
 
 try:  # Keep registry/unit-test imports usable in lightweight environments.
@@ -31,7 +33,7 @@ except ImportError:  # pragma: no cover - GPU environment is the execution contr
 if nn is not None:
 
     class PerturbagenEncoder(nn.Module):
-        """Project each additive chemical representation to one hidden token."""
+        """Project each additive chemical representation to one hidden vector."""
 
         def __init__(
             self,
@@ -91,7 +93,7 @@ else:
 
 
 def append_perturbagen_tokens(base_drug_embed: Tensor, extra_tokens: Tensor) -> Tensor:
-    """Append separate additive tokens without changing the official sequence."""
+    """Legacy helper retained for compatibility; overlays use residual fusion."""
     if base_drug_embed.ndim != 3 or extra_tokens.ndim != 3:
         raise ValueError("drug embeddings and additive tokens must be rank-3 tensors")
     if base_drug_embed.shape[0] != extra_tokens.shape[0]:
@@ -109,14 +111,17 @@ def build_xpert_additive_model(
     use_unipert: bool,
     kpgt_dim: int = 2304,
     unipert_dim: int = 256,
+    gate_init: float = 0.0,
+    freeze_official: bool = False,
 ) -> Type[Any]:
-    """Return an XPertNet subclass that adds frozen-feature tokens.
+    """Return an XPertNet subclass that adds frozen-feature residuals.
 
     ``official_model`` must be the imported upstream ``XPertNet`` class.  The
     returned class consumes the ordinary ten-item XPert tuple plus KPGT and/or
-    UniPert tensors appended at the end.  A forward hook intercepts only the
-    output of the official drug embedding module; all transformer layers and
-    heads continue to execute in upstream code.
+    UniPert tensors appended to the *dataset tuple* (not the model sequence).
+    A forward hook intercepts only the output of the official drug embedding
+    module; all transformer layers and heads continue to execute in upstream
+    code with unchanged sequence length.
     """
     if torch is None:  # pragma: no cover - runtime dependency
         raise RuntimeError("PyTorch is required for XPert additive models")
@@ -136,15 +141,53 @@ def build_xpert_additive_model(
                 use_kpgt=use_kpgt,
                 use_unipert=use_unipert,
             )
+            # A zero-initialised residual gate gives strict baseline
+            # equivalence at construction time. Non-zero gates add a
+            # projected residual to the existing HG/global token only.
+            self.additive_gate = nn.Parameter(
+                torch.full((int(use_kpgt) + int(use_unipert),), float(gate_init))
+            )
+            self.official_checkpoint_loaded = False
+            self.official_parameters_frozen = False
+            self.checkpoint_audit: dict[str, Any] | None = None
             self._active_additive_features: tuple[Tensor | None, Tensor | None] | None = None
             self._drug_embedding_hook_handle = self.drug_emb.register_forward_hook(self._drug_embedding_hook)
+
+            if freeze_official:
+                self.freeze_official_parameters()
+
+        def freeze_official_parameters(self) -> None:
+            """Freeze inherited XPert weights; leave only extension weights trainable."""
+            for name, parameter in self.named_parameters():
+                if name == "additive_gate" or name.startswith("perturbagen_encoder."):
+                    continue
+                parameter.requires_grad_(False)
+            self.official_parameters_frozen = True
 
         def _drug_embedding_hook(self, _module: Any, _inputs: Any, output: Tensor) -> Tensor:
             if self._active_additive_features is None:
                 return output
             kpgt, unipert = self._active_additive_features
+            gates = self.additive_gate
+            if torch.count_nonzero(gates).item() == 0:
+                # Keep the official representation exactly unchanged while
+                # still exposing a straight-through gradient to the gate.
+                straight_through_zero = gates - gates.detach()
+                # Use raw feature means here to avoid invoking dropout (and
+                # consuming RNG state) while the extension is exactly off.
+                signal = (kpgt if kpgt is not None else unipert).mean(dim=-1, keepdim=True)
+                if kpgt is not None and unipert is not None:
+                    signal = signal + unipert.mean(dim=-1, keepdim=True)
+                residual = signal.unsqueeze(-1) * straight_through_zero.sum().to(signal)
+                return output + residual
             tokens = self.perturbagen_encoder(kpgt=kpgt, unipert=unipert)
-            return append_perturbagen_tokens(output, tokens)
+            gated = tokens * gates.to(device=tokens.device, dtype=tokens.dtype).view(1, -1, 1)
+            # Fuse into existing compound/HG global token (position zero),
+            # preserving official sequence length and attention masks.
+            residual = gated.sum(dim=1)
+            fused = output.clone()
+            fused[:, 0, :] = fused[:, 0, :] + residual
+            return fused
 
         def forward(self, data: Any, mode: str = "ST") -> Any:
             if len(data) < 10:
@@ -169,6 +212,73 @@ def build_xpert_additive_model(
 
     XPertAdditiveNet.__name__ = "XPertAdditiveNet"
     return XPertAdditiveNet
+
+
+def load_xpert_checkpoint(
+    model: Any,
+    checkpoint: str | Path | Mapping[str, Any],
+    *,
+    strict_official: bool = True,
+    map_location: Any = "cpu",
+) -> dict[str, Any]:
+    """Inherit an official XPert checkpoint without silently dropping weights.
+
+    Checkpoints may be a raw state dict or a common ``state_dict``/
+    ``model_state_dict`` wrapper.  Extension-only parameters are allowed to be
+    missing; every official parameter must be present when ``strict_official``
+    is true.  The returned audit is attached to ``model.checkpoint_audit``.
+    """
+    if torch is None:  # pragma: no cover
+        raise RuntimeError("PyTorch is required for checkpoint loading")
+    if isinstance(checkpoint, (str, Path)):
+        try:
+            payload = torch.load(str(checkpoint), map_location=map_location, weights_only=False)
+        except TypeError:  # older torch versions
+            payload = torch.load(str(checkpoint), map_location=map_location)
+    else:
+        payload = checkpoint
+    state: Any = payload
+    if isinstance(payload, Mapping):
+        for key in ("state_dict", "model_state_dict", "model"):
+            value = payload.get(key)
+            if isinstance(value, Mapping):
+                state = value
+                break
+    if not isinstance(state, Mapping):
+        raise ValueError("XPert checkpoint must contain a state-dict mapping")
+    target_keys = set(model.state_dict().keys())
+    normalized: dict[str, Any] = {}
+    unrecognized: list[str] = []
+    for key, value in state.items():
+        name = str(key)
+        for prefix in ("module.", "model."):
+            if name.startswith(prefix):
+                name = name[len(prefix) :]
+        if name in target_keys:
+            normalized[name] = value
+        else:
+            unrecognized.append(name)
+    extension_prefixes = ("perturbagen_encoder.", "additive_gate")
+    official_keys = {k for k in target_keys if not k.startswith(extension_prefixes)}
+    result = model.load_state_dict(normalized, strict=False)
+    missing_official = sorted(k for k in result.missing_keys if k in official_keys)
+    unexpected = sorted(set(unrecognized) | set(result.unexpected_keys))
+    if strict_official and (missing_official or unexpected):
+        raise ValueError(
+            "official XPert checkpoint inheritance failed: "
+            f"missing={missing_official}, unexpected={unexpected}"
+        )
+    audit = {
+        "loaded_keys": len(normalized),
+        "official_parameter_count": len(official_keys),
+        "missing_official": missing_official,
+        "missing_extension": sorted(k for k in result.missing_keys if k not in official_keys),
+        "unexpected": unexpected,
+        "strict_official": bool(strict_official),
+    }
+    model.official_checkpoint_loaded = not missing_official
+    model.checkpoint_audit = audit
+    return audit
 
 
 def build_xpert_extension_dataset(base_dataset: Type[Any]) -> Type[Any]:

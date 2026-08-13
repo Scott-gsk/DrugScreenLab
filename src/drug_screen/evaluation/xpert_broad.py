@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -27,12 +28,113 @@ def _dcg(relevance: np.ndarray) -> float:
     return float(np.sum(relevance / np.log2(positions)))
 
 
+def _random_null_statistics(
+    observed: np.ndarray,
+    observed_order: np.ndarray,
+    *,
+    ks: Iterable[int],
+    seed: int,
+    repeats: int,
+) -> dict[str, Any]:
+    """Generate a deterministic random-ranking null for one evaluation line.
+
+    The null preserves the observed response values and candidate count while
+    shuffling only the predicted order.  Returning the full compact
+    distributions makes the baseline auditable and permits downstream
+    uncertainty summaries without rerunning evaluation.
+    """
+    if repeats < 1:
+        raise ValueError("null repeats must be at least one")
+    n = len(observed)
+    rng = np.random.default_rng(int(seed))
+    obs_rank = np.empty(n, dtype=float)
+    obs_rank[observed_order] = np.arange(n, 0, -1, dtype=float)
+    observed_top = {
+        int(requested_k): set(observed_order[: min(int(requested_k), n)].tolist())
+        for requested_k in ks
+    }
+    overlap: dict[int, list[float]] = {k: [] for k in observed_top}
+    ndcg: dict[int, list[float]] = {k: [] for k in observed_top}
+    spearmans: list[float] = []
+    for _ in range(int(repeats)):
+        order = rng.permutation(n)
+        # random score ranks (higher score = earlier order)
+        random_rank = np.empty(n, dtype=float)
+        random_rank[order] = np.arange(n, 0, -1, dtype=float)
+        corr = spearman(random_rank, observed)
+        spearmans.append(float(corr) if corr is not None else 0.0)
+        for k, true_top in observed_top.items():
+            effective_k = min(k, n)
+            pred_top = set(order[:effective_k].tolist())
+            overlap[k].append(float(len(pred_top & true_top) / effective_k))
+            ideal = _dcg(np.arange(n, n - effective_k, -1, dtype=float))
+            rel = obs_rank[order[:effective_k]]
+            ndcg[k].append(float(_dcg(rel) / ideal) if ideal else 0.0)
+    return {
+        "seed": int(seed),
+        "repeats": int(repeats),
+        "spearman_distribution": spearmans,
+        "spearman_mean": float(np.mean(spearmans)),
+        "top_k": {
+            str(k): {
+                "overlap_distribution": overlap[k],
+                "expected_overlap_rate": float(np.mean(overlap[k])),
+                "ndcg_distribution": ndcg[k],
+                "ndcg_mean": float(np.mean(ndcg[k])),
+            }
+            for k in observed_top
+        },
+    }
+
+
+def audit_oracle_coverage(
+    prism_frame: pd.DataFrame,
+    oracle_frame: pd.DataFrame,
+    *,
+    context_column: str = "context_id",
+    pert_column: str = "pert_id",
+) -> dict[str, Any]:
+    """Report response-blind observed-LINCS Oracle pair/context coverage.
+
+    Coverage is computed on unique ``(context, perturbagen)`` identities; no
+    response values are inspected.  ``cell_iname`` is accepted as the Oracle
+    context column used by the processed LINCS h5ad asset.
+    """
+    def pairs(frame: pd.DataFrame, context: str) -> set[tuple[str, str]]:
+        if context not in frame.columns:
+            raise ValueError(f"missing context column: {context}")
+        if pert_column not in frame.columns:
+            raise ValueError(f"missing perturbagen column: {pert_column}")
+        values = frame[[context, pert_column]].dropna().astype(str)
+        return set(map(tuple, values.drop_duplicates().itertuples(index=False, name=None)))
+
+    prism_pairs = pairs(prism_frame, context_column)
+    oracle_context = context_column if context_column in oracle_frame.columns else "cell_iname"
+    oracle_pairs = pairs(oracle_frame, oracle_context)
+    shared = prism_pairs & oracle_pairs
+    contexts = {context for context, _ in prism_pairs}
+    oracle_contexts = {context for context, _ in oracle_pairs}
+    return {
+        "status": "READY" if shared else "NO_OVERLAP",
+        "prism_unique_pairs": int(len(prism_pairs)),
+        "oracle_unique_pairs": int(len(oracle_pairs)),
+        "overlap_unique_pairs": int(len(shared)),
+        "pair_coverage_rate": float(len(shared) / len(prism_pairs)) if prism_pairs else 0.0,
+        "prism_context_count": int(len(contexts)),
+        "oracle_context_count": int(len(oracle_contexts)),
+        "overlap_context_count": int(len(contexts & oracle_contexts)),
+        "context_coverage_rate": float(len(contexts & oracle_contexts) / len(contexts)) if contexts else 0.0,
+    }
+
+
 def rank_metrics(
     frame: pd.DataFrame,
     *,
     score_column: str,
     ks: Iterable[int] = (10, 20, 50),
     minimum_candidates: int = 20,
+    null_seed: int = 2026,
+    null_repeats: int = 256,
 ) -> dict[str, Any]:
     """Evaluate a predicted ranking against continuous PRISM sensitivity."""
     eligible = _finite_frame(frame, score_column)
@@ -58,6 +160,11 @@ def rank_metrics(
         "spearman": spearman(predicted, observed),
         "top_k": {},
     }
+    null = _random_null_statistics(
+        observed, obs_order, ks=ks, seed=null_seed, repeats=null_repeats
+    )
+    metrics["null_baseline"] = null
+    metrics["null_baseline"]["spearman_delta"] = float(metrics["spearman"] - null["spearman_mean"])
     for requested_k in ks:
         k = min(int(requested_k), candidate_count)
         pred_top = set(eligible.iloc[pred_order[:k]]["pert_id"].astype(str))
@@ -75,6 +182,17 @@ def rank_metrics(
             "overlap_rate": float(len(pred_top & obs_top) / k),
             "ndcg": float(_dcg(pred_relevance) / ideal_dcg) if ideal_dcg else None,
         }
+        null_k = null["top_k"][str(int(requested_k))]
+        expected_overlap = float(null_k["expected_overlap_rate"])
+        observed_overlap = float(metrics["top_k"][str(int(requested_k))]["overlap_rate"])
+        observed_ndcg = metrics["top_k"][str(int(requested_k))]["ndcg"]
+        metrics["top_k"][str(int(requested_k))]["null_expected_overlap_rate"] = expected_overlap
+        metrics["top_k"][str(int(requested_k))]["overlap_lift"] = (
+            observed_overlap / expected_overlap if expected_overlap > 0 else None
+        )
+        metrics["top_k"][str(int(requested_k))]["delta_ndcg"] = (
+            float(observed_ndcg - null_k["ndcg_mean"]) if observed_ndcg is not None else None
+        )
     return metrics
 
 
@@ -83,6 +201,31 @@ def _summary(line_rows: list[dict[str, Any]]) -> dict[str, Any]:
     values = [float(row["spearman"]) for row in eligible if row.get("spearman") is not None]
     top10 = [row["top_k"]["10"]["overlap_rate"] for row in eligible if "10" in row.get("top_k", {})]
     ndcg10 = [row["top_k"]["10"]["ndcg"] for row in eligible if "10" in row.get("top_k", {})]
+    null_spearman = [
+        row["null_baseline"]["spearman_mean"]
+        for row in eligible
+        if isinstance(row.get("null_baseline"), dict)
+    ]
+    delta_spearman = [
+        row["null_baseline"]["spearman_delta"]
+        for row in eligible
+        if isinstance(row.get("null_baseline"), dict)
+    ]
+    null_overlap10 = [
+        row["top_k"]["10"]["null_expected_overlap_rate"]
+        for row in eligible
+        if "10" in row.get("top_k", {}) and row["top_k"]["10"].get("null_expected_overlap_rate") is not None
+    ]
+    overlap_lift10 = [
+        row["top_k"]["10"]["overlap_lift"]
+        for row in eligible
+        if "10" in row.get("top_k", {}) and row["top_k"]["10"].get("overlap_lift") is not None
+    ]
+    delta_ndcg10 = [
+        row["top_k"]["10"]["delta_ndcg"]
+        for row in eligible
+        if "10" in row.get("top_k", {}) and row["top_k"]["10"].get("delta_ndcg") is not None
+    ]
     return {
         "line_count": int(len(line_rows)),
         "eligible_line_count": int(len(eligible)),
@@ -91,6 +234,11 @@ def _summary(line_rows: list[dict[str, Any]]) -> dict[str, Any]:
         "fraction_positive_spearman": float(np.mean(np.asarray(values) > 0)) if values else None,
         "macro_mean_top10_overlap_rate": float(np.mean(top10)) if top10 else None,
         "macro_mean_ndcg10": float(np.mean(ndcg10)) if ndcg10 else None,
+        "macro_mean_null_spearman": float(np.mean(null_spearman)) if null_spearman else None,
+        "macro_mean_spearman_delta_vs_null": float(np.mean(delta_spearman)) if delta_spearman else None,
+        "macro_mean_null_top10_overlap_rate": float(np.mean(null_overlap10)) if null_overlap10 else None,
+        "macro_mean_top10_overlap_lift_vs_null": float(np.mean(overlap_lift10)) if overlap_lift10 else None,
+        "macro_mean_delta_ndcg10_vs_null": float(np.mean(delta_ndcg10)) if delta_ndcg10 else None,
     }
 
 
@@ -222,6 +370,9 @@ def build(
             signature_indices=signature_indices,
             signature_values=signature_values,
         )
+        # Response-blind identity coverage is reported separately from ranking
+        # metrics so missing observed pairs cannot be mistaken for negatives.
+        oracle_info["coverage"] = audit_oracle_coverage(prism, oracle)
         oracle_join = prism.merge(
             oracle,
             left_on=["context_id", "pert_id"],
