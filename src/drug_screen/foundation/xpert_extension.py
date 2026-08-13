@@ -15,7 +15,8 @@ at runtime, so this project module remains import-safe without that checkout.
 
 from __future__ import annotations
 
-from typing import Any, Callable, Type
+from pathlib import Path
+from typing import Any, Callable, Mapping, Type
 
 
 try:  # Keep registry/unit-test imports usable in lightweight environments.
@@ -109,6 +110,8 @@ def build_xpert_additive_model(
     use_unipert: bool,
     kpgt_dim: int = 2304,
     unipert_dim: int = 256,
+    gate_init: float = 0.0,
+    freeze_official: bool = False,
 ) -> Type[Any]:
     """Return an XPertNet subclass that adds frozen-feature tokens.
 
@@ -136,14 +139,51 @@ def build_xpert_additive_model(
                 use_kpgt=use_kpgt,
                 use_unipert=use_unipert,
             )
+            # A zero-initialised residual gate gives strict baseline
+            # equivalence at construction time.  The hook bypasses sequence
+            # extension while all gates are zero, so the extra positions do
+            # not perturb attention/normalisation in the official network.
+            self.additive_gate = nn.Parameter(
+                torch.full((int(use_kpgt) + int(use_unipert),), float(gate_init))
+            )
+            self.official_checkpoint_loaded = False
+            self.official_parameters_frozen = False
+            self.checkpoint_audit: dict[str, Any] | None = None
             self._active_additive_features: tuple[Tensor | None, Tensor | None] | None = None
             self._drug_embedding_hook_handle = self.drug_emb.register_forward_hook(self._drug_embedding_hook)
+
+            if freeze_official:
+                self.freeze_official_parameters()
+
+        def freeze_official_parameters(self) -> None:
+            """Freeze inherited XPert weights; leave only extension weights trainable."""
+            for name, parameter in self.named_parameters():
+                if name == "additive_gate" or name.startswith("perturbagen_encoder."):
+                    continue
+                parameter.requires_grad_(False)
+            self.official_parameters_frozen = True
 
         def _drug_embedding_hook(self, _module: Any, _inputs: Any, output: Tensor) -> Tensor:
             if self._active_additive_features is None:
                 return output
             kpgt, unipert = self._active_additive_features
+            gates = self.additive_gate
+            if torch.count_nonzero(gates).item() == 0:
+                # Keep the official sequence *exactly* unchanged while still
+                # exposing a straight-through gradient to the gate.  This
+                # avoids a dead gate and makes a freshly inherited checkpoint
+                # numerically equivalent to the official baseline in both
+                # train and eval modes.
+                straight_through_zero = gates - gates.detach()
+                # Use raw feature means here to avoid invoking dropout (and
+                # consuming RNG state) while the extension is exactly off.
+                signal = (kpgt if kpgt is not None else unipert).mean(dim=-1, keepdim=True)
+                if kpgt is not None and unipert is not None:
+                    signal = signal + unipert.mean(dim=-1, keepdim=True)
+                residual = signal.unsqueeze(-1) * straight_through_zero.sum().to(signal)
+                return output + residual
             tokens = self.perturbagen_encoder(kpgt=kpgt, unipert=unipert)
+            tokens = tokens * gates.to(device=tokens.device, dtype=tokens.dtype).view(1, -1, 1)
             return append_perturbagen_tokens(output, tokens)
 
         def forward(self, data: Any, mode: str = "ST") -> Any:
@@ -169,6 +209,73 @@ def build_xpert_additive_model(
 
     XPertAdditiveNet.__name__ = "XPertAdditiveNet"
     return XPertAdditiveNet
+
+
+def load_xpert_checkpoint(
+    model: Any,
+    checkpoint: str | Path | Mapping[str, Any],
+    *,
+    strict_official: bool = True,
+    map_location: Any = "cpu",
+) -> dict[str, Any]:
+    """Inherit an official XPert checkpoint without silently dropping weights.
+
+    Checkpoints may be a raw state dict or a common ``state_dict``/
+    ``model_state_dict`` wrapper.  Extension-only parameters are allowed to be
+    missing; every official parameter must be present when ``strict_official``
+    is true.  The returned audit is attached to ``model.checkpoint_audit``.
+    """
+    if torch is None:  # pragma: no cover
+        raise RuntimeError("PyTorch is required for checkpoint loading")
+    if isinstance(checkpoint, (str, Path)):
+        try:
+            payload = torch.load(str(checkpoint), map_location=map_location, weights_only=False)
+        except TypeError:  # older torch versions
+            payload = torch.load(str(checkpoint), map_location=map_location)
+    else:
+        payload = checkpoint
+    state: Any = payload
+    if isinstance(payload, Mapping):
+        for key in ("state_dict", "model_state_dict", "model"):
+            value = payload.get(key)
+            if isinstance(value, Mapping):
+                state = value
+                break
+    if not isinstance(state, Mapping):
+        raise ValueError("XPert checkpoint must contain a state-dict mapping")
+    target_keys = set(model.state_dict().keys())
+    normalized: dict[str, Any] = {}
+    unrecognized: list[str] = []
+    for key, value in state.items():
+        name = str(key)
+        for prefix in ("module.", "model."):
+            if name.startswith(prefix):
+                name = name[len(prefix) :]
+        if name in target_keys:
+            normalized[name] = value
+        else:
+            unrecognized.append(name)
+    extension_prefixes = ("perturbagen_encoder.", "additive_gate")
+    official_keys = {k for k in target_keys if not k.startswith(extension_prefixes)}
+    result = model.load_state_dict(normalized, strict=False)
+    missing_official = sorted(k for k in result.missing_keys if k in official_keys)
+    unexpected = sorted(set(unrecognized) | set(result.unexpected_keys))
+    if strict_official and (missing_official or unexpected):
+        raise ValueError(
+            "official XPert checkpoint inheritance failed: "
+            f"missing={missing_official}, unexpected={unexpected}"
+        )
+    audit = {
+        "loaded_keys": len(normalized),
+        "official_parameter_count": len(official_keys),
+        "missing_official": missing_official,
+        "missing_extension": sorted(k for k in result.missing_keys if k not in official_keys),
+        "unexpected": unexpected,
+        "strict_official": bool(strict_official),
+    }
+    model.official_checkpoint_loaded = not missing_official
+    model.checkpoint_audit = audit
+    return audit
 
 
 def build_xpert_extension_dataset(base_dataset: Type[Any]) -> Type[Any]:

@@ -20,15 +20,15 @@ research:
   accepted_model: null
   current_champion: official_xpert_foundation_exp005_fast_baseline_retained
   current_baseline: official_xpert_hg_unimol_foundation
-  program_checkpoint: DRUGSCREENLAB_XPERT_EXTENSION_REPORT.md
+  program_checkpoint: DRUGSCREENLAB_PROGRAM_DIRECTION_CHECKPOINT.md
   program_decision: CONTINUE_WITH_EXTENSIONS
   cross_study_status: OFFICIAL_GDSC_ASSET_REACHABLE_LOCAL_FREEZE_PENDING
   next_experiment_id: EXP-006
   extension_status:
     foundation: XPERT_FOUNDATION_READY
-    e1_kpgt_unipert_additive: NO_MATERIAL_FAST_INCREMENT_XPERT_BASELINE_RETAINED
+    e1_kpgt_unipert_additive: INCONCLUSIVE_PROTOCOL_MISMATCH_ATTEMPT2_IN_PROGRESS
     e2_genetic_chemical_low_data: PROMISING_FAST_GENETIC_TO_CHEMICAL_TRANSFER
-    e3_prism_identity_bridge: BROAD_PRISM_COHORT_V1_FROZEN_RESPONSE_BLIND
+    e3_prism_identity_bridge: ORACLE_AND_NULL_NORMALIZED_TOPK_IN_PROGRESS
     e4_target_pathway_transfer: FORWARD_PREPARATION_COMPLETE
     organoid_readiness: METADATA_READY_ADAPTATION_PENDING
 data:

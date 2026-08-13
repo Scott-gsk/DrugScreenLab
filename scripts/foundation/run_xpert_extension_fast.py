@@ -194,6 +194,7 @@ def _model(
     device: Any,
     logger: logging.Logger,
     official: dict[str, Any],
+    checkpoint: str | Path | None = None,
 ) -> Any:
     from drug_screen.foundation.xpert_extension import build_xpert_additive_model
 
@@ -204,9 +205,14 @@ def _model(
             official["XPertNet"],
             use_kpgt=True,
             use_unipert=variant == "C",
+            freeze_official=checkpoint is not None and not getattr(args, "finetune_official", False),
         )
     model = model_class(args, config, device, logger)
     model.init_weights()
+    if checkpoint is not None:
+        from drug_screen.foundation.xpert_extension import load_xpert_checkpoint
+
+        load_xpert_checkpoint(model, checkpoint, map_location=device)
     return model.to(device)
 
 
@@ -333,6 +339,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     config["model"]["ATTN"]["ppi_gene_vector_path"] = str(SOURCE / "processed_data" / "PPI_gene_vector_128d.npy")
     config["model"]["HG"]["drug_hg_pretrained_embed_path"] = str(SOURCE / "HG_data" / "saved_embedding" / "HG_drug_embeddings.npy")
     args_model = _args(device=args.device)
+    args_model.finetune_official = bool(getattr(args, "finetune_official", False))
     device = torch.device(args.device if torch.cuda.is_available() else "cpu")
 
     backed = sc.read_h5ad(FULL_DATA, backed="r")
@@ -356,7 +363,15 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     train_loader = DataLoader(train_dataset, shuffle=True, **loader_kwargs)
     test_loader = DataLoader(test_dataset, shuffle=False, **loader_kwargs)
 
-    model = _model(variant=args.variant, args=args_model, config=config, device=device, logger=logger, official=official)
+    model = _model(
+        variant=args.variant,
+        args=args_model,
+        config=config,
+        device=device,
+        logger=logger,
+        official=official,
+        checkpoint=getattr(args, "checkpoint", None),
+    )
     history = _train(model, train_loader, config=config, official=official, epochs=args.epochs)
     test_true, test_pred, _ = _predict(model, test_loader)
 
@@ -373,6 +388,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "training": history,
         "test_delta978": _metrics(test_true, test_pred),
         "official_architecture_preserved": True,
+        "checkpoint_inheritance": getattr(model, "checkpoint_audit", None),
+        "official_parameters_frozen": getattr(model, "official_parameters_frozen", False),
+        "additive_gate_init": (
+            model.additive_gate.detach().cpu().tolist()
+            if hasattr(model, "additive_gate")
+            else None
+        ),
         "token_policy": "KPGT and UniPert are separate projected tokens appended after official UniMol/HG drug sequence; no external concatenation and no transformer rewrite",
     }
 
@@ -421,6 +443,16 @@ def main() -> int:
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--max-rows", type=int, default=4096)
     parser.add_argument("--skip-broad", action="store_true")
+    parser.add_argument(
+        "--checkpoint",
+        default=None,
+        help="official XPert checkpoint to inherit (extension parameters remain freshly gated)",
+    )
+    parser.add_argument(
+        "--finetune-official",
+        action="store_true",
+        help="opt in to updating inherited official XPert weights (default: frozen foundation)",
+    )
     run(parser.parse_args())
     return 0
 

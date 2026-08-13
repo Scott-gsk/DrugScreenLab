@@ -46,7 +46,7 @@ experiments:
     record: experiments/records/EXP-004.md
   - id: EXP-005
     title: XPert Additive KPGT and UniPert Perturbagen Tokens
-    status: fast_result_ready_no_material_increment
+    status: inconclusive_protocol_mismatch_attempt2_in_progress
     hypothesis: >
       在固定的官方 XPert L1000 split、训练预算、loss 与评估契约下，保留官方 HG + UniMol
       路径并将 KPGT、UniPert 作为独立投影 token 追加至官方 drug attention sequence，能够改善
