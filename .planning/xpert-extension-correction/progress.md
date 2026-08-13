@@ -16,3 +16,5 @@
   不进入科学指标。
 - EXP-006 preparation 与 `CONTEXT_ADAPTER_TRACK` 已整合，状态仍为 `PREPARATION_ONLY / DATA_PARTIAL`，
   未创建或执行 EXP-006。
+- 最终验证：WSL2 `drugscreening-gpu` 环境 `PASS`；全量测试 `90 passed`；数据注册表 `PASS`；
+  datasets 与 EXP-005 comparison JSON 均有效。checkpoint `2dbf038` 已推送至 `origin/master`。

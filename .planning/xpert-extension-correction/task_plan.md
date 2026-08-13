@@ -13,4 +13,4 @@ context/drug registry，完成 response-blind Broad screening 接入，并按 EX
 - [x] KPGT/UniPert 独立 token overlay GPU smoke。
 - [x] EXP-005 fixed FAST：cold-cell / cold-drug A/B/C。
 - [x] EXP-006 genetic→chemical 与 CONTEXT_ADAPTER_TRACK preparation。
-- [ ] 报告、审计、GitHub checkpoint。
+- [x] 报告、审计、GitHub checkpoint（commit `2dbf038` 已推送至 `origin/master`）。
