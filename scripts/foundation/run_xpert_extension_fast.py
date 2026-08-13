@@ -33,6 +33,7 @@ SIGNATURE = ROOT / "mvp" / "core_data" / "crc_disease_signature_exact978.tsv"
 BROAD_RESPONSE = ROOT / "mvp" / "foundation" / "xpert" / "BROAD_PRISM_CRC_V1.parquet"
 RESULT_ROOT = ROOT / "mvp" / "foundation" / "xpert" / "EXP005_FAST"
 PROFILE_ROOT = SOURCE / "experiment" / "exp005_fast"
+STRONG_CHECKPOINT = SOURCE / "saved_model" / "l1000_sdst_warm_split.pth"
 
 
 def _seed_everything(seed: int) -> None:
@@ -258,6 +259,29 @@ def _predict(model: Any, loader: Any) -> tuple[np.ndarray, np.ndarray, np.ndarra
     return np.concatenate(true_rows), np.concatenate(pred_rows), np.concatenate(ctl_rows)
 
 
+def _baseline_equivalence(model: Any, official_model: Any, loader: Any) -> dict[str, Any] | None:
+    """Compare a zero-gated extension with the same loaded official checkpoint."""
+    if not hasattr(model, "additive_gate"):
+        return None
+    import torch
+
+    model.eval()
+    official_model.eval()
+    with torch.no_grad():
+        batch = next(iter(loader))
+        extended = model(batch)
+        baseline = official_model(batch[:10])
+    deltas = []
+    for left, right in zip(extended[:3], baseline[:3], strict=True):
+        deltas.append(float((left - right).abs().max().detach().cpu()))
+    return {
+        "checked": True,
+        "gate_zero": bool(torch.count_nonzero(model.additive_gate).item() == 0),
+        "max_abs_delta_first_batch": max(deltas),
+        "exact": bool(max(deltas) == 0.0),
+    }
+
+
 def _rank(values: np.ndarray) -> np.ndarray:
     order = np.argsort(values, kind="mergesort")
     ranks = np.empty(len(values), dtype=float)
@@ -372,7 +396,24 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         official=official,
         checkpoint=getattr(args, "checkpoint", None),
     )
-    history = _train(model, train_loader, config=config, official=official, epochs=args.epochs)
+    pre_training_gate = (
+        model.additive_gate.detach().cpu().tolist()
+        if hasattr(model, "additive_gate") else None
+    )
+    baseline_equivalence = None
+    if args.variant in {"B", "C"} and getattr(args, "checkpoint", None):
+        baseline_model = _model(
+            variant="A", args=args_model, config=config, device=device,
+            logger=logger, official=official, checkpoint=args.checkpoint,
+        )
+        baseline_equivalence = _baseline_equivalence(model, baseline_model, test_loader)
+        del baseline_model
+    # EXP-005 strong-foundation protocol evaluates A directly from the
+    # registered checkpoint; B/C inherit the exact same checkpoint and only
+    # train when explicitly requested for a follow-up probe.
+    history = []
+    if args.train and args.variant in {"B", "C"}:
+        history = _train(model, train_loader, config=config, official=official, epochs=args.epochs)
     test_true, test_pred, _ = _predict(model, test_loader)
 
     output: dict[str, Any] = {
@@ -389,13 +430,15 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "test_delta978": _metrics(test_true, test_pred),
         "official_architecture_preserved": True,
         "checkpoint_inheritance": getattr(model, "checkpoint_audit", None),
+        "pre_training_gate_init": pre_training_gate,
+        "baseline_equivalence": baseline_equivalence,
         "official_parameters_frozen": getattr(model, "official_parameters_frozen", False),
         "additive_gate_init": (
             model.additive_gate.detach().cpu().tolist()
             if hasattr(model, "additive_gate")
             else None
         ),
-        "token_policy": "KPGT and UniPert are separate projected tokens appended after official UniMol/HG drug sequence; no external concatenation and no transformer rewrite",
+        "token_policy": "KPGT and UniPert are independently projected gated residuals fused into existing HG/global compound token; no new tokens, no external concatenation, no transformer rewrite",
     }
 
     if not args.skip_broad:
@@ -404,11 +447,12 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         broad_loader = DataLoader(broad_dataset, shuffle=False, **loader_kwargs)
         _, broad_pred, broad_ctl = _predict(model, broad_loader)
         PROFILE_ROOT.mkdir(parents=True, exist_ok=True)
-        profile_path = PROFILE_ROOT / f"{args.split}_{args.variant}_broad_profile.npy"
+        suffix = f"_{args.attempt_tag}" if args.attempt_tag else ""
+        profile_path = PROFILE_ROOT / f"{args.split}_{args.variant}{suffix}_broad_profile.npy"
         np.save(profile_path, {"deg_pred": broad_pred.astype(np.float32), "ctl_true": broad_ctl.astype(np.float32), "y_pred": (broad_pred + broad_ctl).astype(np.float32)})
         from drug_screen.evaluation.xpert_broad import build as evaluate_broad
 
-        evaluation_path = RESULT_ROOT / f"{args.split}_{args.variant}_BROAD_EVALUATION.json"
+        evaluation_path = RESULT_ROOT / f"{args.split}_{args.variant}{suffix}_BROAD_EVALUATION.json"
         evaluation = evaluate_broad(
             profile_path=profile_path,
             adapter_path=GLOBAL_ADAPTER,
@@ -427,7 +471,8 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         }
 
     RESULT_ROOT.mkdir(parents=True, exist_ok=True)
-    result_path = RESULT_ROOT / f"{args.split}_{args.variant}.json"
+    suffix = f"_{args.attempt_tag}" if args.attempt_tag else ""
+    result_path = RESULT_ROOT / f"{args.split}_{args.variant}{suffix}.json"
     result_path.write_text(json.dumps(output, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
     print(json.dumps({"status": output["status"], "variant": args.variant, "split": args.split, "test": output["test_delta978"], "broad": output.get("broad", {}).get("line_metrics")}, sort_keys=True))
     return output
@@ -444,9 +489,19 @@ def main() -> int:
     parser.add_argument("--max-rows", type=int, default=4096)
     parser.add_argument("--skip-broad", action="store_true")
     parser.add_argument(
+        "--attempt-tag",
+        default="",
+        help="optional suffix for compact outputs (e.g. ATTEMPT2) to preserve prior EXP artifacts",
+    )
+    parser.add_argument(
         "--checkpoint",
-        default=None,
-        help="official XPert checkpoint to inherit (extension parameters remain freshly gated)",
+        default=str(STRONG_CHECKPOINT),
+        help="registered strong XPert checkpoint shared by A/B/C",
+    )
+    parser.add_argument(
+        "--train",
+        action="store_true",
+        help="explicitly train after checkpoint inheritance (off by default for EXP-005 strong protocol)",
     )
     parser.add_argument(
         "--finetune-official",

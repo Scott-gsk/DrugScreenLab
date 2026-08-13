@@ -1,12 +1,13 @@
-"""Additive perturbagen extensions around the official XPert implementation.
+"""Gated perturbagen residual extensions around the official XPert implementation.
 
 The module deliberately does not reimplement XPert's transformer.  It provides
 two small overlays:
 
 * ``PerturbagenEncoder`` projects KPGT and UniPert independently to the
-  official hidden size and emits one token per representation;
+  official hidden size;
 * ``build_xpert_additive_model`` creates a subclass of the official XPertNet
-  and appends those tokens through a hook on the official ``drug_emb`` output.
+  and fuses projected features as a gated residual on the existing compound
+  (HG/global) representation. Sequence length is unchanged.
 
 The hook keeps the official HG + UniMol path and all downstream attention,
 loss, and prediction heads unchanged.  The external XPert source is supplied
@@ -32,7 +33,7 @@ except ImportError:  # pragma: no cover - GPU environment is the execution contr
 if nn is not None:
 
     class PerturbagenEncoder(nn.Module):
-        """Project each additive chemical representation to one hidden token."""
+        """Project each additive chemical representation to one hidden vector."""
 
         def __init__(
             self,
@@ -92,7 +93,7 @@ else:
 
 
 def append_perturbagen_tokens(base_drug_embed: Tensor, extra_tokens: Tensor) -> Tensor:
-    """Append separate additive tokens without changing the official sequence."""
+    """Legacy helper retained for compatibility; overlays use residual fusion."""
     if base_drug_embed.ndim != 3 or extra_tokens.ndim != 3:
         raise ValueError("drug embeddings and additive tokens must be rank-3 tensors")
     if base_drug_embed.shape[0] != extra_tokens.shape[0]:
@@ -113,13 +114,14 @@ def build_xpert_additive_model(
     gate_init: float = 0.0,
     freeze_official: bool = False,
 ) -> Type[Any]:
-    """Return an XPertNet subclass that adds frozen-feature tokens.
+    """Return an XPertNet subclass that adds frozen-feature residuals.
 
     ``official_model`` must be the imported upstream ``XPertNet`` class.  The
     returned class consumes the ordinary ten-item XPert tuple plus KPGT and/or
-    UniPert tensors appended at the end.  A forward hook intercepts only the
-    output of the official drug embedding module; all transformer layers and
-    heads continue to execute in upstream code.
+    UniPert tensors appended to the *dataset tuple* (not the model sequence).
+    A forward hook intercepts only the output of the official drug embedding
+    module; all transformer layers and heads continue to execute in upstream
+    code with unchanged sequence length.
     """
     if torch is None:  # pragma: no cover - runtime dependency
         raise RuntimeError("PyTorch is required for XPert additive models")
@@ -140,9 +142,8 @@ def build_xpert_additive_model(
                 use_unipert=use_unipert,
             )
             # A zero-initialised residual gate gives strict baseline
-            # equivalence at construction time.  The hook bypasses sequence
-            # extension while all gates are zero, so the extra positions do
-            # not perturb attention/normalisation in the official network.
+            # equivalence at construction time. Non-zero gates add a
+            # projected residual to the existing HG/global token only.
             self.additive_gate = nn.Parameter(
                 torch.full((int(use_kpgt) + int(use_unipert),), float(gate_init))
             )
@@ -169,11 +170,8 @@ def build_xpert_additive_model(
             kpgt, unipert = self._active_additive_features
             gates = self.additive_gate
             if torch.count_nonzero(gates).item() == 0:
-                # Keep the official sequence *exactly* unchanged while still
-                # exposing a straight-through gradient to the gate.  This
-                # avoids a dead gate and makes a freshly inherited checkpoint
-                # numerically equivalent to the official baseline in both
-                # train and eval modes.
+                # Keep the official representation exactly unchanged while
+                # still exposing a straight-through gradient to the gate.
                 straight_through_zero = gates - gates.detach()
                 # Use raw feature means here to avoid invoking dropout (and
                 # consuming RNG state) while the extension is exactly off.
@@ -183,8 +181,13 @@ def build_xpert_additive_model(
                 residual = signal.unsqueeze(-1) * straight_through_zero.sum().to(signal)
                 return output + residual
             tokens = self.perturbagen_encoder(kpgt=kpgt, unipert=unipert)
-            tokens = tokens * gates.to(device=tokens.device, dtype=tokens.dtype).view(1, -1, 1)
-            return append_perturbagen_tokens(output, tokens)
+            gated = tokens * gates.to(device=tokens.device, dtype=tokens.dtype).view(1, -1, 1)
+            # Fuse into existing compound/HG global token (position zero),
+            # preserving official sequence length and attention masks.
+            residual = gated.sum(dim=1)
+            fused = output.clone()
+            fused[:, 0, :] = fused[:, 0, :] + residual
+            return fused
 
         def forward(self, data: Any, mode: str = "ST") -> Any:
             if len(data) < 10:
