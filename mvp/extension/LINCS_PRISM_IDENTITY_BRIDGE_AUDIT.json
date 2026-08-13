@@ -1,0 +1,38 @@
+{
+  "alias_only_candidates": 225,
+  "ambiguous_alias_matches": 65,
+  "ambiguous_pert_id_matches": 0,
+  "ambiguous_structure_matches": 0,
+  "bridge_rows": 4686,
+  "exact_alias_matches": 225,
+  "exact_inchi_key_matches": 6,
+  "exact_pert_id_matches": 1925,
+  "formal_eligible_identity_rows": 1931,
+  "formal_eligible_unique_compound_base_ids": 1851,
+  "format": "lincs_prism_identity_bridge_v1",
+  "identity_keys": [
+    "pert_id",
+    "canonical_smiles",
+    "InChIKey",
+    "aliases"
+  ],
+  "identity_matches": 1931,
+  "lincs_pert_info": "data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_pert_info.txt.gz",
+  "lincs_pert_info_sha256": "b1945b3fde51021865b12269929cc78ccf2665be27f53a4da9336e4ddcf4b42f",
+  "lincs_trt_cp_compounds": 20413,
+  "match_method_counts": {
+    "ambiguous_alias": 65,
+    "exact_alias": 225,
+    "exact_inchi_key": 6,
+    "exact_pert_id": 1925,
+    "unmatched": 2465
+  },
+  "output": "artifacts/extension/lincs_prism_identity_bridge.csv",
+  "output_sha256": "d6a399d8cc62b41a57e7b50d1e85459be14aaadf2f16759a2787d6ef7a81d19b",
+  "prism_treatment_info": "mvp/core_data/_source_cache/primary-screen-replicate-collapsed-treatment-info.csv",
+  "prism_treatment_info_sha256": "d649f207a437c9e9910572c5023d02f68a77c946f6e972c998b057160a3505e6",
+  "prism_unique_broad_ids": 4686,
+  "prism_unique_compound_base_ids": 4532,
+  "response_values_read": false,
+  "unmatched_compounds": 2530
+}

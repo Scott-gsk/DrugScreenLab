@@ -19,6 +19,7 @@ MANIFEST_FORMAT = "phase1_context_chemical_manifest_v1"
 SUPPORTED_MANIFEST_FORMATS = {
     MANIFEST_FORMAT,
     "phase1_context_unipert_manifest_v1",
+    "phase1_context_kpgt_unipert_manifest_v1",
     "phase1_context_mechanism_manifest_v1",
 }
 

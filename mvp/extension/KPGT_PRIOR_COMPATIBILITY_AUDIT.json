@@ -1,0 +1,42 @@
+{
+  "format": "kpgt_prior_compatibility_audit_v1",
+  "status": "BROKEN",
+  "status_meaning": "FOUNDATION asset unavailable; this is not evidence against KPGT's published representation.",
+  "role": "reference_architectural_prior",
+  "historical_internal_evidence": {
+    "status": "PRIOR_INTERNAL_EVIDENCE_UNVERIFIED_REPOSITORY_HISTORY",
+    "search_scope": "current repository, all local git refs, and attached-file names",
+    "finding": "No auditable KPGT embedding, KPGT+UniPert fusion artifact, or historical compatibility record is present in this checkout.",
+    "action": "Do not re-prove or infer a historical result; require an auditable embedding table and provenance before reuse."
+  },
+  "official_source": {
+    "repository": "https://github.com/lihan97/KPGT",
+    "repository_revision": "47dc1646c70b2138a157de481d24a1ac35d174cd",
+    "pretrained_weight_share": "https://figshare.com/s/d488f30c23946cf6898f",
+    "weight_status_on_2026_08_13": "PRIVATE_SHARED_ITEM",
+    "local_source_path": "data/external/kpgt_source",
+    "local_weight_path": null
+  },
+  "required_compatibility_contract": {
+    "alignment_key": "pert_id",
+    "required_feature_table": "finite float32 [n_drugs, n_kpgt_features]",
+    "required_mapping": "one-to-one JSON pert_id -> row index",
+    "required_provenance": [
+      "official KPGT source revision",
+      "weight file SHA256",
+      "preprocessing revision",
+      "canonical SMILES source and identity digest",
+      "feature shape and extraction command"
+    ],
+    "forbidden_inputs": ["PRISM response values", "GDSC response values", "test labels", "external labels"]
+  },
+  "implemented_path": {
+    "fusion_module": "src/drug_screen/modeling/phase2_fusion.py",
+    "manifest_builder": "scripts/modeling/build_phase2_kpgt_unipert_manifest.py",
+    "manifest_format": "phase1_context_kpgt_unipert_manifest_v1",
+    "fusion_rule": "concatenate KPGT structural features and official UniPert chemical features after pert_id alignment",
+    "labels_used": false
+  },
+  "decision": "BLOCK_E1_UNTIL_KPGT_FEATURE_ASSET_IS_AUDITABLE",
+  "negative_representation_semantics": "The existing UniPert replacement result is recorded as UNIPERT_REPLACEMENT_NO_SIGNAL; it does not invalidate UniPert as an additive chemical representation or genetic-to-chemical shared-space prior."
+}

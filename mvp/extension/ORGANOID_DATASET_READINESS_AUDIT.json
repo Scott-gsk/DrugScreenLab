@@ -1,0 +1,42 @@
+{
+  "format": "organoid_dataset_readiness_audit_v1",
+  "status": "METADATA_READY_ADAPTATION_PENDING",
+  "datasets": [
+    {
+      "accession": "GSE280506",
+      "official_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280506",
+      "role": "organoid_genetic_adaptation_reference",
+      "status": "METADATA_READY",
+      "organism": "Homo sapiens",
+      "platform": "GPL24676",
+      "samples": 4,
+      "design": "primary human gastric organoid; CRISPRi/CRISPRa; DMSO/cisplatin; single-cell RNA-seq",
+      "constraints": [
+        "metadata does not provide a chemical dose-response ground truth for the planned transfer endpoint",
+        "requires gene harmonization and explicit single-cell-to-context aggregation"
+      ]
+    },
+    {
+      "accession": "GSE145308",
+      "official_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE145308",
+      "role": "organoid_genetic_adaptation_reference",
+      "status": "METADATA_READY",
+      "organism": "Homo sapiens",
+      "platforms": ["GPL20301", "GPL24676"],
+      "samples": 24,
+      "design": "human intestinal organoid; WT/APC/ARID1A/SMARCA4 perturbations; 0h/24h; three replicates",
+      "constraints": [
+        "two platform/batch strata must remain explicit",
+        "not a chemical sensitivity ground-truth benchmark"
+      ]
+    }
+  ],
+  "readiness_gate": {
+    "metadata_identity": "PASS",
+    "gene_universe_and_platform_contract": "PENDING",
+    "genetic_to_chemical_response_adapter": "PENDING",
+    "small_feasibility_probe": "NOT_RUN",
+    "full_pdo_benchmark": "DEFERRED"
+  },
+  "forbidden_interpretation": "These accessions support organoid context/mechanism adaptation design; they do not by themselves validate a chemical response ranking or clinical efficacy."
+}
