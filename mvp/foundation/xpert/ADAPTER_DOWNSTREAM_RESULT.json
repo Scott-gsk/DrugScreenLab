@@ -1,0 +1,148 @@
+{
+  "format": "xpert_adapter_downstream_evaluation_v1",
+  "status": "READY_FOR_PROGRAM_REVIEW",
+  "foundation_boundary": "XPert weights and official inference were executed before reading PRISM response values; this is an integration diagnostic, not a new EXP.",
+  "adapter": {
+    "path": "data/external/xpert_source/processed_data/l1000_sdst_prism_adapter.h5ad",
+    "records": 220,
+    "drugs": 4,
+    "contexts": 55,
+    "heldout_test_records": 0
+  },
+  "delta978": {
+    "profile": "data/external/xpert_source/experiment/l1000/20260813_133750/split_1_predict_profile.npy",
+    "profile_predicted_delta_shape": [
+      220,
+      978
+    ],
+    "test_drug_scores": [],
+    "all_adapter_drug_scores": [
+      {
+        "pert_id": "BRD-K02950022",
+        "n_rows": 55,
+        "reversal_predicted": 0.19760155193432402
+      },
+      {
+        "pert_id": "BRD-K12343256",
+        "n_rows": 55,
+        "reversal_predicted": 0.19980990517046465
+      },
+      {
+        "pert_id": "BRD-K40738845",
+        "n_rows": 55,
+        "reversal_predicted": 0.19014404315040725
+      },
+      {
+        "pert_id": "BRD-K49865102",
+        "n_rows": 55,
+        "reversal_predicted": 0.19374527027204608
+      }
+    ]
+  },
+  "disease_reversal": {
+    "signature": "mvp/core_data/crc_disease_signature_exact978.tsv",
+    "signature_gene_count": 947,
+    "scoring": "-Spearman(signed disease signature, predicted Delta978)"
+  },
+  "broad_prism": {
+    "response_path": "mvp/core_data/compact_prism_response.parquet",
+    "exact_context_joined_rows": 40,
+    "line_metrics": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "macro_mean_spearman": 0.45999999999999996,
+      "macro_median_spearman": 0.7,
+      "fraction_positive_spearman": 0.8,
+      "macro_mean_top2_overlap_rate": 0.7
+    },
+    "global_predicted_vs_observed_oracle_spearman": 0.7999999999999999,
+    "line_rows": [
+      {
+        "depmap_id": "ACH-000552",
+        "ccle_name": "HT29_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.7999999999999999,
+        "top2_overlap_rate": 0.5
+      },
+      {
+        "depmap_id": "ACH-000651",
+        "ccle_name": "SW620_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.7999999999999999,
+        "top2_overlap_rate": 1.0
+      },
+      {
+        "depmap_id": "ACH-000680",
+        "ccle_name": "SW948_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.39999999999999997,
+        "top2_overlap_rate": 0.5
+      },
+      {
+        "depmap_id": "ACH-000842",
+        "ccle_name": "SW480_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.7999999999999999,
+        "top2_overlap_rate": 1.0
+      },
+      {
+        "depmap_id": "ACH-000895",
+        "ccle_name": "CL34_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.39999999999999997,
+        "top2_overlap_rate": 0.5
+      },
+      {
+        "depmap_id": "ACH-000943",
+        "ccle_name": "RKO_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.6000000000000001,
+        "top2_overlap_rate": 1.0
+      },
+      {
+        "depmap_id": "ACH-000950",
+        "ccle_name": "LOVO_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.7999999999999999,
+        "top2_overlap_rate": 1.0
+      },
+      {
+        "depmap_id": "ACH-000959",
+        "ccle_name": "SNUC4_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": -1.0,
+        "top2_overlap_rate": 0.0
+      },
+      {
+        "depmap_id": "ACH-000970",
+        "ccle_name": "SNUC5_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 0.0,
+        "top2_overlap_rate": 0.5
+      },
+      {
+        "depmap_id": "ACH-000971",
+        "ccle_name": "HCT116_LARGE_INTESTINE",
+        "eligible": true,
+        "candidate_count": 4,
+        "spearman": 1.0,
+        "top2_overlap_rate": 1.0
+      }
+    ],
+    "context_join_rule": "exact base ccle_name (before underscore) == adapter cell_iname and pert_id; no reference-context fallback"
+  },
+  "known_limits": [
+    "The current adapter is a four-drug, identity-frozen integration cohort, not a full Broad PRISM retraining set.",
+    "PRISM response values are used only in this downstream evaluation after prediction and identity/context freeze.",
+    "No PRISM label or response value is used for XPert fitting, checkpoint selection, or adapter construction."
+  ]
+}

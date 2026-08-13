@@ -1,0 +1,72 @@
+{
+  "track": "XPert Foundation Reset",
+  "status": "XPERT_FOUNDATION_READY",
+  "experiment_id": null,
+  "official_repository": {
+    "url": "https://github.com/GSanShui/XPert",
+    "commit": "d53ff497e465692c80fac7b899e3cc5cc8e7bfed",
+    "local_path": "data/external/xpert_source",
+    "upstream_code_modified": true,
+    "compatibility_repairs": [
+      "datasets/__init__.py: prevent installed third-party datasets package from shadowing the upstream local package",
+      "flash_attn/flash_attn_interface.py: PyTorch scaled-dot-product fallback because WSL has no nvcc",
+      "models/model_utils.py: reshape non-contiguous attention output for the installed PyTorch/CUDA runtime"
+    ]
+  },
+  "figshare_record": {
+    "doi": "10.6084/m9.figshare.28955141.v1",
+    "api_url": "https://api.figshare.com/v2/articles/28955141",
+    "record_status": "public"
+  },
+  "assets": [
+    {
+      "name": "processed_data.zip",
+      "file_id": 58181296,
+      "url": "https://ndownloader.figshare.com/files/58181296",
+      "size_bytes": 1579752267,
+      "md5": "4a58bc01b42c7909e7adc2ddd40b30ac",
+      "required_for": ["official L1000 data contract", "cold-cell split", "cold-drug split"],
+      "status": "DOWNLOADED_VERIFIED",
+      "local_archive": "data/external/xpert_assets/processed_data.zip",
+      "extracted_path": "data/external/xpert_source/processed_data"
+    },
+    {
+      "name": "all_drugs_unimol_arr.zip",
+      "file_id": 54296132,
+      "url": "https://ndownloader.figshare.com/files/54296132",
+      "size_bytes": 1105069918,
+      "md5": "4cea4b57b6143fbe9ee5f3f8d860607b",
+      "required_for": ["official UniMol drug feature contract"],
+      "status": "DOWNLOADED_VERIFIED",
+      "local_archive": "data/external/xpert_assets/all_drugs_unimol_arr.zip",
+      "extracted_path": "data/external/xpert_source/processed_data/all_drugs_unimol_arr.npy"
+    },
+    {
+      "name": "HG_data.zip",
+      "file_id": 54292856,
+      "url": "https://ndownloader.figshare.com/files/54292856",
+      "size_bytes": 100190311,
+      "md5": "17677573799fc37577f001c33cc2921d",
+      "required_for": ["official HG drug embeddings"],
+      "status": "PRESENT_IN_CLONED_REPOSITORY",
+      "extracted_path": "data/external/xpert_source/HG_data/saved_embedding/HG_drug_embeddings.npy",
+      "note": "The official clone already contains the exact embedding consumed by XPert; full HG graph archive was not needed for this bounded reproduction."
+    },
+    {
+      "name": "saved_model.zip",
+      "file_id": 58180870,
+      "url": "https://ndownloader.figshare.com/files/58180870",
+      "size_bytes": 373399282,
+      "md5": "d2375c96c6f31177727332dfee0ea166",
+      "required_for": ["bounded full-L1000 cold-cell/cold-drug evaluation"],
+      "status": "DOWNLOADED_VERIFIED",
+      "local_archive": "data/external/xpert_assets/saved_model.zip",
+      "extracted_path": "data/external/xpert_source/saved_model/l1000_sdst_warm_split.pth"
+    }
+  ],
+  "download_policy": {
+    "bounded": true,
+    "excluded_assets": ["reproducing.zip", "Xpert.zip", "l1000_mdmt_268022_pretrain.zip", "l1000_mdmt_full_336852.zip"],
+    "note": "No raw dataset is copied into tracked project paths; downloaded public assets remain external/ignored and are checksum-registered here."
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "format": "xpert_foundation_reproduction_result_v1",
+  "track": "FOUNDATION",
+  "status": "XPERT_FOUNDATION_READY",
+  "experiment_id": null,
+  "scientific_scope": "Engineering integration and published-baseline reproduction; no new scientific hypothesis and no new EXP-ID.",
+  "protected_records": {
+    "exp_004": "遗传→化学 FAST 结果未修改、未覆盖、未重新解释。",
+    "exp_005": "保留给第一个 Novel Extension；本 Foundation track 不创建或占用 EXP-005。"
+  },
+  "official_foundation": {
+    "repository": "https://github.com/GSanShui/XPert",
+    "commit": "d53ff497e465692c80fac7b899e3cc5cc8e7bfed",
+    "paper": "https://www.nature.com/articles/s42256-025-01165-w",
+    "figshare_record": "https://api.figshare.com/v2/articles/28955141",
+    "local_source": "data/external/xpert_source",
+    "model_design_changed": false,
+    "official_contract": "adata.X post-treatment, adata.obsm[X_ctl] matched control, 978 ordered genes, official obs identity/split fields"
+  },
+  "runtime": {
+    "platform": "WSL2",
+    "conda_environment": "drugscreening-gpu",
+    "torch": "2.5.1",
+    "cuda_runtime": "available",
+    "evaluation_devices": ["cuda:1 RTX A5000", "cuda:2 Quadro RTX 4000 for small adapter only"],
+    "compatibility_repairs": [
+      "local datasets package marker to avoid third-party package shadowing",
+      "flash_attn fallback using PyTorch attention when the installed runtime lacks the upstream kernel",
+      "reshape non-contiguous attention output for the installed PyTorch/CUDA runtime",
+      "official example config completed with the official KPGT feature path"
+    ],
+    "known_environment_deviation": "unimol-tools requires a legacy pandas compatibility range; import and official inference work with the project pandas runtime, with the upstream warning retained."
+  },
+  "bounded_protocol": {
+    "dataset": "l1000_sdst_78453.h5ad",
+    "gene_count": 978,
+    "single_seed": 2024,
+    "epochs": 10,
+    "official_architecture_and_loss_preserved": true,
+    "full_paper_reproduction": false,
+    "independent_reviewer_required": false,
+    "cold_cell_split": "split_cold_cell_1",
+    "cold_drug_split": "split_cold_drug_1",
+    "decision_value": "Determine whether the official XPert path has finite, non-near-zero cold generalization before allocating Novel Extension effort."
+  },
+  "demo": {
+    "dataset": "l1000_sdst_example",
+    "records": 30,
+    "epochs": 10,
+    "overall_pearson": 0.958,
+    "delta_pearson": 0.105,
+    "interpretation": "Finite execution and non-collapse smoke check only; not used as the foundation readiness endpoint."
+  },
+  "warm_sanity": {
+    "checkpoint": "data/external/xpert_source/saved_model/l1000_sdst_warm_split.pth",
+    "split": "split_1",
+    "test_rows": 15691,
+    "mse_delta": 0.228,
+    "rmse_delta": 0.477,
+    "mae_delta": 0.297,
+    "pearson_delta": 0.721,
+    "spearman_delta": 0.653,
+    "interpretation": "Official checkpoint/pipeline sanity, separate from the bounded cold-split readiness decision."
+  },
+  "cold_cell": {
+    "split": "split_cold_cell_1",
+    "train_rows": 52875,
+    "test_rows": 25578,
+    "checkpoint": "data/external/xpert_source/experiment/l1000/20260813_121726/split_cold_cell_1_fold_early_stop.pth",
+    "test_profile": "data/external/xpert_source/experiment/l1000/20260813_132404/split_cold_cell_1_predict_profile.npy",
+    "metrics": {
+      "mse": 0.407,
+      "rmse": 0.638,
+      "mae": 0.419,
+      "pearson": 0.96,
+      "spearman": 0.956,
+      "mse_delta": 0.407,
+      "rmse_delta": 0.638,
+      "mae_delta": 0.419,
+      "pearson_delta": 0.282,
+      "spearman_delta": 0.216,
+      "prediction_std": 0.25016969442367554,
+      "all_predictions_finite": true
+    },
+    "evaluation_provenance": "Official train_xpert.py mode=test and output_profile=True; test CSV/profile captured independently from the training-run validation printout."
+  },
+  "cold_drug": {
+    "split": "split_cold_drug_1",
+    "train_rows": 62624,
+    "test_rows": 15829,
+    "checkpoint": "data/external/xpert_source/experiment/l1000/20260813_130757/split_cold_drug_1_fold_early_stop.pth",
+    "test_profile": "data/external/xpert_source/experiment/l1000/20260813_135501/split_cold_drug_1_predict_profile.npy",
+    "metrics": {
+      "mse": 0.429,
+      "rmse": 0.655,
+      "mae": 0.422,
+      "pearson": 0.957,
+      "spearman": 0.954,
+      "mse_delta": 0.429,
+      "rmse_delta": 0.655,
+      "mae_delta": 0.422,
+      "pearson_delta": 0.356,
+      "spearman_delta": 0.243,
+      "prediction_std": 0.2569842040538788,
+      "all_predictions_finite": true
+    },
+    "evaluation_provenance": "Official train_xpert.py mode=test and output_profile=True against the finite early-stop checkpoint."
+  },
+  "readiness_rule": {
+    "required": [
+      "both cold splits have n_test > 0",
+      "finite positive Delta978 Pearson",
+      "finite nonzero prediction standard deviation",
+      "official evaluation path completes without architecture substitution"
+    ],
+    "observed": {
+      "cold_cell_pearson_delta": 0.282,
+      "cold_drug_pearson_delta": 0.356,
+      "cold_cell_prediction_std": 0.25016969442367554,
+      "cold_drug_prediction_std": 0.2569842040538788
+    },
+    "decision": "XPERT_FOUNDATION_READY"
+  },
+  "training_numerics": {
+    "status": "KNOWN_DEVIATION",
+    "observation": "The bounded cold-drug training log contained one NaN train-loss epoch; later epochs recovered to finite loss, epoch 9 validation remained finite, and the final saved early-stop checkpoint produced the finite independent test metrics above.",
+    "handling": "No architecture change and no label/data substitution. The finite checkpoint was used for the authoritative test; the numerical event is retained for future hardening."
+  },
+  "adapter_integration": {
+    "phase1_adapter": "data/external/xpert_source/processed_data/xpert_phase1_adapter.h5ad",
+    "cartesian_prism_adapter": "data/external/xpert_source/processed_data/l1000_sdst_prism_adapter.h5ad",
+    "cartesian_records": 220,
+    "drugs": 4,
+    "contexts": 55,
+    "gene_count": 978,
+    "warm_profile": "data/external/xpert_source/experiment/l1000/20260813_133750/split_1_predict_profile.npy",
+    "downstream_result": "mvp/foundation/xpert/ADAPTER_DOWNSTREAM_RESULT.json",
+    "disease_reversal": {
+      "signature_gene_count": 947,
+      "scoring": "-Spearman(signed disease signature, predicted Delta978)"
+    },
+    "broad_prism": {
+      "eligible_line_count": 10,
+      "macro_mean_spearman": 0.46,
+      "macro_median_spearman": 0.7,
+      "fraction_positive_spearman": 0.8,
+      "macro_mean_top2_overlap_rate": 0.7,
+      "response_used_for_training": false
+    },
+    "status": "READY_FOR_PROGRAM_REVIEW"
+  },
+  "fallback": {
+    "used": false,
+    "multi_dcp": "not activated because XPert official path completed the bounded foundation gate"
+  },
+  "next_step": "Do not resume simple Context+Chemical as the main backbone. Preserve EXP-005 for the first Novel Extension: XPert + KPGT + UniPert versus XPert baseline / XPert + KPGT under fixed data, split, context, loss, and evaluation."
+}
