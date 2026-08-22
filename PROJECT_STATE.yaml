@@ -8,29 +8,29 @@ runtime:
   environment_doc: docs/ENVIRONMENT.md
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
-  active_experiment: EXP-006
+  active_experiment: EXP-008
   active_mvp: MVP-001
   proposed_mvp: null
   mvp_status: result_reviewed
   mvp_result: PROMISING
   mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
   last_accepted_experiment: EXP-002
-  last_completed_experiment: EXP-002
+  last_completed_experiment: EXP-007
   evidence_level: phase_4_screening_gate_and_genetic_transfer_fast
   accepted_model: null
   current_champion: official_xpert_foundation_exp005_fast_baseline_retained
   current_baseline: official_xpert_hg_unimol_foundation
-  program_checkpoint: DRUGSCREENLAB_PROGRAM_DIRECTION_CHECKPOINT_V2.md
+  program_checkpoint: DRUGSCREENLAB_PROGRAM_EXECUTION_CHECKPOINT.md
   program_decision: CONTINUE_WITH_EXTENSIONS
   cross_study_status: OFFICIAL_GDSC_ASSET_REACHABLE_LOCAL_FREEZE_PENDING
-  next_experiment_id: EXP-006
+  next_experiment_id: EXP-010
   extension_status:
     foundation: XPERT_FOUNDATION_READY
     e1_kpgt_unipert_additive: FAST_COMPLETE_CHEMICAL_BACKBONE_CHAMPION_XPERT
-    e2_genetic_chemical_low_data: FAST_RESULT_READY_PROMISING_10PCT_GAIN
-    e3_prism_identity_bridge: GATE_B_ORACLE_POSITIVE_PREDICTED_NEGATIVE_SPARSE_ORACLE
-    e4_target_pathway_transfer: FORWARD_PREPARATION_COMPLETE
-    organoid_readiness: METADATA_READY_ADAPTATION_PENDING
+    e2_genetic_chemical_low_data: EXP006_COMPLETE_GENETIC_PRETRAINING_HURT_CHEMICAL_DELTA978
+    e3_prism_identity_bridge: EXP007_ORACLE_NEAR_NULL_FAIL_RULE_AUDITED
+    e4_target_pathway_transfer: EXP008_APPROVED_PREPARATION_ONLY_NO_COMPLETED_RESULT
+    organoid_readiness: READINESS_PREPARATION_LOCAL_MATRICES_PRESENT_ADAPTER_NOT_BUILT
 data:
   default_root: data
   root_env: DRUGSCREEN_DATA_ROOT

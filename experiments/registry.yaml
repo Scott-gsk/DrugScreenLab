@@ -58,12 +58,37 @@ experiments:
     record: experiments/records/EXP-005.md
   - id: EXP-006
     title: Genetic to Chemical Transfer Under Low Chemical Supervision
-    status: fast_result_ready_promising_low_chemical_data_signal
+    status: quantitative_complete_genetic_pretrain_hurt_chemical_delta978
     hypothesis: genetic pretraining reduces chemical perturbation supervision required for exact978 response prediction and downstream screening utility
     primary_endpoint: frozen_chemical_test_spearman_transfer_minus_chemical_only_at_20pct_and_10pct_unique_compounds
     approved_by: user_program_direction_reset
     approved_on: 2026-08-13
     record: experiments/records/EXP-006.md
+  - id: EXP-007
+    title: Full Observed Oracle Screening Translation
+    status: oracle_near_null_fail_rule_audit_complete
+    hypothesis: >
+      在 Observed chemical ∩ CRC exact contexts ∩ PRISM compounds ∩ canonical dose/time
+      的最大 support 上，Observed Δ978 → Disease Reversal 的 Top-10/20/50 lift 与 NDCG
+      excess 显著高于 line-wise permutation null。
+    primary_endpoint: top10_20_50_lift_and_ndcg_excess_over_permutation_null
+    approved_by: user_program_execution_mandate_2026-08-13
+    approved_on: 2026-08-13
+    record: experiments/records/EXP-007.md
+  - id: EXP-008
+    title: Full SDST Drug-Target-Pathway Residual
+    status: approved_for_evidence
+    hypothesis: >
+      在官方完整 SDST（78,453 × 978，10 μM / 24 h）上，冻结官方 XPert 主干，
+      只训练药物–靶点–通路低容量残差后，冷药物全量测试的行宏 Δ978 斯皮尔曼
+      比冻结官方 XPert 至少高 0.02，且预测标准差 > 0.01、相对主干下降不超过 20%。
+    primary_endpoint: cold_drug_full_sdst_row_macro_delta978_spearman_increment_over_frozen_xpert
+    approved_by: user_long_running_execution_authorization
+    approved_on: 2026-08-16
+    record: experiments/records/EXP-008.md
+    supersedes:
+      - experiments/EXP-008-Design.md
+      - disease_signature_swap_gate
 mvps:
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility
