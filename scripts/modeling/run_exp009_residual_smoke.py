@@ -31,6 +31,20 @@ if str(ROOT / "src") not in sys.path:
 SOURCE = ROOT / "data" / "external" / "xpert_source"
 DEFAULT_CHECKPOINT = SOURCE / "saved_model" / "l1000_sdst_warm_split.pth"
 DEFAULT_OUTPUT = ROOT / "artifacts" / "experiments" / "EXP-009" / "residual_smoke"
+DEFAULT_SOFT_TARGET_FEATURES = (
+    ROOT
+    / "artifacts"
+    / "experiments"
+    / "EXP-009"
+    / "teacher_morgan_probe_100k"
+    / "xpert_sdst_features"
+    / "xpert_sdst_soft_target_features.npz"
+)
+EXPECTED_SOFT_TARGET_FEATURES_SHA256 = "84cc67ffe427b6e51ee2b2ad08c9b3b81d416721bcc85ad3c3d8f9c3517a1ec0"
+# Applied only after the pre-activation A/C equivalence assertion. It is small
+# enough to keep the bounded effective gate essentially inactive (about 5e-5),
+# but lets gradients reach the zero-initialized residual output layer.
+RESIDUAL_ACTIVATION_RAW_GAMMA = 1e-3
 
 
 def checkpoint_sha256(path: Path) -> str:
@@ -143,6 +157,77 @@ def _structure_features(batch: Any) -> Any:
     return candidates[0].mean(dim=1)
 
 
+def load_soft_target_features_for_batch(
+    path: Path | str,
+    pert_ids: list[str],
+    *,
+    expected_target_dim: int = 64,
+) -> tuple[np.ndarray, dict[str, Any]]:
+    """Read only precomputed Morgan probabilities in exact requested pert_id order."""
+    artifact = Path(path)
+    if not artifact.is_file():
+        raise FileNotFoundError(f"soft-target feature artifact not found: {artifact}")
+    with np.load(artifact, allow_pickle=False) as payload:
+        required = {"pert_id", "soft_target_probabilities", "feature_valid"}
+        missing = sorted(required.difference(payload.files))
+        if missing:
+            raise ValueError(f"soft-target feature artifact missing arrays: {missing}")
+        stored_ids = np.asarray(payload["pert_id"]).astype(str)
+        probabilities = np.asarray(payload["soft_target_probabilities"], dtype=np.float32)
+        valid = np.asarray(payload["feature_valid"], dtype=bool)
+    if probabilities.shape != (len(stored_ids), expected_target_dim):
+        raise ValueError(
+            "soft-target feature probabilities must have shape "
+            f"({len(stored_ids)}, {expected_target_dim}), received {probabilities.shape}"
+        )
+    if valid.shape != (len(stored_ids),):
+        raise ValueError("soft-target feature validity mask must align with pert_id")
+    lookup = {pert_id: position for position, pert_id in enumerate(stored_ids.tolist())}
+    missing_ids = sorted(set(pert_ids).difference(lookup))
+    if missing_ids:
+        raise ValueError(f"soft-target feature artifact does not contain requested pert_id values: {missing_ids}")
+    positions = np.asarray([lookup[pert_id] for pert_id in pert_ids], dtype=np.int64)
+    if not np.all(valid[positions]):
+        invalid_ids = [pert_id for pert_id, position in zip(pert_ids, positions, strict=True) if not valid[position]]
+        raise ValueError(f"soft-target feature artifact has invalid features for requested pert_id values: {invalid_ids}")
+    selected = probabilities[positions]
+    if not np.isfinite(selected).all():
+        raise ValueError("soft-target feature artifact has non-finite probabilities for requested pert_id values")
+    return selected, {
+        "path": str(artifact.resolve()),
+        "sha256": checkpoint_sha256(artifact),
+        "expected_sha256": EXPECTED_SOFT_TARGET_FEATURES_SHA256 if artifact.resolve() == DEFAULT_SOFT_TARGET_FEATURES.resolve() else None,
+        "feature_source": "precomputed_morgan_soft_target_probabilities",
+        "rows": int(len(stored_ids)),
+        "target_dim": int(expected_target_dim),
+        "requested_batch_rows": int(len(pert_ids)),
+    }
+
+
+def residual_learnability_audit(
+    *,
+    raw_gamma_before: float,
+    raw_gamma_after: float,
+    gradient_norms: dict[str, float],
+    parameter_max_abs_updates: dict[str, float],
+    loss_finite: bool,
+) -> dict[str, Any]:
+    """Classify one post-equivalence residual optimization step honestly."""
+    at_least_one_gradient_nonzero = any(value > 0.0 for value in gradient_norms.values())
+    at_least_one_updated = any(value > 0.0 for value in parameter_max_abs_updates.values())
+    status = "COMPLETE" if loss_finite and at_least_one_gradient_nonzero and at_least_one_updated else "BROKEN"
+    return {
+        "status": status,
+        "loss_finite": bool(loss_finite),
+        "raw_gamma_before": float(raw_gamma_before),
+        "raw_gamma_after": float(raw_gamma_after),
+        "residual_gradient_norms": gradient_norms,
+        "residual_parameter_max_abs_updates": parameter_max_abs_updates,
+        "at_least_one_residual_gradient_nonzero": at_least_one_gradient_nonzero,
+        "at_least_one_residual_parameter_updated": at_least_one_updated,
+    }
+
+
 def _load_teacher(path: Path, *, device: Any) -> tuple[Any, dict[str, Any]]:
     import torch
     from drug_screen.foundation.soft_target import SoftTargetHead
@@ -203,7 +288,11 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     with torch.no_grad():
         baseline_output = baseline(batch)
     structure = _structure_features(batch).to(device)
+    batch_pert_ids = data.obs["pert_id"].astype(str).tolist()
     teacher_audit = None
+    soft_target_feature_audit = None
+    activation = None
+    learnability = None
     if args.variant == "A":
         model = baseline
         output = baseline_output
@@ -217,40 +306,89 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         model = build_exp009_residual_wrapper(official_model, variant=args.variant, structure_dim=514, soft_target_dim=64, hidden_dim=args.hidden_dim, n_genes=978).to(device)
         soft_targets = None
         if args.variant == "C":
-            teacher, teacher_audit = _load_teacher(Path(args.teacher_checkpoint), device=device)
-            with torch.no_grad():
-                soft_targets, _ = teacher(structure)
+            # C consumes the reviewed full 8,418 x 64 Morgan artifact directly;
+            # it does not re-run or substitute the small UniMol teacher smoke.
+            values, soft_target_feature_audit = load_soft_target_features_for_batch(
+                args.soft_target_features, batch_pert_ids, expected_target_dim=64
+            )
+            if (
+                Path(args.soft_target_features).resolve() == DEFAULT_SOFT_TARGET_FEATURES.resolve()
+                and soft_target_feature_audit["sha256"] != EXPECTED_SOFT_TARGET_FEATURES_SHA256
+            ):
+                raise ValueError("default Morgan soft-target artifact SHA256 does not match the approved identity")
+            soft_targets = torch.from_numpy(values).to(device)
         model.eval()
         with torch.no_grad():
             initialized = model(batch, structure_features=structure, soft_targets=soft_targets)
         max_delta = float((initialized[2] - baseline_output[2]).abs().max().cpu())
         initial_equivalence = {"checked": True, "max_abs_delta": max_delta, "exact": max_delta == 0.0}
+        # Phase 2 begins only after strict pre-activation baseline equivalence.
+        # We retain the all-zero output initialization and activate raw_gamma to
+        # a fixed audit-visible value so its output layer can receive gradient.
+        with torch.no_grad():
+            model.residual.raw_gamma.fill_(RESIDUAL_ACTIVATION_RAW_GAMMA)
+        raw_gamma_before = float(model.residual.raw_gamma.detach().cpu())
+        max_effective_gate = float(0.05 * torch.tanh(model.residual.raw_gamma).detach().cpu())
+        parameters_before = {
+            name: parameter.detach().clone()
+            for name, parameter in model.residual.named_parameters()
+        }
         model.train()
         train_output = model(batch, structure_features=structure, soft_targets=soft_targets)
         loss = _official_loss(_OutputOverride(model, train_output), batch, config, official)
+        loss_finite = bool(torch.isfinite(loss).item())
         optimizer = torch.optim.AdamW((p for p in model.parameters() if p.requires_grad), lr=args.lr)
         optimizer.zero_grad(set_to_none=True)
-        loss.backward()
+        if loss_finite:
+            loss.backward()
         gradient_audit = model.gradient_audit()
         if gradient_audit["official_trainable_parameter_count"] or gradient_audit["official_parameters_with_grad"]:
             raise RuntimeError(f"frozen XPert gradient audit failed: {gradient_audit}")
-        optimizer.step()
+        if loss_finite:
+            optimizer.step()
+        raw_gamma_after = float(model.residual.raw_gamma.detach().cpu())
+        parameter_updates = {
+            name: float((parameter.detach() - parameters_before[name]).abs().max().cpu())
+            for name, parameter in model.residual.named_parameters()
+        }
+        learnability = residual_learnability_audit(
+            raw_gamma_before=raw_gamma_before,
+            raw_gamma_after=raw_gamma_after,
+            gradient_norms=gradient_audit["residual_gradient_norms"],
+            parameter_max_abs_updates=parameter_updates,
+            loss_finite=loss_finite,
+        )
+        activation = {
+            "policy": "after_pre_activation_equivalence_assertion_set_raw_gamma_fixed_1e-3_before_one_optimizer_step",
+            "raw_gamma_fixed": RESIDUAL_ACTIVATION_RAW_GAMMA,
+            "raw_gamma_before": raw_gamma_before,
+            "raw_gamma_after": raw_gamma_after,
+            "max_effective_gate": max_effective_gate,
+            "gate_bound": 0.05,
+            "output_layer_initialization": "all_zero_preserved_before_activation",
+        }
         output = train_output
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     result = {
-        "format": "exp009_residual_train_only_smoke_v1", "experiment": "EXP-009", "mode": "TRAIN_ONLY_SMOKE",
+        "format": "exp009_residual_train_only_smoke_v2", "experiment": "EXP-009", "mode": "TRAIN_ONLY_SMOKE",
+        "status": "COMPLETE" if learnability is None or learnability["status"] == "COMPLETE" else "BROKEN",
         "variant": args.variant, "variant_definition": {"A": "frozen official XPert baseline", "B": "frozen XPert + parameter-matched structure-only residual", "C": "frozen XPert + 64-d BindingDB soft-target residual"}[args.variant],
         "seed": args.seed, "command": args.command, "batch_size": args.batch_size, "max_batches": 1,
         "split": args.split, "endpoint": "official XPert Delta978 output index 2", "checkpoint": identity["checkpoint"],
         "checkpoint_inheritance": checkpoint_audit, "teacher_checkpoint": teacher_audit,
-        "initial_equivalence": initial_equivalence, "gradient_audit": gradient_audit,
+        "soft_target_features": soft_target_feature_audit,
+        "initial_equivalence": {
+            **initial_equivalence,
+            "scope": "pre_activation_only; checked before fixed raw_gamma activation and optimizer step",
+        },
+        "activation": activation, "gradient_audit": gradient_audit, "learnability": learnability,
         "model_trainable_parameters": count_trainable_parameters(model),
         "output_shape": list(output[2].shape),
     }
     manifest = args.output_dir / f"{args.variant}_manifest.json"
     manifest.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    print(json.dumps({"variant": args.variant, "manifest": str(manifest), "initial_equivalence": initial_equivalence, "gradient_audit": gradient_audit}, sort_keys=True))
+    print(json.dumps({"status": result["status"], "variant": args.variant, "manifest": str(manifest), "initial_equivalence": initial_equivalence, "activation": activation, "gradient_audit": gradient_audit, "learnability": learnability}, sort_keys=True))
     return result
 
 
@@ -266,7 +404,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--variant", choices=["A", "B", "C"], required=True)
     parser.add_argument("--checkpoint", type=Path, default=DEFAULT_CHECKPOINT)
-    parser.add_argument("--teacher-checkpoint", type=Path, default=ROOT / "artifacts/experiments/EXP-009/teacher_probe/bindingdb_teacher_probe.pt")
+    parser.add_argument(
+        "--soft-target-features",
+        type=Path,
+        default=DEFAULT_SOFT_TARGET_FEATURES,
+        help="approved full 8418x64 Morgan teacher probabilities aligned by XPert pert_id",
+    )
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--split", default="split_cold_drug_1")
     parser.add_argument("--device", default="cuda")

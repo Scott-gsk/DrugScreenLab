@@ -154,6 +154,10 @@ class _EXP009ResidualWrapper(nn.Module):
         official_with_grad = [
             name for name, parameter in self.official.named_parameters() if parameter.grad is not None
         ]
+        residual_gradient_norms = {
+            name: float(parameter.grad.detach().norm().cpu()) if parameter.grad is not None else 0.0
+            for name, parameter in self.residual.named_parameters()
+        }
         return {
             "official_parameters_frozen": self.official_parameters_frozen,
             "official_trainable_parameter_count": sum(
@@ -162,6 +166,7 @@ class _EXP009ResidualWrapper(nn.Module):
             "official_parameters_with_grad": official_with_grad,
             "official_trainable_parameter_names": official_trainable,
             "residual_trainable_parameter_count": count_trainable_parameters(self.residual),
+            "residual_gradient_norms": residual_gradient_norms,
             "raw_gamma": float(self.residual.raw_gamma.detach().cpu()),
             "residual_output_zero_initialized": bool(
                 torch.count_nonzero(self.residual.output.weight).item() == 0
