@@ -12,8 +12,16 @@ data/splits/**
 !data/interim/.gitkeep
 !data/processed/.gitkeep
 !data/splits/.gitkeep
-artifacts/**
+artifacts/*
+!artifacts/experiments/
+artifacts/experiments/*
 !artifacts/experiments/.gitkeep
+!artifacts/experiments/EXP-006/
+artifacts/experiments/EXP-006/*
+!artifacts/experiments/EXP-006/*.json
+!artifacts/experiments/EXP-007/
+artifacts/experiments/EXP-007/*
+!artifacts/experiments/EXP-007/*.json
 *.pt
 *.pth
 *.ckpt
