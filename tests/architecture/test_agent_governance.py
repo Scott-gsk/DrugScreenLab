@@ -19,12 +19,13 @@ def test_agent_rules_are_concise_and_point_to_authoritative_state():
         assert path in text
 
 
-def test_agent_rules_match_the_current_research_track():
+def test_agent_rules_do_not_hardcode_the_current_research_track():
     text = RULES.read_text()
-    assert "EXP-010 / breast_pdo_transfer" in text
-    assert "XPert、PharmaFormer、UniPert 通过 adapter 接入" in text
-    assert "EXP-006、EXP-007、EXP-008 已归档" in text
-    assert "不重复造轮子" in text
+    assert "不写死当前研究方向、模型、数据集或 EXP 编号" in text
+    assert "breast_pdo_transfer" not in text
+    assert "EXP-010" not in text
+    assert "PharmaFormer" not in text
+    assert "根据状态文件确认当前主线" in text
 
 
 def test_agent_rules_protect_data_and_evaluation():
