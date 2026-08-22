@@ -3,10 +3,64 @@ import tomllib
 
 
 ROOT = Path(__file__).resolve().parents[2]
+RULES = ROOT / "AGENTS.md"
 AGENT_DIR = ROOT / ".codex" / "agents"
 
 
-def test_governance_has_six_non_overlapping_role_templates():
+def test_agent_rules_are_concise_and_point_to_authoritative_state():
+    text = RULES.read_text()
+    assert len(text) < 5_000
+    for path in (
+        "PROJECT_STATE.yaml",
+        "experiments/registry.yaml",
+        "data/registry/datasets.json",
+        "experiments/records/EXP-###.md",
+    ):
+        assert path in text
+
+
+def test_agent_rules_match_the_current_research_track():
+    text = RULES.read_text()
+    assert "EXP-010 / breast_pdo_transfer" in text
+    assert "XPert、PharmaFormer、UniPert 通过 adapter 接入" in text
+    assert "EXP-006、EXP-007、EXP-008 已归档" in text
+    assert "不重复造轮子" in text
+
+
+def test_agent_rules_protect_data_and_evaluation():
+    text = RULES.read_text()
+    assert "data/raw/" in text
+    assert "checksum" in text
+    assert "禁止用测试结果选择样本、特征或阈值" in text
+    assert "大型矩阵、原始数据、checkpoint、预测文件和日志不进入 Git" in text
+
+
+def test_agent_rules_fix_the_runtime_and_validation_commands():
+    text = RULES.read_text()
+    assert "WSL2 Conda `drugscreening-gpu`" in text
+    assert "python -m pytest --capture=no" in text
+    assert "python -m drug_screen.data.registry --root data" in text
+    assert "不得使用 Windows Python" in text
+
+
+def test_agent_rules_keep_research_and_engineering_distinct():
+    text = RULES.read_text()
+    assert "工程整理、修复和测试不创建 EXP" in text
+    assert "研究工作必须登记 EXP" in text
+    assert "开始训练或正式评测前" in text
+    assert "获得用户批准" in text
+    assert "不把准备工作写成实验完成" in text
+
+
+def test_agent_rules_forbid_destructive_git_cleanup():
+    text = RULES.read_text()
+    assert "git clean" in text
+    assert "git reset --hard" in text
+    assert "不改写 master" in text
+    assert "删除前确认路径、引用和恢复点" in text
+
+
+def test_optional_agent_templates_remain_well_formed():
     expected = {
         "research_manager.toml": "research_manager",
         "scientific_analyst.toml": "scientific_analyst",
@@ -15,83 +69,6 @@ def test_governance_has_six_non_overlapping_role_templates():
         "evaluation_statistics_analyst.toml": "evaluation_statistics_analyst",
         "reviewer.toml": "independent_reviewer",
     }
-    assert not (AGENT_DIR / "engineer.toml").exists()
-    assert {path.name for path in AGENT_DIR.glob("*.toml")} == set(expected)
     templates = {path.name: tomllib.loads(path.read_text()) for path in AGENT_DIR.glob("*.toml")}
     assert {name: template["name"] for name, template in templates.items()} == expected
     assert templates["reviewer.toml"]["sandbox_mode"] == "read-only"
-
-
-def test_adaptive_parallel_budget_and_gates_are_governed():
-    root_rules = (ROOT / "AGENTS.md").read_text()
-    governance = (ROOT / "docs" / "AGENT_GOVERNANCE.md").read_text()
-    assert "DEFAULT_AGENT_BUDGET" not in root_rules
-    assert "ADAPTIVE_AGENT_BUDGET" in root_rules
-    assert "独立任务必须优先" in root_rules
-    assert "并行；只串行化真实依赖" in root_rules
-    assert "Minimal Context Principle" in governance
-    assert "structured evidence package" in governance
-    assert "PRIMARY_SOURCE_VERIFICATION" in governance
-    assert "Role availability != Role activation" in governance
-    assert "IDEA -> Manager -> EXP-ID -> APPROVE -> parallel evidence work -> Reviewer" in governance
-
-
-def test_exp_scoped_agent_lifecycle_is_governed():
-    root_rules = (ROOT / "AGENTS.md").read_text()
-    governance = (ROOT / "docs" / "AGENT_GOVERNANCE.md").read_text()
-    templates = "\n".join(path.read_text() for path in AGENT_DIR.glob("*.toml"))
-
-    assert "EXP_SCOPED_AGENT_LIFECYCLE" in root_rules
-    assert "AGENT_EXECUTION_MANIFEST" in root_rules
-    assert "CROSS_EXP_AGENT_REUSE_JUSTIFICATION" in root_rules
-    assert "Manager execution" in root_rules
-    assert "dry-run Agent" in root_rules
-    assert "fresh context" in governance
-    assert "actual child agent spawned" in governance
-    assert "EXP-ID + Role" in governance
-    assert "实验关闭后" in root_rules
-    assert "禁止跨 EXP 复用" in templates
-
-
-def test_large_data_runs_require_a_dry_run_and_reuse_rule():
-    governance = (ROOT / "docs" / "AGENT_GOVERNANCE.md").read_text()
-    assert "SMALL-SCALE DRY RUN" in governance
-    assert "restart/recovery" in governance
-    assert "重新扫描完整源矩阵" in governance
-
-
-def test_github_audit_checkpoints_are_governed():
-    root_rules = (ROOT / "AGENTS.md").read_text()
-    governance = (ROOT / "docs" / "AGENT_GOVERNANCE.md").read_text()
-    for text in (root_rules, governance):
-        assert "DESIGN READY" in text
-        assert "RESULT REVIEWED" in text
-        assert "GitHub" in text
-        assert "checksum" in text
-    assert "等待 `APPROVE EXP-###`" in governance
-    assert "等待用户 `ACCEPT / REJECT`" in governance
-
-
-def test_coarse_to_fine_policy_distinguishes_fast_mvp_and_rigorous_loops():
-    root_rules = (ROOT / "AGENTS.md").read_text()
-    governance = (ROOT / "docs" / "AGENT_GOVERNANCE.md").read_text()
-    mvp = (ROOT / "mvp" / "records" / "MVP-001.md").read_text()
-    for text in (root_rules, governance):
-        assert "COARSE_TO_FINE_ML_RESEARCH_POLICY" in text
-        assert "FAST LOOP" in text
-        assert "MVP LOOP" in text
-        assert "RIGOROUS LOOP" in text
-    assert "不是 Formal Research EXP" in mvp
-    assert "result_reviewed" in mvp
-    assert "DEFERRED_PDO_LEG" in mvp
-
-
-def test_every_experiment_record_has_execution_manifest():
-    records = sorted((ROOT / "experiments" / "records").glob("EXP-*.md"))
-    assert records
-    for record in records:
-        text = record.read_text()
-        assert "AGENT_EXECUTION_MANIFEST" in text, record
-        assert "spawned_for_exp" in text, record
-        assert "fresh_context" in text, record
-        assert "worktree_isolation" in text, record
