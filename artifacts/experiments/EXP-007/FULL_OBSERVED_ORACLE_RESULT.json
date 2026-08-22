@@ -1,0 +1,3332 @@
+{
+  "format": "full_observed_oracle_result_v1",
+  "exp_id": "EXP-007",
+  "status": "ORACLE_NEAR_NULL",
+  "verdict": "CHECK_SIGNATURE_DOSE_TIME_CONTEXT_PRISM",
+  "can_answer_question": true,
+  "primary_condition": "10uM_6h",
+  "sensitivity_condition": "10uM_24h",
+  "null": {
+    "seed": 20260813,
+    "repeats": 256,
+    "type": "linewise_random_ranking"
+  },
+  "oracle": {
+    "source": "exact978_cache_v1 + inst_info matched controls",
+    "forbidden_source_used": false,
+    "identity_pairs_before_prism": 2173,
+    "unique_pairs_after_prism_join": 2163,
+    "unique_lines_after_prism_join": 10,
+    "unique_compounds_after_prism_join": 1438,
+    "build": {
+      "condition": "10uM_6h",
+      "dose_um": 10.0,
+      "time_h": 6.0,
+      "treatment_rows_before_control": 10613,
+      "matched_treatment_rows": 10613,
+      "unique_pairs": 2173,
+      "unique_contexts": 10,
+      "unique_compounds": 1438,
+      "control_audit": {
+        "dropped_unmatched_treatment_rows": 0,
+        "dropped_unmatched_unique_pairs": 0,
+        "vehicle_matched_rows": 10613,
+        "untrt_matched_rows": 0
+      },
+      "per_context_pairs": {
+        "CL34": 80,
+        "HCT116": 82,
+        "HT29": 1438,
+        "LOVO": 82,
+        "RKO": 82,
+        "SNUC4": 82,
+        "SNUC5": 81,
+        "SW480": 82,
+        "SW620": 82,
+        "SW948": 82
+      }
+    },
+    "metrics": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "line_rows": [
+        {
+          "context_id": "CL34",
+          "depmap_id": "ACH-000895",
+          "ccle_name": "CL34_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 80,
+          "spearman": 0.11891701828410689,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.5996003741486072,
+              "null_expected_overlap_rate": 0.11523437500000001,
+              "overlap_lift": 0.8677966101694915,
+              "delta_ndcg": 0.0700917738184379
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 4,
+              "overlap_rate": 0.2,
+              "ndcg": 0.5863562558838719,
+              "null_expected_overlap_rate": 0.244140625,
+              "overlap_lift": 0.8192,
+              "delta_ndcg": 0.03154194633483809
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 34,
+              "overlap_rate": 0.68,
+              "ndcg": 0.7254583871153726,
+              "null_expected_overlap_rate": 0.6220312499999999,
+              "overlap_lift": 1.0931926651595079,
+              "delta_ndcg": 0.05902645100632853
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.008874769251054852,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.11523437500000001,
+                "ndcg_mean": 0.5295086003301693,
+                "overlap_std": 0.09208067831179012,
+                "ndcg_std": 0.10054551416706187
+              },
+              "20": {
+                "expected_overlap_rate": 0.244140625,
+                "ndcg_mean": 0.5548143095490338,
+                "overlap_std": 0.08583712177496036,
+                "ndcg_std": 0.07671435000174115
+              },
+              "50": {
+                "expected_overlap_rate": 0.6220312499999999,
+                "ndcg_mean": 0.666431936109044,
+                "overlap_std": 0.04509294871082951,
+                "ndcg_std": 0.04549322657576505
+              }
+            },
+            "spearman_delta": 0.12779178753516174,
+            "spearman_std": 0.11687662668944136
+          },
+          "kendall": 0.07658227848101265,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.11626039785484607,
+            "spearman_std": 0.10668997717439307,
+            "spearman_q05": -0.06435698710326541,
+            "spearman_q95": 0.27436838328701135,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "HCT116",
+          "depmap_id": "ACH-000971",
+          "ccle_name": "HCT116_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": 0.008173615872704912,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.6206087461617221,
+              "null_expected_overlap_rate": 0.130859375,
+              "overlap_lift": 0.764179104477612,
+              "delta_ndcg": 0.09814729929589594
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 6,
+              "overlap_rate": 0.3,
+              "ndcg": 0.6140708087105716,
+              "null_expected_overlap_rate": 0.2431640625,
+              "overlap_lift": 1.233734939759036,
+              "delta_ndcg": 0.06424407734515214
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 32,
+              "overlap_rate": 0.64,
+              "ndcg": 0.6827671635739517,
+              "null_expected_overlap_rate": 0.607421875,
+              "overlap_lift": 1.0536334405144694,
+              "delta_ndcg": 0.02291713678066054
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.009003748734776502,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.130859375,
+                "ndcg_mean": 0.5224614468658262,
+                "overlap_std": 0.09973031873311833,
+                "ndcg_std": 0.09942119038515689
+              },
+              "20": {
+                "expected_overlap_rate": 0.2431640625,
+                "ndcg_mean": 0.5498267313654195,
+                "overlap_std": 0.09047481325482852,
+                "ndcg_std": 0.07447860838676362
+              },
+              "50": {
+                "expected_overlap_rate": 0.607421875,
+                "ndcg_mean": 0.6598500267932912,
+                "overlap_std": 0.04179088742159438,
+                "ndcg_std": 0.043961853538238595
+              }
+            },
+            "spearman_delta": 0.017177364607481413,
+            "spearman_std": 0.11934075078123343
+          },
+          "kendall": 0.012947907256850348,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.0005578009070751992,
+            "spearman_std": 0.10923282467438195,
+            "spearman_q05": -0.18788249188659334,
+            "spearman_q95": 0.1646606440012754,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "HT29",
+          "depmap_id": "ACH-000552",
+          "ccle_name": "HT29_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 1438,
+          "spearman": 0.03355778570570278,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.5451724763427579,
+              "null_expected_overlap_rate": 0.0078125,
+              "overlap_lift": 0.0,
+              "delta_ndcg": 0.040709181156501795
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.5719779014223837,
+              "null_expected_overlap_rate": 0.012890625000000001,
+              "overlap_lift": 0.0,
+              "delta_ndcg": 0.06756438837584844
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 2,
+              "overlap_rate": 0.04,
+              "ndcg": 0.5364661904430035,
+              "null_expected_overlap_rate": 0.035234375,
+              "overlap_lift": 1.1352549889135255,
+              "delta_ndcg": 0.02667425873052176
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.0037248594014755725,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.0078125,
+                "ndcg_mean": 0.5044632951862561,
+                "overlap_std": 0.03089643739575811,
+                "ndcg_std": 0.10586666751860976
+              },
+              "20": {
+                "expected_overlap_rate": 0.012890625000000001,
+                "ndcg_mean": 0.5044135130465353,
+                "overlap_std": 0.026697154101315276,
+                "ndcg_std": 0.07138329764706161
+              },
+              "50": {
+                "expected_overlap_rate": 0.035234375,
+                "ndcg_mean": 0.5097919317124817,
+                "overlap_std": 0.026114676302021723,
+                "ndcg_std": 0.045767251736342815
+              }
+            },
+            "spearman_delta": 0.02983292630422721,
+            "spearman_std": 0.0259554787534636
+          },
+          "kendall": 0.022403148268055745,
+          "support_stratum": "n_ge_500",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.03204802264902039,
+            "spearman_std": 0.025600673437256617,
+            "spearman_q05": -0.012926537036510461,
+            "spearman_q95": 0.0717916877230203,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "LOVO",
+          "depmap_id": "ACH-000950",
+          "ccle_name": "LOVO_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.16378794310031455,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.3954173621329391,
+              "null_expected_overlap_rate": 0.12929687500000003,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.12218896829565262
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 5,
+              "overlap_rate": 0.25,
+              "ndcg": 0.4503868930185251,
+              "null_expected_overlap_rate": 0.24160156250000003,
+              "overlap_lift": 1.034761519805982,
+              "delta_ndcg": -0.09722795707917653
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 28,
+              "overlap_rate": 0.56,
+              "ndcg": 0.5931726877566744,
+              "null_expected_overlap_rate": 0.610625,
+              "overlap_lift": 0.9170931422722621,
+              "delta_ndcg": -0.06633148947789624
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.005453725470989651,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12929687500000003,
+                "ndcg_mean": 0.5176063304285917,
+                "overlap_std": 0.09823189713751015,
+                "ndcg_std": 0.10210280988631924
+              },
+              "20": {
+                "expected_overlap_rate": 0.24160156250000003,
+                "ndcg_mean": 0.5476148500977016,
+                "overlap_std": 0.0905591001642496,
+                "ndcg_std": 0.07192533854017294
+              },
+              "50": {
+                "expected_overlap_rate": 0.610625,
+                "ndcg_mean": 0.6595041772345707,
+                "overlap_std": 0.04354864377911211,
+                "ndcg_std": 0.045290268156857376
+              }
+            },
+            "spearman_delta": -0.1583342176293249,
+            "spearman_std": 0.1158563261332933
+          },
+          "kendall": -0.10870219813309245,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.1601976222636916,
+            "spearman_std": 0.1075993274836455,
+            "spearman_q05": -0.3315348464539702,
+            "spearman_q95": 0.008690476410476124,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "RKO",
+          "depmap_id": "ACH-000943",
+          "ccle_name": "RKO_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.12486803582895269,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.5608025962516123,
+              "null_expected_overlap_rate": 0.13007812500000002,
+              "overlap_lift": 0.0,
+              "delta_ndcg": 0.04073750509582541
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 2,
+              "overlap_rate": 0.1,
+              "ndcg": 0.5287281330222979,
+              "null_expected_overlap_rate": 0.24453125,
+              "overlap_lift": 0.4089456869009585,
+              "delta_ndcg": -0.02038766414695381
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 31,
+              "overlap_rate": 0.62,
+              "ndcg": 0.6426463645354723,
+              "null_expected_overlap_rate": 0.6103125,
+              "overlap_lift": 1.0158730158730158,
+              "delta_ndcg": -0.016291880898812283
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.0038880964236349207,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.13007812500000002,
+                "ndcg_mean": 0.5200650911557869,
+                "overlap_std": 0.10228633289195764,
+                "ndcg_std": 0.09743939066153394
+              },
+              "20": {
+                "expected_overlap_rate": 0.24453125,
+                "ndcg_mean": 0.5491157971692517,
+                "overlap_std": 0.09126591791812265,
+                "ndcg_std": 0.07246787287776323
+              },
+              "50": {
+                "expected_overlap_rate": 0.6103125,
+                "ndcg_mean": 0.6589382454342846,
+                "overlap_std": 0.040464828477951076,
+                "ndcg_std": 0.041722111621206544
+              }
+            },
+            "spearman_delta": -0.12097993940531776,
+            "spearman_std": 0.11223201346550266
+          },
+          "kendall": -0.08220415537488708,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.12467208901893098,
+            "spearman_std": 0.10623147732674186,
+            "spearman_q05": -0.2896543341370208,
+            "spearman_q95": 0.04663499877104183,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SNUC4",
+          "depmap_id": "ACH-000959",
+          "ccle_name": "SNUC4_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 76,
+          "spearman": -0.03814080656185919,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.47508163589025754,
+              "null_expected_overlap_rate": 0.12460937500000002,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.051916212315299526
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 6,
+              "overlap_rate": 0.3,
+              "ndcg": 0.5490590796047133,
+              "null_expected_overlap_rate": 0.263671875,
+              "overlap_lift": 1.1377777777777778,
+              "delta_ndcg": -0.009748286910785109
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 33,
+              "overlap_rate": 0.66,
+              "ndcg": 0.6521302446249665,
+              "null_expected_overlap_rate": 0.6578906250000001,
+              "overlap_lift": 1.0032062700391877,
+              "delta_ndcg": -0.027656166209365396
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.005517664900888587,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12460937500000002,
+                "ndcg_mean": 0.5269978482055571,
+                "overlap_std": 0.09591176237620377,
+                "ndcg_std": 0.1056380131457828
+              },
+              "20": {
+                "expected_overlap_rate": 0.263671875,
+                "ndcg_mean": 0.5588073665154984,
+                "overlap_std": 0.09104747296869022,
+                "ndcg_std": 0.07440001492290885
+              },
+              "50": {
+                "expected_overlap_rate": 0.6578906250000001,
+                "ndcg_mean": 0.6797864108343319,
+                "overlap_std": 0.03905429601349095,
+                "ndcg_std": 0.045925457450460845
+              }
+            },
+            "spearman_delta": -0.043658471462747775,
+            "spearman_std": 0.11854019376152128
+          },
+          "kendall": -0.019649122807017545,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.027114086300478898,
+            "spearman_std": 0.11976164510333585,
+            "spearman_q05": -0.22265195736529417,
+            "spearman_q95": 0.18203550690075557,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SNUC5",
+          "depmap_id": "ACH-000970",
+          "ccle_name": "SNUC5_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 81,
+          "spearman": -0.24505420054200544,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.3510932589260356,
+              "null_expected_overlap_rate": 0.11406250000000001,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.16575728087887664
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.44393924027192827,
+              "null_expected_overlap_rate": 0.2390625,
+              "overlap_lift": 0.6274509803921569,
+              "delta_ndcg": -0.1005520390318419
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 28,
+              "overlap_rate": 0.56,
+              "ndcg": 0.5534283018524003,
+              "null_expected_overlap_rate": 0.6136718749999999,
+              "overlap_lift": 0.9125397835773396,
+              "delta_ndcg": -0.10374132200882447
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.013429542824074076,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.11406250000000001,
+                "ndcg_mean": 0.5168505398049122,
+                "overlap_std": 0.08859526563959273,
+                "ndcg_std": 0.09493148186629685
+              },
+              "20": {
+                "expected_overlap_rate": 0.2390625,
+                "ndcg_mean": 0.5444912793037702,
+                "overlap_std": 0.08111467095260881,
+                "ndcg_std": 0.06555517277450436
+              },
+              "50": {
+                "expected_overlap_rate": 0.6136718749999999,
+                "ndcg_mean": 0.6571696238612248,
+                "overlap_std": 0.04189591070718448,
+                "ndcg_std": 0.04317963270031285
+              }
+            },
+            "spearman_delta": -0.23162465771793136,
+            "spearman_std": 0.10661855719735451
+          },
+          "kendall": -0.17345679012345677,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.22999230918472974,
+            "spearman_std": 0.1169038039045608,
+            "spearman_q05": -0.41515386654407943,
+            "spearman_q95": -0.0302890365356513,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW480",
+          "depmap_id": "ACH-000842",
+          "ccle_name": "SW480_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.14454566232409313,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.45367476596919787,
+              "null_expected_overlap_rate": 0.12851562500000002,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.06842235967765109
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 2,
+              "overlap_rate": 0.1,
+              "ndcg": 0.4808975074318518,
+              "null_expected_overlap_rate": 0.24902343750000003,
+              "overlap_lift": 0.4015686274509804,
+              "delta_ndcg": -0.07183871811921749
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 28,
+              "overlap_rate": 0.56,
+              "ndcg": 0.6290290912471775,
+              "null_expected_overlap_rate": 0.6109374999999999,
+              "overlap_lift": 0.9166240409207164,
+              "delta_ndcg": -0.03204667757553181
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.0010207666710201242,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12851562500000002,
+                "ndcg_mean": 0.522097125646849,
+                "overlap_std": 0.0992518092069831,
+                "ndcg_std": 0.09786151794203027
+              },
+              "20": {
+                "expected_overlap_rate": 0.24902343750000003,
+                "ndcg_mean": 0.5527362255510693,
+                "overlap_std": 0.0810636290248814,
+                "ndcg_std": 0.06889912855783507
+              },
+              "50": {
+                "expected_overlap_rate": 0.6109374999999999,
+                "ndcg_mean": 0.6610757688227094,
+                "overlap_std": 0.04768774573986487,
+                "ndcg_std": 0.04503792508490693
+              }
+            },
+            "spearman_delta": -0.14556642899511327,
+            "spearman_std": 0.11490819184162097
+          },
+          "kendall": -0.09725986148750378,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.1293634983742461,
+            "spearman_std": 0.10264530783179514,
+            "spearman_q05": -0.2913368723817699,
+            "spearman_q95": 0.04610936039369451,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW620",
+          "depmap_id": "ACH-000651",
+          "ccle_name": "SW620_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 78,
+          "spearman": -0.2002680863440357,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 2,
+              "overlap_rate": 0.2,
+              "ndcg": 0.4466631169094808,
+              "null_expected_overlap_rate": 0.143359375,
+              "overlap_lift": 1.3950953678474114,
+              "delta_ndcg": -0.0886953776446685
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 4,
+              "overlap_rate": 0.2,
+              "ndcg": 0.4887069768159467,
+              "null_expected_overlap_rate": 0.2603515625,
+              "overlap_lift": 0.768192048012003,
+              "delta_ndcg": -0.07270796223324211
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 32,
+              "overlap_rate": 0.64,
+              "ndcg": 0.6142304911142153,
+              "null_expected_overlap_rate": 0.645078125,
+              "overlap_lift": 0.992127891486012,
+              "delta_ndcg": -0.0629575610460511
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.008428873341848026,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.143359375,
+                "ndcg_mean": 0.5353584945541493,
+                "overlap_std": 0.10286351199336612,
+                "ndcg_std": 0.09321739866371921
+              },
+              "20": {
+                "expected_overlap_rate": 0.2603515625,
+                "ndcg_mean": 0.5614149390491888,
+                "overlap_std": 0.07603628757908025,
+                "ndcg_std": 0.0643784392607503
+              },
+              "50": {
+                "expected_overlap_rate": 0.645078125,
+                "ndcg_mean": 0.6771880521602665,
+                "overlap_std": 0.04028213185128582,
+                "ndcg_std": 0.043600115193494285
+              }
+            },
+            "spearman_delta": -0.20869695968588373,
+            "spearman_std": 0.11605349736299049
+          },
+          "kendall": -0.13619713619713622,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.20223427050953147,
+            "spearman_std": 0.12704011072061241,
+            "spearman_q05": -0.41757877201220084,
+            "spearman_q95": 0.007544516657594048,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW948",
+          "depmap_id": "ACH-000680",
+          "ccle_name": "SW948_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": 0.09343607492299823,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.41177085854502365,
+              "null_expected_overlap_rate": 0.13046875000000002,
+              "overlap_lift": 0.7664670658682634,
+              "delta_ndcg": -0.11761368480444284
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 5,
+              "overlap_rate": 0.25,
+              "ndcg": 0.5246851096304271,
+              "null_expected_overlap_rate": 0.2509765625,
+              "overlap_lift": 0.9961089494163424,
+              "delta_ndcg": -0.03281668985205133
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 33,
+              "overlap_rate": 0.66,
+              "ndcg": 0.6683773662358243,
+              "null_expected_overlap_rate": 0.61046875,
+              "overlap_lift": 1.0811364218070132,
+              "delta_ndcg": 0.00438904296243825
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.007923462141247922,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.13046875000000002,
+                "ndcg_mean": 0.5293845433494665,
+                "overlap_std": 0.10197931296805986,
+                "ndcg_std": 0.10674125838284933
+              },
+              "20": {
+                "expected_overlap_rate": 0.2509765625,
+                "ndcg_mean": 0.5575017994824785,
+                "overlap_std": 0.09029586480389672,
+                "ndcg_std": 0.07553948794859461
+              },
+              "50": {
+                "expected_overlap_rate": 0.61046875,
+                "ndcg_mean": 0.6639883232733861,
+                "overlap_std": 0.04242381728979018,
+                "ndcg_std": 0.045570312953750934
+              }
+            },
+            "spearman_delta": 0.0855126127817503,
+            "spearman_std": 0.11721624541300331
+          },
+          "kendall": 0.06654622101776574,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.08298936685802216,
+            "spearman_std": 0.10182744025220948,
+            "spearman_q05": -0.0824809639870553,
+            "spearman_q95": 0.25440507071595475,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        }
+      ],
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 9,
+          "candidate_counts": [
+            80,
+            82,
+            82,
+            82,
+            76,
+            81,
+            82,
+            78,
+            82
+          ],
+          "top10_overlap_lifts": [
+            0.8677966101694915,
+            0.764179104477612,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.3950953678474114,
+            0.7664670658682634
+          ],
+          "mean_top10_overlap_lift": 0.42150423870697534,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 1,
+          "candidate_counts": [
+            1438
+          ],
+          "top10_overlap_lifts": [
+            0.0
+          ],
+          "mean_top10_overlap_lift": 0.0,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 10,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "null": {
+        "seed": 20260813,
+        "repeats": 256
+      }
+    },
+    "metrics_summary": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 9,
+          "candidate_counts": [
+            80,
+            82,
+            82,
+            82,
+            76,
+            81,
+            82,
+            78,
+            82
+          ],
+          "top10_overlap_lifts": [
+            0.8677966101694915,
+            0.764179104477612,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.3950953678474114,
+            0.7664670658682634
+          ],
+          "mean_top10_overlap_lift": 0.42150423870697534,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 1,
+          "candidate_counts": [
+            1438
+          ],
+          "top10_overlap_lifts": [
+            0.0
+          ],
+          "mean_top10_overlap_lift": 0.0,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 10,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "per_line_top10": {
+        "CL34": {
+          "candidate_count": 80,
+          "support_stratum": "n_20_99",
+          "spearman": 0.11891701828410689,
+          "kendall": 0.07658227848101265,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.8677966101694915,
+          "delta_ndcg": 0.0700917738184379
+        },
+        "HCT116": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": 0.008173615872704912,
+          "kendall": 0.012947907256850348,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.764179104477612,
+          "delta_ndcg": 0.09814729929589594
+        },
+        "HT29": {
+          "candidate_count": 1438,
+          "support_stratum": "n_ge_500",
+          "spearman": 0.03355778570570278,
+          "kendall": 0.022403148268055745,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": 0.040709181156501795
+        },
+        "LOVO": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.16378794310031455,
+          "kendall": -0.10870219813309245,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.12218896829565262
+        },
+        "RKO": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.12486803582895269,
+          "kendall": -0.08220415537488708,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": 0.04073750509582541
+        },
+        "SNUC4": {
+          "candidate_count": 76,
+          "support_stratum": "n_20_99",
+          "spearman": -0.03814080656185919,
+          "kendall": -0.019649122807017545,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.051916212315299526
+        },
+        "SNUC5": {
+          "candidate_count": 81,
+          "support_stratum": "n_20_99",
+          "spearman": -0.24505420054200544,
+          "kendall": -0.17345679012345677,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.16575728087887664
+        },
+        "SW480": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.14454566232409313,
+          "kendall": -0.09725986148750378,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.06842235967765109
+        },
+        "SW620": {
+          "candidate_count": 78,
+          "support_stratum": "n_20_99",
+          "spearman": -0.2002680863440357,
+          "kendall": -0.13619713619713622,
+          "overlap_count": 2,
+          "overlap_rate": 0.2,
+          "overlap_lift": 1.3950953678474114,
+          "delta_ndcg": -0.0886953776446685
+        },
+        "SW948": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": 0.09343607492299823,
+          "kendall": 0.06654622101776574,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.7664670658682634,
+          "delta_ndcg": -0.11761368480444284
+        }
+      }
+    }
+  },
+  "sensitivity_condition_result": {
+    "build": {
+      "condition": "10uM_24h",
+      "dose_um": 10.0,
+      "time_h": 24.0,
+      "treatment_rows_before_control": 1133,
+      "matched_treatment_rows": 1133,
+      "unique_pairs": 297,
+      "unique_contexts": 1,
+      "unique_compounds": 297,
+      "control_audit": {
+        "dropped_unmatched_treatment_rows": 0,
+        "dropped_unmatched_unique_pairs": 0,
+        "vehicle_matched_rows": 1133,
+        "untrt_matched_rows": 0
+      },
+      "per_context_pairs": {
+        "HT29": 297
+      }
+    },
+    "unique_pairs_after_prism_join": 297,
+    "unique_lines_after_prism_join": 1,
+    "metrics": {
+      "line_count": 1,
+      "eligible_line_count": 1,
+      "line_rows": [
+        {
+          "context_id": "HT29",
+          "depmap_id": "ACH-000552",
+          "ccle_name": "HT29_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 297,
+          "spearman": 0.0548561068695297,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.479926893482845,
+              "null_expected_overlap_rate": 0.028515625,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.0268212544362052
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.4787659919005987,
+              "null_expected_overlap_rate": 0.0630859375,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.03266809980976654
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 4,
+              "overlap_rate": 0.08,
+              "ndcg": 0.5276671755412403,
+              "null_expected_overlap_rate": 0.16546875000000005,
+              "overlap_lift": 0.4834749763928233,
+              "delta_ndcg": -0.00692381544513998
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.00023558476395095507,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.028515625,
+                "ndcg_mean": 0.5067481479190502,
+                "overlap_std": 0.05383118641511977,
+                "ndcg_std": 0.09810515880678278
+              },
+              "20": {
+                "expected_overlap_rate": 0.0630859375,
+                "ndcg_mean": 0.5114340917103652,
+                "overlap_std": 0.05515114563403097,
+                "ndcg_std": 0.07272141991375376
+              },
+              "50": {
+                "expected_overlap_rate": 0.16546875000000005,
+                "ndcg_mean": 0.5345909909863803,
+                "overlap_std": 0.05069608242692428,
+                "ndcg_std": 0.04763789988431991
+              }
+            },
+            "spearman_delta": 0.055091691633480655,
+            "spearman_std": 0.05947352598287462
+          },
+          "kendall": 0.034762034762034766,
+          "support_stratum": "n_100_499",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.04981264835526343,
+            "spearman_std": 0.05637287388137541,
+            "spearman_q05": -0.03405580240987788,
+            "spearman_q95": 0.13904625417050204,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        }
+      ],
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 1,
+          "candidate_counts": [
+            297
+          ],
+          "top10_overlap_lifts": [
+            0.0
+          ],
+          "mean_top10_overlap_lift": 0.0,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 1,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "null": {
+        "seed": 20260813,
+        "repeats": 256
+      }
+    },
+    "metrics_summary": {
+      "line_count": 1,
+      "eligible_line_count": 1,
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 1,
+          "candidate_counts": [
+            297
+          ],
+          "top10_overlap_lifts": [
+            0.0
+          ],
+          "mean_top10_overlap_lift": 0.0,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 1,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "per_line_top10": {
+        "HT29": {
+          "candidate_count": 297,
+          "support_stratum": "n_100_499",
+          "spearman": 0.0548561068695297,
+          "kendall": 0.034762034762034766,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.0268212544362052
+        }
+      }
+    }
+  },
+  "cmap_weighted_ks": {
+    "status": "RUN_BECAUSE_SPEARMAN_ORACLE_NEAR_NULL",
+    "metrics": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "line_rows": [
+        {
+          "context_id": "CL34",
+          "depmap_id": "ACH-000895",
+          "ccle_name": "CL34_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 80,
+          "spearman": 0.01971401781528364,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.511585677555584,
+              "null_expected_overlap_rate": 0.11523437500000001,
+              "overlap_lift": 0.8677966101694915,
+              "delta_ndcg": -0.017922922774585293
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 5,
+              "overlap_rate": 0.25,
+              "ndcg": 0.5747266529817968,
+              "null_expected_overlap_rate": 0.244140625,
+              "overlap_lift": 1.024,
+              "delta_ndcg": 0.019912343432763047
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 32,
+              "overlap_rate": 0.64,
+              "ndcg": 0.6707760434180519,
+              "null_expected_overlap_rate": 0.6220312499999999,
+              "overlap_lift": 1.028887214267772,
+              "delta_ndcg": 0.004344107309007805
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.008874769251054852,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.11523437500000001,
+                "ndcg_mean": 0.5295086003301693,
+                "overlap_std": 0.09208067831179012,
+                "ndcg_std": 0.10054551416706187
+              },
+              "20": {
+                "expected_overlap_rate": 0.244140625,
+                "ndcg_mean": 0.5548143095490338,
+                "overlap_std": 0.08583712177496036,
+                "ndcg_std": 0.07671435000174115
+              },
+              "50": {
+                "expected_overlap_rate": 0.6220312499999999,
+                "ndcg_mean": 0.666431936109044,
+                "overlap_std": 0.04509294871082951,
+                "ndcg_std": 0.04549322657576505
+              }
+            },
+            "spearman_delta": 0.02858878706633849,
+            "spearman_std": 0.11687662668944136
+          },
+          "kendall": 0.01582278481012658,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.01299878299741629,
+            "spearman_std": 0.10807552460757036,
+            "spearman_q05": -0.16433427413275595,
+            "spearman_q95": 0.18252312565816692,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "HCT116",
+          "depmap_id": "ACH-000971",
+          "ccle_name": "HCT116_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.036166345599198964,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.5440583045769898,
+              "null_expected_overlap_rate": 0.130859375,
+              "overlap_lift": 0.764179104477612,
+              "delta_ndcg": 0.021596857711163597
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 6,
+              "overlap_rate": 0.3,
+              "ndcg": 0.5760010202253489,
+              "null_expected_overlap_rate": 0.2431640625,
+              "overlap_lift": 1.233734939759036,
+              "delta_ndcg": 0.02617428885992945
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 30,
+              "overlap_rate": 0.6,
+              "ndcg": 0.6390108751364778,
+              "null_expected_overlap_rate": 0.607421875,
+              "overlap_lift": 0.9877813504823151,
+              "delta_ndcg": -0.02083915165681338
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.009003748734776502,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.130859375,
+                "ndcg_mean": 0.5224614468658262,
+                "overlap_std": 0.09973031873311833,
+                "ndcg_std": 0.09942119038515689
+              },
+              "20": {
+                "expected_overlap_rate": 0.2431640625,
+                "ndcg_mean": 0.5498267313654195,
+                "overlap_std": 0.09047481325482852,
+                "ndcg_std": 0.07447860838676362
+              },
+              "50": {
+                "expected_overlap_rate": 0.607421875,
+                "ndcg_mean": 0.6598500267932912,
+                "overlap_std": 0.04179088742159438,
+                "ndcg_std": 0.043961853538238595
+              }
+            },
+            "spearman_delta": -0.02716259686442246,
+            "spearman_std": 0.11934075078123343
+          },
+          "kendall": -0.026799156880457694,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.03686522391188983,
+            "spearman_std": 0.10881130057115805,
+            "spearman_q05": -0.19760345327264184,
+            "spearman_q95": 0.13749214025334242,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "HT29",
+          "depmap_id": "ACH-000552",
+          "ccle_name": "HT29_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 1438,
+          "spearman": 0.01434819592274841,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.3184069184351332,
+              "null_expected_overlap_rate": 0.0078125,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.1860563767511229
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.43392097606274777,
+              "null_expected_overlap_rate": 0.012890625000000001,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.07049253698378749
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 1,
+              "overlap_rate": 0.02,
+              "ndcg": 0.4582956537441334,
+              "null_expected_overlap_rate": 0.035234375,
+              "overlap_lift": 0.5676274944567627,
+              "delta_ndcg": -0.051496277968348325
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.0037248594014755725,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.0078125,
+                "ndcg_mean": 0.5044632951862561,
+                "overlap_std": 0.03089643739575811,
+                "ndcg_std": 0.10586666751860976
+              },
+              "20": {
+                "expected_overlap_rate": 0.012890625000000001,
+                "ndcg_mean": 0.5044135130465353,
+                "overlap_std": 0.026697154101315276,
+                "ndcg_std": 0.07138329764706161
+              },
+              "50": {
+                "expected_overlap_rate": 0.035234375,
+                "ndcg_mean": 0.5097919317124817,
+                "overlap_std": 0.026114676302021723,
+                "ndcg_std": 0.045767251736342815
+              }
+            },
+            "spearman_delta": 0.010623336521272838,
+            "spearman_std": 0.0259554787534636
+          },
+          "kendall": 0.009905134671224137,
+          "support_stratum": "n_ge_500",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.012385661566835704,
+            "spearman_std": 0.02511721821242351,
+            "spearman_q05": -0.034025135070106086,
+            "spearman_q95": 0.04954605785116661,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "LOVO",
+          "depmap_id": "ACH-000950",
+          "ccle_name": "LOVO_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.0918252957629978,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.43499793235183903,
+              "null_expected_overlap_rate": 0.12929687500000003,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.08260839807675269
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 8,
+              "overlap_rate": 0.4,
+              "ndcg": 0.5606375412964211,
+              "null_expected_overlap_rate": 0.24160156250000003,
+              "overlap_lift": 1.6556184316895715,
+              "delta_ndcg": 0.01302269119871946
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 28,
+              "overlap_rate": 0.56,
+              "ndcg": 0.6210129607766985,
+              "null_expected_overlap_rate": 0.610625,
+              "overlap_lift": 0.9170931422722621,
+              "delta_ndcg": -0.038491216457872124
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.005453725470989651,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12929687500000003,
+                "ndcg_mean": 0.5176063304285917,
+                "overlap_std": 0.09823189713751015,
+                "ndcg_std": 0.10210280988631924
+              },
+              "20": {
+                "expected_overlap_rate": 0.24160156250000003,
+                "ndcg_mean": 0.5476148500977016,
+                "overlap_std": 0.0905591001642496,
+                "ndcg_std": 0.07192533854017294
+              },
+              "50": {
+                "expected_overlap_rate": 0.610625,
+                "ndcg_mean": 0.6595041772345707,
+                "overlap_std": 0.04354864377911211,
+                "ndcg_std": 0.045290268156857376
+              }
+            },
+            "spearman_delta": -0.08637157029200815,
+            "spearman_std": 0.1158563261332933
+          },
+          "kendall": -0.06233062330623307,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.0912107496498599,
+            "spearman_std": 0.10751401144329534,
+            "spearman_q05": -0.25267555343176595,
+            "spearman_q95": 0.08809253812551228,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "RKO",
+          "depmap_id": "ACH-000943",
+          "ccle_name": "RKO_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.07752418889650745,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.503897185692577,
+              "null_expected_overlap_rate": 0.13007812500000002,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.016167905463209897
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.5549762209822806,
+              "null_expected_overlap_rate": 0.24453125,
+              "overlap_lift": 0.6134185303514377,
+              "delta_ndcg": 0.00586042381302887
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 29,
+              "overlap_rate": 0.58,
+              "ndcg": 0.6409379164868375,
+              "null_expected_overlap_rate": 0.6103125,
+              "overlap_lift": 0.9503328213005631,
+              "delta_ndcg": -0.018000328947447075
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.0038880964236349207,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.13007812500000002,
+                "ndcg_mean": 0.5200650911557869,
+                "overlap_std": 0.10228633289195764,
+                "ndcg_std": 0.09743939066153394
+              },
+              "20": {
+                "expected_overlap_rate": 0.24453125,
+                "ndcg_mean": 0.5491157971692517,
+                "overlap_std": 0.09126591791812265,
+                "ndcg_std": 0.07246787287776323
+              },
+              "50": {
+                "expected_overlap_rate": 0.6103125,
+                "ndcg_mean": 0.6589382454342846,
+                "overlap_std": 0.040464828477951076,
+                "ndcg_std": 0.041722111621206544
+              }
+            },
+            "spearman_delta": -0.07363609247287252,
+            "spearman_std": 0.11223201346550266
+          },
+          "kendall": -0.05389942788316772,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.0760183946446822,
+            "spearman_std": 0.10761283092725447,
+            "spearman_q05": -0.25889441855907736,
+            "spearman_q95": 0.0886939118070404,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SNUC4",
+          "depmap_id": "ACH-000959",
+          "ccle_name": "SNUC4_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 76,
+          "spearman": -0.022939166097060835,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.5052072433604184,
+              "null_expected_overlap_rate": 0.12460937500000002,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.021790604845138617
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 5,
+              "overlap_rate": 0.25,
+              "ndcg": 0.5622839571245102,
+              "null_expected_overlap_rate": 0.263671875,
+              "overlap_lift": 0.9481481481481482,
+              "delta_ndcg": 0.0034765906090117316
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 32,
+              "overlap_rate": 0.64,
+              "ndcg": 0.6530398283574617,
+              "null_expected_overlap_rate": 0.6578906250000001,
+              "overlap_lift": 0.9728060800380002,
+              "delta_ndcg": -0.02674658247687023
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.005517664900888587,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12460937500000002,
+                "ndcg_mean": 0.5269978482055571,
+                "overlap_std": 0.09591176237620377,
+                "ndcg_std": 0.1056380131457828
+              },
+              "20": {
+                "expected_overlap_rate": 0.263671875,
+                "ndcg_mean": 0.5588073665154984,
+                "overlap_std": 0.09104747296869022,
+                "ndcg_std": 0.07440001492290885
+              },
+              "50": {
+                "expected_overlap_rate": 0.6578906250000001,
+                "ndcg_mean": 0.6797864108343319,
+                "overlap_std": 0.03905429601349095,
+                "ndcg_std": 0.045925457450460845
+              }
+            },
+            "spearman_delta": -0.028456830997949423,
+            "spearman_std": 0.11854019376152128
+          },
+          "kendall": -0.012631578947368424,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.008754856255105123,
+            "spearman_std": 0.11805740795112772,
+            "spearman_q05": -0.2116308690976539,
+            "spearman_q95": 0.17165454836508953,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SNUC5",
+          "depmap_id": "ACH-000970",
+          "ccle_name": "SNUC5_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 81,
+          "spearman": -0.26463414634146337,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.3381843355896901,
+              "null_expected_overlap_rate": 0.11406250000000001,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.17866620421522217
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.43384778342974384,
+              "null_expected_overlap_rate": 0.2390625,
+              "overlap_lift": 0.6274509803921569,
+              "delta_ndcg": -0.11064349587402633
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 27,
+              "overlap_rate": 0.54,
+              "ndcg": 0.5360096162595133,
+              "null_expected_overlap_rate": 0.6136718749999999,
+              "overlap_lift": 0.879949077021006,
+              "delta_ndcg": -0.12116000760171153
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.013429542824074076,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.11406250000000001,
+                "ndcg_mean": 0.5168505398049122,
+                "overlap_std": 0.08859526563959273,
+                "ndcg_std": 0.09493148186629685
+              },
+              "20": {
+                "expected_overlap_rate": 0.2390625,
+                "ndcg_mean": 0.5444912793037702,
+                "overlap_std": 0.08111467095260881,
+                "ndcg_std": 0.06555517277450436
+              },
+              "50": {
+                "expected_overlap_rate": 0.6136718749999999,
+                "ndcg_mean": 0.6571696238612248,
+                "overlap_std": 0.04189591070718448,
+                "ndcg_std": 0.04317963270031285
+              }
+            },
+            "spearman_delta": -0.25120460351738927,
+            "spearman_std": 0.10661855719735451
+          },
+          "kendall": -0.18024691358024691,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.24911002466735432,
+            "spearman_std": 0.11274026740688123,
+            "spearman_q05": -0.42159127581166733,
+            "spearman_q95": -0.04972060761944132,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW480",
+          "depmap_id": "ACH-000842",
+          "ccle_name": "SW480_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.17112351846410032,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.3695420868040401,
+              "null_expected_overlap_rate": 0.12851562500000002,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.15255503884280885
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.40399269027490253,
+              "null_expected_overlap_rate": 0.24902343750000003,
+              "overlap_lift": 0.6023529411764705,
+              "delta_ndcg": -0.14874353527616674
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 29,
+              "overlap_rate": 0.58,
+              "ndcg": 0.5745332788855877,
+              "null_expected_overlap_rate": 0.6109374999999999,
+              "overlap_lift": 0.9493606138107418,
+              "delta_ndcg": -0.08654248993712166
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.0010207666710201242,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12851562500000002,
+                "ndcg_mean": 0.522097125646849,
+                "overlap_std": 0.0992518092069831,
+                "ndcg_std": 0.09786151794203027
+              },
+              "20": {
+                "expected_overlap_rate": 0.24902343750000003,
+                "ndcg_mean": 0.5527362255510693,
+                "overlap_std": 0.0810636290248814,
+                "ndcg_std": 0.06889912855783507
+              },
+              "50": {
+                "expected_overlap_rate": 0.6109374999999999,
+                "ndcg_mean": 0.6610757688227094,
+                "overlap_std": 0.04768774573986487,
+                "ndcg_std": 0.04503792508490693
+              }
+            },
+            "spearman_delta": -0.17214428513512045,
+            "spearman_std": 0.11490819184162097
+          },
+          "kendall": -0.10267991568804577,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.16258760664333838,
+            "spearman_std": 0.10130043485577102,
+            "spearman_q05": -0.32157379799676206,
+            "spearman_q95": 0.025670862640841143,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW620",
+          "depmap_id": "ACH-000651",
+          "ccle_name": "SW620_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 78,
+          "spearman": -0.12004451244957573,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 2,
+              "overlap_rate": 0.2,
+              "ndcg": 0.4303455138598449,
+              "null_expected_overlap_rate": 0.143359375,
+              "overlap_lift": 1.3950953678474114,
+              "delta_ndcg": -0.10501298069430443
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.4264775850373663,
+              "null_expected_overlap_rate": 0.2603515625,
+              "overlap_lift": 0.5761440360090022,
+              "delta_ndcg": -0.1349373540118225
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 32,
+              "overlap_rate": 0.64,
+              "ndcg": 0.6039994599417345,
+              "null_expected_overlap_rate": 0.645078125,
+              "overlap_lift": 0.992127891486012,
+              "delta_ndcg": -0.07318859221853191
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.008428873341848026,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.143359375,
+                "ndcg_mean": 0.5353584945541493,
+                "overlap_std": 0.10286351199336612,
+                "ndcg_std": 0.09321739866371921
+              },
+              "20": {
+                "expected_overlap_rate": 0.2603515625,
+                "ndcg_mean": 0.5614149390491888,
+                "overlap_std": 0.07603628757908025,
+                "ndcg_std": 0.0643784392607503
+              },
+              "50": {
+                "expected_overlap_rate": 0.645078125,
+                "ndcg_mean": 0.6771880521602665,
+                "overlap_std": 0.04028213185128582,
+                "ndcg_std": 0.043600115193494285
+              }
+            },
+            "spearman_delta": -0.12847338579142376,
+            "spearman_std": 0.11605349736299049
+          },
+          "kendall": -0.08091908091908091,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.11782924025723979,
+            "spearman_std": 0.12919076161141005,
+            "spearman_q05": -0.35013598103455257,
+            "spearman_q95": 0.09041657402759418,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW948",
+          "depmap_id": "ACH-000680",
+          "ccle_name": "SW948_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": 0.08592636127164485,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 2,
+              "overlap_rate": 0.2,
+              "ndcg": 0.6205004886691242,
+              "null_expected_overlap_rate": 0.13046875000000002,
+              "overlap_lift": 1.5329341317365268,
+              "delta_ndcg": 0.09111594531965772
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 5,
+              "overlap_rate": 0.25,
+              "ndcg": 0.6021853521548057,
+              "null_expected_overlap_rate": 0.2509765625,
+              "overlap_lift": 0.9961089494163424,
+              "delta_ndcg": 0.044683552672327265
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 30,
+              "overlap_rate": 0.6,
+              "ndcg": 0.6915274315442539,
+              "null_expected_overlap_rate": 0.61046875,
+              "overlap_lift": 0.98285129255183,
+              "delta_ndcg": 0.027539108270867807
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.007923462141247922,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.13046875000000002,
+                "ndcg_mean": 0.5293845433494665,
+                "overlap_std": 0.10197931296805986,
+                "ndcg_std": 0.10674125838284933
+              },
+              "20": {
+                "expected_overlap_rate": 0.2509765625,
+                "ndcg_mean": 0.5575017994824785,
+                "overlap_std": 0.09029586480389672,
+                "ndcg_std": 0.07553948794859461
+              },
+              "50": {
+                "expected_overlap_rate": 0.61046875,
+                "ndcg_mean": 0.6639883232733861,
+                "overlap_std": 0.04242381728979018,
+                "ndcg_std": 0.045570312953750934
+              }
+            },
+            "spearman_delta": 0.07800289913039693,
+            "spearman_std": 0.11721624541300331
+          },
+          "kendall": 0.060523938572719066,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.07606901871872195,
+            "spearman_std": 0.10163873130094146,
+            "spearman_q05": -0.10194345939678429,
+            "spearman_q95": 0.2447478264608351,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        }
+      ],
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 9,
+          "candidate_counts": [
+            80,
+            82,
+            82,
+            82,
+            76,
+            81,
+            82,
+            78,
+            82
+          ],
+          "top10_overlap_lifts": [
+            0.8677966101694915,
+            0.764179104477612,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.3950953678474114,
+            1.5329341317365268
+          ],
+          "mean_top10_overlap_lift": 0.5066672460256713,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 1,
+          "candidate_counts": [
+            1438
+          ],
+          "top10_overlap_lifts": [
+            0.0
+          ],
+          "mean_top10_overlap_lift": 0.0,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 10,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "null": {
+        "seed": 20260813,
+        "repeats": 256
+      }
+    },
+    "metrics_summary": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 9,
+          "candidate_counts": [
+            80,
+            82,
+            82,
+            82,
+            76,
+            81,
+            82,
+            78,
+            82
+          ],
+          "top10_overlap_lifts": [
+            0.8677966101694915,
+            0.764179104477612,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.3950953678474114,
+            1.5329341317365268
+          ],
+          "mean_top10_overlap_lift": 0.5066672460256713,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 1,
+          "candidate_counts": [
+            1438
+          ],
+          "top10_overlap_lifts": [
+            0.0
+          ],
+          "mean_top10_overlap_lift": 0.0,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 10,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "per_line_top10": {
+        "CL34": {
+          "candidate_count": 80,
+          "support_stratum": "n_20_99",
+          "spearman": 0.01971401781528364,
+          "kendall": 0.01582278481012658,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.8677966101694915,
+          "delta_ndcg": -0.017922922774585293
+        },
+        "HCT116": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.036166345599198964,
+          "kendall": -0.026799156880457694,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.764179104477612,
+          "delta_ndcg": 0.021596857711163597
+        },
+        "HT29": {
+          "candidate_count": 1438,
+          "support_stratum": "n_ge_500",
+          "spearman": 0.01434819592274841,
+          "kendall": 0.009905134671224137,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.1860563767511229
+        },
+        "LOVO": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.0918252957629978,
+          "kendall": -0.06233062330623307,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.08260839807675269
+        },
+        "RKO": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.07752418889650745,
+          "kendall": -0.05389942788316772,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.016167905463209897
+        },
+        "SNUC4": {
+          "candidate_count": 76,
+          "support_stratum": "n_20_99",
+          "spearman": -0.022939166097060835,
+          "kendall": -0.012631578947368424,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.021790604845138617
+        },
+        "SNUC5": {
+          "candidate_count": 81,
+          "support_stratum": "n_20_99",
+          "spearman": -0.26463414634146337,
+          "kendall": -0.18024691358024691,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.17866620421522217
+        },
+        "SW480": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.17112351846410032,
+          "kendall": -0.10267991568804577,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.15255503884280885
+        },
+        "SW620": {
+          "candidate_count": 78,
+          "support_stratum": "n_20_99",
+          "spearman": -0.12004451244957573,
+          "kendall": -0.08091908091908091,
+          "overlap_count": 2,
+          "overlap_rate": 0.2,
+          "overlap_lift": 1.3950953678474114,
+          "delta_ndcg": -0.10501298069430443
+        },
+        "SW948": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": 0.08592636127164485,
+          "kendall": 0.060523938572719066,
+          "overlap_count": 2,
+          "overlap_rate": 0.2,
+          "overlap_lift": 1.5329341317365268,
+          "delta_ndcg": 0.09111594531965772
+        }
+      }
+    }
+  },
+  "predicted_on_same_support": {
+    "profile": "data/external/xpert_source/experiment/infer/20260813_151613/l1000_sdst_broad_crc_global_adapter_split_1_test_samples_prediction_profile.npy",
+    "adapter": "data/external/xpert_source/processed_data/l1000_sdst_broad_crc_global_adapter.h5ad",
+    "pair_count": 2163,
+    "metrics": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "line_rows": [
+        {
+          "context_id": "CL34",
+          "depmap_id": "ACH-000895",
+          "ccle_name": "CL34_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 80,
+          "spearman": -0.26528363806844824,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.5541281790947,
+              "null_expected_overlap_rate": 0.11523437500000001,
+              "overlap_lift": 0.8677966101694915,
+              "delta_ndcg": 0.024619578764530692
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 2,
+              "overlap_rate": 0.1,
+              "ndcg": 0.5401301158968351,
+              "null_expected_overlap_rate": 0.244140625,
+              "overlap_lift": 0.4096,
+              "delta_ndcg": -0.01468419365219864
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 27,
+              "overlap_rate": 0.54,
+              "ndcg": 0.611863761644882,
+              "null_expected_overlap_rate": 0.6220312499999999,
+              "overlap_lift": 0.8681235870384327,
+              "delta_ndcg": -0.05456817446416207
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.008874769251054852,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.11523437500000001,
+                "ndcg_mean": 0.5295086003301693,
+                "overlap_std": 0.09208067831179012,
+                "ndcg_std": 0.10054551416706187
+              },
+              "20": {
+                "expected_overlap_rate": 0.244140625,
+                "ndcg_mean": 0.5548143095490338,
+                "overlap_std": 0.08583712177496036,
+                "ndcg_std": 0.07671435000174115
+              },
+              "50": {
+                "expected_overlap_rate": 0.6220312499999999,
+                "ndcg_mean": 0.666431936109044,
+                "overlap_std": 0.04509294871082951,
+                "ndcg_std": 0.04549322657576505
+              }
+            },
+            "spearman_delta": -0.2564088688173934,
+            "spearman_std": 0.11687662668944136
+          },
+          "kendall": -0.18797468354430377,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.2633158504843423,
+            "spearman_std": 0.11179161097900268,
+            "spearman_q05": -0.4429379827363924,
+            "spearman_q95": -0.07737776757632552,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "HCT116",
+          "depmap_id": "ACH-000971",
+          "ccle_name": "HCT116_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.0937190496402956,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 3,
+              "overlap_rate": 0.3,
+              "ndcg": 0.6840497412514387,
+              "null_expected_overlap_rate": 0.130859375,
+              "overlap_lift": 2.292537313432836,
+              "delta_ndcg": 0.1615882943856125
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 8,
+              "overlap_rate": 0.4,
+              "ndcg": 0.6877355846139427,
+              "null_expected_overlap_rate": 0.2431640625,
+              "overlap_lift": 1.644979919678715,
+              "delta_ndcg": 0.1379088532485232
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 30,
+              "overlap_rate": 0.6,
+              "ndcg": 0.687529479076621,
+              "null_expected_overlap_rate": 0.607421875,
+              "overlap_lift": 0.9877813504823151,
+              "delta_ndcg": 0.027679452283329797
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.009003748734776502,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.130859375,
+                "ndcg_mean": 0.5224614468658262,
+                "overlap_std": 0.09973031873311833,
+                "ndcg_std": 0.09942119038515689
+              },
+              "20": {
+                "expected_overlap_rate": 0.2431640625,
+                "ndcg_mean": 0.5498267313654195,
+                "overlap_std": 0.09047481325482852,
+                "ndcg_std": 0.07447860838676362
+              },
+              "50": {
+                "expected_overlap_rate": 0.607421875,
+                "ndcg_mean": 0.6598500267932912,
+                "overlap_std": 0.04179088742159438,
+                "ndcg_std": 0.043961853538238595
+              }
+            },
+            "spearman_delta": -0.0847153009055191,
+            "spearman_std": 0.11934075078123343
+          },
+          "kendall": -0.06473953628425173,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.09661050434984891,
+            "spearman_std": 0.1189939937623235,
+            "spearman_q05": -0.3024123607799757,
+            "spearman_q95": 0.10040818775738548,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "HT29",
+          "depmap_id": "ACH-000552",
+          "ccle_name": "HT29_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 1438,
+          "spearman": -0.028329871275694005,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 2,
+              "overlap_rate": 0.2,
+              "ndcg": 0.7503924528205688,
+              "null_expected_overlap_rate": 0.0078125,
+              "overlap_lift": 25.6,
+              "delta_ndcg": 0.24592915763431267
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.7041847281859386,
+              "null_expected_overlap_rate": 0.012890625000000001,
+              "overlap_lift": 11.636363636363635,
+              "delta_ndcg": 0.19977121513940332
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 6,
+              "overlap_rate": 0.12,
+              "ndcg": 0.6163059145728491,
+              "null_expected_overlap_rate": 0.035234375,
+              "overlap_lift": 3.4057649667405765,
+              "delta_ndcg": 0.1065139828603674
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.0037248594014755725,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.0078125,
+                "ndcg_mean": 0.5044632951862561,
+                "overlap_std": 0.03089643739575811,
+                "ndcg_std": 0.10586666751860976
+              },
+              "20": {
+                "expected_overlap_rate": 0.012890625000000001,
+                "ndcg_mean": 0.5044135130465353,
+                "overlap_std": 0.026697154101315276,
+                "ndcg_std": 0.07138329764706161
+              },
+              "50": {
+                "expected_overlap_rate": 0.035234375,
+                "ndcg_mean": 0.5097919317124817,
+                "overlap_std": 0.026114676302021723,
+                "ndcg_std": 0.045767251736342815
+              }
+            },
+            "spearman_delta": -0.03205473067716958,
+            "spearman_std": 0.0259554787534636
+          },
+          "kendall": -0.019658285932193383,
+          "support_stratum": "n_ge_500",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.027980177093479344,
+            "spearman_std": 0.02624346421422614,
+            "spearman_q05": -0.06953115417637905,
+            "spearman_q95": 0.014900343351166735,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "LOVO",
+          "depmap_id": "ACH-000950",
+          "ccle_name": "LOVO_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.2399081420533081,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.6124261877633923,
+              "null_expected_overlap_rate": 0.12929687500000003,
+              "overlap_lift": 0.7734138972809667,
+              "delta_ndcg": 0.09481985733480058
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 6,
+              "overlap_rate": 0.3,
+              "ndcg": 0.5861911220755598,
+              "null_expected_overlap_rate": 0.24160156250000003,
+              "overlap_lift": 1.2417138237671785,
+              "delta_ndcg": 0.03857627197785818
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 27,
+              "overlap_rate": 0.54,
+              "ndcg": 0.6054295953462941,
+              "null_expected_overlap_rate": 0.610625,
+              "overlap_lift": 0.8843398157625385,
+              "delta_ndcg": -0.05407458188827652
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.005453725470989651,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12929687500000003,
+                "ndcg_mean": 0.5176063304285917,
+                "overlap_std": 0.09823189713751015,
+                "ndcg_std": 0.10210280988631924
+              },
+              "20": {
+                "expected_overlap_rate": 0.24160156250000003,
+                "ndcg_mean": 0.5476148500977016,
+                "overlap_std": 0.0905591001642496,
+                "ndcg_std": 0.07192533854017294
+              },
+              "50": {
+                "expected_overlap_rate": 0.610625,
+                "ndcg_mean": 0.6595041772345707,
+                "overlap_std": 0.04354864377911211,
+                "ndcg_std": 0.045290268156857376
+              }
+            },
+            "spearman_delta": -0.23445441658231844,
+            "spearman_std": 0.1158563261332933
+          },
+          "kendall": -0.16350496838301717,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.24675514997306316,
+            "spearman_std": 0.1233795826978207,
+            "spearman_q05": -0.4472600074978466,
+            "spearman_q95": -0.03095258022798018,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "RKO",
+          "depmap_id": "ACH-000943",
+          "ccle_name": "RKO_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.31134837452792197,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.5376566089678968,
+              "null_expected_overlap_rate": 0.13007812500000002,
+              "overlap_lift": 0.7687687687687688,
+              "delta_ndcg": 0.01759151781210988
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.511284538089574,
+              "null_expected_overlap_rate": 0.24453125,
+              "overlap_lift": 0.6134185303514377,
+              "delta_ndcg": -0.03783125907967777
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 27,
+              "overlap_rate": 0.54,
+              "ndcg": 0.6020437446330625,
+              "null_expected_overlap_rate": 0.6103125,
+              "overlap_lift": 0.8847926267281107,
+              "delta_ndcg": -0.05689450080122205
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.0038880964236349207,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.13007812500000002,
+                "ndcg_mean": 0.5200650911557869,
+                "overlap_std": 0.10228633289195764,
+                "ndcg_std": 0.09743939066153394
+              },
+              "20": {
+                "expected_overlap_rate": 0.24453125,
+                "ndcg_mean": 0.5491157971692517,
+                "overlap_std": 0.09126591791812265,
+                "ndcg_std": 0.07246787287776323
+              },
+              "50": {
+                "expected_overlap_rate": 0.6103125,
+                "ndcg_mean": 0.6589382454342846,
+                "overlap_std": 0.040464828477951076,
+                "ndcg_std": 0.041722111621206544
+              }
+            },
+            "spearman_delta": -0.30746027810428705,
+            "spearman_std": 0.11223201346550266
+          },
+          "kendall": -0.2255344775669979,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.3237095193978919,
+            "spearman_std": 0.10813580283196372,
+            "spearman_q05": -0.4872936293053055,
+            "spearman_q95": -0.13973728719865747,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SNUC4",
+          "depmap_id": "ACH-000959",
+          "ccle_name": "SNUC4_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 76,
+          "spearman": 0.12164046479835953,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.6974226268244722,
+              "null_expected_overlap_rate": 0.12460937500000002,
+              "overlap_lift": 0.8025078369905955,
+              "delta_ndcg": 0.17042477861891514
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 6,
+              "overlap_rate": 0.3,
+              "ndcg": 0.6710371624461641,
+              "null_expected_overlap_rate": 0.263671875,
+              "overlap_lift": 1.1377777777777778,
+              "delta_ndcg": 0.11222979593066562
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 36,
+              "overlap_rate": 0.72,
+              "ndcg": 0.7393863463127804,
+              "null_expected_overlap_rate": 0.6578906250000001,
+              "overlap_lift": 1.09440684004275,
+              "delta_ndcg": 0.05959993547844855
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.005517664900888587,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12460937500000002,
+                "ndcg_mean": 0.5269978482055571,
+                "overlap_std": 0.09591176237620377,
+                "ndcg_std": 0.1056380131457828
+              },
+              "20": {
+                "expected_overlap_rate": 0.263671875,
+                "ndcg_mean": 0.5588073665154984,
+                "overlap_std": 0.09104747296869022,
+                "ndcg_std": 0.07440001492290885
+              },
+              "50": {
+                "expected_overlap_rate": 0.6578906250000001,
+                "ndcg_mean": 0.6797864108343319,
+                "overlap_std": 0.03905429601349095,
+                "ndcg_std": 0.045925457450460845
+              }
+            },
+            "spearman_delta": 0.11612279989747094,
+            "spearman_std": 0.11854019376152128
+          },
+          "kendall": 0.08842105263157897,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.12206353735404818,
+            "spearman_std": 0.13119460812982547,
+            "spearman_q05": -0.10448910997486346,
+            "spearman_q95": 0.34263854437909336,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SNUC5",
+          "depmap_id": "ACH-000970",
+          "ccle_name": "SNUC5_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 81,
+          "spearman": -0.16806684733514002,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 0,
+              "overlap_rate": 0.0,
+              "ndcg": 0.34602225160731104,
+              "null_expected_overlap_rate": 0.11406250000000001,
+              "overlap_lift": 0.0,
+              "delta_ndcg": -0.1708282881976012
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 4,
+              "overlap_rate": 0.2,
+              "ndcg": 0.42843236585288885,
+              "null_expected_overlap_rate": 0.2390625,
+              "overlap_lift": 0.8366013071895425,
+              "delta_ndcg": -0.11605891345088132
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 29,
+              "overlap_rate": 0.58,
+              "ndcg": 0.5891924993608147,
+              "null_expected_overlap_rate": 0.6136718749999999,
+              "overlap_lift": 0.945130490133673,
+              "delta_ndcg": -0.06797712450041005
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": -0.013429542824074076,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.11406250000000001,
+                "ndcg_mean": 0.5168505398049122,
+                "overlap_std": 0.08859526563959273,
+                "ndcg_std": 0.09493148186629685
+              },
+              "20": {
+                "expected_overlap_rate": 0.2390625,
+                "ndcg_mean": 0.5444912793037702,
+                "overlap_std": 0.08111467095260881,
+                "ndcg_std": 0.06555517277450436
+              },
+              "50": {
+                "expected_overlap_rate": 0.6136718749999999,
+                "ndcg_mean": 0.6571696238612248,
+                "overlap_std": 0.04189591070718448,
+                "ndcg_std": 0.04317963270031285
+              }
+            },
+            "spearman_delta": -0.15463730451106594,
+            "spearman_std": 0.10661855719735451
+          },
+          "kendall": -0.11358024691358025,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.16499695620650245,
+            "spearman_std": 0.11781881462688372,
+            "spearman_q05": -0.35322905025658846,
+            "spearman_q95": 0.032717829500342875,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW480",
+          "depmap_id": "ACH-000842",
+          "ccle_name": "SW480_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": -0.0030147691035143282,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 3,
+              "overlap_rate": 0.3,
+              "ndcg": 0.6513863889035691,
+              "null_expected_overlap_rate": 0.12851562500000002,
+              "overlap_lift": 2.33434650455927,
+              "delta_ndcg": 0.1292892632567202
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 5,
+              "overlap_rate": 0.25,
+              "ndcg": 0.6043522261874376,
+              "null_expected_overlap_rate": 0.24902343750000003,
+              "overlap_lift": 1.003921568627451,
+              "delta_ndcg": 0.05161600063636829
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 30,
+              "overlap_rate": 0.6,
+              "ndcg": 0.6938674443036311,
+              "null_expected_overlap_rate": 0.6109374999999999,
+              "overlap_lift": 0.9820971867007674,
+              "delta_ndcg": 0.03279167548092177
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.0010207666710201242,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.12851562500000002,
+                "ndcg_mean": 0.522097125646849,
+                "overlap_std": 0.0992518092069831,
+                "ndcg_std": 0.09786151794203027
+              },
+              "20": {
+                "expected_overlap_rate": 0.24902343750000003,
+                "ndcg_mean": 0.5527362255510693,
+                "overlap_std": 0.0810636290248814,
+                "ndcg_std": 0.06889912855783507
+              },
+              "50": {
+                "expected_overlap_rate": 0.6109374999999999,
+                "ndcg_mean": 0.6610757688227094,
+                "overlap_std": 0.04768774573986487,
+                "ndcg_std": 0.04503792508490693
+              }
+            },
+            "spearman_delta": -0.004035535774534452,
+            "spearman_std": 0.11490819184162097
+          },
+          "kendall": -0.005118940078289672,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.0031611447633260827,
+            "spearman_std": 0.11411886166984281,
+            "spearman_q05": -0.18738039156089592,
+            "spearman_q95": 0.18037429728829976,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW620",
+          "depmap_id": "ACH-000651",
+          "ccle_name": "SW620_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 78,
+          "spearman": -0.411171107373639,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.3275108234981646,
+              "null_expected_overlap_rate": 0.143359375,
+              "overlap_lift": 0.6975476839237057,
+              "delta_ndcg": -0.20784767105598467
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 3,
+              "overlap_rate": 0.15,
+              "ndcg": 0.42041277842956243,
+              "null_expected_overlap_rate": 0.2603515625,
+              "overlap_lift": 0.5761440360090022,
+              "delta_ndcg": -0.1410021606196264
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 27,
+              "overlap_rate": 0.54,
+              "ndcg": 0.5400718783771868,
+              "null_expected_overlap_rate": 0.645078125,
+              "overlap_lift": 0.8371079084413227,
+              "delta_ndcg": -0.1371161737830796
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.008428873341848026,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.143359375,
+                "ndcg_mean": 0.5353584945541493,
+                "overlap_std": 0.10286351199336612,
+                "ndcg_std": 0.09321739866371921
+              },
+              "20": {
+                "expected_overlap_rate": 0.2603515625,
+                "ndcg_mean": 0.5614149390491888,
+                "overlap_std": 0.07603628757908025,
+                "ndcg_std": 0.0643784392607503
+              },
+              "50": {
+                "expected_overlap_rate": 0.645078125,
+                "ndcg_mean": 0.6771880521602665,
+                "overlap_std": 0.04028213185128582,
+                "ndcg_std": 0.043600115193494285
+              }
+            },
+            "spearman_delta": -0.419599980715487,
+            "spearman_std": 0.11605349736299049
+          },
+          "kendall": -0.28471528471528473,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": -0.393770909531721,
+            "spearman_std": 0.11206187557180057,
+            "spearman_q05": -0.5537769257483712,
+            "spearman_q95": -0.18298078123000294,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        },
+        {
+          "context_id": "SW948",
+          "depmap_id": "ACH-000680",
+          "ccle_name": "SW948_LARGE_INTESTINE",
+          "eligible": true,
+          "candidate_count": 82,
+          "spearman": 0.03342366757000903,
+          "top_k": {
+            "10": {
+              "effective_k": 10,
+              "overlap_count": 1,
+              "overlap_rate": 0.1,
+              "ndcg": 0.6079989548428759,
+              "null_expected_overlap_rate": 0.13046875000000002,
+              "overlap_lift": 0.7664670658682634,
+              "delta_ndcg": 0.07861441149340942
+            },
+            "20": {
+              "effective_k": 20,
+              "overlap_count": 4,
+              "overlap_rate": 0.2,
+              "ndcg": 0.633358000959429,
+              "null_expected_overlap_rate": 0.2509765625,
+              "overlap_lift": 0.796887159533074,
+              "delta_ndcg": 0.07585620147695049
+            },
+            "50": {
+              "effective_k": 50,
+              "overlap_count": 32,
+              "overlap_rate": 0.64,
+              "ndcg": 0.7125518476913415,
+              "null_expected_overlap_rate": 0.61046875,
+              "overlap_lift": 1.0483747120552853,
+              "delta_ndcg": 0.04856352441795542
+            }
+          },
+          "null_baseline": {
+            "seed": 20260813,
+            "repeats": 256,
+            "spearman_mean": 0.007923462141247922,
+            "top_k": {
+              "10": {
+                "expected_overlap_rate": 0.13046875000000002,
+                "ndcg_mean": 0.5293845433494665,
+                "overlap_std": 0.10197931296805986,
+                "ndcg_std": 0.10674125838284933
+              },
+              "20": {
+                "expected_overlap_rate": 0.2509765625,
+                "ndcg_mean": 0.5575017994824785,
+                "overlap_std": 0.09029586480389672,
+                "ndcg_std": 0.07553948794859461
+              },
+              "50": {
+                "expected_overlap_rate": 0.61046875,
+                "ndcg_mean": 0.6639883232733861,
+                "overlap_std": 0.04242381728979018,
+                "ndcg_std": 0.045570312953750934
+              }
+            },
+            "spearman_delta": 0.025500205428761108,
+            "spearman_std": 0.11721624541300331
+          },
+          "kendall": 0.032219211080999705,
+          "support_stratum": "n_20_99",
+          "bootstrap": {
+            "repeats": 256,
+            "status": "ok",
+            "spearman_mean": 0.016350754147622094,
+            "spearman_std": 0.1183054239641461,
+            "spearman_q05": -0.20619090631285586,
+            "spearman_q95": 0.1933081413155536,
+            "ks": [
+              10,
+              20,
+              50
+            ]
+          }
+        }
+      ],
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 9,
+          "candidate_counts": [
+            80,
+            82,
+            82,
+            82,
+            76,
+            81,
+            82,
+            78,
+            82
+          ],
+          "top10_overlap_lifts": [
+            0.8677966101694915,
+            2.292537313432836,
+            0.7734138972809667,
+            0.7687687687687688,
+            0.8025078369905955,
+            0.0,
+            2.33434650455927,
+            0.6975476839237057,
+            0.7664670658682634
+          ],
+          "mean_top10_overlap_lift": 1.0337095201104332,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 1,
+          "candidate_counts": [
+            1438
+          ],
+          "top10_overlap_lifts": [
+            25.6
+          ],
+          "mean_top10_overlap_lift": 25.6,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 10,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "null": {
+        "seed": 20260813,
+        "repeats": 256
+      }
+    },
+    "metrics_summary": {
+      "line_count": 10,
+      "eligible_line_count": 10,
+      "support_strata": {
+        "n_lt_20": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_20_99": {
+          "line_count": 9,
+          "candidate_counts": [
+            80,
+            82,
+            82,
+            82,
+            76,
+            81,
+            82,
+            78,
+            82
+          ],
+          "top10_overlap_lifts": [
+            0.8677966101694915,
+            2.292537313432836,
+            0.7734138972809667,
+            0.7687687687687688,
+            0.8025078369905955,
+            0.0,
+            2.33434650455927,
+            0.6975476839237057,
+            0.7664670658682634
+          ],
+          "mean_top10_overlap_lift": 1.0337095201104332,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_100_499": {
+          "line_count": 0,
+          "candidate_counts": [],
+          "top10_overlap_lifts": [],
+          "mean_top10_overlap_lift": null,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "n_ge_500": {
+          "line_count": 1,
+          "candidate_counts": [
+            1438
+          ],
+          "top10_overlap_lifts": [
+            25.6
+          ],
+          "mean_top10_overlap_lift": 25.6,
+          "note": "do_not_macro_average_across_strata"
+        },
+        "eligible_line_count": 10,
+        "forbidden_interpretation": "do not macro-average lift across lines with different candidate sizes"
+      },
+      "per_line_top10": {
+        "CL34": {
+          "candidate_count": 80,
+          "support_stratum": "n_20_99",
+          "spearman": -0.26528363806844824,
+          "kendall": -0.18797468354430377,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.8677966101694915,
+          "delta_ndcg": 0.024619578764530692
+        },
+        "HCT116": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.0937190496402956,
+          "kendall": -0.06473953628425173,
+          "overlap_count": 3,
+          "overlap_rate": 0.3,
+          "overlap_lift": 2.292537313432836,
+          "delta_ndcg": 0.1615882943856125
+        },
+        "HT29": {
+          "candidate_count": 1438,
+          "support_stratum": "n_ge_500",
+          "spearman": -0.028329871275694005,
+          "kendall": -0.019658285932193383,
+          "overlap_count": 2,
+          "overlap_rate": 0.2,
+          "overlap_lift": 25.6,
+          "delta_ndcg": 0.24592915763431267
+        },
+        "LOVO": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.2399081420533081,
+          "kendall": -0.16350496838301717,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.7734138972809667,
+          "delta_ndcg": 0.09481985733480058
+        },
+        "RKO": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.31134837452792197,
+          "kendall": -0.2255344775669979,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.7687687687687688,
+          "delta_ndcg": 0.01759151781210988
+        },
+        "SNUC4": {
+          "candidate_count": 76,
+          "support_stratum": "n_20_99",
+          "spearman": 0.12164046479835953,
+          "kendall": 0.08842105263157897,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.8025078369905955,
+          "delta_ndcg": 0.17042477861891514
+        },
+        "SNUC5": {
+          "candidate_count": 81,
+          "support_stratum": "n_20_99",
+          "spearman": -0.16806684733514002,
+          "kendall": -0.11358024691358025,
+          "overlap_count": 0,
+          "overlap_rate": 0.0,
+          "overlap_lift": 0.0,
+          "delta_ndcg": -0.1708282881976012
+        },
+        "SW480": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": -0.0030147691035143282,
+          "kendall": -0.005118940078289672,
+          "overlap_count": 3,
+          "overlap_rate": 0.3,
+          "overlap_lift": 2.33434650455927,
+          "delta_ndcg": 0.1292892632567202
+        },
+        "SW620": {
+          "candidate_count": 78,
+          "support_stratum": "n_20_99",
+          "spearman": -0.411171107373639,
+          "kendall": -0.28471528471528473,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.6975476839237057,
+          "delta_ndcg": -0.20784767105598467
+        },
+        "SW948": {
+          "candidate_count": 82,
+          "support_stratum": "n_20_99",
+          "spearman": 0.03342366757000903,
+          "kendall": 0.032219211080999705,
+          "overlap_count": 1,
+          "overlap_rate": 0.1,
+          "overlap_lift": 0.7664670658682634,
+          "delta_ndcg": 0.07861441149340942
+        }
+      }
+    },
+    "gap": {
+      "pair_count": 2163,
+      "context_count": 10,
+      "compound_count": 1438,
+      "pearson": -0.10333482302647397,
+      "spearman": -0.1317040591632504,
+      "kendall": -0.08800390727409041,
+      "mae": 0.1144313363816085
+    }
+  },
+  "evaluation_contract": {
+    "reversal": "-Spearman(CRC signed disease signature, Delta978)",
+    "prism_direction": "sensitivity_score = - official PRISM log2 fold-change; larger means more sensitive",
+    "prism_values_read_after_identity_freeze": true,
+    "dose_time_not_mixed": true,
+    "old_839_pair_oracle_not_used": true
+  },
+  "decision_rule": {
+    "oracle_above_null": "theory chain holds; record Predicted→Oracle gap",
+    "oracle_near_null": "rerun CMap/weighted-KS once; if still no signal, inspect signature/dose/time/context/PRISM endpoint"
+  }
+}
