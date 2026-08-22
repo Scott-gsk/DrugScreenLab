@@ -1,12 +1,12 @@
 # Context Adapter Track：CCLE / DepMap / organoid / PDO
 
-> 状态：`PREPARATION_ONLY` · `DATA_PARTIAL`
+> 状态：`INTAKE_PARTIAL` · CCLE/DepMap 24Q2 identity/split `FROZEN` 但仍 `DATA_PARTIAL` · organoid `LOCAL_MATRICES_PRESENT_ADAPTER_NOT_BUILT`
 >
-> 本文件只定义 future context adapter 的 normalization 与 interface 边界。不创建、登记、批准或执行 `EXP-006`；不训练 adapter 或 XPert；不修改 XPert foundation，也不改变 `EXP-004`。
+> 2026-08-14：CCLE 24Q2 已冻结 response-blind identity/split（CRC exact 10/10 locked_eval；PatientID 原子）。四个 organoid GEO accession 已从 NCBI FTP 下载到本地。尚未建 organoid 978 adapter，不能当 `X_ctl` / Δ978。本文件仍不训练 adapter 或 XPert；不修改 XPert foundation；不改 EXP-007 主指标。
 
 ## 目的、现有锚点与非目标
 
-`mvp/foundation/xpert/CONTEXT_REGISTRY.json` 已将当前 XPert/LINCS context 以 `context_id` 登记，并列出 `CCLE`、`DepMap`、`organoid`、`PDO` 为 future adapters。该登记不等于这些来源已被选定、下载、标准化或验收。本 track 的作用是使未来接入在读取数据前就有一致的接口和 leakage gate。
+`mvp/foundation/xpert/CONTEXT_REGISTRY.json` 已将当前 XPert/LINCS context 以 `context_id` 登记，并列出 `CCLE`、`DepMap`、`organoid`、`PDO` 为 future adapters。2026-08-13 已为 DepMap Public 24Q2 冻结 source/checksum/978 mapping 并写出 basal adapter，但仍未冻结 split、未验收为 foundation 等价物、未接入 organoid/PDO 矩阵。本 track 的作用是使接入保持一致的接口和 leakage gate。
 
 相关的既有边界为：
 
@@ -78,6 +78,50 @@
 
 ## 当前 readiness 与升级条件
 
-本 track 的唯一当前数据状态为 `DATA_PARTIAL`：现有 context registry 已表达 future-adapter 的接口意图，但尚未为 CCLE、DepMap、organoid 或 PDO 冻结具体 source release、checksum、gene crosswalk、normalization parameters、identity crosswalk 或 split manifest。因此它不是 `DATA_READY`，也没有启动任何数据接入。
+本 track 不再是“尚未下载”的 `PREPARATION_ONLY`。2026-08-13 已完成一次真实 CCLE/DepMap intake，但仍不是可用于 foundation 替换或训练的 `DATA_READY`。
 
-未来任一候选 adapter 若出现下列情形，应立即是 `DATA_BLOCKED`：provenance/checksum 无法确认；978 gene order 无法证明；context identity 或 lineage 不能审计；matched-control 语义被错误替代为 basal context；normalization 使用了 held-out/external 数据；或任何 PRISM/GDSC/疗效/test label 污染了 adapter 选择或参数。只有全部 response-blind gate `VALID` 且正式 EXP 获批后，才可由 Data Steward 重新评定 readiness。
+### 已核验：DepMap Public 24Q2 basal RNA-seq
+
+| 项 | 值 |
+| --- | --- |
+| release | DepMap Public 24Q2（官方 Figshare+ DOI `10.25452/figshare.plus.25880521.v1`） |
+| 当前门户宣布但未取到 | DepMap Public 26Q1；本会话被 WAF/HTML 门控，标 `UNVERIFIED` / 未下载 |
+| registry | `depmap_public_24q2_rnaseq_raw_v1` + `depmap_public_24q2_rnaseq_exact978_v1` |
+| raw expression | `data/raw/depmap/24q2/OmicsExpressionProteinCodingGenesTPMLogp1.csv`；460,868,099 B；sha256 `39eff342…`；1517 × 19193；official `log2(TPM+1)` |
+| raw model | `data/raw/depmap/24q2/Model.csv`；559,182 B；sha256 `a4cac376…` |
+| gene mapping | DepMap 列名括号内 Entrez → GSE92742 `pr_gene_id`；978/978 mapped；0 missing；0 ambiguous |
+| gene-order sha256 | `b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623` |
+| adapter matrix | `data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_log2tpm.npy`；1517 × 978 float32；sha256 `36ab8a0f…` |
+| LINCS overlap | 55 registry contexts 中 54 个 stripped-name 命中；表达矩阵实际 overlap 行 52 |
+| CRC exact overlap | 10/10（CL34, HCT116, HT29, LOVO, RKO, SNUC4, SNUC5, SW480, SW620, SW948） |
+| intake audit | `artifacts/experiments/EXP-007/CCLE_RNASEQ_INTAKE.json` |
+| response-blind | true；未读 PRISM/GDSC 值来选线或拟合 |
+
+normalization probe（不是 architecture search；`train_fitted_zscore` 只用非 CRC-exact DepMap 线拟合）：
+
+| 变换 | 相对 raw 的 mean Spearman（前 48 行） |
+| --- | --- |
+| raw_log2tpm | 1.0 |
+| within_sample_rank | ≈1.0 |
+| quantile_bin10 | ≈0.995 |
+| relative_expression | 1.0 |
+| train_fitted_zscore | ≈0.552 |
+
+该 978 向量只是 basal RNA-seq context。它不能替换 matched control，也不能用来算 `Delta978`。2026-08-14 已冻结 response-blind identity/split：`artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json`。CRC exact 10 线 + 共享 PatientID 为 `locked_eval`；其余按 PatientID 哈希到 train 1338 / val 169。H1299 保持 alias 未合并。adapter 仍不是 foundation 等价物，状态保持 `DATA_PARTIAL`。
+
+### 已下载、未建成 adapter：organoid genetic
+
+2026-08-14 NCBI GEO FTP 可通。四个 accession 本地矩阵均 present。盘点见 `artifacts/experiments/EXP-007/ORGANOID_GENETIC_INVENTORY.json`。
+
+| accession | 本地矩阵 | unique perturbation | controls | donor grouping | exact978 (symbol) |
+| --- | --- | --- | --- | --- | --- |
+| GSE280506 | 10x h5 + cell identities | 79 assigned targets / 96 guides | DMSO vs cisplatin；5 control-like guides / 3277 cells | 1 engineered line；不可称 donor-cold | 976/978 |
+| GSE145308 | RAW.tar 24 per-sample count files | WT / APC-KO / ARID1A / SMARCA4 | WT + 0h | donor ID 不在 SOFT | `UNVERIFIED` Ensembl-only |
+| GSE167285 | raw + normalized counts | Cas9 vs SATB2 | 5/5 donor-paired Cas9 | donors 80/83/87/88/89 | 950/978 |
+| GSE241659 | normalised counts | PTEN WT vs KO | 3 WT / 4 KO | T427/T474/T561/T640；T561 仅 KO | 935/978 |
+
+organoid 状态：`DATA_PARTIAL` / `LOCAL_MATRICES_PRESENT_ADAPTER_NOT_BUILT`。没有 organoid 978 adapter，不能当 `X_ctl`，不能算 Δ978，也不是化学药敏 ground truth。
+
+### 升级 / 阻断条件
+
+未来任一候选 adapter 若出现下列情形，应立即是 `DATA_BLOCKED`：provenance/checksum 无法确认；978 gene order 无法证明；context identity 或 lineage 不能审计；matched-control 语义被错误替代为 basal context；normalization 使用了 held-out/external 数据；或任何 PRISM/GDSC/疗效/test label 污染了 adapter 选择或参数。只有全部 response-blind gate `VALID`、split 已冻结且正式 EXP 获批后，才可由 Data Steward 重新评定 readiness。

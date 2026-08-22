@@ -1,22 +1,911 @@
 [
-  {"id":"legacy_raw_collection","version":1,"asset_type":"raw","source":{"provider":"MCPIRE_PDO","accession":"legacy-runtime"},"path":{"relative":"raw"},"immutable":true,"checksum":{"algorithm":"sha512","value":"verified-by-file-inventory-and-source-sums"},"provenance":{"migrated_from":"MCPIRE_PDO/runtime/raw"}},
-  {"id":"lincs_gse92742_raw_level3_v1","version":1,"asset_type":"raw","source":{"provider":"NCBI GEO / Broad LINCS","accession":"GSE92742","source_revision":"GSE92742_SHA512SUMS.txt.gz sha256:43bbea5abfe40e7755c88ae8a2e680544bd8cb1a190538d3ad786036e6009edf"},"path":{"relative":"raw/lincs/GSE92742"},"immutable":true,"intended_role":"TRAIN","checksum":{"algorithm":"sha512","value":"per-file values in files","verification":"verified during immutable raw migration against official SHA512 manifest; EXP-002 re-verifies used metadata"},"files":{"GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx.gz":{"bytes":52407725132,"sha512":"c049fd66717defce00a0073ce19339f8d507991d2a1d7dd9b5fd175cf9680295174f019ad34a666ff58d939a74de522536a3900bda719855b7ea414673a226a4"},"GSE92742_Broad_LINCS_gene_info.txt.gz":{"bytes":216692,"sha512":"b2df105ebf7a69799b23130d03b7da769bfd6ab83fd69cbb419c91c78ae069ae3e5d474e09d36e3ac4271f3b7fc56b24caaf1ac5ece9554ea7738b15535dfefd"},"GSE92742_Broad_LINCS_pert_info.txt.gz":{"bytes":1138509,"sha512":"cdba99a4a6204ecdd26adb2338a418e60ac3da9e18d6d75214dea87c3cf06e951f9356e876f581dd7d6081014a428a11b6ad93b68486954cddbae5e29177530b"},"GSE92742_Broad_LINCS_cell_info.txt.gz":{"bytes":2528,"sha512":"75b5d4cf9b6f3955bfe888ce22ae85134dd9fd053111c0f0d7b02298640269454267b0bdfcb2dc9ab562e0281b332703eb1d94337e57355945ccc3505b609b4a"},"GSE92742_Broad_LINCS_inst_info.txt.gz":{"bytes":12046182,"sha512":"4c91c838d348f03c50381fbe4e281edb2a45844d0b792780db3642554275e1b29ac3fbbc542b9cf4e18858135eeb6d58f1fc8206ae96153a40f083286fca7f16"}},"provenance":{"download_source":"NCBI GEO accession GSE92742","migrated_from":"legacy immutable raw store","derived_expression_storage":"interim/lincs/GSE92742"}},
-  {"id":"legacy_external_collection","version":1,"asset_type":"external","source":{"provider":"third-party","accession":"legacy-runtime-external"},"path":{"relative":"external"},"immutable":true,"checksum":{"algorithm":"sha512","value":"46c01693bcd40cf93df304668491b19eed5e3d41954ecab542c2f8f95d92950facc0f9202a082134015c7f8ac4d9067ad353278ea687d40d780225e42ee97788"},"provenance":{"migrated_from":"MCPIRE_PDO/runtime/raw/external"}},
-  {"id":"lincs_gse92742_level3_level4_level5","version":1,"asset_type":"interim","source":{"provider":"Broad LINCS","accession":"GSE92742"},"path":{"relative":"interim/lincs/GSE92742"},"immutable":false,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"},"provenance":{"migrated_from":"MCPIRE_PDO/runtime/interim/lincs/GSE92742"}},
-  {"id":"lincs_gse92742_exact978_cache_v1","version":1,"asset_type":"processed","source":{"provider":"NCBI GEO / Broad LINCS","accession":"GSE92742","parent_asset":"lincs_gse92742_raw_level3_v1","source_level3_sha512":"c049fd66717defce00a0073ce19339f8d507991d2a1d7dd9b5fd175cf9680295174f019ad34a666ff58d939a74de522536a3900bda719855b7ea414673a226a4"},"path":{"relative":"processed/lincs/GSE92742/exact978_cache_v1"},"immutable":true,"intended_role":"TRAIN","checksum":{"algorithm":"sha256","value":"04b8bb746a61ba4992e49566315327023783ec1c0448da2a9e263e0881281733","file":"exact978_cache.npy","verification":"EXP-002 reviewer VALID; hard-linked to the verified experiment cache"},"schema":{"format":"npy_float32_exact978_v1","matrix_shape":[1319138,978],"ordered_gene_ids_sha256":"b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623"},"preprocessing_contract":{"id":"EXP-002 strict split data contract v2","sha256":"900592f841d736f3087077936b86c6f78ceb17f9a79f4485e619561d63e2ee9c","description":"Level-3 exact pr_is_lm=1 ordered 978 extraction; no inferred genes"},"provenance":{"extraction_runner":"scripts/modeling/run_exp002_streaming.py","runner_sha256":"23263bb996cb5b172e37de44615930347fbaa6bf0ccf82cc9a76fc537ebdf105","creation_command":"scripts/modeling/run_exp002_streaming.py --root data --config configs/experiments/EXP-002/baselines.json --cache artifacts/experiments/EXP-002/exact978_cache.npy --contract artifacts/experiments/EXP-002/strict_split_audit.json --output artifacts/experiments/EXP-002/baseline_metrics.json","creation_environment":"WSL2; conda drugscreening-gpu; Python 3.11.15","registered_from":"EXP-002 accepted evidence"}},
-  {"id":"betge_2022","version":1,"asset_type":"processed","source":{"provider":"Betge et al.","accession":"2022"},"path":{"relative":"processed/betge_2022"},"immutable":false,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"}},
-  {"id":"inflammation_geo_collection","version":1,"asset_type":"processed","source":{"provider":"GEO","accession":"multiple"},"path":{"relative":"processed/inflammation"},"immutable":false,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"}},
-  {"id":"jci_158060","version":1,"asset_type":"processed","source":{"provider":"JCI","accession":"158060"},"path":{"relative":"processed/jci_158060"},"immutable":false,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"}},
-  {"id":"mcrc_pdo_2026","version":1,"asset_type":"processed","source":{"provider":"internal","accession":"mcrc-pdo-2026"},"path":{"relative":"processed/mcrc_pdo_2026"},"immutable":false,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"}},
-  {"id":"tornado_gse157167","version":1,"asset_type":"processed","source":{"provider":"GEO","accession":"GSE157167"},"path":{"relative":"processed/tornado_gse157167"},"immutable":false,"checksum":{"algorithm":"sha512","value":"verified-by-size-and-file-inventory"}},
-  {"id":"gse74602_crc_exact978_signature_v1","version":1,"asset_type":"processed","source":{"provider":"NCBI GEO","accession":"GSE74602","platform":"GPL6104","parent_asset":"lincs_gse92742_exact978_cache_v1"},"path":{"relative":"../mvp/core_data/crc_disease_signature_exact978.tsv"},"immutable":true,"intended_role":"MVP-001_EXTERNAL_SIGNATURE","checksum":{"algorithm":"sha256","value":"61e95b6a6da1d4c8b91ed1a99e96471027917c7e7e2501b507875ce28cd310c3"},"schema":{"rows":947,"up":712,"down":235,"ordered_gene_ids_sha256":"b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623","format":"tsv_exact978_signed_log2fc_v2"},"preprocessing_contract":{"id":"MVP-001 CRC tumor-vs-normal signature contract","sha256":"see mvp/core_data/crc_disease_signature_audit.json"},"provenance":{"generator":"mvp/core_data/build_crc_signature_gse74602.py","generator_revision":"1abf74455d9db958e7a0e5f2455b3857b0611d00ed1ba3471cb398616a639713","source_matrix_sha256":"381b6cb83e6776d7f571833001765ccfbf3143fc500f69a0e1df5b4aa264b0f6","platform_annotation_sha256":"82ae57d6d9ec26ce2bcff01ccd1db498bb8055ee01471829dec0a5ab5666d518","creation_command":"python mvp/core_data/build_crc_signature_gse74602.py","creation_environment":"WSL2; conda drugscreening-gpu"}},
-  {"id":"prism_repurposing_primary_19q4_compact_crc_v1","version":1,"asset_type":"processed","source":{"provider":"DepMap/Broad","accession":"PRISM_REPURPOSING_PRIMARY_19Q4","source_revision":"Figshare files 20237709, 20237700"},"path":{"relative":"../mvp/core_data/compact_prism_response.parquet"},"immutable":true,"intended_role":"MVP-001_EXTERNAL_TEST","checksum":{"algorithm":"sha256","value":"5114e789299a794792bc44c818af98e679e8f00d6f6f3fb246781e6df2e960f1"},"schema":{"rows":135,"cell_line_unit":"depmap_id","colorectal_lines":35,"candidate_count":4,"response":"official log2 fold-change relative to DMSO; sensitivity_score=-response_raw"},"preprocessing_contract":{"id":"MVP-001 PRISM compact response contract","sha256":"see mvp/core_data/prism_compact_audit.json"},"provenance":{"generator":"mvp/core_data/build_prism_compact.py","generator_revision":"see mvp/core_data/prism_compact_audit.json","source_matrix_sha256":"25efc741b372b30d38629cb139a388e989663fba597e55fff5f6c2bb7cdeb75a","creation_command":"python mvp/core_data/build_prism_compact.py","creation_environment":"WSL2; conda drugscreening-gpu"}},
-  {"id":"lincs_prism_identity_bridge_v1","version":1,"asset_type":"derived_metadata","source":{"provider":"DrugScreenLab","accessions":["PRISM_REPURPOSING_PRIMARY_19Q4","GSE92742"],"source_revisions":"PRISM treatment metadata + LINCS pert_info"},"path":{"relative":"../mvp/extension/LINCS_PRISM_IDENTITY_BRIDGE_AUDIT.json"},"immutable":true,"intended_role":"IDENTITY_ONLY_PRE_EVALUATION","checksum":{"algorithm":"sha256","value":"E880D9F5CA9368588EDC086A3BA29F41C9E0FA7BB8930C846B18B843076FF2B0"},"schema":{"format":"lincs_prism_identity_bridge_v1","response_values_read":false,"identity_keys":["pert_id","canonical_smiles","InChIKey","aliases"]},"preprocessing_contract":{"id":"response-blind Broad LINCS-PRISM identity bridge","source":"scripts/data/build_lincs_prism_identity_bridge.py","formal_rule":"exact identity only; alias-only and ambiguous rows excluded from formal cohort"},"provenance":{"derived_output":"artifacts/extension/lincs_prism_identity_bridge.csv","large_output_not_tracked":true,"creation_environment":"WSL2; conda drugscreening-gpu"}},
-  {"id":"unipert_genetic_features_256_v1","version":1,"asset_type":"derived_feature_metadata","source":{"provider":"DrugScreenLab","accession":"GSE92742","source_revision":"GSE92742_Broad_LINCS_pert_info.txt.gz"},"path":{"relative":"../mvp/extension/GENETIC_UNIPERT_FAST_AUDIT.json"},"immutable":true,"intended_role":"GENETIC_PRETRAINING_FEATURE_ONLY","checksum":{"algorithm":"sha256","value":"384887DF9D41915DA7ABABC015D4EE50DB7E817F1A9780122199128908FDD39F"},"schema":{"format":"unipert_genetic_feature_table_v1","feature_shape":[256,256],"mapped_genetic_perturbagen_ids":1392,"labels_used":false},"preprocessing_contract":{"id":"response-blind official UniPert genetic encoder feature contract","source":"scripts/modeling/build_unipert_genetic_features.py","model_sha256":"06b065c2768b440077bdb1488f654b310f67a04c01fceb9f4791043558bfd322","downstream_status":"GENETIC_RESPONSE_ADAPTER_PENDING"},"provenance":{"features_output":"artifacts/extension/unipert_genetic_features_256.npy","mapping_output":"artifacts/extension/unipert_genetic_features_256_mapping.json","large_outputs_not_tracked":true,"creation_environment":"WSL2; conda drugscreening-gpu"}},
-  {"id":"xpert_context_registry_v1","version":1,"asset_type":"derived_metadata","source":{"provider":"DrugScreenLab / GSanShui XPert","accession":"official processed L1000 SDST"},"path":{"relative":"../mvp/foundation/xpert/CONTEXT_REGISTRY.json"},"immutable":true,"intended_role":"XPERT_FOUNDATION_CONTEXT_REGISTRY","checksum":{"algorithm":"sha256","value":"18D5D67344D09978A553AB34A9C4C197FCD5A1848EEE0D76D0F752206E8D0477"},"schema":{"format":"xpert_context_registry_v1","exact_lincs_contexts":55,"broad_exact_contexts":10,"matched_control_policy":"official XPert processed contract"},"provenance":{"generator":"scripts/foundation/build_xpert_registries.py","large_assets_not_tracked":true}},
-  {"id":"xpert_drug_registry_v1","version":1,"asset_type":"derived_metadata","source":{"provider":"DrugScreenLab / GSanShui XPert","accession":"official processed L1000 SDST"},"path":{"relative":"../mvp/foundation/xpert/DRUG_REGISTRY.json"},"immutable":true,"intended_role":"XPERT_FOUNDATION_PERTURBAGEN_REGISTRY","checksum":{"algorithm":"sha256","value":"CA0765ACDE47ED790A399FC988380EE98B6C5BC050D6DF7DD6E3686552C1EF74"},"schema":{"format":"xpert_drug_registry_v1","official_pert_ids":8418,"global_inference_eligible":8418,"broad_inference_eligible":1836,"unipert_feature_complete":8418},"provenance":{"generator":"scripts/foundation/build_xpert_registries.py","large_assets_not_tracked":true}},
-  {"id":"xpert_broad_global_adapter_v1","version":1,"asset_type":"derived_metadata","source":{"provider":"DrugScreenLab / GSanShui XPert","accession":"official processed L1000 SDST + frozen Broad identity cohort"},"path":{"relative":"../mvp/foundation/xpert/BROAD_GLOBAL_ADAPTER_AUDIT.json"},"immutable":true,"intended_role":"XPERT_BROAD_RESPONSE_BLIND_GLOBAL_ADAPTER","checksum":{"algorithm":"sha256","value":"D31BE2B08EE4FF2977C861E181527D1A6BDFCE9BCE91586A604E1413CFF5AB24"},"schema":{"format":"xpert_global_cartesian_adapter_v1","records":18360,"contexts":10,"drugs":1836,"broad_only":true},"provenance":{"generator":"scripts/foundation/build_xpert_global_cartesian_adapter.py","large_output_not_tracked":true}},
-  {"id":"xpert_broad_prism_crc_response_v1","version":1,"asset_type":"derived_metadata","source":{"provider":"DrugScreenLab / DepMap Broad PRISM","accession":"PRISM_REPURPOSING_PRIMARY_19Q4"},"path":{"relative":"../mvp/foundation/xpert/BROAD_PRISM_CRC_V1_AUDIT.json"},"immutable":true,"intended_role":"XPERT_BROAD_EXTERNAL_EVALUATION_RESPONSE_COMPACT","checksum":{"algorithm":"sha256","value":"F6241F512C67FA55C2BE08419AC7FCF010C11831FA65E822EC004A07F8C1BFC3"},"schema":{"format":"xpert_broad_prism_crc_response_v1","response_values_read_after_identity_freeze":true,"crc_lines":35,"eligible_pert_ids":1836,"finite_rows":64823,"output_sha256":"e72020f081a60006d4c97e17fbb9fc91bfb544ca4cc145d4460ec25727e9448c"},"provenance":{"generator":"scripts/foundation/build_broad_prism_extension.py","large_output_not_tracked":true}},
-  {"id":"xpert_broad_evaluation_v1","version":1,"asset_type":"derived_metrics","source":{"provider":"DrugScreenLab","accession":"XPert global adapter + Broad PRISM CRC compact response"},"path":{"relative":"../mvp/foundation/xpert/BROAD_XPERT_EVALUATION_V1.json"},"immutable":true,"intended_role":"XPERT_FOUNDATION_BROAD_TRANSLATION_DIAGNOSTIC","checksum":{"algorithm":"sha256","value":"28B115C5E4E01856545267B835481236CA5E309B191C9304D5983FDF0BA2A2CA"},"schema":{"format":"xpert_broad_prism_evaluation_v1","prediction_records":18360,"joined_prediction_rows":18179,"eligible_lines":10,"oracle_eligible_lines":2},"provenance":{"generator":"scripts/foundation/evaluate_xpert_broad.py","response_used_only_after_identity_context_freeze":true}},
-  {"id":"xpert_exp005_fast_comparison_v1","version":1,"asset_type":"derived_metrics","source":{"provider":"DrugScreenLab","accession":"EXP-005"},"path":{"relative":"../mvp/foundation/xpert/EXP005_FAST_COMPARISON.json"},"immutable":true,"intended_role":"EXP005_FAST_HELDOUT_COMPARISON","checksum":{"algorithm":"sha256","value":"1CF97DEDA8EC094028545DA6F698275F1280B1C4009A6BCDD23BC7DD30B9DFF3"},"schema":{"format":"exp005_xpert_additive_fast_comparison_v1","splits":["split_cold_cell_1","split_cold_drug_1"],"variants":["A","B","C"],"rows_per_partition":4096,"decision":"NO_MATERIAL_FAST_INCREMENT"},"provenance":{"generator":"scripts/foundation/summarize_exp005_fast.py","response_labels_not_used_for_selection":true,"large_profiles_not_tracked":true}}
+  {
+    "id": "legacy_raw_collection",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "MCPIRE_PDO",
+      "accession": "legacy-runtime"
+    },
+    "path": {
+      "relative": "raw"
+    },
+    "immutable": true,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "verified-by-file-inventory-and-source-sums"
+    },
+    "provenance": {
+      "migrated_from": "MCPIRE_PDO/runtime/raw"
+    }
+  },
+  {
+    "id": "lincs_gse92742_raw_level3_v1",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "NCBI GEO / Broad LINCS",
+      "accession": "GSE92742",
+      "source_revision": "GSE92742_SHA512SUMS.txt.gz sha256:43bbea5abfe40e7755c88ae8a2e680544bd8cb1a190538d3ad786036e6009edf"
+    },
+    "path": {
+      "relative": "raw/lincs/GSE92742"
+    },
+    "immutable": true,
+    "intended_role": "TRAIN",
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "per-file values in files",
+      "verification": "verified during immutable raw migration against official SHA512 manifest; EXP-002 re-verifies used metadata"
+    },
+    "files": {
+      "GSE92742_Broad_LINCS_Level3_INF_mlr12k_n1319138x12328.gctx.gz": {
+        "bytes": 52407725132,
+        "sha512": "c049fd66717defce00a0073ce19339f8d507991d2a1d7dd9b5fd175cf9680295174f019ad34a666ff58d939a74de522536a3900bda719855b7ea414673a226a4"
+      },
+      "GSE92742_Broad_LINCS_gene_info.txt.gz": {
+        "bytes": 216692,
+        "sha512": "b2df105ebf7a69799b23130d03b7da769bfd6ab83fd69cbb419c91c78ae069ae3e5d474e09d36e3ac4271f3b7fc56b24caaf1ac5ece9554ea7738b15535dfefd"
+      },
+      "GSE92742_Broad_LINCS_pert_info.txt.gz": {
+        "bytes": 1138509,
+        "sha512": "cdba99a4a6204ecdd26adb2338a418e60ac3da9e18d6d75214dea87c3cf06e951f9356e876f581dd7d6081014a428a11b6ad93b68486954cddbae5e29177530b"
+      },
+      "GSE92742_Broad_LINCS_cell_info.txt.gz": {
+        "bytes": 2528,
+        "sha512": "75b5d4cf9b6f3955bfe888ce22ae85134dd9fd053111c0f0d7b02298640269454267b0bdfcb2dc9ab562e0281b332703eb1d94337e57355945ccc3505b609b4a"
+      },
+      "GSE92742_Broad_LINCS_inst_info.txt.gz": {
+        "bytes": 12046182,
+        "sha512": "4c91c838d348f03c50381fbe4e281edb2a45844d0b792780db3642554275e1b29ac3fbbc542b9cf4e18858135eeb6d58f1fc8206ae96153a40f083286fca7f16"
+      }
+    },
+    "provenance": {
+      "download_source": "NCBI GEO accession GSE92742",
+      "migrated_from": "legacy immutable raw store",
+      "derived_expression_storage": "interim/lincs/GSE92742"
+    }
+  },
+  {
+    "id": "legacy_external_collection",
+    "version": 1,
+    "asset_type": "external",
+    "source": {
+      "provider": "third-party",
+      "accession": "legacy-runtime-external"
+    },
+    "path": {
+      "relative": "external"
+    },
+    "immutable": true,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "46c01693bcd40cf93df304668491b19eed5e3d41954ecab542c2f8f95d92950facc0f9202a082134015c7f8ac4d9067ad353278ea687d40d780225e42ee97788"
+    },
+    "provenance": {
+      "migrated_from": "MCPIRE_PDO/runtime/raw/external"
+    }
+  },
+  {
+    "id": "lincs_gse92742_level3_level4_level5",
+    "version": 1,
+    "asset_type": "interim",
+    "source": {
+      "provider": "Broad LINCS",
+      "accession": "GSE92742"
+    },
+    "path": {
+      "relative": "interim/lincs/GSE92742"
+    },
+    "immutable": false,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "verified-by-size-and-file-inventory"
+    },
+    "provenance": {
+      "migrated_from": "MCPIRE_PDO/runtime/interim/lincs/GSE92742"
+    }
+  },
+  {
+    "id": "lincs_gse92742_exact978_cache_v1",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "NCBI GEO / Broad LINCS",
+      "accession": "GSE92742",
+      "parent_asset": "lincs_gse92742_raw_level3_v1",
+      "source_level3_sha512": "c049fd66717defce00a0073ce19339f8d507991d2a1d7dd9b5fd175cf9680295174f019ad34a666ff58d939a74de522536a3900bda719855b7ea414673a226a4"
+    },
+    "path": {
+      "relative": "processed/lincs/GSE92742/exact978_cache_v1"
+    },
+    "immutable": true,
+    "intended_role": "TRAIN",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "04b8bb746a61ba4992e49566315327023783ec1c0448da2a9e263e0881281733",
+      "file": "exact978_cache.npy",
+      "verification": "EXP-002 reviewer VALID; hard-linked to the verified experiment cache"
+    },
+    "schema": {
+      "format": "npy_float32_exact978_v1",
+      "matrix_shape": [
+        1319138,
+        978
+      ],
+      "ordered_gene_ids_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623"
+    },
+    "preprocessing_contract": {
+      "id": "EXP-002 strict split data contract v2",
+      "sha256": "900592f841d736f3087077936b86c6f78ceb17f9a79f4485e619561d63e2ee9c",
+      "description": "Level-3 exact pr_is_lm=1 ordered 978 extraction; no inferred genes"
+    },
+    "provenance": {
+      "extraction_runner": "scripts/modeling/run_exp002_streaming.py",
+      "runner_sha256": "23263bb996cb5b172e37de44615930347fbaa6bf0ccf82cc9a76fc537ebdf105",
+      "creation_command": "scripts/modeling/run_exp002_streaming.py --root data --config configs/experiments/EXP-002/baselines.json --cache artifacts/experiments/EXP-002/exact978_cache.npy --contract artifacts/experiments/EXP-002/strict_split_audit.json --output artifacts/experiments/EXP-002/baseline_metrics.json",
+      "creation_environment": "WSL2; conda drugscreening-gpu; Python 3.11.15",
+      "registered_from": "EXP-002 accepted evidence"
+    }
+  },
+  {
+    "id": "betge_2022",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "Betge et al.",
+      "accession": "2022"
+    },
+    "path": {
+      "relative": "processed/betge_2022"
+    },
+    "immutable": false,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "verified-by-size-and-file-inventory"
+    }
+  },
+  {
+    "id": "inflammation_geo_collection",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "GEO",
+      "accession": "multiple"
+    },
+    "path": {
+      "relative": "processed/inflammation"
+    },
+    "immutable": false,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "verified-by-size-and-file-inventory"
+    }
+  },
+  {
+    "id": "jci_158060",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "JCI",
+      "accession": "158060"
+    },
+    "path": {
+      "relative": "processed/jci_158060"
+    },
+    "immutable": false,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "verified-by-size-and-file-inventory"
+    }
+  },
+  {
+    "id": "mcrc_pdo_2026",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "internal",
+      "accession": "mcrc-pdo-2026"
+    },
+    "path": {
+      "relative": "processed/mcrc_pdo_2026"
+    },
+    "immutable": false,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "verified-by-size-and-file-inventory"
+    }
+  },
+  {
+    "id": "tornado_gse157167",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "GEO",
+      "accession": "GSE157167"
+    },
+    "path": {
+      "relative": "processed/tornado_gse157167"
+    },
+    "immutable": false,
+    "checksum": {
+      "algorithm": "sha512",
+      "value": "verified-by-size-and-file-inventory"
+    }
+  },
+  {
+    "id": "gse74602_crc_exact978_signature_v1",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "NCBI GEO",
+      "accession": "GSE74602",
+      "platform": "GPL6104",
+      "parent_asset": "lincs_gse92742_exact978_cache_v1"
+    },
+    "path": {
+      "relative": "../mvp/core_data/crc_disease_signature_exact978.tsv"
+    },
+    "immutable": true,
+    "intended_role": "MVP-001_EXTERNAL_SIGNATURE",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "61e95b6a6da1d4c8b91ed1a99e96471027917c7e7e2501b507875ce28cd310c3"
+    },
+    "schema": {
+      "rows": 947,
+      "up": 712,
+      "down": 235,
+      "ordered_gene_ids_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623",
+      "format": "tsv_exact978_signed_log2fc_v2"
+    },
+    "preprocessing_contract": {
+      "id": "MVP-001 CRC tumor-vs-normal signature contract",
+      "sha256": "see mvp/core_data/crc_disease_signature_audit.json"
+    },
+    "provenance": {
+      "generator": "mvp/core_data/build_crc_signature_gse74602.py",
+      "generator_revision": "1abf74455d9db958e7a0e5f2455b3857b0611d00ed1ba3471cb398616a639713",
+      "source_matrix_sha256": "381b6cb83e6776d7f571833001765ccfbf3143fc500f69a0e1df5b4aa264b0f6",
+      "platform_annotation_sha256": "82ae57d6d9ec26ce2bcff01ccd1db498bb8055ee01471829dec0a5ab5666d518",
+      "creation_command": "python mvp/core_data/build_crc_signature_gse74602.py",
+      "creation_environment": "WSL2; conda drugscreening-gpu"
+    }
+  },
+  {
+    "id": "prism_repurposing_primary_19q4_compact_crc_v1",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "DepMap/Broad",
+      "accession": "PRISM_REPURPOSING_PRIMARY_19Q4",
+      "source_revision": "Figshare files 20237709, 20237700"
+    },
+    "path": {
+      "relative": "../mvp/core_data/compact_prism_response.parquet"
+    },
+    "immutable": true,
+    "intended_role": "MVP-001_EXTERNAL_TEST",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "5114e789299a794792bc44c818af98e679e8f00d6f6f3fb246781e6df2e960f1"
+    },
+    "schema": {
+      "rows": 135,
+      "cell_line_unit": "depmap_id",
+      "colorectal_lines": 35,
+      "candidate_count": 4,
+      "response": "official log2 fold-change relative to DMSO; sensitivity_score=-response_raw"
+    },
+    "preprocessing_contract": {
+      "id": "MVP-001 PRISM compact response contract",
+      "sha256": "see mvp/core_data/prism_compact_audit.json"
+    },
+    "provenance": {
+      "generator": "mvp/core_data/build_prism_compact.py",
+      "generator_revision": "see mvp/core_data/prism_compact_audit.json",
+      "source_matrix_sha256": "25efc741b372b30d38629cb139a388e989663fba597e55fff5f6c2bb7cdeb75a",
+      "creation_command": "python mvp/core_data/build_prism_compact.py",
+      "creation_environment": "WSL2; conda drugscreening-gpu"
+    }
+  },
+  {
+    "id": "lincs_prism_identity_bridge_v1",
+    "version": 1,
+    "asset_type": "derived_metadata",
+    "source": {
+      "provider": "DrugScreenLab",
+      "accessions": [
+        "PRISM_REPURPOSING_PRIMARY_19Q4",
+        "GSE92742"
+      ],
+      "source_revisions": "PRISM treatment metadata + LINCS pert_info"
+    },
+    "path": {
+      "relative": "../mvp/extension/LINCS_PRISM_IDENTITY_BRIDGE_AUDIT.json"
+    },
+    "immutable": true,
+    "intended_role": "IDENTITY_ONLY_PRE_EVALUATION",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "E880D9F5CA9368588EDC086A3BA29F41C9E0FA7BB8930C846B18B843076FF2B0"
+    },
+    "schema": {
+      "format": "lincs_prism_identity_bridge_v1",
+      "response_values_read": false,
+      "identity_keys": [
+        "pert_id",
+        "canonical_smiles",
+        "InChIKey",
+        "aliases"
+      ]
+    },
+    "preprocessing_contract": {
+      "id": "response-blind Broad LINCS-PRISM identity bridge",
+      "source": "scripts/data/build_lincs_prism_identity_bridge.py",
+      "formal_rule": "exact identity only; alias-only and ambiguous rows excluded from formal cohort"
+    },
+    "provenance": {
+      "derived_output": "artifacts/extension/lincs_prism_identity_bridge.csv",
+      "large_output_not_tracked": true,
+      "creation_environment": "WSL2; conda drugscreening-gpu"
+    }
+  },
+  {
+    "id": "unipert_genetic_features_256_v1",
+    "version": 1,
+    "asset_type": "derived_feature_metadata",
+    "source": {
+      "provider": "DrugScreenLab",
+      "accession": "GSE92742",
+      "source_revision": "GSE92742_Broad_LINCS_pert_info.txt.gz"
+    },
+    "path": {
+      "relative": "../mvp/extension/GENETIC_UNIPERT_FAST_AUDIT.json"
+    },
+    "immutable": true,
+    "intended_role": "GENETIC_PRETRAINING_FEATURE_ONLY",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "384887DF9D41915DA7ABABC015D4EE50DB7E817F1A9780122199128908FDD39F"
+    },
+    "schema": {
+      "format": "unipert_genetic_feature_table_v1",
+      "feature_shape": [
+        256,
+        256
+      ],
+      "mapped_genetic_perturbagen_ids": 1392,
+      "labels_used": false
+    },
+    "preprocessing_contract": {
+      "id": "response-blind official UniPert genetic encoder feature contract",
+      "source": "scripts/modeling/build_unipert_genetic_features.py",
+      "model_sha256": "06b065c2768b440077bdb1488f654b310f67a04c01fceb9f4791043558bfd322",
+      "downstream_status": "GENETIC_RESPONSE_ADAPTER_PENDING"
+    },
+    "provenance": {
+      "features_output": "artifacts/extension/unipert_genetic_features_256.npy",
+      "mapping_output": "artifacts/extension/unipert_genetic_features_256_mapping.json",
+      "large_outputs_not_tracked": true,
+      "creation_environment": "WSL2; conda drugscreening-gpu"
+    }
+  },
+  {
+    "id": "xpert_context_registry_v1",
+    "version": 1,
+    "asset_type": "derived_metadata",
+    "source": {
+      "provider": "DrugScreenLab / GSanShui XPert",
+      "accession": "official processed L1000 SDST"
+    },
+    "path": {
+      "relative": "../mvp/foundation/xpert/CONTEXT_REGISTRY.json"
+    },
+    "immutable": true,
+    "intended_role": "XPERT_FOUNDATION_CONTEXT_REGISTRY",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "18D5D67344D09978A553AB34A9C4C197FCD5A1848EEE0D76D0F752206E8D0477"
+    },
+    "schema": {
+      "format": "xpert_context_registry_v1",
+      "exact_lincs_contexts": 55,
+      "broad_exact_contexts": 10,
+      "matched_control_policy": "official XPert processed contract"
+    },
+    "provenance": {
+      "generator": "scripts/foundation/build_xpert_registries.py",
+      "large_assets_not_tracked": true
+    }
+  },
+  {
+    "id": "xpert_drug_registry_v1",
+    "version": 1,
+    "asset_type": "derived_metadata",
+    "source": {
+      "provider": "DrugScreenLab / GSanShui XPert",
+      "accession": "official processed L1000 SDST"
+    },
+    "path": {
+      "relative": "../mvp/foundation/xpert/DRUG_REGISTRY.json"
+    },
+    "immutable": true,
+    "intended_role": "XPERT_FOUNDATION_PERTURBAGEN_REGISTRY",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "CA0765ACDE47ED790A399FC988380EE98B6C5BC050D6DF7DD6E3686552C1EF74"
+    },
+    "schema": {
+      "format": "xpert_drug_registry_v1",
+      "official_pert_ids": 8418,
+      "global_inference_eligible": 8418,
+      "broad_inference_eligible": 1836,
+      "unipert_feature_complete": 8418
+    },
+    "provenance": {
+      "generator": "scripts/foundation/build_xpert_registries.py",
+      "large_assets_not_tracked": true
+    }
+  },
+  {
+    "id": "xpert_broad_global_adapter_v1",
+    "version": 1,
+    "asset_type": "derived_metadata",
+    "source": {
+      "provider": "DrugScreenLab / GSanShui XPert",
+      "accession": "official processed L1000 SDST + frozen Broad identity cohort"
+    },
+    "path": {
+      "relative": "../mvp/foundation/xpert/BROAD_GLOBAL_ADAPTER_AUDIT.json"
+    },
+    "immutable": true,
+    "intended_role": "XPERT_BROAD_RESPONSE_BLIND_GLOBAL_ADAPTER",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "D31BE2B08EE4FF2977C861E181527D1A6BDFCE9BCE91586A604E1413CFF5AB24"
+    },
+    "schema": {
+      "format": "xpert_global_cartesian_adapter_v1",
+      "records": 18360,
+      "contexts": 10,
+      "drugs": 1836,
+      "broad_only": true
+    },
+    "provenance": {
+      "generator": "scripts/foundation/build_xpert_global_cartesian_adapter.py",
+      "large_output_not_tracked": true
+    }
+  },
+  {
+    "id": "xpert_broad_prism_crc_response_v1",
+    "version": 1,
+    "asset_type": "derived_metadata",
+    "source": {
+      "provider": "DrugScreenLab / DepMap Broad PRISM",
+      "accession": "PRISM_REPURPOSING_PRIMARY_19Q4"
+    },
+    "path": {
+      "relative": "../mvp/foundation/xpert/BROAD_PRISM_CRC_V1_AUDIT.json"
+    },
+    "immutable": true,
+    "intended_role": "XPERT_BROAD_EXTERNAL_EVALUATION_RESPONSE_COMPACT",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "F6241F512C67FA55C2BE08419AC7FCF010C11831FA65E822EC004A07F8C1BFC3"
+    },
+    "schema": {
+      "format": "xpert_broad_prism_crc_response_v1",
+      "response_values_read_after_identity_freeze": true,
+      "crc_lines": 35,
+      "eligible_pert_ids": 1836,
+      "finite_rows": 64823,
+      "output_sha256": "e72020f081a60006d4c97e17fbb9fc91bfb544ca4cc145d4460ec25727e9448c"
+    },
+    "provenance": {
+      "generator": "scripts/foundation/build_broad_prism_extension.py",
+      "large_output_not_tracked": true
+    }
+  },
+  {
+    "id": "xpert_broad_evaluation_v1",
+    "version": 1,
+    "asset_type": "derived_metrics",
+    "source": {
+      "provider": "DrugScreenLab",
+      "accession": "XPert global adapter + Broad PRISM CRC compact response"
+    },
+    "path": {
+      "relative": "../mvp/foundation/xpert/BROAD_XPERT_EVALUATION_V1.json"
+    },
+    "immutable": true,
+    "intended_role": "XPERT_FOUNDATION_BROAD_TRANSLATION_DIAGNOSTIC",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "28B115C5E4E01856545267B835481236CA5E309B191C9304D5983FDF0BA2A2CA"
+    },
+    "schema": {
+      "format": "xpert_broad_prism_evaluation_v1",
+      "prediction_records": 18360,
+      "joined_prediction_rows": 18179,
+      "eligible_lines": 10,
+      "oracle_eligible_lines": 2
+    },
+    "provenance": {
+      "generator": "scripts/foundation/evaluate_xpert_broad.py",
+      "response_used_only_after_identity_context_freeze": true
+    }
+  },
+  {
+    "id": "xpert_exp005_fast_comparison_v1",
+    "version": 1,
+    "asset_type": "derived_metrics",
+    "source": {
+      "provider": "DrugScreenLab",
+      "accession": "EXP-005"
+    },
+    "path": {
+      "relative": "../mvp/foundation/xpert/EXP005_FAST_COMPARISON.json"
+    },
+    "immutable": true,
+    "intended_role": "EXP005_FAST_HELDOUT_COMPARISON",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "1CF97DEDA8EC094028545DA6F698275F1280B1C4009A6BCDD23BC7DD30B9DFF3"
+    },
+    "schema": {
+      "format": "exp005_xpert_additive_fast_comparison_v1",
+      "splits": [
+        "split_cold_cell_1",
+        "split_cold_drug_1"
+      ],
+      "variants": [
+        "A",
+        "B",
+        "C"
+      ],
+      "rows_per_partition": 4096,
+      "decision": "NO_MATERIAL_FAST_INCREMENT"
+    },
+    "provenance": {
+      "generator": "scripts/foundation/summarize_exp005_fast.py",
+      "response_labels_not_used_for_selection": true,
+      "large_profiles_not_tracked": true
+    }
+  },
+  {
+    "id": "organoid_gse280506_raw_v1",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "NCBI GEO",
+      "accession": "GSE280506",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280506"
+    },
+    "path": {
+      "relative": "raw/geo/GSE280506"
+    },
+    "immutable": true,
+    "intended_role": "ORGANOID_GENETIC_ADAPTATION_REFERENCE",
+    "files": {
+      "GSE280506_filtered_feature_bc_matrix.h5": {
+        "bytes": 237076182,
+        "sha256": "6e9297941a1b948d6c61c58c37497ef447f7b4c54aaf6e1561cd3b63d7b8f87e"
+      },
+      "GSE280506_barcodes.tsv.gz": {
+        "bytes": 249413,
+        "sha256": "e424368fd3d40df8a2d1cc69eb2921694dc775fb5de4aa777e2bf0bd27b8c6ec"
+      },
+      "GSE280506_features.tsv.gz": {
+        "bytes": 318733,
+        "sha256": "afe2f8945809104893fb74f91e94ace82b364de91106a018f962a4d36131fdf2"
+      },
+      "GSE280506_cell_identities.csv.gz": {
+        "bytes": 856626,
+        "sha256": "3b9d318464ec3d42dbcfd400d1d816939b2325b660d83abf8b6a5a8a148c3013"
+      },
+      "GSE280506_CRISPRi_reference_guide_barcode_library.xlsx": {
+        "bytes": 8477,
+        "sha256": "5f68b3646964a5649398503ffbb7fe89b5195ed9aaa2390e7d52512d7b637af6"
+      },
+      "GSE280506_CRISPRa_reference_guide_barcode_library.xlsx": {
+        "bytes": 6489,
+        "sha256": "1b9a9eae10fdba889ab77ec555671ba9486bfc20862593a3be48696dd7d49e94"
+      },
+      "GSE280506_series_matrix.txt.gz": {
+        "bytes": 3471,
+        "sha256": "f6b9f764899d213db2d738ac1d3e97252925b258afbfa1a233b38a7442056340"
+      },
+      "GSE280506_family.soft.gz": {
+        "bytes": 3567,
+        "sha256": "8bfc3190dfe2908b12b799a0eb83cf4975668b9441d19e8742f4b977ff9765f0"
+      }
+    },
+    "schema": {
+      "modality": "scRNA-seq / CROP-seq",
+      "unique_perturbations": 79,
+      "cannot_use_as_x_ctl": true,
+      "cannot_compute_delta978": true
+    },
+    "provenance": {
+      "fetch_audit": "artifacts/experiments/EXP-007/ORGANOID_GEO_FETCH.json",
+      "inventory": "artifacts/experiments/EXP-007/ORGANOID_GENETIC_INVENTORY.json",
+      "response_blind": true
+    }
+  },
+  {
+    "id": "organoid_gse145308_raw_v1",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "NCBI GEO",
+      "accession": "GSE145308",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE145308"
+    },
+    "path": {
+      "relative": "raw/geo/GSE145308"
+    },
+    "immutable": true,
+    "intended_role": "ORGANOID_GENETIC_ADAPTATION_REFERENCE",
+    "files": {
+      "GSE145308_RAW.tar": {
+        "bytes": 2652160,
+        "sha256": "540f0ce0ea0e4baed3237b23b4436896524ef68f337ccefd2cdcd3507ccfff02"
+      },
+      "filelist.txt": {
+        "bytes": 1651,
+        "sha256": "26510ec89ba5cdb7d16ad70354718e518a62f9a3f04963ce0605742f774f0dae"
+      },
+      "GSE145308-GPL20301_series_matrix.txt.gz": {
+        "bytes": 4501,
+        "sha256": "351695aaf19fccdc0d39572c501bb7b2a559fac58f94f609e1637006107e3e52"
+      },
+      "GSE145308-GPL24676_series_matrix.txt.gz": {
+        "bytes": 3524,
+        "sha256": "521f33f0a594d42e0eb0c76cc2097ad7eb98896ee33eb67807d934aa328a3082"
+      },
+      "GSE145308_family.soft.gz": {
+        "bytes": 5224,
+        "sha256": "ca9833dbb2b690345436fb6d16086d8860bf4e9c409e007f2b65c434e0f2b4f9"
+      }
+    },
+    "schema": {
+      "modality": "bulk RNA-seq",
+      "unique_perturbations": 4,
+      "cannot_use_as_x_ctl": true,
+      "cannot_compute_delta978": true
+    },
+    "provenance": {
+      "fetch_audit": "artifacts/experiments/EXP-007/ORGANOID_GEO_FETCH.json",
+      "inventory": "artifacts/experiments/EXP-007/ORGANOID_GENETIC_INVENTORY.json",
+      "response_blind": true
+    }
+  },
+  {
+    "id": "organoid_gse167285_raw_v1",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "NCBI GEO",
+      "accession": "GSE167285",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE167285"
+    },
+    "path": {
+      "relative": "raw/geo/GSE167285"
+    },
+    "immutable": true,
+    "intended_role": "ORGANOID_GENETIC_ADAPTATION_REFERENCE",
+    "files": {
+      "GSE167285_Human_CRISPR_organoids_raw_counts.txt.gz": {
+        "bytes": 648849,
+        "sha256": "c904c6b4cd61d7fff4b2b6a2d561827f2b1c5909419bd78601f6a7f82ff94318"
+      },
+      "GSE167285_Human_CRISPR_organoids_normalized_counts.txt.gz": {
+        "bytes": 743219,
+        "sha256": "9bf4fc0734730fc8a5fb3730c0ee7ef50301de5e725ef852ac127fb2f49d7142"
+      },
+      "GSE167285_series_matrix.txt.gz": {
+        "bytes": 2196,
+        "sha256": "7104568ae43fb644d32ce0efc2526e4f846bbc008d8d943d8a8d954ebb34d469"
+      },
+      "GSE167285_family.soft.gz": {
+        "bytes": 2437,
+        "sha256": "ca34a857ba0e126b9df824c0d9c529bac9578d7fa086687bad655aac2b513442"
+      }
+    },
+    "schema": {
+      "modality": "bulk RNA-seq",
+      "donors": [
+        "80",
+        "83",
+        "87",
+        "88",
+        "89"
+      ],
+      "cannot_use_as_x_ctl": true,
+      "cannot_compute_delta978": true
+    },
+    "provenance": {
+      "fetch_audit": "artifacts/experiments/EXP-007/ORGANOID_GEO_FETCH.json",
+      "inventory": "artifacts/experiments/EXP-007/ORGANOID_GENETIC_INVENTORY.json",
+      "response_blind": true
+    }
+  },
+  {
+    "id": "organoid_gse241659_raw_v1",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "NCBI GEO",
+      "accession": "GSE241659",
+      "url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE241659"
+    },
+    "path": {
+      "relative": "raw/geo/GSE241659"
+    },
+    "immutable": true,
+    "intended_role": "ORGANOID_GENETIC_ADAPTATION_REFERENCE",
+    "files": {
+      "GSE241659_counts_normalised.tsv.gz": {
+        "bytes": 1817653,
+        "sha256": "6d417a7011e0d214b0ea6c9bf62a498a01575f5e58cd8dddf3ef857e04552910"
+      },
+      "GSE241659_series_matrix.txt.gz": {
+        "bytes": 2356,
+        "sha256": "897252f31a29dce99f5eae8a05645e640f37648c649e144e5dbb04fb5cc01bc6"
+      },
+      "GSE241659_family.soft.gz": {
+        "bytes": 2524,
+        "sha256": "356af9c148ea2d55805fb9dfd2c0b10067a16ab455031195ab80c342f0205b4a"
+      }
+    },
+    "schema": {
+      "modality": "bulk RNA-seq",
+      "gsm_samples": 7,
+      "donors": [
+        "T427",
+        "T474",
+        "T561",
+        "T640"
+      ],
+      "cannot_use_as_x_ctl": true,
+      "cannot_compute_delta978": true
+    },
+    "provenance": {
+      "fetch_audit": "artifacts/experiments/EXP-007/ORGANOID_GEO_FETCH.json",
+      "inventory": "artifacts/experiments/EXP-007/ORGANOID_GENETIC_INVENTORY.json",
+      "response_blind": true
+    }
+  },
+  {
+    "id": "depmap_public_24q2_rnaseq_raw_v1",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "DepMap / Broad",
+      "accession": "DepMap Public 24Q2",
+      "doi": "10.25452/figshare.plus.25880521.v1"
+    },
+    "path": {
+      "relative": "raw/depmap/24q2"
+    },
+    "immutable": true,
+    "intended_role": "CONTEXT_ADAPTER_BASAL_RNASEQ_SOURCE",
+    "files": {
+      "OmicsExpressionProteinCodingGenesTPMLogp1.csv": {
+        "bytes": 460868099,
+        "sha256": "39eff342bbbbe0a40208545e93a69cc85a945899592f9d683f87e3b2bb121670"
+      },
+      "Model.csv": {
+        "bytes": 559182,
+        "sha256": "a4cac376131b41aa10b60a075b11c80264bfa860a5509d22cde259c5e85867f8"
+      }
+    },
+    "provenance": {
+      "intake_audit": "artifacts/experiments/EXP-007/CCLE_RNASEQ_INTAKE.json",
+      "response_blind": true
+    }
+  },
+  {
+    "id": "depmap_public_24q2_rnaseq_exact978_v1",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "DrugScreenLab",
+      "parent_asset": "depmap_public_24q2_rnaseq_raw_v1",
+      "accession": "DepMap Public 24Q2"
+    },
+    "path": {
+      "relative": "processed/depmap/24q2_rnaseq_exact978"
+    },
+    "immutable": true,
+    "intended_role": "XPERT_CONTEXT_ADAPTER_BASAL_978",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "36ab8a0f8f65df2cdb2c660f2f4ae7c92e26fc7a06ad18ff32bdd0ef11fff9bd",
+      "file": "ccle_24q2_exact978_log2tpm.npy"
+    },
+    "schema": {
+      "matrix_shape": [
+        1517,
+        978
+      ],
+      "dtype": "float32",
+      "ordered_gene_ids_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623",
+      "cannot_replace_matched_control": true,
+      "cannot_use_as_x_ctl": true,
+      "cannot_compute_delta978": true
+    },
+    "preprocessing_contract": {
+      "mapped_genes": 978,
+      "crc_exact_overlap": 10,
+      "lincs_overlap_by_stripped_name": 54,
+      "units": "official log2(TPM+1); not LINCS X_ctl"
+    },
+    "provenance": {
+      "intake_audit": "artifacts/experiments/EXP-007/CCLE_RNASEQ_INTAKE.json",
+      "response_blind": true
+    }
+  },
+  {
+    "id": "ccle_24q2_context_identity_split_v1",
+    "version": 1,
+    "asset_type": "derived_metadata",
+    "source": {
+      "provider": "DrugScreenLab",
+      "parent_asset": "depmap_public_24q2_rnaseq_exact978_v1",
+      "accession": "DepMap Public 24Q2"
+    },
+    "path": {
+      "relative": "../artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json"
+    },
+    "immutable": true,
+    "intended_role": "IDENTITY_SPLIT_FREEZE_PRE_EVALUATION",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "99c53232e354cc813b69cc88204a9c1ccdb922a661fab00a0b627eef52a9cf92",
+      "file": "CCLE_CONTEXT_IDENTITY_SPLIT.json"
+    },
+    "schema": {
+      "split_unit": "PatientID",
+      "crc_exact_overlap": 10,
+      "lines_by_role": {
+        "locked_eval": 10,
+        "train": 1338,
+        "val": 169
+      },
+      "cannot_use_as_x_ctl": true,
+      "cannot_compute_delta978": true
+    },
+    "provenance": {
+      "identity_split": "artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json",
+      "response_blind": true
+    }
+  },
+  {
+    "id": "bindingdb_all_202608_tsv_raw_v1",
+    "version": 1,
+    "asset_type": "raw",
+    "source": {
+      "provider": "BindingDB",
+      "accession": "BindingDB_All_202608_tsv.zip",
+      "source_revision": "2026-08"
+    },
+    "path": {
+      "relative": "raw/bindingdb/2026-08/BindingDB_All_202608_tsv.zip"
+    },
+    "immutable": true,
+    "intended_role": "EXP-009_SOFT_TARGET_SOURCE",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "8dc30541d668e5e403ba1fe9a682b76c42a50e1711aac44329c62ba24ccd57db",
+      "bytes": 592986963
+    },
+    "provenance": {
+      "canonicalized_from": "repository root duplicate",
+      "canonicalized_on": "2026-08-23",
+      "content_verified_against_recovery_snapshot": true,
+      "git_tracked": false
+    }
+  }
 ]
