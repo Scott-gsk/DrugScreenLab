@@ -59,6 +59,11 @@ PYTHONPATH=src conda run -n drugscreening-gpu python -m drug_screen.data.registr
 
 ## 协作与汇报
 
-- 子任务只有在确实独立且被允许时才委派；不得虚构已启动的 Agent、Reviewer 或实验。
+- 复杂研究采用 `Sol Manager → Terra Executor`：主任务在 Codex 中选择 `gpt-5.6-sol`，负责研究设计、任务拆分、科学判断、证据合并和最终验收。
+- 独立的数据处理、代码实现和测试任务可由 Manager 调用子 Agent，并显式选择 `gpt-5.6-terra`；简单任务直接完成，不为使用多 Agent 而拆分。
+- `AGENTS.md` 只能规定编排策略，不能自行切换当前主任务模型；若当前任务不是 Sol，必须如实说明，不能宣称已按 Sol Manager 执行。
+- 子 Agent 必须获得明确的目标、允许路径、输入、验收标准和禁止操作；并行写入使用独立 worktree 或互不重叠的路径。
+- Manager 必须复核 Terra 的代码、测试和科学表述；不得把子 Agent 输出直接当成结论。
+- 只记录实际启动的 Agent、模型和结果，不得虚构 Agent、Reviewer 或实验。
 - 面向用户默认使用简体中文，先给结论，再给验证结果、限制和下一步。
 - 不把准备工作写成实验完成，不把作者结论、模型输出和本项目推断混在一起。
