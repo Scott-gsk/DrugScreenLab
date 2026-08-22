@@ -28,7 +28,7 @@ from drug_screen.data.ccle_context_identity import (
     data_contract,
     summarize,
 )
-from drug_screen.evaluation.full_observed_oracle import CRC_EXACT_CONTEXTS, ORDERED_GENE_IDS_SHA256
+from drug_screen.data.lincs_landmarks import CRC_EXACT_CONTEXTS, ORDERED_GENE_IDS_SHA256
 
 
 CONTEXT_REGISTRY = ROOT / "mvp/foundation/xpert/CONTEXT_REGISTRY.json"

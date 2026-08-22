@@ -16,9 +16,6 @@ artifacts/*
 !artifacts/experiments/
 artifacts/experiments/*
 !artifacts/experiments/.gitkeep
-!artifacts/experiments/EXP-006/
-artifacts/experiments/EXP-006/*
-!artifacts/experiments/EXP-006/*.json
 !artifacts/experiments/EXP-007/
 artifacts/experiments/EXP-007/*
 !artifacts/experiments/EXP-007/*.json

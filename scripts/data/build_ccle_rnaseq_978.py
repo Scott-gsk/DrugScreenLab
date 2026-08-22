@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
-from drug_screen.evaluation.full_observed_oracle import (
+from drug_screen.data.lincs_landmarks import (
     CRC_EXACT_CONTEXTS,
     ORDERED_GENE_IDS_SHA256,
     gene_order_digest,

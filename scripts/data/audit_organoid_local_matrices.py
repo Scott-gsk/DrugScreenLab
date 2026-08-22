@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT / "src") not in sys.path:
     sys.path.insert(0, str(ROOT / "src"))
 
-from drug_screen.evaluation.full_observed_oracle import ORDERED_GENE_IDS_SHA256
+from drug_screen.data.lincs_landmarks import ORDERED_GENE_IDS_SHA256
 
 GENE_INFO = ROOT / "data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_gene_info.txt.gz"
 FETCH = ROOT / "artifacts/experiments/EXP-007/ORGANOID_GEO_FETCH.json"

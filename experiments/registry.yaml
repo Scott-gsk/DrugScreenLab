@@ -77,7 +77,7 @@ experiments:
     record: experiments/records/EXP-007.md
   - id: EXP-008
     title: Full SDST Drug-Target-Pathway Residual
-    status: approved_for_evidence
+    status: archived_without_result_implementation_removed
     hypothesis: >
       在官方完整 SDST（78,453 × 978，10 μM / 24 h）上，冻结官方 XPert 主干，
       只训练药物–靶点–通路低容量残差后，冷药物全量测试的行宏 Δ978 斯皮尔曼
@@ -87,7 +87,7 @@ experiments:
     approved_on: 2026-08-16
     record: experiments/records/EXP-008.md
     supersedes:
-      - experiments/EXP-008-Design.md
+      - legacy_exp008_champion_draft_removed_20260823
       - disease_signature_swap_gate
 mvps:
   - id: MVP-001

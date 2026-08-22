@@ -12,7 +12,7 @@ from collections import defaultdict
 from hashlib import sha256
 from typing import Any, Iterable, Mapping
 
-from drug_screen.evaluation.full_observed_oracle import CRC_EXACT_CONTEXTS
+from drug_screen.data.lincs_landmarks import CRC_EXACT_CONTEXTS
 
 
 FORMAT = "ccle_context_identity_split_v1"

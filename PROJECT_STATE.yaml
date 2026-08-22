@@ -8,7 +8,7 @@ runtime:
   environment_doc: docs/ENVIRONMENT.md
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
-  active_experiment: EXP-008
+  active_experiment: null
   active_mvp: MVP-001
   proposed_mvp: null
   mvp_status: result_reviewed
@@ -29,7 +29,7 @@ research:
     e1_kpgt_unipert_additive: FAST_COMPLETE_CHEMICAL_BACKBONE_CHAMPION_XPERT
     e2_genetic_chemical_low_data: EXP006_COMPLETE_GENETIC_PRETRAINING_HURT_CHEMICAL_DELTA978
     e3_prism_identity_bridge: EXP007_ORACLE_NEAR_NULL_FAIL_RULE_AUDITED
-    e4_target_pathway_transfer: EXP008_APPROVED_PREPARATION_ONLY_NO_COMPLETED_RESULT
+    e4_target_pathway_transfer: EXP008_ARCHIVED_WITHOUT_RESULT_IMPLEMENTATION_REMOVED
     organoid_readiness: READINESS_PREPARATION_LOCAL_MATRICES_PRESENT_ADAPTER_NOT_BUILT
 data:
   default_root: data

@@ -14,7 +14,6 @@ from drug_screen.data.ccle_context_identity import (
     data_contract,
     patient_split_bucket,
 )
-from drug_screen.evaluation.full_observed_oracle import CRC_EXACT_CONTEXTS as ORACLE_CRC
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -55,7 +54,6 @@ def _expr(*rows: tuple[str, str]) -> list[dict]:
 
 
 def test_oracle_crc_list_is_not_redefined() -> None:
-    assert CRC_EXACT_CONTEXTS == ORACLE_CRC
     assert len(CRC_EXACT_CONTEXTS) == 10
 
 
