@@ -1,0 +1,137 @@
+{
+  "comparison": {
+    "0.1": {
+      "direction_B_minus_A": -0.12487280959057123,
+      "mse_B_minus_A": 0.14794851773282347,
+      "spearman_gain_B_minus_A": -0.29780078722362047
+    },
+    "0.2": {
+      "direction_B_minus_A": -0.0839958006449838,
+      "mse_B_minus_A": 0.10221993600264423,
+      "spearman_gain_B_minus_A": -0.19108949405476655
+    },
+    "1.0": {
+      "direction_B_minus_A": -0.04891279129503867,
+      "mse_B_minus_A": 0.06924620699671857,
+      "spearman_gain_B_minus_A": -0.10865530865534367
+    }
+  },
+  "failures_kept": [],
+  "format": "exp006_transfer_result_v1",
+  "primary_regimes": [
+    0.2,
+    0.1
+  ],
+  "runs": {
+    "0.1": {
+      "A": {
+        "delta978": {
+          "direction_consistency": 0.7311551043541379,
+          "genes": 978,
+          "mse": 0.23063118483875877,
+          "pearson_row_mean": 0.7006341258782472,
+          "prediction_std": 0.5159348346184365,
+          "rows": 2468,
+          "spearman_row_mean": 0.6354202910842718
+        },
+        "downstream": {
+          "note": "frozen chemical test in selected contexts has no exact PRISM join; not used for selection",
+          "status": "NO_PRISM_OVERLAP"
+        },
+        "test_unique_compounds": 769,
+        "train_unique_compounds": 613
+      },
+      "B": {
+        "delta978": {
+          "direction_consistency": 0.6062822947635667,
+          "genes": 978,
+          "mse": 0.37857970257158224,
+          "pearson_row_mean": 0.4566320564937125,
+          "prediction_std": 0.2787203845085103,
+          "rows": 2468,
+          "spearman_row_mean": 0.3376195038606513
+        },
+        "downstream": {
+          "note": "frozen chemical test in selected contexts has no exact PRISM join; not used for selection",
+          "status": "NO_PRISM_OVERLAP"
+        },
+        "test_unique_compounds": 769,
+        "train_unique_compounds": 613
+      }
+    },
+    "0.2": {
+      "A": {
+        "delta978": {
+          "direction_consistency": 0.7316137355698958,
+          "genes": 978,
+          "mse": 0.22868590221063323,
+          "pearson_row_mean": 0.70357472845405,
+          "prediction_std": 0.5035401664541681,
+          "rows": 2468,
+          "spearman_row_mean": 0.6372400362383549
+        },
+        "downstream": {
+          "note": "frozen chemical test in selected contexts has no exact PRISM join; not used for selection",
+          "status": "NO_PRISM_OVERLAP"
+        },
+        "test_unique_compounds": 769,
+        "train_unique_compounds": 1226
+      },
+      "B": {
+        "delta978": {
+          "direction_consistency": 0.647617934924912,
+          "genes": 978,
+          "mse": 0.33090583821327746,
+          "pearson_row_mean": 0.5547198728525259,
+          "prediction_std": 0.3678775023727497,
+          "rows": 2468,
+          "spearman_row_mean": 0.44615054218358835
+        },
+        "downstream": {
+          "note": "frozen chemical test in selected contexts has no exact PRISM join; not used for selection",
+          "status": "NO_PRISM_OVERLAP"
+        },
+        "test_unique_compounds": 769,
+        "train_unique_compounds": 1226
+      }
+    },
+    "1.0": {
+      "A": {
+        "delta978": {
+          "direction_consistency": 0.731763298233752,
+          "genes": 978,
+          "mse": 0.23049883061505116,
+          "pearson_row_mean": 0.7016575254039081,
+          "prediction_std": 0.5041113520017446,
+          "rows": 2468,
+          "spearman_row_mean": 0.63751530163575
+        },
+        "downstream": {
+          "note": "frozen chemical test in selected contexts has no exact PRISM join; not used for selection",
+          "status": "NO_PRISM_OVERLAP"
+        },
+        "test_unique_compounds": 769,
+        "train_unique_compounds": 6131
+      },
+      "B": {
+        "delta978": {
+          "direction_consistency": 0.6828505069387133,
+          "genes": 978,
+          "mse": 0.29974503761176974,
+          "pearson_row_mean": 0.615268119050389,
+          "prediction_std": 0.40575205673652204,
+          "rows": 2468,
+          "spearman_row_mean": 0.5288599929804063
+        },
+        "downstream": {
+          "note": "frozen chemical test in selected contexts has no exact PRISM join; not used for selection",
+          "status": "NO_PRISM_OVERLAP"
+        },
+        "test_unique_compounds": 769,
+        "train_unique_compounds": 6131
+      }
+    }
+  },
+  "seed": 20260813,
+  "status": "COMPLETE"
+}

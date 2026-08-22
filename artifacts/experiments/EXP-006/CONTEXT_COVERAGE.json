@@ -1,0 +1,1478 @@
+{
+  "all_contexts_ranked": [
+    {
+      "chemical_records": 4948,
+      "context_id": "VCAP",
+      "genetic_records": 66763,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 4948,
+      "unique_genes": 3967,
+      "unique_genetic_perturbagens": 18313
+    },
+    {
+      "chemical_records": 7269,
+      "context_id": "PC3",
+      "genetic_records": 70142,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 7269,
+      "unique_genes": 3918,
+      "unique_genetic_perturbagens": 15546
+    },
+    {
+      "chemical_records": 3560,
+      "context_id": "A375",
+      "genetic_records": 50511,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 3560,
+      "unique_genes": 3841,
+      "unique_genetic_perturbagens": 14984
+    },
+    {
+      "chemical_records": 4009,
+      "context_id": "HA1E",
+      "genetic_records": 47004,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 4009,
+      "unique_genes": 3666,
+      "unique_genetic_perturbagens": 14598
+    },
+    {
+      "chemical_records": 5079,
+      "context_id": "A549",
+      "genetic_records": 44365,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 5079,
+      "unique_genes": 3624,
+      "unique_genetic_perturbagens": 13992
+    },
+    {
+      "chemical_records": 6945,
+      "context_id": "MCF7",
+      "genetic_records": 60400,
+      "unique_compounds": 6945,
+      "unique_genes": 3623,
+      "unique_genetic_perturbagens": 14283
+    },
+    {
+      "chemical_records": 2822,
+      "context_id": "HT29",
+      "genetic_records": 51922,
+      "unique_compounds": 2822,
+      "unique_genes": 3609,
+      "unique_genetic_perturbagens": 13944
+    },
+    {
+      "chemical_records": 1113,
+      "context_id": "HEPG2",
+      "genetic_records": 39896,
+      "unique_compounds": 1113,
+      "unique_genes": 3557,
+      "unique_genetic_perturbagens": 13400
+    },
+    {
+      "chemical_records": 2545,
+      "context_id": "HCC515",
+      "genetic_records": 40630,
+      "unique_compounds": 2545,
+      "unique_genes": 3538,
+      "unique_genetic_perturbagens": 13643
+    },
+    {
+      "chemical_records": 28,
+      "context_id": "HEK293T",
+      "genetic_records": 8600,
+      "unique_compounds": 28,
+      "unique_genes": 1085,
+      "unique_genetic_perturbagens": 1193
+    },
+    {
+      "chemical_records": 2478,
+      "context_id": "ASC",
+      "genetic_records": 10450,
+      "unique_compounds": 2478,
+      "unique_genes": 1011,
+      "unique_genetic_perturbagens": 3123
+    },
+    {
+      "chemical_records": 2410,
+      "context_id": "NPC",
+      "genetic_records": 10795,
+      "unique_compounds": 2410,
+      "unique_genes": 1011,
+      "unique_genetic_perturbagens": 3110
+    },
+    {
+      "chemical_records": 168,
+      "context_id": "SKL",
+      "genetic_records": 4234,
+      "unique_compounds": 168,
+      "unique_genes": 525,
+      "unique_genetic_perturbagens": 1556
+    },
+    {
+      "chemical_records": 129,
+      "context_id": "SHSY5Y",
+      "genetic_records": 954,
+      "unique_compounds": 129,
+      "unique_genes": 122,
+      "unique_genetic_perturbagens": 322
+    },
+    {
+      "chemical_records": 828,
+      "context_id": "JURKAT",
+      "genetic_records": 712,
+      "unique_compounds": 828,
+      "unique_genes": 109,
+      "unique_genetic_perturbagens": 239
+    },
+    {
+      "chemical_records": 295,
+      "context_id": "U2OS",
+      "genetic_records": 955,
+      "unique_compounds": 295,
+      "unique_genes": 41,
+      "unique_genetic_perturbagens": 335
+    },
+    {
+      "chemical_records": 2096,
+      "context_id": "SKB",
+      "genetic_records": 0,
+      "unique_compounds": 2096,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 1319,
+      "context_id": "HELA",
+      "genetic_records": 0,
+      "unique_compounds": 1319,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 1270,
+      "context_id": "MCF10A",
+      "genetic_records": 0,
+      "unique_compounds": 1270,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 1266,
+      "context_id": "YAPC",
+      "genetic_records": 0,
+      "unique_compounds": 1266,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 1047,
+      "context_id": "MDAMB231",
+      "genetic_records": 0,
+      "unique_compounds": 1047,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 963,
+      "context_id": "THP1",
+      "genetic_records": 0,
+      "unique_compounds": 963,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 827,
+      "context_id": "HEK293",
+      "genetic_records": 0,
+      "unique_compounds": 827,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 664,
+      "context_id": "XC.L10",
+      "genetic_records": 0,
+      "unique_compounds": 664,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 636,
+      "context_id": "NCIH1573",
+      "genetic_records": 0,
+      "unique_compounds": 636,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 636,
+      "context_id": "SNU407",
+      "genetic_records": 0,
+      "unique_compounds": 636,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 634,
+      "context_id": "OVTOKO",
+      "genetic_records": 0,
+      "unique_compounds": 634,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 627,
+      "context_id": "T47D",
+      "genetic_records": 0,
+      "unique_compounds": 627,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 626,
+      "context_id": "HEC1A",
+      "genetic_records": 0,
+      "unique_compounds": 626,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 622,
+      "context_id": "CAL29",
+      "genetic_records": 0,
+      "unique_compounds": 622,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 622,
+      "context_id": "MELHO",
+      "genetic_records": 0,
+      "unique_compounds": 622,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 621,
+      "context_id": "BEN",
+      "genetic_records": 0,
+      "unique_compounds": 621,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 619,
+      "context_id": "SH4",
+      "genetic_records": 0,
+      "unique_compounds": 619,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 617,
+      "context_id": "CJM",
+      "genetic_records": 0,
+      "unique_compounds": 617,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 617,
+      "context_id": "HEC265",
+      "genetic_records": 0,
+      "unique_compounds": 617,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 617,
+      "context_id": "IGR37",
+      "genetic_records": 0,
+      "unique_compounds": 617,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 614,
+      "context_id": "A204",
+      "genetic_records": 0,
+      "unique_compounds": 614,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 613,
+      "context_id": "22RV1",
+      "genetic_records": 0,
+      "unique_compounds": 613,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 610,
+      "context_id": "GI1",
+      "genetic_records": 0,
+      "unique_compounds": 610,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 609,
+      "context_id": "HEC108",
+      "genetic_records": 0,
+      "unique_compounds": 609,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 609,
+      "context_id": "JHH5",
+      "genetic_records": 0,
+      "unique_compounds": 609,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 607,
+      "context_id": "HCC95",
+      "genetic_records": 0,
+      "unique_compounds": 607,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 604,
+      "context_id": "MDAMB468",
+      "genetic_records": 0,
+      "unique_compounds": 604,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 598,
+      "context_id": "HEC251",
+      "genetic_records": 0,
+      "unique_compounds": 598,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 572,
+      "context_id": "BC3C",
+      "genetic_records": 0,
+      "unique_compounds": 572,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 568,
+      "context_id": "NCIH838",
+      "genetic_records": 0,
+      "unique_compounds": 568,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 566,
+      "context_id": "SKES1",
+      "genetic_records": 0,
+      "unique_compounds": 566,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 506,
+      "context_id": "NCIH2110",
+      "genetic_records": 0,
+      "unique_compounds": 506,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 376,
+      "context_id": "HUVEC",
+      "genetic_records": 0,
+      "unique_compounds": 376,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 337,
+      "context_id": "XC.R10",
+      "genetic_records": 0,
+      "unique_compounds": 337,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 322,
+      "context_id": "1HAE",
+      "genetic_records": 0,
+      "unique_compounds": 322,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 319,
+      "context_id": "NL20",
+      "genetic_records": 0,
+      "unique_compounds": 319,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 313,
+      "context_id": "HFL1",
+      "genetic_records": 0,
+      "unique_compounds": 313,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 309,
+      "context_id": "IMR90",
+      "genetic_records": 0,
+      "unique_compounds": 309,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 305,
+      "context_id": "WI38",
+      "genetic_records": 0,
+      "unique_compounds": 305,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 238,
+      "context_id": "PHH",
+      "genetic_records": 0,
+      "unique_compounds": 238,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 201,
+      "context_id": "HME1",
+      "genetic_records": 0,
+      "unique_compounds": 201,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 176,
+      "context_id": "CD34",
+      "genetic_records": 0,
+      "unique_compounds": 176,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 136,
+      "context_id": "LNCAP",
+      "genetic_records": 0,
+      "unique_compounds": 136,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 136,
+      "context_id": "SKBR3",
+      "genetic_records": 0,
+      "unique_compounds": 136,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 135,
+      "context_id": "BT20",
+      "genetic_records": 0,
+      "unique_compounds": 135,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 126,
+      "context_id": "HS578T",
+      "genetic_records": 0,
+      "unique_compounds": 126,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 109,
+      "context_id": "NEU",
+      "genetic_records": 0,
+      "unique_compounds": 109,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 103,
+      "context_id": "XC.P934",
+      "genetic_records": 0,
+      "unique_compounds": 103,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 103,
+      "context_id": "XC.P935",
+      "genetic_records": 0,
+      "unique_compounds": 103,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 102,
+      "context_id": "K562",
+      "genetic_records": 0,
+      "unique_compounds": 102,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 102,
+      "context_id": "XC.P033",
+      "genetic_records": 0,
+      "unique_compounds": 102,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 102,
+      "context_id": "XC.P904",
+      "genetic_records": 0,
+      "unique_compounds": 102,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 102,
+      "context_id": "XC.P909",
+      "genetic_records": 0,
+      "unique_compounds": 102,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 102,
+      "context_id": "XC.P912",
+      "genetic_records": 0,
+      "unique_compounds": 102,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 102,
+      "context_id": "XC.P914",
+      "genetic_records": 0,
+      "unique_compounds": 102,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.500",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P901",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P905",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P908",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P910",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P930",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P931",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P932",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 101,
+      "context_id": "XC.P933",
+      "genetic_records": 0,
+      "unique_compounds": 101,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 100,
+      "context_id": "WA09",
+      "genetic_records": 0,
+      "unique_compounds": 100,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 100,
+      "context_id": "XC.P936",
+      "genetic_records": 0,
+      "unique_compounds": 100,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 99,
+      "context_id": "XC.P031",
+      "genetic_records": 0,
+      "unique_compounds": 99,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 99,
+      "context_id": "XC.P091",
+      "genetic_records": 0,
+      "unique_compounds": 99,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 99,
+      "context_id": "XC.P092",
+      "genetic_records": 0,
+      "unique_compounds": 99,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 99,
+      "context_id": "XC.P906",
+      "genetic_records": 0,
+      "unique_compounds": 99,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 99,
+      "context_id": "XC.P907",
+      "genetic_records": 0,
+      "unique_compounds": 99,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 99,
+      "context_id": "XC.P911",
+      "genetic_records": 0,
+      "unique_compounds": 99,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 99,
+      "context_id": "XC.P915",
+      "genetic_records": 0,
+      "unique_compounds": 99,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 98,
+      "context_id": "XC.P922",
+      "genetic_records": 0,
+      "unique_compounds": 98,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 97,
+      "context_id": "ZR751",
+      "genetic_records": 0,
+      "unique_compounds": 97,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 96,
+      "context_id": "JHH7",
+      "genetic_records": 0,
+      "unique_compounds": 96,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 96,
+      "context_id": "SKMEL5",
+      "genetic_records": 0,
+      "unique_compounds": 96,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 95,
+      "context_id": "OCILY3",
+      "genetic_records": 0,
+      "unique_compounds": 95,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 95,
+      "context_id": "XC.P026",
+      "genetic_records": 0,
+      "unique_compounds": 95,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 94,
+      "context_id": "SKMEL3",
+      "genetic_records": 0,
+      "unique_compounds": 94,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 93,
+      "context_id": "OC316",
+      "genetic_records": 0,
+      "unique_compounds": 93,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 93,
+      "context_id": "OVK18",
+      "genetic_records": 0,
+      "unique_compounds": 93,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 91,
+      "context_id": "HEC151",
+      "genetic_records": 0,
+      "unique_compounds": 91,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 91,
+      "context_id": "KMS34",
+      "genetic_records": 0,
+      "unique_compounds": 91,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 89,
+      "context_id": "HBL1",
+      "genetic_records": 0,
+      "unique_compounds": 89,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 87,
+      "context_id": "IM95",
+      "genetic_records": 0,
+      "unique_compounds": 87,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 86,
+      "context_id": "G401",
+      "genetic_records": 0,
+      "unique_compounds": 86,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 86,
+      "context_id": "OAW28",
+      "genetic_records": 0,
+      "unique_compounds": 86,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 86,
+      "context_id": "TMD8",
+      "genetic_records": 0,
+      "unique_compounds": 86,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 86,
+      "context_id": "U251MG",
+      "genetic_records": 0,
+      "unique_compounds": 86,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 85,
+      "context_id": "BICR6",
+      "genetic_records": 0,
+      "unique_compounds": 85,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 84,
+      "context_id": "NCIH841",
+      "genetic_records": 0,
+      "unique_compounds": 84,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 83,
+      "context_id": "COV434",
+      "genetic_records": 0,
+      "unique_compounds": 83,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 82,
+      "context_id": "MINO",
+      "genetic_records": 0,
+      "unique_compounds": 82,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 82,
+      "context_id": "NCIH1437",
+      "genetic_records": 0,
+      "unique_compounds": 82,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 82,
+      "context_id": "NCIH2172",
+      "genetic_records": 0,
+      "unique_compounds": 82,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 82,
+      "context_id": "YH13",
+      "genetic_records": 0,
+      "unique_compounds": 82,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 81,
+      "context_id": "ES2",
+      "genetic_records": 0,
+      "unique_compounds": 81,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 81,
+      "context_id": "GP2D",
+      "genetic_records": 0,
+      "unique_compounds": 81,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 81,
+      "context_id": "MKN45",
+      "genetic_records": 0,
+      "unique_compounds": 81,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 80,
+      "context_id": "NALM6",
+      "genetic_records": 0,
+      "unique_compounds": 80,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 79,
+      "context_id": "RCC10RGB",
+      "genetic_records": 0,
+      "unique_compounds": 79,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 76,
+      "context_id": "HCC1588",
+      "genetic_records": 0,
+      "unique_compounds": 76,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 76,
+      "context_id": "TOV112D",
+      "genetic_records": 0,
+      "unique_compounds": 76,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 75,
+      "context_id": "OCILY19",
+      "genetic_records": 0,
+      "unique_compounds": 75,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 74,
+      "context_id": "OCILY10",
+      "genetic_records": 0,
+      "unique_compounds": 74,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 72,
+      "context_id": "BJAB",
+      "genetic_records": 0,
+      "unique_compounds": 72,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 61,
+      "context_id": "MNEU",
+      "genetic_records": 0,
+      "unique_compounds": 61,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 52,
+      "context_id": "HUES3",
+      "genetic_records": 0,
+      "unique_compounds": 52,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 49,
+      "context_id": "HCT116",
+      "genetic_records": 0,
+      "unique_compounds": 49,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 48,
+      "context_id": "AGS",
+      "genetic_records": 0,
+      "unique_compounds": 48,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 46,
+      "context_id": "HL60",
+      "genetic_records": 0,
+      "unique_compounds": 46,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 44,
+      "context_id": "P1A82",
+      "genetic_records": 0,
+      "unique_compounds": 44,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 42,
+      "context_id": "HUH7",
+      "genetic_records": 0,
+      "unique_compounds": 42,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 41,
+      "context_id": "SKNSH",
+      "genetic_records": 0,
+      "unique_compounds": 41,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 39,
+      "context_id": "NKDBA",
+      "genetic_records": 0,
+      "unique_compounds": 39,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 38,
+      "context_id": "U937",
+      "genetic_records": 0,
+      "unique_compounds": 38,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 36,
+      "context_id": "TC32",
+      "genetic_records": 0,
+      "unique_compounds": 36,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 35,
+      "context_id": "BT474",
+      "genetic_records": 0,
+      "unique_compounds": 35,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 29,
+      "context_id": "HPTEC",
+      "genetic_records": 0,
+      "unique_compounds": 29,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 27,
+      "context_id": "HMELZ",
+      "genetic_records": 0,
+      "unique_compounds": 27,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 16,
+      "context_id": "XC.L100",
+      "genetic_records": 0,
+      "unique_compounds": 16,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 15,
+      "context_id": "HIMG001",
+      "genetic_records": 0,
+      "unique_compounds": 15,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 15,
+      "context_id": "HIMG002",
+      "genetic_records": 0,
+      "unique_compounds": 15,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 15,
+      "context_id": "NOMO1",
+      "genetic_records": 0,
+      "unique_compounds": 15,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 9,
+      "context_id": "H1975",
+      "genetic_records": 0,
+      "unique_compounds": 9,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 9,
+      "context_id": "NCIH1975",
+      "genetic_records": 0,
+      "unique_compounds": 9,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 9,
+      "context_id": "NCIH2073",
+      "genetic_records": 0,
+      "unique_compounds": 9,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 9,
+      "context_id": "NCIH508",
+      "genetic_records": 0,
+      "unique_compounds": 9,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 9,
+      "context_id": "NCIH596",
+      "genetic_records": 0,
+      "unique_compounds": 9,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 5,
+      "context_id": "C42",
+      "genetic_records": 0,
+      "unique_compounds": 5,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 4,
+      "context_id": "DU145",
+      "genetic_records": 0,
+      "unique_compounds": 4,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 4,
+      "context_id": "U266B1",
+      "genetic_records": 0,
+      "unique_compounds": 4,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "5637",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "AN3CA",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "CW2",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "DV90",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "J82",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "MFE319",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "NCIH1563",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "NCIH1781",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "OC314",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "OVCAR8",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "SNU1040",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 2,
+      "context_id": "SUDHL4",
+      "genetic_records": 0,
+      "unique_compounds": 2,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 1,
+      "context_id": "HCC827",
+      "genetic_records": 0,
+      "unique_compounds": 1,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 1,
+      "context_id": "LN229",
+      "genetic_records": 0,
+      "unique_compounds": 1,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    },
+    {
+      "chemical_records": 1,
+      "context_id": "VMCUB1",
+      "genetic_records": 0,
+      "unique_compounds": 1,
+      "unique_genes": 0,
+      "unique_genetic_perturbagens": 0
+    }
+  ],
+  "cell_idx_map": {
+    "A375": 83,
+    "A549": 70,
+    "HA1E": 57,
+    "PC3": 110,
+    "VCAP": 111
+  },
+  "downsample": {
+    "applied": false,
+    "reason": null
+  },
+  "eligibility_note": "enough dual-high-coverage contexts after response-blind gates",
+  "eligible_context_count": 11,
+  "format": "exp006_context_coverage_v1",
+  "official_xpert_context_count": 164,
+  "official_xpert_overlap_only": true,
+  "per_context": [
+    {
+      "chemical_records": 4948,
+      "context_id": "VCAP",
+      "genetic_records": 66763,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 4948,
+      "unique_genes": 3967,
+      "unique_genetic_perturbagens": 18313
+    },
+    {
+      "chemical_records": 7269,
+      "context_id": "PC3",
+      "genetic_records": 70142,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 7269,
+      "unique_genes": 3918,
+      "unique_genetic_perturbagens": 15546
+    },
+    {
+      "chemical_records": 3560,
+      "context_id": "A375",
+      "genetic_records": 50511,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 3560,
+      "unique_genes": 3841,
+      "unique_genetic_perturbagens": 14984
+    },
+    {
+      "chemical_records": 4009,
+      "context_id": "HA1E",
+      "genetic_records": 47004,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 4009,
+      "unique_genes": 3666,
+      "unique_genetic_perturbagens": 14598
+    },
+    {
+      "chemical_records": 5079,
+      "context_id": "A549",
+      "genetic_records": 44365,
+      "meets_min_unique_compounds": true,
+      "meets_min_unique_genes": true,
+      "meets_target_unique_genes": true,
+      "unique_compounds": 5079,
+      "unique_genes": 3624,
+      "unique_genetic_perturbagens": 13992
+    }
+  ],
+  "prism_values_read": false,
+  "response_values_read": false,
+  "selected_contexts": [
+    "VCAP",
+    "PC3",
+    "A375",
+    "HA1E",
+    "A549"
+  ],
+  "selected_pool": {
+    "chemical_records": 24865,
+    "compound_split": {
+      "test": {
+        "count": 769,
+        "sha256": "a034ac7ba954fc0b5e774780f83b3325687e12698fbcdd33c217f6eb0f14e97d"
+      },
+      "train": {
+        "count": 6131,
+        "sha256": "eb36ec17e25d10d745e068f02f58c52210a7e4b5453134a74f5ca6daa0d05fff"
+      },
+      "validation": {
+        "count": 746,
+        "sha256": "0b0504473995873877ab746c07bba57de91c1f460be7283ceb4ab0df58f6f825"
+      }
+    },
+    "genetic_records": 278785,
+    "train_fraction_unique_compounds": {
+      "0.1": 613,
+      "0.2": 1226,
+      "1.0": 6131
+    },
+    "unique_compounds": 7646,
+    "unique_genes": 4247
+  },
+  "selection_policy": {
+    "criteria": [
+      "unique_mappable_genetic_genes_with_matched_control",
+      "unique_chemical_compounds_with_official_xpert_identity",
+      "exact978_available"
+    ],
+    "max_contexts": 5,
+    "min_unique_compounds": 200,
+    "min_unique_genes": 200,
+    "prism_used": false,
+    "response_values_used": false,
+    "target_unique_genes": 2000,
+    "test_performance_used": false
+  },
+  "source": {
+    "exact978_cache_manifest": {
+      "asset_id": "lincs_gse92742_exact978_cache_v1",
+      "cache_file": "exact978_cache.npy",
+      "cache_format": "npy_float32_exact978_v1",
+      "cache_sha256": "04b8bb746a61ba4992e49566315327023783ec1c0448da2a9e263e0881281733",
+      "cache_shape": [
+        1319138,
+        978
+      ],
+      "creation_environment": "WSL2; conda drugscreening-gpu; Python 3.11.15",
+      "extraction_runner": "scripts/modeling/run_exp002_streaming.py",
+      "ordered_gene_ids_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623",
+      "preprocessing_contract_sha256": "900592f841d736f3087077936b86c6f78ceb17f9a79f4485e619561d63e2ee9c",
+      "registered_from": "EXP-002 accepted evidence",
+      "runner_sha256": "23263bb996cb5b172e37de44615930347fbaa6bf0ccf82cc9a76fc537ebdf105",
+      "source_accession": "GSE92742",
+      "source_level3_sha512": "c049fd66717defce00a0073ce19339f8d507991d2a1d7dd9b5fd175cf9680295174f019ad34a666ff58d939a74de522536a3900bda719855b7ea414673a226a4",
+      "version": 1
+    },
+    "inst_info": "/mnt/d/Code/DrugScreenLab/data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_inst_info.txt.gz",
+    "inst_info_sha256": "9eddd1efbbd754588bb9cbe4fd4530a2a85b926bfb1657a359f0e9d809350472",
+    "unipert_ref": "/mnt/d/Code/DrugScreenLab/data/external/unipert_source/data/ref_targets.csv",
+    "unipert_ref_sha256": "2942d3bd611a0785fc5eefc2c34ae6610aac92160feddb2fb8794648b3a14e82",
+    "xpert_h5ad": "/mnt/d/Code/DrugScreenLab/data/external/xpert_source/processed_data/l1000_sdst_78453.h5ad"
+  }
+}

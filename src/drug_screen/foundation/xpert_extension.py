@@ -258,7 +258,7 @@ def load_xpert_checkpoint(
             normalized[name] = value
         else:
             unrecognized.append(name)
-    extension_prefixes = ("perturbagen_encoder.", "additive_gate")
+    extension_prefixes = ("perturbagen_encoder.", "additive_gate", "genetic_adapter.")
     official_keys = {k for k in target_keys if not k.startswith(extension_prefixes)}
     result = model.load_state_dict(normalized, strict=False)
     missing_official = sorted(k for k in result.missing_keys if k in official_keys)

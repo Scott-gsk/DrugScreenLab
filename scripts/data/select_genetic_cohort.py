@@ -22,7 +22,7 @@ def select_cohort(
     instances: pd.DataFrame,
     local_genes: set[str],
     *,
-    max_genes: int,
+    max_genes: int = 0,
     min_rows: int,
     min_cells: int,
 ) -> pd.DataFrame:
@@ -51,7 +51,10 @@ def select_cohort(
         ["rows", "cells", "perturbagen_ids", "gene_symbol"],
         ascending=[False, False, False, True],
     )
-    result = summary.head(max_genes).reset_index(drop=True)
+    if max_genes and max_genes > 0:
+        result = summary.head(max_genes).reset_index(drop=True)
+    else:
+        result = summary.reset_index(drop=True)
     if result.empty:
         raise ValueError("no genetic genes satisfy the cohort criteria")
     return result
@@ -63,12 +66,17 @@ def main() -> int:
     parser.add_argument("--unipert-source", type=Path, required=True)
     parser.add_argument("--output-genes", type=Path, required=True)
     parser.add_argument("--audit", type=Path, required=True)
-    parser.add_argument("--max-genes", type=int, default=256)
-    parser.add_argument("--min-rows", type=int, default=100)
-    parser.add_argument("--min-cells", type=int, default=2)
+    parser.add_argument(
+        "--max-genes",
+        type=int,
+        default=0,
+        help="Maximum unique genes to keep. 0 or negative means no cap (EXP-006 default).",
+    )
+    parser.add_argument("--min-rows", type=int, default=1)
+    parser.add_argument("--min-cells", type=int, default=1)
     args = parser.parse_args()
-    if args.max_genes < 1 or args.min_rows < 1 or args.min_cells < 1:
-        raise ValueError("cohort limits must be positive")
+    if args.min_rows < 1 or args.min_cells < 1:
+        raise ValueError("minimum coverage thresholds must be positive")
 
     instances = pd.read_csv(args.inst_info, sep="\t", low_memory=False)
     reference_targets = pd.read_csv(args.unipert_source / "data" / "ref_targets.csv", low_memory=False)
@@ -94,7 +102,7 @@ def main() -> int:
         "selection": {
             "minimum_rows_per_gene": args.min_rows,
             "minimum_cells_per_gene": args.min_cells,
-            "maximum_genes": args.max_genes,
+            "maximum_genes": None if args.max_genes <= 0 else args.max_genes,
             "local_unipert_reference_only": True,
         },
         "candidate_genes": int(len(cohort)),

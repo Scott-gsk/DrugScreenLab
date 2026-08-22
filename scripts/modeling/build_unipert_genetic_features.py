@@ -28,15 +28,19 @@ def main() -> int:
     parser.add_argument("--output-features", type=Path, required=True)
     parser.add_argument("--output-mapping", type=Path, required=True)
     parser.add_argument("--audit", type=Path, required=True)
-    parser.add_argument("--max-genes", type=int, default=256)
+    parser.add_argument(
+        "--max-genes",
+        type=int,
+        default=0,
+        help="Maximum unique genes to encode. 0 or negative means no cap (EXP-006 default).",
+    )
     parser.add_argument(
         "--gene-list",
         type=Path,
         help="Optional newline-delimited gene cohort selected from matched response metadata.",
     )
     args = parser.parse_args()
-    if args.max_genes < 1:
-        raise ValueError("--max-genes must be positive")
+    unlimited = args.max_genes <= 0
 
     perturbagens = pd.read_csv(args.pert_info, sep="\t", low_memory=False)
     required = {"pert_id", "pert_iname", "pert_type"}
@@ -58,10 +62,12 @@ def main() -> int:
             if line.strip()
         }
         genes = sorted(requested_genes.intersection(set(genetic["gene_symbol"])).intersection(local_genes))
-        if len(genes) > args.max_genes:
+        if not unlimited and len(genes) > args.max_genes:
             raise ValueError("--gene-list contains more genes than --max-genes")
     else:
-        genes = sorted(set(genetic["gene_symbol"]).intersection(local_genes))[: args.max_genes]
+        genes = sorted(set(genetic["gene_symbol"]).intersection(local_genes))
+        if not unlimited:
+            genes = genes[: args.max_genes]
     if not genes:
         raise ValueError("no genetic perturbagen gene symbols are available")
 
@@ -97,7 +103,7 @@ def main() -> int:
         "unipert_source": str(source_root),
         "unipert_model": str(args.model_dir.resolve() / "unipert_model.pt"),
         "unipert_model_sha256": _sha256(args.model_dir.resolve() / "unipert_model.pt"),
-        "candidate_gene_limit": args.max_genes,
+        "candidate_gene_limit": None if unlimited else args.max_genes,
         "gene_selection": "explicit_cohort_file" if args.gene_list is not None else "sorted_intersection",
         "gene_list": str(args.gene_list) if args.gene_list is not None else None,
         "local_reference_only": True,

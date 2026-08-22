@@ -1,0 +1,34 @@
+{
+  "champion_initialization": "both A and B load official warm-split champion before FT",
+  "claim_allowed": "compare genetic pretraining vs chemical-only FT of the same champion",
+  "claim_forbidden": "A is 10%/20% chemical supervision trained from scratch on a cold compound split",
+  "format": "exp006_test_compound_leakage_audit_v1",
+  "frozen_exp006_split": {
+    "test_sha256": "a034ac7ba954fc0b5e774780f83b3325687e12698fbcdd33c217f6eb0f14e97d",
+    "test_unique_compounds": 769,
+    "train_unique_compounds": 6131,
+    "validation_unique_compounds": 746
+  },
+  "interpretation": "Most frozen EXP-006 test compounds already appear in the official XPert L1000 warm-split train partition. Model A is therefore not 10%/20% chemical supervision from scratch; it is the full-chemical champion plus a small fine-tune on a response-blind compound subset. A vs B remains a valid comparison of additional genetic pretraining under the same FT budget, but must not be claimed as low-data chemical training from random initialization.",
+  "official_asset": "/mnt/d/Code/DrugScreenLab/data/external/xpert_source/processed_data/l1000_sdst_78453.h5ad",
+  "official_split_column": "split_1",
+  "official_split_semantics": "warm split used by champion l1000_sdst_warm_split.pth",
+  "official_unique_compounds": {
+    "any": 8382,
+    "test": 5952,
+    "train": 8228,
+    "valid": 0
+  },
+  "overlap": {
+    "frozen_test_in_official_test": 578,
+    "frozen_test_in_official_train": 761,
+    "frozen_test_in_official_train_rate": 0.9895968790637191,
+    "frozen_test_in_official_train_sha256": "fb77fe01ed0480b24c9f1adaec676c7b85cec18c09ef4b4d22f7568e1da1e7d4",
+    "frozen_test_in_official_valid": 0,
+    "frozen_test_unseen_in_official_h5ad": 0
+  },
+  "prism_values_read": false,
+  "response_values_read": false,
+  "selection_used_official_split": false,
+  "status": "FULL_CHEMICAL_CHAMPION_PLUS_FRACTIONAL_FT"
+}
