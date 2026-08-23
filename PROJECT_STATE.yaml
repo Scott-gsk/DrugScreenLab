@@ -8,7 +8,7 @@ runtime:
   environment_doc: docs/ENVIRONMENT.md
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
-  active_experiment: null
+  active_experiment: EXP-011
   active_mvp: MVP-001
   proposed_mvp: null
   mvp_status: result_reviewed
@@ -23,7 +23,7 @@ research:
   program_checkpoint: DRUGSCREENLAB_PROGRAM_EXECUTION_CHECKPOINT.md
   program_decision: CONTINUE_WITH_EXTENSIONS
   cross_study_status: EXP010_MCRC_PROMISING_FAST_BREAST_DIRECTIONAL_SUPPORT_WITH_LIMITATIONS
-  next_experiment_id: EXP-011
+  next_experiment_id: EXP-012
   extension_status:
     foundation: XPERT_FOUNDATION_READY
     e1_kpgt_unipert_additive: FAST_COMPLETE_CHEMICAL_BACKBONE_CHAMPION_XPERT

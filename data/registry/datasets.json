@@ -944,5 +944,45 @@
       "access_blocked": "six multiregional breast PDO supplements; access attempts stored alongside asset",
       "git_tracked": false
     }
+  },
+  {
+    "id": "exp011_indexed_multicohort_inputs_v1",
+    "version": 1,
+    "asset_type": "processed",
+    "source": {
+      "provider": "GDSC2 / Cell Model Passports / published PDO supplements / PubChem",
+      "accession": "EXP-011-indexed-multicohort-inputs",
+      "source_revision": "GDSC2-8.5; CMP-20220624; mCRC; Zhu-2024; Merrill-2024"
+    },
+    "path": {
+      "relative": "processed/exp011"
+    },
+    "immutable": true,
+    "intended_role": "EXP-011_SOURCE_PDO_AND_EXTERNAL_BRIDGE",
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "a9327a9058c5a8a08825ceef9fe5cb67d44d7bf46beccd46499f72ac4377a666",
+      "file": "cohort_index_manifest.json"
+    },
+    "schema": {
+      "format": "exp011_indexed_drug_response_v1",
+      "gene_count": 19091,
+      "gene_order_sha256": "0fd5fdd7ab9d53d569bef5c2a91b508c62d6cb9d1000bc3aeac6f5d424424b39",
+      "pair_storage": "unique-sample expression plus sample-drug index pairs",
+      "cohorts": {
+        "gdsc2_cell_line": {"samples": 963, "drugs": 229, "response_rows": 192845, "sample_tissue_categories": 37},
+        "mcrc_pdo": {"patients": 52, "pdo_samples": 91, "drugs": 49, "response_rows": 3268},
+        "zhu_hepatobiliary": {"patients": 20, "pdo_samples": 20, "drugs": 64, "response_rows": 1280},
+        "merrill_bladder_external": {"patients": 65, "response_rows": 1525, "expression_type": "primary_tumor_not_pdo"}
+      }
+    },
+    "provenance": {
+      "experiment": "EXP-011",
+      "freeze_manifest": "processed/exp011/cohort_index_manifest.json",
+      "data_status": "PARTIAL_PRISM_PENDING",
+      "prism_status": "PENDING_OFFICIAL_FIGSHARE_HTTP_403",
+      "prism_required_for": "frozen external cell-line gate; no PRISM labels may enter training or model selection",
+      "git_tracked": false
+    }
   }
 ]

@@ -104,6 +104,17 @@ experiments:
       M3 相对 M2 的患者宏 Spearman 提升 0.2486（2000 次患者 bootstrap 95% CI
       0.2190–0.2769），达到 PROMISING_FAST；但 M3 Spearman 0.7277 未超过 M0 的
       0.7505。GSE303509 上 M3 五折 ensemble rho 0.4286、14/21，达到限定的 SUPPORTS。
+  - id: EXP-011
+    title: Cell-Line-Gated Multi-Cohort PDO Transfer Validation
+    status: approved_running
+    hypothesis: >
+      在冻结的细胞系泛化门槛通过后，GDSC2/CMP 预训练 PharmaFormer 的低容量PDO
+      adapter 能在 mCRC 与肝胆癌直接表达—药敏配对的患者/PDO留出测试中，改善逐药物
+      跨患者排序，同时维持对强线性基线的非劣表现。
+    primary_endpoint: equal_cohort_macro_per_drug_patient_spearman_adapter_minus_source_only
+    approved_by: user_explicit_implementation_authorization
+    approved_on: 2026-08-23
+    record: experiments/records/EXP-011.md
 mvps:
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility
