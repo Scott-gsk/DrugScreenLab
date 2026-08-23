@@ -1,0 +1,42 @@
+experiment_id: EXP-010
+seed: 20260823
+data_root_env: DRUGSCREEN_DATA_ROOT
+upstream:
+  pharmaformer_commit: f526ddda4091151f082b38367571a94823314aba
+data_gates:
+  min_drug_structure_mapping_rate: 0.90
+  min_ordered_common_genes: 15000
+  min_mcrc_patients: 40
+  min_mapped_monotherapies_per_main_pdo: 5
+split:
+  unit: patient
+  outer_folds: 5
+  validation_offset: 1
+models:
+  baselines: [M0, M1]
+  source_only: M2
+  source_target_finetune: M3
+  target_random_init: M4
+  architecture:
+    gene_input_dim: 8192
+    drug_input_dim: 256
+    hidden_dim: 128
+    transformer_layers: 3
+    attention_heads: 8
+    feedforward_dim: 2048
+    learning_rate: 1.0e-5
+  target_training:
+    dropout: 0.3
+    batch_size: 4
+    max_epochs: 30
+    patience: 5
+evaluation:
+  primary: patient_macro_within_pdo_drug_spearman
+  secondary: [patient_macro_ndcg_at_5, raw_dss_mae]
+  bootstrap_clusters: patient
+  bootstrap_replicates: 2000
+verdict:
+  min_spearman_delta: 0.05
+  require_ci_lower_above_zero: true
+  max_ndcg_decline: 0.0
+  max_mae_relative_worsening: 0.05

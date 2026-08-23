@@ -15,22 +15,22 @@ research:
   mvp_result: PROMISING
   mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
   last_accepted_experiment: EXP-002
-  last_completed_experiment: EXP-007
-  evidence_level: phase_4_screening_gate_and_genetic_transfer_fast
+  last_completed_experiment: EXP-010
+  evidence_level: pdo_transfer_fast_complete_with_breast_directional_support
   accepted_model: null
   current_champion: official_xpert_foundation_exp005_fast_baseline_retained
   current_baseline: official_xpert_hg_unimol_foundation
   program_checkpoint: DRUGSCREENLAB_PROGRAM_EXECUTION_CHECKPOINT.md
   program_decision: CONTINUE_WITH_EXTENSIONS
-  cross_study_status: OFFICIAL_GDSC_ASSET_REACHABLE_LOCAL_FREEZE_PENDING
-  next_experiment_id: EXP-010
+  cross_study_status: EXP010_MCRC_PROMISING_FAST_BREAST_DIRECTIONAL_SUPPORT_WITH_LIMITATIONS
+  next_experiment_id: EXP-011
   extension_status:
     foundation: XPERT_FOUNDATION_READY
     e1_kpgt_unipert_additive: FAST_COMPLETE_CHEMICAL_BACKBONE_CHAMPION_XPERT
     e2_genetic_chemical_low_data: EXP006_COMPLETE_GENETIC_PRETRAINING_HURT_CHEMICAL_DELTA978
     e3_prism_identity_bridge: EXP007_ORACLE_NEAR_NULL_FAIL_RULE_AUDITED
     e4_target_pathway_transfer: EXP008_ARCHIVED_WITHOUT_RESULT_IMPLEMENTATION_REMOVED
-    organoid_readiness: READINESS_PREPARATION_LOCAL_MATRICES_PRESENT_ADAPTER_NOT_BUILT
+    organoid_readiness: EXP010_COMPLETE_M3_BEATS_M2_NOT_SIMPLE_BASELINES
 data:
   default_root: data
   root_env: DRUGSCREEN_DATA_ROOT

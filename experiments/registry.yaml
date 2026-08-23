@@ -89,6 +89,21 @@ experiments:
     supersedes:
       - legacy_exp008_champion_draft_removed_20260823
       - disease_signature_swap_gate
+  - id: EXP-010
+    title: PharmaFormer to mCRC PDO to Breast PDO One-Day Validation
+    status: complete_promising_fast_with_limitations
+    hypothesis: >
+      在患者级严格隔离的 mCRC PDO 上，GDSC2/CMP 预训练的 PharmaFormer 经短程
+      mCRC 微调后，比不做微调的同一 checkpoint 提高患者等权药物排序质量，并且该
+      方向能在公开乳腺癌 PDO 分析输入上获得独立、有限范围的外部支持。
+    primary_endpoint: patient_macro_within_pdo_drug_spearman_m3_minus_m2
+    approved_by: user_explicit_implementation_authorization
+    approved_on: 2026-08-23
+    record: experiments/records/EXP-010.md
+    result: >
+      M3 相对 M2 的患者宏 Spearman 提升 0.2486（2000 次患者 bootstrap 95% CI
+      0.2190–0.2769），达到 PROMISING_FAST；但 M3 Spearman 0.7277 未超过 M0 的
+      0.7505。GSE303509 上 M3 五折 ensemble rho 0.4286、14/21，达到限定的 SUPPORTS。
 mvps:
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility

@@ -15,3 +15,8 @@ dependencies:
   # 开发与测试栈。
   - pytest=9.0.2
   - pip
+  - pip:
+      # EXP-010 official PharmaFormer adapter dependencies. Keep the upstream
+      # repository external and pinned; do not create a second environment.
+      - subword-nmt==0.3.8
+      - lifelines==0.29.0
