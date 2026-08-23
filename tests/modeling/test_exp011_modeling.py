@@ -20,6 +20,7 @@ from drug_screen.modeling.exp011_training import (
     fit_source_model,
     fit_target_model,
     macro_cohort_drug_spearman,
+    attention_backend_for_capability,
 )
 
 RUNNER = Path(__file__).resolve().parents[2] / "scripts/modeling/run_exp011_pharmaformer.py"
@@ -102,6 +103,11 @@ def test_per_drug_macro_spearman_does_not_mix_drug_main_effects() -> None:
     groups = np.asarray(["drug_a"] * 3 + ["drug_b"] * 3)
     assert np.corrcoef(predicted, target)[0, 1] > .9
     assert macro_cohort_drug_spearman(predicted, target, groups) == pytest.approx(-1.0)
+
+
+def test_pre_ampere_devices_use_math_attention_without_changing_model_geometry() -> None:
+    assert attention_backend_for_capability(7) == "math_sdp_pre_ampere"
+    assert attention_backend_for_capability(8) == "default_sdp_ampere_or_newer"
 
 
 def test_direct_raw_npz_is_marked_development_only(tmp_path: Path) -> None:

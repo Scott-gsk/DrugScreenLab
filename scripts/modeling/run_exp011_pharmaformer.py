@@ -43,6 +43,7 @@ from drug_screen.modeling.exp011_training import (  # noqa: E402
     fit_source_model,
     refit_source_model_full,
     fit_target_model,
+    configure_attention_backend,
     predict_dataset,
     transformed_data,
 )
@@ -184,6 +185,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
     )
     gene_sha = "test-only-geometry" if args.allow_test_geometry else require_official_gene_contract(data.ordered_genes.tolist(), config)
     upstream = upstream_checkout(args.upstream)
+    attention_backend = configure_attention_backend(args.device)
     if args.stage == "source-final":
         if not args.formal:
             raise ValueError("source-final is a formal post-gate operation and requires --formal")
@@ -220,6 +222,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             "experiment_id": EXP011_EXPERIMENT_ID, "model_id": "M2", "stage": "source-final", "fold_id": -1,
             "fit": fit.__dict__, "checkpoint": str(checkpoint_path), "checkpoint_sha256": sha256_file(checkpoint_path),
             "post_gate_full_source_refit": True, "frozen_median_best_epoch": fixed_epochs,
+            "attention_backend": attention_backend,
             "strict_reload_max_abs_delta": reload_delta,
             "predictions": None, "gene_contract_sha256": gene_sha, "bpe_codes_sha256": bpe_sha,
             "pair_counts": {"train": int(len(all_indices)), "validation": 0, "test": 0}, "fold_manifest": str(fold_manifest_path),
@@ -340,6 +343,7 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         "checkpoint_strictly_loaded": bool(loaded_checkpoint_path is not None), "source_checkpoint_sha256": source_checkpoint_sha,
         "predictions": str(prediction_path), "predictions_sha256": sha256_file(prediction_path), "strict_reload_max_abs_delta": reload_delta,
         "architecture_sha256": architecture_digest(config, gene_sha), "gene_contract_sha256": gene_sha, "bpe_codes_sha256": bpe_sha,
+        "attention_backend": attention_backend,
         "pair_counts": {"train": int(len(train_indices)), "validation": int(len(validation_indices)), "test": int(len(test_indices))},
         "fold_manifest": str(fold_manifest_path), "indexed_input": True, "development_input": bool(data.manifest.get("development_input", False)),
     }

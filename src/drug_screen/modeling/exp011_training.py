@@ -42,6 +42,35 @@ TARGET_POLICY = {
 }
 
 
+def attention_backend_for_capability(major: int) -> str:
+    """Return the deterministic SDP backend allowed by a CUDA architecture.
+
+    The official model is unchanged.  Turing-era devices cannot execute
+    PyTorch's FlashAttention kernel, so they explicitly use the mathematical
+    scaled-dot-product attention implementation instead of failing halfway
+    through a formal fold.  Ampere and newer retain PyTorch's default kernels.
+    """
+
+    return "math_sdp_pre_ampere" if int(major) < 8 else "default_sdp_ampere_or_newer"
+
+
+def configure_attention_backend(device: str) -> str:
+    """Configure a process-local CUDA SDP backend before any model forward pass."""
+
+    import torch
+
+    if not str(device).startswith("cuda") or not torch.cuda.is_available():
+        return "not_cuda"
+    parsed = torch.device(device)
+    index = torch.cuda.current_device() if parsed.index is None else int(parsed.index)
+    backend = attention_backend_for_capability(torch.cuda.get_device_capability(index)[0])
+    if backend == "math_sdp_pre_ampere":
+        torch.backends.cuda.enable_flash_sdp(False)
+        torch.backends.cuda.enable_mem_efficient_sdp(False)
+        torch.backends.cuda.enable_math_sdp(True)
+    return backend
+
+
 @dataclass(frozen=True)
 class FitResult:
     best_epoch: int
