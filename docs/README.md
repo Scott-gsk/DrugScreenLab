@@ -10,7 +10,7 @@
 | 项目状态 | `../PROJECT_STATE.yaml` | 当前状态、实验索引、有效结论摘要 |
 | 主研究方案 | `研究实施方案.md` | 研究问题、路线、长期目标 |
 | 设计稿 | `design/基于统一扰动机制、转录扰动预测与疾病表达谱逆转的类器官药物筛选研究方案.md` | 长期科学设计（与主方案互补） |
-| 当前执行计划 | `exec-plans/active/复核审计与文档治理执行方案_20260921.md` | 第三波：复核审计与文档治理（阶段 0~7，2026-09-22 收口） |
+| 执行计划（已收口） | `exec-plans/completed/复核审计与文档治理执行方案_20260921.md` | 第三波：复核审计与文档治理（阶段 0~7，2026-09-22 收口） |
 | 第三波收口报告 | `reports/program_closeout_20260922.md` | 工作包 A~G 全部完成、EXP-031~035 结论汇总、F2 审计修复 |
 | 最新周报 | `reports/weekly_report_20260920.md` | 2026-09-13~20 周报（2026-09-21 复核修订 v2） |
 | 审计证据表 | `reports/audit_evidence_20260921.md` | 工作包 A 证据清单与更正表 |
@@ -35,12 +35,13 @@
 
 | 文档 | 状态 |
 |---|---|
-| `exec-plans/active/pathway_transfer_pdo_20260918.md` | 历史 / 已被 20260921 方案替代 |
+| `exec-plans/completed/pathway_transfer_pdo_20260918.md` | 历史 / 已被 20260921 方案替代 |
 | `.trae/documents/第二波研究方案_双路线对比与可解释融合_EXP026-030.md` | 第二波方案（EXP-026~030 已完成，结论保留在注册表） |
 
 ## 报告与实验记录
 
-- 专题报告：`reports/`（文件名含 EXP 编号与日期；含 DRAFT 的为未定稿）
+- 专题报告：`reports/`（文件名含 EXP 编号与日期；已定稿报告，DRAFT 中间稿已于 2026-09-22 清理，可从 git 历史恢复）
+- 汇报 PPT：`reports/presentations/`
 - 实验记录：`../experiments/records/EXP-###.md`
 - 实验登记：`../experiments/registry.yaml`
 - 数据登记：`../data/registry/datasets.json`、`datasets_transfer.json`
