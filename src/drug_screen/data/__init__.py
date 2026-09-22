@@ -19,11 +19,6 @@ from drug_screen.data.expression_contracts import (
     StubPerturbationGeneLoader,
     registry_hint,
 )
-from drug_screen.data.measured_perturbation_loader_DRAFT import (
-    MeasuredPerturbationControlLoader,
-    describe_assets as describe_measured_perturbation_assets,
-    smoke_measured_control_loader,
-)
 
 from drug_screen.data.identity_contracts import (
     CellLineIdentity,
@@ -66,8 +61,4 @@ __all__ = [
     "default_identity_paths",
     "validate_drug_identity",
     "validate_patient_fold_unit",
-    # measured perturbation DRAFT
-    "MeasuredPerturbationControlLoader",
-    "describe_measured_perturbation_assets",
-    "smoke_measured_control_loader",
 ]
