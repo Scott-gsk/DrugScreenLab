@@ -1,0 +1,111 @@
+{
+  "format": "ccle_rnaseq_intake_v1",
+  "status": "DATA_PARTIAL",
+  "primary_source_verification": {
+    "release": "DepMap Public 24Q2",
+    "official_title": "DepMap 24Q2 Public",
+    "doi": "10.25452/figshare.plus.25880521.v1",
+    "figshare_article": "https://figshare.com/articles/dataset/DepMap_24Q2_Public/25880521",
+    "release_notes_url": "https://forum.depmap.org/t/announcing-the-26q1-release/4606",
+    "current_portal_release_announced": "DepMap Public 26Q1",
+    "current_portal_file": "OmicsExpressionTPMLogp1HumanProteinCodingGenes.csv",
+    "why_not_26q1": "depmap.org portal download is WAF/HTML gated from this session; figshare.plus 26Q1 article was not resolvable. 24Q2 is the latest official public RNA-seq matrix successfully retrieved from Broad DepMap figshare.plus.",
+    "expression_file": "OmicsExpressionProteinCodingGenesTPMLogp1.csv",
+    "expression_file_id": 46490878,
+    "expression_url": "https://ndownloader.figshare.com/files/46490878",
+    "model_file": "Model.csv",
+    "model_file_id": 46489732,
+    "model_url": "https://ndownloader.figshare.com/files/46489732",
+    "description": "Gene expression TPM values of protein-coding genes; log2(TPM+1).",
+    "pipeline": "https://github.com/broadinstitute/depmap_omics"
+  },
+  "local": {
+    "expression_path": "data/raw/depmap/24q2/OmicsExpressionProteinCodingGenesTPMLogp1.csv",
+    "model_path": "data/raw/depmap/24q2/Model.csv",
+    "expression_bytes": 460868099,
+    "model_bytes": 559182,
+    "expression_sha256": "39eff342bbbbe0a40208545e93a69cc85a945899592f9d683f87e3b2bb121670",
+    "model_sha256": "a4cac376131b41aa10b60a075b11c80264bfa860a5509d22cde259c5e85867f8",
+    "expression_shape": [
+      1517,
+      19193
+    ]
+  },
+  "gene_harmonization": {
+    "ordered_gene_ids_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623",
+    "mapping_key": "DepMap column Entrez ID in parentheses -> GSE92742 pr_gene_id",
+    "landmark_genes": 978,
+    "mapped_genes": 978,
+    "missing_genes": [],
+    "missing_count": 0,
+    "ambiguous_count": 0,
+    "duplicate_gene_rule": "require unique Entrez match; no symbol fallback"
+  },
+  "overlap": {
+    "lincs_registry_contexts": 55,
+    "depmap_models": 1959,
+    "expression_models": 1517,
+    "lincs_overlap_by_stripped_name": 54,
+    "crc_exact_overlap": [
+      "CL34",
+      "HCT116",
+      "HT29",
+      "LOVO",
+      "RKO",
+      "SNUC4",
+      "SNUC5",
+      "SW480",
+      "SW620",
+      "SW948"
+    ],
+    "crc_exact_overlap_count": 10,
+    "expression_rows_overlapping_lincs": 52,
+    "join_key": "Model.StrippedCellLineName == LINCS context_id (uppercase exact)"
+  },
+  "normalization_probe": {
+    "compared": [
+      "raw_log2tpm",
+      "within_sample_rank",
+      "quantile_bin10",
+      "relative_expression",
+      "train_fitted_zscore"
+    ],
+    "fit_population": "train_fitted_zscore uses all non-CRC-exact DepMap lines; others are within-sample",
+    "not_architecture_search": true,
+    "comparison": {
+      "raw_log2tpm": {
+        "mean_spearman_vs_raw_first48": 1.0,
+        "finite_fraction": 1.0
+      },
+      "within_sample_rank": {
+        "mean_spearman_vs_raw_first48": 0.9999993642691928,
+        "finite_fraction": 1.0
+      },
+      "quantile_bin10": {
+        "mean_spearman_vs_raw_first48": 0.9949880360720952,
+        "finite_fraction": 1.0
+      },
+      "relative_expression": {
+        "mean_spearman_vs_raw_first48": 1.0,
+        "finite_fraction": 1.0
+      },
+      "train_fitted_zscore": {
+        "mean_spearman_vs_raw_first48": 0.5522227241866705,
+        "finite_fraction": 1.0
+      }
+    }
+  },
+  "adapter_output": {
+    "matrix": "data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_log2tpm.npy",
+    "mapping": "data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_mapping.json",
+    "rows_complete_978": 1517,
+    "shape": [
+      1517,
+      978
+    ],
+    "dtype": "float32",
+    "units": "official log2(TPM+1); not LINCS X_ctl",
+    "cannot_replace_matched_control": true
+  },
+  "response_blind": true
+}

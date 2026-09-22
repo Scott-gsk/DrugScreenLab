@@ -1,0 +1,8 @@
+{
+  "experiment_id": "EXP-015",
+  "cohort_id": "zhu_hepatobiliary_v2",
+  "seeds": [20260912, 20260913, 20260914],
+  "device": "cuda",
+  "bootstrap_resamples": 2000,
+  "scope": "fixed_parameter_exploratory_patient_5fold"
+}

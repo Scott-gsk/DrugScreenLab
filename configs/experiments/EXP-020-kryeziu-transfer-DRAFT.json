@@ -1,0 +1,13 @@
+{
+  "experiment_id": "EXP-020_DRAFT",
+  "cohort_id": "kryeziu_mcrc_v3",
+  "seeds": [20260912],
+  "device": "cuda",
+  "bootstrap_resamples": 2,
+  "scope": "DRAFT_official_CLI_gdsc_to_kryeziu_transfer_under_steward_contracts_not_frozen",
+  "notes": [
+    "Uses registry alias kryeziu_mcrc_v3",
+    "Admission EXPLORATORY_ADMITTED DRAFT",
+    "bootstrap=2 is SMOKE_ONLY; follow with 2000 if CLI path clears"
+  ]
+}

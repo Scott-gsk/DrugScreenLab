@@ -1,0 +1,15 @@
+{
+  "experiment_id": "EXP-020_DRAFT",
+  "cohort_id": "kryeziu_mcrc_v3",
+  "seeds": [
+    20260912
+  ],
+  "device": "cuda",
+  "bootstrap_resamples": 2000,
+  "scope": "DRAFT_official_CLI_gdsc_to_kryeziu_transfer_bootstrap2000_not_frozen",
+  "notes": [
+    "Main registry+admission aligned (response_name=DSS, sha matched)",
+    "Follows successful smoke bootstrap=2",
+    "DRAFT only; do not claim freeze"
+  ]
+}

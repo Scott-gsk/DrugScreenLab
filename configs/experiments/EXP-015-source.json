@@ -1,0 +1,18 @@
+{
+  "experiment_id": "EXP-015",
+  "cohort_id": "gdsc2_v2",
+  "seed": 20260912,
+  "n_features": 512,
+  "model": {
+    "hidden_dim": 32,
+    "learning_rate": 0.001,
+    "ranking_weight": 0.2,
+    "huber_delta": 1.0,
+    "epochs": 50,
+    "patience": 10,
+    "max_rank_pairs": 128,
+    "batch_groups": 8,
+    "device": "cuda",
+    "seed": 20260912
+  }
+}

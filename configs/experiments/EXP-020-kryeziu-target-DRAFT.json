@@ -1,0 +1,10 @@
+{
+  "experiment_id": "EXP-020-DRAFT",
+  "cohort_id": "kryeziu_mcrc_v3",
+  "seeds": [
+    20260918
+  ],
+  "device": "cuda",
+  "bootstrap_resamples": 2,
+  "scope": "DRAFT_gdsc_to_kryeziu_pdo_transfer_patient_5fold"
+}

@@ -1,0 +1,116 @@
+experiment_id: EXP-012
+title: Protocol-corrected PharmaFormer source audit and gated dual-cohort PDO transfer
+seed: 20260823
+model_init_seed: 20260823
+runtime:
+  platform: WSL2
+  conda_env: drugscreening-gpu
+  environment_doc: docs/ENVIRONMENT.md
+upstream:
+  pharmaformer_commit: f526ddda4091151f082b38367571a94823314aba
+  checkout: data/external/exp010/pharmaformer/repo
+predecessor:
+  exp011_status: SOURCE_AUDIT_REQUIRED_BEFORE_CELL_LINE_GATE_DECISION
+  exp011_artifacts: data/artifacts/EXP-011/source_cv
+  overwrite_exp011: false
+source:
+  cohort: gdsc2_cmp_release8_5
+  processed_root: processed/exp012
+  label: 1-AUC
+  higher_is_sensitive: true
+  genes: 19091
+  expression_unit: log2(CMP TPM+1)
+  missing_values: train_fold_mean_impute_with_mask
+  grouped_outer_folds: 5
+  group_key: SANGER_MODEL_ID
+  protocols:
+    paper_pair:
+      split: pair_stratified_kfold_by_tissue
+      optimizer: Adam
+      learning_rate: 1.0e-5
+      weight_decay: 0.0
+      batch_size: 128
+      gradient_accumulation: 1
+      min_epochs: 100
+      max_epochs: 100
+      patience: 100
+      early_stopping: false
+      selection_metric: last_epoch
+      diagnostic_fold: 0
+    cold_cell:
+      split: cell_line_stratified_group_kfold
+      optimizer: AdamW
+      learning_rate: 1.0e-5
+      weight_decay: 1.0e-5
+      batch_size: 64
+      gradient_accumulation: 2
+      min_epochs: 10
+      max_epochs: 50
+      patience: 8
+      early_stopping: true
+      selection_metric: validation_macro_per_drug_spearman
+      save_mse_selected_checkpoint: true
+      diagnostic_fold: 0
+external_cell_line:
+  cohort: prism_extended_primary_24q2
+  role: frozen_external_test
+  panel: all_extended_primary_ach_with_expression
+  lineage_filter: null
+  matrix: data/external/exp011/prism24q2/Repurposing_Public_24Q2_Extended_Primary_Data_Matrix.csv
+  compound_list: data/external/exp011/prism24q2/Repurposing_Public_24Q2_Extended_Primary_Compound_List.csv
+  cell_metadata: data/external/exp011/prism24q2/Repurposing_Public_24Q2_Cell_Line_Meta_Data.csv
+  identity_freeze: processed/exp012/prism_identity_freeze.json
+  min_lines: 30
+  min_exact_drugs: 60
+  hardcode_81_2784_35: false
+  note: Counts come from the identity freeze. Do not subset to OncotreeLineage=Bowel.
+pdo:
+  train_cohorts: [mcrc_pdo, zhu_hepatobiliary]
+  external_cohorts: [merrill_bladder]
+  response_standardization: train_only_cohort_drug_zscore
+  min_train_observations_per_drug: 8
+  min_test_observations_per_drug: 5
+  outer_folds: 5
+  split_unit: patient_or_pdo
+  start_only_if: cell_line_gate_passed
+  adapter:
+    bottleneck_dim: 256
+    dropout: 0.3
+    adapter_learning_rate: 1.0e-4
+    transformer_learning_rate: 1.0e-6
+    warmup_epochs: 20
+    min_epochs: 20
+    max_epochs: 100
+    patience: 15
+    freeze_output_head: false
+    select_against_source_epoch_zero: true
+    note: >
+      pdo_v2 froze the output head and collapsed to drug ranking.  pdo_v3
+      restores output-head training, keeps Zhu log2(x+1), and only keeps an
+      adapter checkpoint if validation per-drug Spearman beats frozen M2.
+  loss:
+    huber_weight: 1.0
+    pairwise_ranking_weight: 0.5
+evaluation:
+  primary: equal_cohort_macro_per_drug_patient_spearman
+  cell_line_primary: fold_wise_mean_per_drug_spearman
+  cell_line_secondary: merged_oof_per_drug_spearman
+  bootstrap:
+    replicates: 2000
+    clusters: patient_within_cohort
+gates:
+  cell_line:
+    min_gdsc_cold_cell_macro_spearman: 0.30
+    aggregation: fold_wise_mean
+    min_prism_external_macro_spearman: 0.10
+    ridge_noninferiority_delta: -0.02
+  pdo:
+    min_adapter_minus_source_spearman: 0.05
+    require_bootstrap_ci_lower_above_zero: true
+    ridge_noninferiority_delta: -0.02
+breast:
+  role: frozen_directional_positive_control_only
+  cohort: GSE303509
+clinical:
+  role: exploratory_external_only
+  cohorts: [GSE3964, GSE19860, GSE104645, GSE106584, TCGA-COAD, TCGA-BLCA, TCGA-LIHC]

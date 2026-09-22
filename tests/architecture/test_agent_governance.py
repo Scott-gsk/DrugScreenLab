@@ -61,13 +61,12 @@ def test_agent_rules_forbid_destructive_git_cleanup():
     assert "删除前确认路径、引用和恢复点" in text
 
 
-def test_agent_rules_define_sol_manager_and_terra_executors():
+def test_agent_rules_define_orchestration_roles_without_model_binding():
     text = RULES.read_text()
-    assert "Sol Manager → Terra Executor" in text
-    assert "gpt-5.6-sol" in text
-    assert "gpt-5.6-terra" in text
-    assert "不能自行切换当前主任务模型" in text
-    assert "Manager 必须复核 Terra" in text
+    assert "复杂研究采用先进模型" in text
+    assert "可由 Manager 调用子 Agent" in text
+    assert "`AGENTS.md` 只能规定编排策略" in text
+    assert "Manager 必须复核执行方（子 Agent）" in text
 
 
 def test_optional_agent_templates_remain_well_formed():

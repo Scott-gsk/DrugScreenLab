@@ -1,0 +1,220 @@
+{
+  "format": "organoid_geo_fetch_v1",
+  "status": "FETCHED",
+  "datasets": [
+    {
+      "accession": "GSE280506",
+      "n_requested": 8,
+      "n_ok": 8,
+      "local_matrix_present": true,
+      "files": [
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/suppl/GSE280506_filtered_feature_bc_matrix.h5",
+          "path": "data/raw/geo/GSE280506/GSE280506_filtered_feature_bc_matrix.h5",
+          "ok": true,
+          "status": 200,
+          "content_type": "",
+          "bytes": 237076182,
+          "sha256": "6e9297941a1b948d6c61c58c37497ef447f7b4c54aaf6e1561cd3b63d7b8f87e"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/suppl/GSE280506_barcodes.tsv.gz",
+          "path": "data/raw/geo/GSE280506/GSE280506_barcodes.tsv.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 249413,
+          "sha256": "e424368fd3d40df8a2d1cc69eb2921694dc775fb5de4aa777e2bf0bd27b8c6ec"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/suppl/GSE280506_features.tsv.gz",
+          "path": "data/raw/geo/GSE280506/GSE280506_features.tsv.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 318733,
+          "sha256": "afe2f8945809104893fb74f91e94ace82b364de91106a018f962a4d36131fdf2"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/suppl/GSE280506_cell_identities.csv.gz",
+          "path": "data/raw/geo/GSE280506/GSE280506_cell_identities.csv.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 856626,
+          "sha256": "3b9d318464ec3d42dbcfd400d1d816939b2325b660d83abf8b6a5a8a148c3013"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/suppl/GSE280506_CRISPRi_reference_guide_barcode_library.xlsx",
+          "path": "data/raw/geo/GSE280506/GSE280506_CRISPRi_reference_guide_barcode_library.xlsx",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "bytes": 8477,
+          "sha256": "5f68b3646964a5649398503ffbb7fe89b5195ed9aaa2390e7d52512d7b637af6"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/suppl/GSE280506_CRISPRa_reference_guide_barcode_library.xlsx",
+          "path": "data/raw/geo/GSE280506/GSE280506_CRISPRa_reference_guide_barcode_library.xlsx",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+          "bytes": 6489,
+          "sha256": "1b9a9eae10fdba889ab77ec555671ba9486bfc20862593a3be48696dd7d49e94"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/matrix/GSE280506_series_matrix.txt.gz",
+          "path": "data/raw/geo/GSE280506/GSE280506_series_matrix.txt.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 3471,
+          "sha256": "f6b9f764899d213db2d738ac1d3e97252925b258afbfa1a233b38a7442056340"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE280nnn/GSE280506/soft/GSE280506_family.soft.gz",
+          "path": "data/raw/geo/GSE280506/GSE280506_family.soft.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 3567,
+          "sha256": "8bfc3190dfe2908b12b799a0eb83cf4975668b9441d19e8742f4b977ff9765f0"
+        }
+      ]
+    },
+    {
+      "accession": "GSE145308",
+      "n_requested": 5,
+      "n_ok": 5,
+      "local_matrix_present": true,
+      "files": [
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE145nnn/GSE145308/suppl/GSE145308_RAW.tar",
+          "path": "data/raw/geo/GSE145308/GSE145308_RAW.tar",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-tar",
+          "bytes": 2652160,
+          "sha256": "540f0ce0ea0e4baed3237b23b4436896524ef68f337ccefd2cdcd3507ccfff02"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE145nnn/GSE145308/suppl/filelist.txt",
+          "path": "data/raw/geo/GSE145308/filelist.txt",
+          "ok": true,
+          "status": 200,
+          "content_type": "text/plain; charset=utf-8",
+          "bytes": 1651,
+          "sha256": "26510ec89ba5cdb7d16ad70354718e518a62f9a3f04963ce0605742f774f0dae"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE145nnn/GSE145308/matrix/GSE145308-GPL20301_series_matrix.txt.gz",
+          "path": "data/raw/geo/GSE145308/GSE145308-GPL20301_series_matrix.txt.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 4501,
+          "sha256": "351695aaf19fccdc0d39572c501bb7b2a559fac58f94f609e1637006107e3e52"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE145nnn/GSE145308/matrix/GSE145308-GPL24676_series_matrix.txt.gz",
+          "path": "data/raw/geo/GSE145308/GSE145308-GPL24676_series_matrix.txt.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 3524,
+          "sha256": "521f33f0a594d42e0eb0c76cc2097ad7eb98896ee33eb67807d934aa328a3082"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE145nnn/GSE145308/soft/GSE145308_family.soft.gz",
+          "path": "data/raw/geo/GSE145308/GSE145308_family.soft.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 5224,
+          "sha256": "ca9833dbb2b690345436fb6d16086d8860bf4e9c409e007f2b65c434e0f2b4f9"
+        }
+      ]
+    },
+    {
+      "accession": "GSE167285",
+      "n_requested": 4,
+      "n_ok": 4,
+      "local_matrix_present": true,
+      "files": [
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE167nnn/GSE167285/suppl/GSE167285_Human_CRISPR_organoids_raw_counts.txt.gz",
+          "path": "data/raw/geo/GSE167285/GSE167285_Human_CRISPR_organoids_raw_counts.txt.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 648849,
+          "sha256": "c904c6b4cd61d7fff4b2b6a2d561827f2b1c5909419bd78601f6a7f82ff94318"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE167nnn/GSE167285/suppl/GSE167285_Human_CRISPR_organoids_normalized_counts.txt.gz",
+          "path": "data/raw/geo/GSE167285/GSE167285_Human_CRISPR_organoids_normalized_counts.txt.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 743219,
+          "sha256": "9bf4fc0734730fc8a5fb3730c0ee7ef50301de5e725ef852ac127fb2f49d7142"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE167nnn/GSE167285/matrix/GSE167285_series_matrix.txt.gz",
+          "path": "data/raw/geo/GSE167285/GSE167285_series_matrix.txt.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 2196,
+          "sha256": "7104568ae43fb644d32ce0efc2526e4f846bbc008d8d943d8a8d954ebb34d469"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE167nnn/GSE167285/soft/GSE167285_family.soft.gz",
+          "path": "data/raw/geo/GSE167285/GSE167285_family.soft.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 2437,
+          "sha256": "ca34a857ba0e126b9df824c0d9c529bac9578d7fa086687bad655aac2b513442"
+        }
+      ]
+    },
+    {
+      "accession": "GSE241659",
+      "n_requested": 3,
+      "n_ok": 3,
+      "local_matrix_present": true,
+      "files": [
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE241nnn/GSE241659/suppl/GSE241659_counts_normalised.tsv.gz",
+          "path": "data/raw/geo/GSE241659/GSE241659_counts_normalised.tsv.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 1817653,
+          "sha256": "6d417a7011e0d214b0ea6c9bf62a498a01575f5e58cd8dddf3ef857e04552910"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE241nnn/GSE241659/matrix/GSE241659_series_matrix.txt.gz",
+          "path": "data/raw/geo/GSE241659/GSE241659_series_matrix.txt.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 2356,
+          "sha256": "897252f31a29dce99f5eae8a05645e640f37648c649e144e5dbb04fb5cc01bc6"
+        },
+        {
+          "url": "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE241nnn/GSE241659/soft/GSE241659_family.soft.gz",
+          "path": "data/raw/geo/GSE241659/GSE241659_family.soft.gz",
+          "ok": true,
+          "status": 200,
+          "content_type": "application/x-gzip",
+          "bytes": 2524,
+          "sha256": "356af9c148ea2d55805fb9dfd2c0b10067a16ab455031195ab80c342f0205b4a"
+        }
+      ]
+    }
+  ],
+  "user_agent": "DrugScreenLab-data-audit/1.0 (response-blind organoid intake)",
+  "source": "NCBI GEO FTP"
+}

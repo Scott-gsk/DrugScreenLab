@@ -1,0 +1,29 @@
+{
+  "experiment_id": "EXP-017",
+  "cohort_id": "zhu_hepatobiliary_v3",
+  "status": "APPROVED_VERSIONED_RERUN_V2",
+  "outer_folds": 5,
+  "inner_folds": 3,
+  "seed": 20260913,
+  "final_init_seeds": [20260913, 20260914, 20260915],
+  "epochs": 50,
+  "device": "cuda",
+  "inner_selection_endpoint": "strict_full_inchikey_7_drug_patient_ndcg_at_3",
+  "source_checkpoint_requirement": "retrained_common_source_target_labelled_gene_space",
+  "learning_curve_budgets": [0.1, 0.25, 0.5, 1.0],
+  "candidates": [
+    {"representation": "source_log", "mode": "head_only", "shrinkage": 0.0},
+    {"representation": "source_log", "mode": "full", "shrinkage": 0.0},
+    {"representation": "source_log", "mode": "shrink_to_source", "shrinkage": 0.0},
+    {"representation": "source_log", "mode": "shrink_to_source", "shrinkage": 0.01},
+    {"representation": "source_log", "mode": "shrink_to_source", "shrinkage": 0.1},
+    {"representation": "target_log", "mode": "full", "shrinkage": 0.0},
+    {"representation": "target_log", "mode": "shrink_to_source", "shrinkage": 0.0},
+    {"representation": "target_log", "mode": "shrink_to_source", "shrinkage": 0.01},
+    {"representation": "target_log", "mode": "shrink_to_source", "shrinkage": 0.1},
+    {"representation": "samplewise_rank", "mode": "full", "shrinkage": 0.0},
+    {"representation": "samplewise_rank", "mode": "shrink_to_source", "shrinkage": 0.01},
+    {"representation": "samplewise_rank", "mode": "shrink_to_source", "shrinkage": 0.1}
+  ],
+  "note": "Zhu is a previously viewed development cohort. This configuration must be hash-frozen with source/target registry and explicit approval before launch."
+}

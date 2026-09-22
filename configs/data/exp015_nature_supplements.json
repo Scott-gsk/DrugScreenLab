@@ -1,0 +1,14 @@
+{
+  "manifest_version": 1,
+  "purpose": "Original Nature organoid functional biobank supplementary tables for N1/N3 resource admission",
+  "assets": [
+    {
+      "key": "organoid_biobank_supplementary_tables",
+      "status": "ready",
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41586-026-10830-y/MediaObjects/41586_2026_10830_MOESM3_ESM.zip",
+      "source_page": "https://doi.org/10.1038/s41586-026-10830-y",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/41586_2026_10830_MOESM3_ESM.zip",
+      "max_bytes": 1000000000
+    }
+  ]
+}

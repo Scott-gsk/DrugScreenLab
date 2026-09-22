@@ -118,7 +118,7 @@ experiments:
     record: experiments/records/EXP-011.md
   - id: EXP-012
     title: Protocol-corrected PharmaFormer source audit and gated dual-cohort PDO transfer
-    status: approved_running
+    status: completed_exploratory_artifacts_retained  # 2026-09-22 回填：记录遗留 in_progress，按 PROJECT_STATE extension_status（EXP012_ARTIFACTS_RETAINED_RUNNERS_REMOVED）收口
     hypothesis: >
       在补齐 log2(TPM+1) 并分开论文式配对拆分与未见细胞系评测后，若细胞系门槛通过，
       则 PharmaFormer 低容量类器官适配器能在结直肠与肝胆两个直接表达–药敏队列的
@@ -132,7 +132,7 @@ experiments:
     processed: data/processed/exp012
   - id: EXP-013
     title: Cross-model PDO transfer baselines on accessible paired cohorts
-    status: registered_running_baseline_loop
+    status: completed_baseline_loop_on_accessible_pdo  # 2026-09-22 回填：按 PROJECT_STATE extension_status（EXP013_BASELINE_LOOP_ON_ACCESSIBLE_PDO）
     hypothesis: >
       在患者留出且超参冻结的条件下，目标域逐药线性表达模型（B1）相对药物均值
       （B0）能提供逐药跨患者排序增益；该闭环先在已物化 PDO 队列上建立可复现
@@ -145,7 +145,7 @@ experiments:
     artifacts: data/artifacts/EXP-013
   - id: EXP-014
     title: Explainable cross-model PDO transfer aligned with the approved source proposal
-    status: P0_implementing
+    status: completed_data_foundation_only  # 2026-09-22 回填：mCRC v3 队列/48 结构药/admission 建设完成并被 EXP-015/020 吸收；模型比较未运行（记录 2026-09-13 检查点）
     hypothesis: Functional priors and selective transfer improve patient-level PDO single-drug ranking under patient-isolated validation.
     primary_endpoint: patient_macro_ndcg5_difference
     approved_by: user_explicit_complete_plan_implementation
@@ -155,7 +155,7 @@ experiments:
     artifacts: data/artifacts/EXP-014
   - id: EXP-015
     title: Direct drug-response transfer feasibility with available paired PDO data
-    status: implementing_source_and_target_verification
+    status: completed_exploratory_no_external_validation  # 2026-09-22 回填：按记录原文（均已真实运行，仍为探索性证据）
     approved_by: user_explicit_train_and_evaluate_with_alternative_datasets
     approved_on: 2026-09-13
     record: experiments/records/EXP-015.md

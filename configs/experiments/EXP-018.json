@@ -1,0 +1,17 @@
+{
+  "experiment_id": "EXP-018",
+  "status": "APPROVED_BOUNDED_SOURCE_AUXILIARY_TRIAL",
+  "source_cohort_id": "gdsc2_v2",
+  "variant": "N3",
+  "library": "minLib",
+  "mask_rate": 0.15,
+  "max_targets": 512,
+  "auxiliary_weight": 0.1,
+  "dependency_enabled": true,
+  "steps": 10,
+  "drug_batch_groups": 8,
+  "source_replay_models": 80,
+  "auxiliary_batch_size": 32,
+  "seed": 20260913,
+  "device": "cuda"
+}

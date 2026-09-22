@@ -1,0 +1,164 @@
+{
+  "manifest_version": 1,
+  "purpose": "Public-source discovery assets for EXP-014; receipt is provenance, not scientific admission.",
+  "assets": [
+    {
+      "key": "hcmi_open_manifest",
+      "status": "ready",
+      "url": "https://gdc.cancer.gov/system/files/public/file/HCMI_Open_Manifest_1.txt",
+      "source_page": "https://gdc.cancer.gov/about-data/publications/HCMI-CMDC-2026",
+      "relative_path": "raw/transfer_public_assets/hcmi/HCMI_Open_Manifest_1.txt",
+      "max_bytes": 1000000
+    },
+    {
+      "key": "hcmi_fidelity_supp3",
+      "status": "ready",
+      "url": "https://api.gdc.cancer.gov/data/26f33ec4-800b-40e0-9570-ca70ef5c39d0",
+      "source_page": "https://gdc.cancer.gov/about-data/publications/HCMI-CMDC-2026",
+      "relative_path": "raw/transfer_public_assets/hcmi/transcriptional_epigenetic_fidelity.xlsx",
+      "max_bytes": 1000000,
+      "bytes": 87660,
+      "md5": "416058e9563c14626bf96874b8e6cfb3"
+    },
+    {
+      "key": "hcmi_snrna_samples",
+      "status": "ready",
+      "url": "https://api.gdc.cancer.gov/data/84f18c69-e6ce-43b9-b61a-814dcf7e155f",
+      "source_page": "https://gdc.cancer.gov/about-data/publications/HCMI-CMDC-2026",
+      "relative_path": "raw/transfer_public_assets/hcmi/snrna_samples.xlsx",
+      "max_bytes": 1000000,
+      "bytes": 71749,
+      "md5": "b0c5874ba027ab9b376ea2bd6e456a74"
+    },
+    {
+      "key": "organoid_biobank_figshare_metadata",
+      "status": "ready",
+      "url": "https://api.figshare.com/v2/articles/28339340",
+      "source_page": "https://doi.org/10.6084/m9.figshare.28339340",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/figshare_28339340.json",
+      "max_bytes": 10000000
+    },
+    {
+      "key": "reactome_human_gene_pathway",
+      "status": "ready",
+      "url": "https://reactome.org/download/current/NCBI2Reactome_All_Levels.txt",
+      "source_page": "https://reactome.org/download-data",
+      "relative_path": "raw/transfer_public_assets/reactome/NCBI2Reactome_All_Levels.txt",
+      "max_bytes": 300000000,
+      "description": "Official Reactome NCBI gene-to-pathway export; filter to Homo sapiens during a later, versioned transform."
+    },
+    {
+      "key": "reactome_pathway_hierarchy",
+      "status": "ready",
+      "url": "https://reactome.org/download/current/ReactomePathwaysRelation.txt",
+      "source_page": "https://reactome.org/download-data",
+      "relative_path": "raw/transfer_public_assets/reactome/ReactomePathwaysRelation.txt",
+      "max_bytes": 50000000,
+      "description": "Official Reactome pathway parent-child relation export."
+    },
+    {
+      "key": "kegg_hsa_gene_pathway",
+      "status": "ready",
+      "url": "https://rest.kegg.jp/link/pathway/hsa",
+      "source_page": "https://www.kegg.jp/kegg/rest/keggapi.html",
+      "relative_path": "raw/transfer_public_assets/kegg/kegg_hsa_gene_pathway.tsv",
+      "max_bytes": 100000000,
+      "description": "Official KEGG REST academic API human gene-to-pathway links; use remains subject to KEGG terms."
+    },
+    {
+      "key": "kegg_hsa_pathway_list",
+      "status": "ready",
+      "url": "https://rest.kegg.jp/list/pathway/hsa",
+      "source_page": "https://www.kegg.jp/kegg/rest/keggapi.html",
+      "relative_path": "raw/transfer_public_assets/kegg/kegg_hsa_pathways.tsv",
+      "max_bytes": 10000000,
+      "description": "Official KEGG REST academic API human pathway names."
+    },
+    {
+      "key": "hcmi_catalog_metadata",
+      "status": "pending",
+      "source_page": "https://hcmi-searchable-catalog.nci.nih.gov/",
+      "reason": "The catalog is an official discovery page; no documented stable, file-level public metadata export was confirmed for immutable intake."
+    },
+    {
+      "key": "pancreatic_pdo_2025_processed_matrix",
+      "status": "pending",
+      "source_page": "https://www.nature.com/articles/s41467-025-57520-3",
+      "reason": "The paper's data-availability statement identifies HRA010277 for RNA data; it is controlled access and not a public processed expression-matrix URL."
+    },
+    {
+      "key": "nextgen_organoid_biobank_metadata",
+      "status": "pending",
+      "source_page": "https://www.nature.com/articles/s41586-026-10843-7",
+      "reason": "Official biobank discovery page retained for provenance; no stable public bulk metadata or processed matrix URL was confirmed."
+    },
+    {
+      "key": "biobank_63130795",
+      "status": "ready",
+      "url": "https://ndownloader.figshare.com/files/63130795",
+      "source_page": "10.6084/m9.figshare.28339340.v1",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/CRISPRInferredCommonEssentials.csv",
+      "max_bytes": 20365,
+      "bytes": 20364,
+      "md5": "ccb9b7379f5afa69b3863e22fd8b1bae"
+    },
+    {
+      "key": "biobank_63130813",
+      "status": "ready",
+      "url": "https://ndownloader.figshare.com/files/63130813",
+      "source_page": "10.6084/m9.figshare.28339340.v1",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/jaccard_index_sanger_HCMI.csv",
+      "max_bytes": 5889,
+      "bytes": 5888,
+      "md5": "0132d2d0e800e35a9546558178459ef4"
+    },
+    {
+      "key": "biobank_63130822",
+      "status": "ready",
+      "url": "https://ndownloader.figshare.com/files/63130822",
+      "source_page": "10.6084/m9.figshare.28339340.v1",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/open_targets_dataset.csv",
+      "max_bytes": 5510215,
+      "bytes": 5510214,
+      "md5": "f99acf27746830f0be9af45258c6e861"
+    },
+    {
+      "key": "biobank_63130933",
+      "status": "ready",
+      "url": "https://ndownloader.figshare.com/files/63130933",
+      "source_page": "10.6084/m9.figshare.28339340.v1",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/data_covariates_ALL-organoids.csv",
+      "max_bytes": 7771,
+      "bytes": 7770,
+      "md5": "2787e7ab6c64e4a9d6af9eef333ac936"
+    },
+    {
+      "key": "biobank_63130957",
+      "status": "ready",
+      "url": "https://ndownloader.figshare.com/files/63130957",
+      "source_page": "10.6084/m9.figshare.28339340.v1",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/data_RNAseq_ALL-organoids.csv",
+      "max_bytes": 65275851,
+      "bytes": 65275850,
+      "md5": "2642cc4aaffeb84f8add28417343760a"
+    },
+    {
+      "key": "biobank_63191101",
+      "status": "ready",
+      "url": "https://ndownloader.figshare.com/files/63191101",
+      "source_page": "10.6084/m9.figshare.28339340.v1",
+      "relative_path": "raw/transfer_public_assets/organoid_biobank/07_EssMatrix_qnorm_corrected_logFCs.RData",
+      "max_bytes": 125803584,
+      "bytes": 125803583,
+      "md5": "84b5e153c267dfa5ebd22a6d5e43a42a"
+    },
+    {
+      "key": "mcrc_isomeric_pubchem",
+      "status": "ready",
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/10184653,10288191,10331844,10461508,104842,11152667,11167602,11556711,11625818,11640390,11707110,126941,131634760,135539077,135565082,137278711,16720766,176870,208908,23725625,24737642,24748573,24771867,24785538,24788740,24856436,24978538,3062316,3385,444795,44516953,46188928,46215462,46926973,49806720,49846579,50922675,5284616,5330286,53358942,54761306,60750,60823,6442177,68289010,6918837,71481097,86345880,9887053/property/IsomericSMILES,InChIKey/JSON",
+      "source_page": "https://pubchem.ncbi.nlm.nih.gov/",
+      "relative_path": "raw/transfer_public_assets/pubchem/mcrc_isomeric_20260912.json",
+      "max_bytes": 5000000
+    }
+  ]
+}

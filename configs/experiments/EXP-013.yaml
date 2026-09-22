@@ -1,0 +1,45 @@
+experiment_id: EXP-013
+title: Cross-model PDO transfer baselines on accessible paired cohorts
+status: registered_running_baseline_loop
+seed: 20260911
+runtime:
+  platform: WSL2
+  conda_env: drugscreening-gpu
+proposal:
+  document: d:/文档/药物筛选模型/相关文献/类器官药物筛选跨模型迁移研究方案_可行性修订版.docx
+  markdown: d:/文档/药物筛选模型/相关文献/类器官药物筛选跨模型迁移研究方案_可行性修订版.md
+preferred_target:
+  name: pancreatic_pdo_2025
+  accession: HRA010277
+  status: NOT_REGISTERED_CONTROLLED_ACCESS
+accessible_backup_target:
+  - mcrc_pdo
+  - zhu_hepatobiliary
+source_priority:
+  preferred: CTRPv2
+  ctrp_status: NOT_INGESTED
+  backup: gdsc2_cell_line
+models:
+  first_loop: [B0, B1]
+  deferred_until_source_ready: [B2, G0, G1, G2, G3, P0, P3]
+  reversal_branch: not_in_first_stage
+splits:
+  unit: patient_id
+  n_folds: 5
+  seed: 20260911
+  inner_cv: false
+hyperparameters_frozen:
+  n_hvg: 512
+  ridge_alpha: 10.0
+  min_drugs_per_patient: 5
+primary_endpoint: per_drug_patient_spearman_B1_minus_B0
+secondary_endpoint: patient_equal_within_pdo_spearman
+fail_rules:
+  mean_effect_only: per-drug residual near zero and within-patient gain not above B0
+  negative_transfer: reserved for G3 versus G0 after source pretraining is approved as data-ready
+  no_test_label_tuning: true
+does_not_overwrite:
+  - data/artifacts/EXP-010
+  - data/artifacts/EXP-011
+  - data/artifacts/EXP-012
+  - data/processed/exp012

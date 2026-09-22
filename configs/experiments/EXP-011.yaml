@@ -1,0 +1,69 @@
+experiment_id: EXP-011
+title: Cell-line-gated multi-cohort PDO transfer validation
+seed: 20260823
+upstream:
+  pharmaformer_commit: f526ddda4091151f082b38367571a94823314aba
+source:
+  cohort: gdsc2_cmp_release8_5
+  label: 1-AUC
+  higher_is_sensitive: true
+  genes: 19091
+  grouped_outer_folds: 5
+  group_key: SANGER_MODEL_ID
+  min_epochs: 10
+  max_epochs: 50
+  patience: 8
+  batch_size: 64
+  gradient_accumulation: 2
+  learning_rate: 1.0e-5
+  weight_decay: 1.0e-5
+external_cell_line:
+  cohort: prism_crc_24q2
+  role: frozen_external_test
+  min_lines: 30
+  min_exact_drugs: 60
+pdo:
+  train_cohorts: [mcrc_pdo, zhu_hepatobiliary]
+  external_cohorts: [merrill_bladder]
+  response_standardization: train_only_cohort_drug_zscore
+  min_train_observations_per_drug: 8
+  min_test_observations_per_drug: 5
+  outer_folds: 5
+  split_unit: patient_or_pdo
+  adapter:
+    bottleneck_dim: 256
+    dropout: 0.3
+    adapter_learning_rate: 1.0e-4
+    transformer_learning_rate: 1.0e-6
+    warmup_epochs: 20
+    min_epochs: 20
+    max_epochs: 100
+    patience: 15
+  loss:
+    huber_weight: 1.0
+    pairwise_ranking_weight: 0.5
+evaluation:
+  primary: equal_cohort_macro_per_drug_patient_spearman
+  bootstrap:
+    replicates: 2000
+    clusters: patient_within_cohort
+  secondary:
+    - per_drug_patient_pearson
+    - drug_prior_residual_patient_spearman
+    - drug_prior_residual_ndcg_at_5
+    - within_cohort_raw_scale_mae
+gates:
+  cell_line:
+    min_gdsc_cold_cell_macro_spearman: 0.30
+    min_prism_external_macro_spearman: 0.10
+    ridge_noninferiority_delta: -0.02
+  pdo:
+    min_adapter_minus_source_spearman: 0.05
+    require_bootstrap_ci_lower_above_zero: true
+    ridge_noninferiority_delta: -0.02
+breast:
+  role: frozen_directional_positive_control_only
+  cohort: GSE303509
+clinical:
+  role: exploratory_external_only
+  cohorts: [GSE3964, GSE19860, GSE104645, GSE106584, TCGA-COAD, TCGA-BLCA, TCGA-LIHC]

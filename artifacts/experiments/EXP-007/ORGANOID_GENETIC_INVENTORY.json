@@ -1,0 +1,655 @@
+{
+  "format": "organoid_genetic_inventory_v2",
+  "status": "LOCAL_MATRICES_PRESENT_ADAPTER_NOT_BUILT",
+  "data_status": "DATA_PARTIAL",
+  "existing_audit": "mvp/extension/ORGANOID_DATASET_READINESS_AUDIT.json",
+  "existing_audit_status": "METADATA_READY_ADAPTATION_PENDING",
+  "ncbi_geo_live_access": "FTP_OK_THIS_SESSION",
+  "local_expression_matrices": true,
+  "fetch_audit": "artifacts/experiments/EXP-007/ORGANOID_GEO_FETCH.json",
+  "fetch_status": "FETCHED",
+  "datasets": [
+    {
+      "accession": "GSE280506",
+      "official_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE280506",
+      "role": "organoid_genetic_adaptation_reference",
+      "organism": "Homo sapiens",
+      "platform": "GPL24676",
+      "modality": "scRNA-seq / CROP-seq",
+      "design": "TP53/APC KO primary human gastric organoid; CRISPRi/CRISPRa; DMSO/cisplatin",
+      "local_availability": "present",
+      "local_expression_matrix": "data/raw/geo/GSE280506/GSE280506_filtered_feature_bc_matrix.h5",
+      "reported_samples": 4,
+      "soft_samples": [
+        {
+          "gsm": "GSM8599465",
+          "title": "organoid, CRISPRi, DMSO, CROP-seq",
+          "treatment": "DMSO",
+          "cell_type": "CRISPRi",
+          "model": "TP53/APC KO Human Gastric Organoids"
+        },
+        {
+          "gsm": "GSM8599466",
+          "title": "organoid, CRISPRi, Cisplatin, CROP-seq",
+          "treatment": "Cisplatin",
+          "cell_type": "CRISPRi",
+          "model": "TP53/APC KO Human Gastric Organoids"
+        },
+        {
+          "gsm": "GSM8599467",
+          "title": "organoid, CRISPRa, DMSO, CROP-seq",
+          "treatment": "DMSO",
+          "cell_type": "CRISPRa",
+          "model": "TP53/APC KO Human Gastric Organoids"
+        },
+        {
+          "gsm": "GSM8599468",
+          "title": "organoid, CRISPRa, Cisplatin, CROP-seq",
+          "treatment": "Cisplatin",
+          "cell_type": "CRISPRa",
+          "model": "TP53/APC KO Human Gastric Organoids"
+        }
+      ],
+      "cells_in_identity_table": 47178,
+      "cells_unassigned_star": 4854,
+      "cells_assigned_guide": 42324,
+      "unique_guide_identities_including_star": 97,
+      "unique_assigned_guides": 96,
+      "unique_assigned_targets": 79,
+      "assigned_control_like_guides": 5,
+      "assigned_control_like_cells": 3277,
+      "unique_perturbations": 79,
+      "matched_controls": "DMSO vs Cisplatin is the chemical contrast; unassigned '*' and control-like guides (3277 cells) are the genetic-control candidates. No LINCS plate-matched vehicle exists.",
+      "donor_or_model_grouping": {
+        "model": "TP53/APC KO Human Gastric Organoids",
+        "n_models": 1,
+        "n_donors_named": 0,
+        "split_unit_if_used": "single engineered organoid line; donor-cold generalization cannot be claimed"
+      },
+      "cells_by_sample_group": {
+        "CRISPRi_Cisplatin": 16779,
+        "CRISPRi_DMSO": 14826,
+        "CRISPRa_Cisplatin": 8044,
+        "CRISPRa_DMSO": 7529
+      },
+      "exact978_coverage": {
+        "method": "symbol_upper_vs_GSE92742_pr_gene_symbol",
+        "landmark_genes": 978,
+        "mapped": 976,
+        "missing": 2,
+        "missing_symbols_head": [
+          "HDGFRP3",
+          "PLSCR3"
+        ],
+        "status": "EXACT978_COUNTED_BY_SYMBOL",
+        "caveat": "symbol join, not Entrez; not a frozen 978 adapter"
+      },
+      "context_identity": "organoid/PDO namespace; not mergeable with LINCS cell_id",
+      "live_geo_query": "NCBI_FTP_OK",
+      "cannot_answer": [
+        "chemical dose-response ranking ground truth",
+        "donor-cold generalization (single engineered line)"
+      ]
+    },
+    {
+      "accession": "GSE145308",
+      "official_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE145308",
+      "role": "organoid_genetic_adaptation_reference",
+      "organism": "Homo sapiens",
+      "platforms": [
+        "GPL20301",
+        "GPL24676"
+      ],
+      "modality": "bulk RNA-seq (two platforms)",
+      "design": "human intestinal organoid; WT/APC/ARID1A/SMARCA4; 0h/24h TGFB; three replicates",
+      "local_availability": "present",
+      "local_expression_matrix": "data/raw/geo/GSE145308/GSE145308_RAW.tar",
+      "reported_samples": 24,
+      "soft_samples": [
+        {
+          "gsm": "GSM4314556",
+          "title": "WT_0h_rep1",
+          "genotype": "WT",
+          "source": "WT_0h_human intestinal organoids",
+          "platform": "GPL24676"
+        },
+        {
+          "gsm": "GSM4314557",
+          "title": "WT_0h_rep2",
+          "genotype": "WT",
+          "source": "WT_0h_human intestinal organoids",
+          "platform": "GPL24676"
+        },
+        {
+          "gsm": "GSM4314558",
+          "title": "WT_0h_rep3",
+          "genotype": "WT",
+          "source": "WT_0h_human intestinal organoids",
+          "platform": "GPL24676"
+        },
+        {
+          "gsm": "GSM4314559",
+          "title": "WT_24h_rep1",
+          "genotype": "WT",
+          "source": "WT_24h_human intestinal organoids",
+          "platform": "GPL24676"
+        },
+        {
+          "gsm": "GSM4314560",
+          "title": "WT_24h_rep2",
+          "genotype": "WT",
+          "source": "WT_24h_human intestinal organoids",
+          "platform": "GPL24676"
+        },
+        {
+          "gsm": "GSM4314561",
+          "title": "WT_24h_rep3",
+          "genotype": "WT",
+          "source": "WT_24h_human intestinal organoids",
+          "platform": "GPL24676"
+        },
+        {
+          "gsm": "GSM4314562",
+          "title": "APC_0h_rep1",
+          "genotype": "APC-KO",
+          "source": "APC_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314563",
+          "title": "APC_0h_rep2",
+          "genotype": "APC-KO",
+          "source": "APC_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314564",
+          "title": "APC_0h_rep3",
+          "genotype": "APC-KO",
+          "source": "APC_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314565",
+          "title": "APC_24h_rep1",
+          "genotype": "APC-KO",
+          "source": "APC_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314566",
+          "title": "APC_24h_rep2",
+          "genotype": "APC-KO",
+          "source": "APC_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314567",
+          "title": "APC_24h_rep3",
+          "genotype": "APC-KO",
+          "source": "APC_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314568",
+          "title": "ARID1A_0h_rep1",
+          "genotype": "APC-KO, ARID1A-KO",
+          "source": "ARID1A_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314569",
+          "title": "ARID1A_0h_rep2",
+          "genotype": "APC-KO, ARID1A-KO",
+          "source": "ARID1A_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314570",
+          "title": "ARID1A_0h_rep3",
+          "genotype": "APC-KO, ARID1A-KO",
+          "source": "ARID1A_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314571",
+          "title": "ARID1A_24h_rep1",
+          "genotype": "APC-KO, ARID1A-KO",
+          "source": "ARID1A_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314572",
+          "title": "ARID1A_24h_rep2",
+          "genotype": "APC-KO, ARID1A-KO",
+          "source": "ARID1A_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314573",
+          "title": "ARID1A_24h_rep3",
+          "genotype": "APC-KO, ARID1A-KO",
+          "source": "ARID1A_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314574",
+          "title": "SMARCA4_0h_rep1",
+          "genotype": "APC-KO, SMARCA4-KO",
+          "source": "SMARCA4_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314575",
+          "title": "SMARCA4_0h_rep2",
+          "genotype": "APC-KO, SMARCA4-KO",
+          "source": "SMARCA4_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314576",
+          "title": "SMARCA4_0h_rep3",
+          "genotype": "APC-KO, SMARCA4-KO",
+          "source": "SMARCA4_0h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314577",
+          "title": "SMARCA4_24h_rep1",
+          "genotype": "APC-KO, SMARCA4-KO",
+          "source": "SMARCA4_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314578",
+          "title": "SMARCA4_24h_rep2",
+          "genotype": "APC-KO, SMARCA4-KO",
+          "source": "SMARCA4_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        },
+        {
+          "gsm": "GSM4314579",
+          "title": "SMARCA4_24h_rep3",
+          "genotype": "APC-KO, SMARCA4-KO",
+          "source": "SMARCA4_24h_human intestinal organoids",
+          "platform": "GPL20301"
+        }
+      ],
+      "unique_perturbations": 4,
+      "unique_genotypes": [
+        "APC-KO",
+        "APC-KO, ARID1A-KO",
+        "APC-KO, SMARCA4-KO",
+        "WT"
+      ],
+      "raw_members": [
+        "GSM4314556_WT_0h_1.txt.gz",
+        "GSM4314557_WT_0h_2.txt.gz",
+        "GSM4314558_WT_0h_3.txt.gz",
+        "GSM4314559_WT_24h_1.txt.gz",
+        "GSM4314560_WT_24h_2.txt.gz",
+        "GSM4314561_WT_24h_3.txt.gz",
+        "GSM4314562_APC_0h_1.txt.gz",
+        "GSM4314563_APC_0h_2.txt.gz",
+        "GSM4314564_APC_0h_3.txt.gz",
+        "GSM4314565_APC_24h_1.txt.gz",
+        "GSM4314566_APC_24h_2.txt.gz",
+        "GSM4314567_APC_24h_3.txt.gz",
+        "GSM4314568_ARID1A_0h_1.txt.gz",
+        "GSM4314569_ARID1A_0h_2.txt.gz",
+        "GSM4314570_ARID1A_0h_3.txt.gz",
+        "GSM4314571_ARID1A_24h_1.txt.gz",
+        "GSM4314572_ARID1A_24h_2.txt.gz",
+        "GSM4314573_ARID1A_24h_3.txt.gz",
+        "GSM4314574_SMARCA4_0h_1.txt.gz",
+        "GSM4314575_SMARCA4_0h_2.txt.gz",
+        "GSM4314576_SMARCA4_0h_3.txt.gz",
+        "GSM4314577_SMARCA4_24_2.txt.gz",
+        "GSM4314578_SMARCA4_24h_1.txt.gz",
+        "GSM4314579_SMARCA4_24h_3.txt.gz"
+      ],
+      "matched_controls": "WT genotype + 0h (no TGFB) titles are the within-study controls; not LINCS vehicle",
+      "donor_or_model_grouping": {
+        "n_donors_named": 0,
+        "note": "single human small-intestine organoid system in metadata; donor IDs are not in SOFT",
+        "split_unit_if_used": "genotype x timepoint x replicate; donor-cold cannot be claimed"
+      },
+      "exact978_coverage": {
+        "status": "UNVERIFIED_ENSEMBL_ONLY_NO_LOCAL_CROSSWALK",
+        "raw_gene_namespace": "Ensembl ENSG in Identifier column",
+        "n_raw_ids_first_file": 21386,
+        "note": "GSE92742 gene_info has Entrez + symbol only. No local Ensembl crosswalk is registered, so exact978 overlap is not counted."
+      },
+      "raw_gene_preview": [
+        "ENSG00000000003",
+        "ENSG00000000005",
+        "ENSG00000000419",
+        "ENSG00000000457",
+        "ENSG00000000460",
+        "ENSG00000000938",
+        "ENSG00000000971",
+        "ENSG00000001036"
+      ],
+      "context_identity": "organoid/PDO namespace; not mergeable with LINCS cell_id",
+      "live_geo_query": "NCBI_FTP_OK",
+      "cannot_answer": [
+        "chemical sensitivity ground truth",
+        "donor-cold generalization"
+      ]
+    },
+    {
+      "accession": "GSE167285",
+      "official_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE167285",
+      "role": "unseen_donor_genetic_response_test",
+      "organism": "Homo sapiens",
+      "modality": "bulk RNA-seq",
+      "design": "colon organoid; 5 donors; SATB2 KO + Cas9 control",
+      "local_availability": "present",
+      "local_expression_matrix": "data/raw/geo/GSE167285/GSE167285_Human_CRISPR_organoids_raw_counts.txt.gz",
+      "reported_samples": 10,
+      "soft_samples": [
+        {
+          "gsm": "GSM5100858",
+          "title": "Human_80_Cas9_Ctrl",
+          "genotyping": "Control",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100859",
+          "title": "Human_83_Cas9_Ctlr",
+          "genotyping": "Control",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100860",
+          "title": "Human_87_Cas9_Ctrl",
+          "genotyping": "Control",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100861",
+          "title": "Human_88_Cas9_Ctrl",
+          "genotyping": "Control",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100862",
+          "title": "Human_89_Cas9_Ctrl",
+          "genotyping": "Control",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100863",
+          "title": "Human_80_Cas9_SATB2KO",
+          "genotyping": "SATB2 Knock out",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100864",
+          "title": "Human_83_Cas9_SATB2KO",
+          "genotyping": "SATB2 Knock out",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100865",
+          "title": "Human_87_Cas9_SATB2KO",
+          "genotyping": "SATB2 Knock out",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100866",
+          "title": "Human_88_Cas9_SATB2KO",
+          "genotyping": "SATB2 Knock out",
+          "intestine_part": "Ascending Colon"
+        },
+        {
+          "gsm": "GSM5100867",
+          "title": "Human_89_Cas9_SATB2KO",
+          "genotyping": "SATB2 Knock out",
+          "intestine_part": "Ascending Colon"
+        }
+      ],
+      "matrix_sample_columns": [
+        "89_Cas9",
+        "89_Satb2",
+        "80_Cas9",
+        "80_Satb2",
+        "88_Cas9",
+        "88_Satb2",
+        "87_Cas9",
+        "87_Satb2",
+        "83_Cas9",
+        "83_Satb2"
+      ],
+      "unique_perturbations": 2,
+      "conditions": [
+        "Cas9",
+        "Satb2"
+      ],
+      "matched_controls": "Cas9 control column per donor; 5/5 donors have paired SATB2",
+      "donor_or_model_grouping": {
+        "donors": [
+          "80",
+          "83",
+          "87",
+          "88",
+          "89"
+        ],
+        "n_donors": 5,
+        "split_unit_if_used": "donor_id; all Cas9/SATB2 profiles of a donor stay together"
+      },
+      "exact978_coverage": {
+        "method": "symbol_upper_vs_GSE92742_pr_gene_symbol",
+        "landmark_genes": 978,
+        "mapped": 950,
+        "missing": 28,
+        "missing_symbols_head": [
+          "AARS",
+          "ADCK3",
+          "ATP5S",
+          "EPRS",
+          "FAM57A",
+          "FAM63A",
+          "FAM69A",
+          "H2AFV",
+          "HDGFRP3",
+          "HIST1H2BK",
+          "HIST2H2BE",
+          "HN1L",
+          "IKBKAP",
+          "KIAA0196",
+          "KIAA0355",
+          "KIAA0907",
+          "KIAA1033",
+          "KIF1BP",
+          "LRRC16A",
+          "NARFL"
+        ],
+        "status": "EXACT978_COUNTED_BY_SYMBOL",
+        "caveat": "symbol join, not Entrez; not a frozen 978 adapter"
+      },
+      "gene_id_namespace": "Geneid column; treated as symbol/ID as provided",
+      "context_identity": "organoid/PDO namespace; not mergeable with LINCS cell_id",
+      "live_geo_query": "NCBI_FTP_OK",
+      "cannot_answer": [
+        "chemical sensitivity ground truth"
+      ]
+    },
+    {
+      "accession": "GSE241659",
+      "official_url": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE241659",
+      "role": "pathway_mechanism_external_validation",
+      "organism": "Homo sapiens",
+      "modality": "bulk RNA-seq",
+      "design": "human intestinal organoid PTEN KO RNA-seq",
+      "local_availability": "present",
+      "local_expression_matrix": "data/raw/geo/GSE241659/GSE241659_counts_normalised.tsv.gz",
+      "reported_samples": 7,
+      "soft_samples": [
+        {
+          "gsm": "GSM7732832",
+          "title": "T427_WT",
+          "characteristics": [
+            "tissue: sigmoid colon",
+            "cell line: primary derived intestinal organoids",
+            "cell type: intestinal epithelial cells",
+            "genotype: PTEN WT"
+          ],
+          "source": "sigmoid colon"
+        },
+        {
+          "gsm": "GSM7732833",
+          "title": "T427_KO",
+          "characteristics": [
+            "tissue: sigmoid colon",
+            "cell line: primary derived intestinal organoids",
+            "cell type: intestinal epithelial cells",
+            "genotype: PTEN KO"
+          ],
+          "source": "sigmoid colon"
+        },
+        {
+          "gsm": "GSM7732834",
+          "title": "T474_WT",
+          "characteristics": [
+            "tissue: sigmoid colon",
+            "cell line: primary derived intestinal organoids",
+            "cell type: intestinal epithelial cells",
+            "genotype: PTEN WT"
+          ],
+          "source": "sigmoid colon"
+        },
+        {
+          "gsm": "GSM7732835",
+          "title": "T474_KO",
+          "characteristics": [
+            "tissue: sigmoid colon",
+            "cell line: primary derived intestinal organoids",
+            "cell type: intestinal epithelial cells",
+            "genotype: PTEN KO"
+          ],
+          "source": "sigmoid colon"
+        },
+        {
+          "gsm": "GSM7732836",
+          "title": "T561_KO",
+          "characteristics": [
+            "tissue: sigmoid colon",
+            "cell line: primary derived intestinal organoids",
+            "cell type: intestinal epithelial cells",
+            "genotype: PTEN KO"
+          ],
+          "source": "sigmoid colon"
+        },
+        {
+          "gsm": "GSM7732837",
+          "title": "T640_KO",
+          "characteristics": [
+            "tissue: sigmoid colon",
+            "cell line: primary derived intestinal organoids",
+            "cell type: intestinal epithelial cells",
+            "genotype: PTEN KO"
+          ],
+          "source": "sigmoid colon"
+        },
+        {
+          "gsm": "GSM7732838",
+          "title": "T640_WT",
+          "characteristics": [
+            "tissue: sigmoid colon",
+            "cell line: primary derived intestinal organoids",
+            "cell type: intestinal epithelial cells",
+            "genotype: PTEN WT"
+          ],
+          "source": "sigmoid colon"
+        }
+      ],
+      "matrix_sample_columns": [
+        "T427_WT",
+        "T427_KO",
+        "T474_WT",
+        "T474_KO",
+        "T561_KO",
+        "T640_WT",
+        "T640_KO"
+      ],
+      "unique_perturbations": 2,
+      "control_titles": [
+        "T427_WT",
+        "T474_WT",
+        "T640_WT"
+      ],
+      "ko_titles": [
+        "T427_KO",
+        "T474_KO",
+        "T561_KO",
+        "T640_KO"
+      ],
+      "matched_controls": "WT/control titles vs PTEN KO titles in the same study; not LINCS vehicle",
+      "donor_or_model_grouping": {
+        "n_soft_samples": 7,
+        "donors": [
+          "T427",
+          "T474",
+          "T561",
+          "T640"
+        ],
+        "n_donors": 4,
+        "split_unit_if_used": "donor prefix in sample title (T427/T474/T561/T640)",
+        "titles": [
+          "T427_WT",
+          "T427_KO",
+          "T474_WT",
+          "T474_KO",
+          "T561_KO",
+          "T640_KO",
+          "T640_WT"
+        ],
+        "note": "T561 has KO only in this series; WT/KO pairing is incomplete for that donor"
+      },
+      "exact978_coverage": {
+        "method": "symbol_upper_vs_GSE92742_pr_gene_symbol",
+        "landmark_genes": 978,
+        "mapped": 935,
+        "missing": 43,
+        "missing_symbols_head": [
+          "AARS",
+          "ADCK3",
+          "ATP5S",
+          "BTK",
+          "CCNA1",
+          "EPHA3",
+          "EPRS",
+          "FAM57A",
+          "FAM63A",
+          "FAM69A",
+          "FSD1",
+          "GATA3",
+          "GHR",
+          "H2AFV",
+          "HDGFRP3",
+          "HIST1H2BK",
+          "HIST2H2BE",
+          "HN1L",
+          "IKBKAP",
+          "KIAA0196"
+        ],
+        "status": "EXACT978_COUNTED_BY_SYMBOL",
+        "caveat": "symbol join, not Entrez; not a frozen 978 adapter"
+      },
+      "context_identity": "organoid/PDO namespace; not mergeable with LINCS cell_id",
+      "live_geo_query": "NCBI_FTP_OK",
+      "cannot_answer": [
+        "chemical sensitivity ground truth"
+      ]
+    }
+  ],
+  "exact978_contract": {
+    "ordered_gene_ids_sha256": "b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623",
+    "status": "COUNTED_BY_SYMBOL_NOT_FROZEN_AS_ADAPTER",
+    "note": "symbol overlap only; no organoid 978 adapter, X_ctl, or Δ978 was built"
+  },
+  "forbidden_interpretation": "These accessions are genetic/context adaptation references, not chemical sensitivity ground truth.",
+  "cannot_use_as_x_ctl": true,
+  "cannot_compute_delta978": true
+}
