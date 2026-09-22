@@ -8,29 +8,44 @@ runtime:
   environment_doc: docs/ENVIRONMENT.md
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
-  active_experiment: EXP-005
+  active_experiment: null
   active_mvp: MVP-001
   proposed_mvp: null
-  mvp_status: result_reviewed
-  mvp_result: PROMISING
-  mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
+  mvp_status: trained_exploratory_models_under_controlled_validation
+  mvp_result: PARTIAL_SOURCE_DOMAIN_SIGNAL_PDO_TRANSFER_NOT_ESTABLISHED
+  mvp_result_case: EXP016_COLD_CELL_POSITIVE_EXP017_ZHU_NEGATIVE_EXP019_PRISM_NEGATIVE
   last_accepted_experiment: EXP-002
-  last_completed_experiment: EXP-002
-  evidence_level: phase_3_xpert_additive_fast_extension
+  last_completed_experiment: EXP-035
+  evidence_level: source_cold_cell_internal_signal_zhu_pdo_transfer_negative_prism_cross_study_negative
   accepted_model: null
-  current_champion: official_xpert_foundation_exp005_fast_baseline_retained
-  current_baseline: official_xpert_hg_unimol_foundation
-  program_checkpoint: DRUGSCREENLAB_XPERT_EXTENSION_REPORT.md
-  program_decision: CONTINUE_WITH_EXTENSIONS
-  cross_study_status: OFFICIAL_GDSC_ASSET_REACHABLE_LOCAL_FREEZE_PENDING
-  next_experiment_id: EXP-006
+  current_champion: exp016_dual_encoder_internal_cold_cell_only
+  current_baseline: target_domain_drug_mean_B0
+  program_checkpoint: DRUGSCREENLAB_PROGRAM_EXECUTION_CHECKPOINT.md
+  program_decision: WAVE3_CLOSED_20260922_ALL_WORK_PACKAGES_COMPLETE
+  cross_study_status: PRISM_353_STRICT_UNSEEN_CELL_LINES_104_KNOWN_DRUGS_EXP019_NEGATIVE
+  next_experiment_id: EXP-036
   extension_status:
-    foundation: XPERT_FOUNDATION_READY
-    e1_kpgt_unipert_additive: NO_MATERIAL_FAST_INCREMENT_XPERT_BASELINE_RETAINED
-    e2_genetic_chemical_low_data: PROMISING_FAST_GENETIC_TO_CHEMICAL_TRANSFER
-    e3_prism_identity_bridge: BROAD_PRISM_COHORT_V1_FROZEN_RESPONSE_BLIND
-    e4_target_pathway_transfer: FORWARD_PREPARATION_COMPLETE
-    organoid_readiness: METADATA_READY_ADAPTATION_PENDING
+    foundation: IMPLEMENTATION_REMOVED_RESULTS_RETAINED
+    pharmaformer_pdo: EXP010_COMPLETE_EXP012_ARTIFACTS_RETAINED_RUNNERS_REMOVED
+    organoid_readiness: EXP013_BASELINE_LOOP_ON_ACCESSIBLE_PDO
+    preferred_pancreatic_target: HRA010277_NOT_REGISTERED
+    preferred_source_ctrp: EXPLORATORY_ADMITTED_SOURCE_DOMAIN_MATERIALIZED_TABLES_FROZEN
+  notes:
+    - 2026-09-19 收口：EXP-020~025 全部完成（020/021/024 证据不足、022 LINCS 对照主导、023 ChemPert 药条件增益 CI 全正 EXPLORATORY、025 联合 DO_NOT_EXPAND）；pytest 162 通过、数据注册表 PASS；GPU 空闲，下一波需用户批准后自 EXP-026 预登记启动；收口报告 docs/reports/program_closeout_20260919.md。
+    - 2026-09-19 二波启动：用户批准第二波方案（.trae/documents/第二波研究方案_双路线对比与可解释融合_EXP026-030.md）；EXP-026 预登记（评价改革：非结构药子集+残差口径双主终点；数据清洗消融；CTRPv2 冻结；引入 2026 Nature 肿瘤类器官依赖图 256 PDO，仅作迁移检验/域适应/辅助任务，不作药敏标签）。
+    - 2026-09-19 EXP-026 完成：6/6 任务交付——结构药 FROZEN（7 结构/7 非结构）、分层终点模块、重打分（M1_source_scaled +0.0186 CI 不跨零 EXPLORATORY-POSITIVE，第一波结论部分翻转）、清洗消融（扩交集显著有害 -0.0059；归一化/通路无差异；响应口径唯一正向 0.854/0.859 跨零；合同固定 top-2000+z-score+基因直接输入）、CTRPv2 冻结（14/14，ctrp_v2_materialized_tables_v1 EXPLORATORY_ADMITTED）、依赖图准入（10/10，交集 14900 不降级，transfer_organoid_biobank_paired_dependency_v1 ACQUIRED_EXPLORATORY）；EGA 申请 EGAD00001015468 为用户人工行动项；下一实验 EXP-027（双路线统一对比）。
+    - 2026-09-20 EXP-027 完成：ChemPert 上游重训（66,173 可编码行×3 种子，206 秒）+ Kryzei 零样本特征（13,248 行）+ 统一双路线对比——跨路线主比较 A2 vs B2 +0.1158（CI 全正，路线 A 显著优）；路线 B 三臂 vs B0 全部显著为负；A2 vs B0 +0.0192（CI 下界 -0.0002 边缘触零，降级边缘正向）；关键发现：零样本 B2 逐药跨患者 Spearman 宏平均 +0.1149 与监督 A2 +0.1153 同量级（CI 均跨零），路线 B 携带与监督路线同量级个性化信号；主线维持直接药敏 A2 强基线，路线 B 定位互补特征与解释模块；A5/A6 响应口径候选 CI 跨零不纳入合同；pytest 188 通过；报告 docs/reports/route_comparison_EXP027_20260920.md；下一实验 EXP-028（双路线融合，A2 强基线）。
+    - 2026-09-20 EXP-028 完成（负结果收口）：路线 A 冻结 5 折重训 105 次（outer 15 + inner 15 + cross-fit 75，577 秒）落盘 routeA_frozen_predictions.parquet（63,375 行）+ 路线 B Hallmark-50 通路 delta 特征（与 EXP-027 一致性核查通过）+ 融合 v1 第二层（GBM/MLP，2,103 维）；8 项预登记 bootstrap：主比较 F1_GBM_full vs A2 -0.0375 [-0.0561, -0.0178]、F2_MLP_full vs A2 -0.0463 [-0.0702, -0.0222] 均 CI 全负；机制对照 F0_MLP vs A2 -0.0002 跨零（第二层本身无害）；特征增量 F1 vs F0 -0.0244、F2 vs F0 -0.0462 显著有害；cross-fit 灵敏度臂 -0.0144 [-0.0285, -0.0011] 仍显著负（排除功率不足）；基线 A2 vs B0 +0.0235 [+0.0047, +0.0421] 全正（基线有效）；预登记失败条件第 1 档触发——v2 端到端双分支不迭代，主线维持路线 A 直接药敏，路线 B 保留为解释模块与 EXP-029 素材；按药分层 14 已知药 8 正 6 负呈向零回归，无稳定获益子集；报告 docs/reports/fusion_EXP028_20260920.md；下一实验 EXP-029（迁移可解释审计）。
+    - 2026-09-20 EXP-029 完成（只读迁移审计，判定 INTERMEDIATE_REPORT_AS_IS）：零样本推断 3,183 行 + T1-T4 四项诊断（54 秒）。四条数据规律——规律 1 覆盖缺口：89% PDO（81/91）与 83% 类器官（212/255）在源域表达近邻范围外（最近距离中位 0.775），近邻误差相关 rho=0.010 p=0.943（近邻不能解释迁移失败，纯粹够不着）；规律 2 表示共享低：T2 Kryzei 共享捕获仅 0.315±0.123，域分类器在共享码上 0.735（两域共同语言少但存在）；规律 3 通路方向中位一致率 0.5：代谢类通路最一致（炎症/过氧化物酶体 0.786、OXPHOS 0.714），增殖凋亡类最不一致（雌激素早期 0.071、E2F/MYC 0.214-0.286），FDR 校正后无显著（线索级）；规律 4 群体规律保守：药物效应幅度排序跨域 Spearman 0.613，但零样本逐药可迁移 0/7 非结构药。综合结论：个性化预测搬不过去（分布够不着+表示不共享），群体规律搬得过去 → EXP-030 域适应/校准为主战场、按有/无近邻分层报告。DepMap 24Q2 细胞系 CRISPR 基因效应（CRISPRGeneEffect.csv，419MB）经 figshare 下载并登记 depmap_public_24q2_crispr_gene_effect_raw_v1；报告 docs/reports/transfer_interpretability_EXP029_20260920.md；下一实验 EXP-030（依赖图迁移五臂检验，预登记完成）。
+    - 2026-09-20 EXP-030 完成（判定 RULE1_TRANSFER_SUPPORTED_ZS_DIRECT，第二波首个明确正向迁移证据）：五臂依赖图迁移（1,066 细胞系→162 类器官，13,448 配对基因，individual 整组 5 折，7,524 秒）。主终点逐基因 Spearman 宏平均：ZS 零样本 0.0294 追平 HD 从头训练 0.0321（源内验证 0.1610，61.3% 基因为正）；CAL 校准 0.0211 有害、DA 域适应 0.0008 失败。配对差 pooled 口径 ZS vs B0 +0.159 [+0.149,+0.168] 2000 次重采样全正（B0 逐基因常数无定义、pooled 负值含折间伪变异，幅度谨慎解读）。必需基因 AUROC 0.9971 五臂最高。五条规律：①零样本迁移成立 ②信号集中于必需基因（中位 0.079 vs 0.022 3.6 倍，Top 基因=增殖/基础机器 TP53/CDK4/MYBL2/ORC，最差=谱系特异 TF HOXC13/ELAVL2 与特异代谢 ACSS1/ETFDH；与目标域方差无关 p=0.16）③有/无近邻无差异（EXP-029 覆盖缺口障碍不适用基因依赖任务，边界澄清）④CAL 小样本校准过拟合（38.2% 基因劣于 ZS）⑤DA 共享码 R2 为负+域分类 0.81（实现失败非方向失败，需换 CORAL/对抗对齐）。EXP-031 输入：必需基因规律与基因级图谱可作药敏辅助特征；CAL/OrthoAE 路径不再投入。运行前 pytest 188 通过；报告 docs/reports/dependency_transfer_EXP030_20260920.md；下一实验 EXP-031（多来源闸门，待预登记）。
+    - 2026-09-21 第三波启动（执行方案 docs/exec-plans/active/复核审计与文档治理执行方案_20260921.md 已登记；旧执行计划已标注历史/已替代）：阶段0盘点完成（git 339 项未提交、registry EXP-012~015 状态过期、docs 导航补建）；阶段1历史审计完成——周报 v2 修订（13+3 项更正：七药子集筛选含全量标签降为事后探索、ChemPert 绝对余弦 0.01~0.06 更正、撤回总体路线优劣与 EXP-030 迁移成立判定、域分类无基线数字撤除、融合归因撤回等，更正记录见周报附录B）；审计证据表 docs/reports/audit_evidence_20260921.md；原周报归档 docs/reports/history/。审查状态：自检完成、未经独立审查。下一阶段：工作包 B（数据合同与工程修复，需用户批准后启动）。
+    - 2026-09-21 EXP-031 完成（工作包 B，214 测试含新 26 项+注册表 PASS）：主药敏指标改患者内全药排序 Spearman（≥3 药资格、患者内多 PDO 先聚合、患者等权、相对同监督条件均值基线配对增益）；准入双白名单 51 患者/60 PDO（Pt120 确认参与 EXP-021 训练，B0/M1/M1_source_scaled/M3 受影响，30 个待确认样本存在于旧训练/预测）；结构药训练折内重推（fold4 Venetoclax 0.725→0.818 变 pan_resistant）；共享外层 5 折/内层 3 折划分；训练侧拟合预处理；三类均值基线+统一 schema+比较检查器+常数守卫落地（exp031_eval.py）。执行 Agent 实际启动 2 个（evaluation_stats_core / data_split_core），无独立 Reviewer。
+    - 2026-09-21 EXP-032 完成（工作包 C 四层矩阵）：L1 来源内有效（dual−药均值 +0.0319 全正，置换回退 0.0193）；L2 跨研究失效（−0.0373 全负，353 未见 PRISM 细胞系，同癌种混淆无法控制）；L3 零标签迁移成立（48 药 0.455、14 共同药 0.685 vs 来源均值 0.655，+0.030 微跨零，表达条件化增量未达显著）；L4 25/50/100% 档来源预训练增益仅 100% 档显著（C3−C1 +0.025，Holm 0.021）；目标监督各档远超来源迁移。复用 EXP-015 固定来源模型贯穿 L1-L4。
+    - 2026-09-21 EXP-033 完成（工作包 D 能力梯度）：直接路线 100% 档药均值 0.8027/platform；GBM 调参 +0.0122 Holm 0.010 唯一显著；双线性网络 +0.0126 跨零；扰动路线全零标签下各臂未超全局扰动均值基线（主比较全部跨零）；XPert 可运行但逆转方向与药敏负相关 −0.168（如实上报）；C4 扰动特征增量 +0.007 跨零；上游 seen>UNK（0.0685 vs 0.0346，覆盖率制约）。
+    - 2026-09-21 EXP-034 完成（工作包 E 融合三架构）：E1 串联扰动增量 −0.0003 跨零；E2 并联扰动增量 +0.0856 [−0.0183,+0.2076] p=0.232 跨零且与打乱对照同量级，双分支优势 0.0206 可由容量完全解释；E3 联合 −0.0111 方向为负（源 512∩ChemPert 795=48 共享表达有限已登记）；指纹/扰动/联合三增量分离完成，历史"仅归因扰动"解释撤回的工程基础落成。主线维持路线 A 直接药敏。
+    - 2026-09-22 EXP-035 完成（工作包 F 域差异与依赖能力，F2 经当日审计修复重跑）：F2 关键修复——EXP-030 predictions.parquet (sample,gene) 标签与数值行序错位（gene-major 数值 vs sample-major 标签），09-21 版按标签重建产生伪相关（HD 层3 0.458/98% CI 正），按书写行序重建与 arm_summary 逐折精确一致后重跑（HD 真实 0.0006）。F1：同癌种域分类 0.903（置换 p95 0.588）、泛癌 0.356 不可分、跨研究细胞系距离 0.98>PDO-细胞系 0.845（混杂不可归因）、误差-距离相关全跨零。F2：层1 AUROC ZS 0.9971；层2 ZS 分癌种 0.02-0.03、HD 癌种内≈0 至负、谱系基因留出复现 0.325 vs 0.102（CTNNB1/GATA5 入选）；层3 个体化 ZS 0.023（置换 p=0.0）显著、HD 0.0006 不显著、必需基因 0.049-0.070、逐基因 CI>0 仅 5-6%——个体化信号微弱、集中于必需基因、仅在零样本臂稳定。F3：ridge 0.031>低秩 0.028>MLP 0.015>通路掩码 0.012≈随机分组 0.010（固定通路结构无增益）。
+    - 2026-09-22 第三波收口（阶段 7 + 工作包 G）：全量 pytest 214 passed（258.5s）+ 数据注册表 PASS；收口报告 docs/reports/program_closeout_20260922.md、专题报告 docs/reports/domain_dependency_EXP035_20260922.md；registry EXP-031~035 全部 completed 并回填 result；docs/README.md 导航更新；AGENTS.md 规则冲突统一（受控容量诊断例外+整体预批准入口）。结论主线：群体级规律可迁移（依赖必需基因 AUROC 0.9971、药物变异幅度排序、代谢通路方向），个性化药敏预测跨体系迁移未建立；下一步启动门槛=新同癌种患者队列或新监督条件带来可配对稳定增量证据。遗留用户行动项：EGA EGAD00001015468 申请。
+    - 2026-09-22 工作树状态：稳定 checkpoint 已提交（见 git log）；EXP-030 predictions.parquet 标签错位缺陷登记不改写原产物（正确读取方式已记入 EXP-035 记录与报告）。
 data:
   default_root: data
   root_env: DRUGSCREEN_DATA_ROOT
@@ -39,6 +54,10 @@ data:
 workflow:
   orchestration: manager
   human_approval_required: true
+  wave3_user_preapproval: full_plan_execution_20260921
 legacy:
   project: MCPIRE_PDO
   status: retired
+  previous_mvp_status: result_reviewed
+  previous_mvp_result: PROMISING
+  previous_mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING

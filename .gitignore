@@ -12,11 +12,17 @@ data/splits/**
 !data/interim/.gitkeep
 !data/processed/.gitkeep
 !data/splits/.gitkeep
-artifacts/**
+artifacts/*
+!artifacts/experiments/
+artifacts/experiments/*
 !artifacts/experiments/.gitkeep
+!artifacts/experiments/EXP-007/
+artifacts/experiments/EXP-007/*
+!artifacts/experiments/EXP-007/*.json
 *.pt
 *.pth
 *.ckpt
+data/artifacts/**
 
 # Public-source download caches remain local; tracked audits record source IDs,
 # checksums, generator revisions and reproducible commands.
@@ -25,3 +31,7 @@ mvp/core_data/_source_cache/**
 # Compact response matrices remain local; tracked audits retain schema,
 # source provenance, eligibility counts and checksums.
 mvp/foundation/xpert/BROAD_PRISM_CRC_V1.parquet
+
+# 一次性探针与运行日志不进入 Git（AGENTS.md：临时探针、cache、无决策价值的
+# 中间结果不提交）。
+tmp/

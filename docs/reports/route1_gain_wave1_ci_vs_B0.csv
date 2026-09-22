@@ -1,0 +1,25 @@
+model,vs,unit,n_units,delta,ci95_low,ci95_high,crosses_zero,claim_level,note
+dual_mlp_genes_h64_wd02_3seed,B0_drug_mean,fold,5,-0.004437208616873289,-0.009533805591975449,-6.599522675427849e-05,False,弱于对照,primary gate1: seed-mean raw-row fold values vs frozen stage1 B0 (EXP-020 口径)
+dual_mlp_genes_h64_wd02_3seed,B0_drug_mean,patient,51,0.00302116561307997,-0.001370739147241629,0.007506264025551614,True,证据不足,"primary gate2: Task-B protocol per-patient deltas, seed-mean"
+dual_mlp_genes_h64_wd02_3seed,B0_drug_mean,patient,51,-0.0005378084215362157,-0.005311628443593932,0.00422158690024822,True,证据不足,sensitivity: stage2 raw-row protocol
+dual_mlp_genes_h64_wd02_3seed,B0_drug_mean,patient,51,0.00766559074269351,0.0019012300286547661,0.013924501325107261,False,可报告模型增益（仍需结合学习曲线与对照）,"sensitivity: seed-ensemble, Task-B protocol"
+dual_mlp_pathway_pca_reg_3seed,B0_drug_mean,fold,5,0.0011908819444828023,-0.005805515712894738,0.007911393389498889,True,证据不足,primary gate1: seed-mean raw-row fold values vs frozen stage1 B0 (EXP-020 口径)
+dual_mlp_pathway_pca_reg_3seed,B0_drug_mean,patient,51,0.006023859952538288,0.0009035761056507203,0.011863207555314743,False,可报告模型增益（仍需结合学习曲线与对照）,"primary gate2: Task-B protocol per-patient deltas, seed-mean"
+dual_mlp_pathway_pca_reg_3seed,B0_drug_mean,patient,51,0.005015984898040658,-0.00044683052809167255,0.01155835063256288,True,证据不足,sensitivity: stage2 raw-row protocol
+dual_mlp_pathway_pca_reg_3seed,B0_drug_mean,patient,51,0.005982373047665879,0.0006969568509833378,0.011719928343587933,False,可报告模型增益（仍需结合学习曲线与对照）,"sensitivity: seed-ensemble, Task-B protocol"
+b0_residual_genes_h64_wd02,B0_drug_mean,fold,5,-0.004929622555095525,-0.010429698445377977,0.0024970237211094258,True,证据不足,primary gate1: seed-mean raw-row fold values vs frozen stage1 B0 (EXP-020 口径)
+b0_residual_genes_h64_wd02,B0_drug_mean,patient,51,0.0024924143878942533,-0.004991958242102609,0.010683275856974877,True,证据不足,"primary gate2: Task-B protocol per-patient deltas, seed-mean"
+b0_residual_genes_h64_wd02,B0_drug_mean,patient,51,-0.0009353129348272469,-0.008062908420027349,0.007378517086023365,True,证据不足,sensitivity: stage2 raw-row protocol
+b0_residual_genes_h64_wd02,B0_drug_mean,patient,51,0.0025515450272348998,-0.006414945412593606,0.011575244425035382,True,证据不足,"sensitivity: seed-ensemble, Task-B protocol"
+dual_mlp_pathway_pca_wd02,B0_drug_mean,fold,5,0.001143463131560596,-0.0056546514313548625,0.007941577694476055,True,证据不足,primary gate1: seed-mean raw-row fold values vs frozen stage1 B0 (EXP-020 口径)
+dual_mlp_pathway_pca_wd02,B0_drug_mean,patient,51,0.005382560385207636,0.0006027716858980183,0.01085319277380355,False,可报告模型增益（仍需结合学习曲线与对照）,"primary gate2: Task-B protocol per-patient deltas, seed-mean"
+dual_mlp_pathway_pca_wd02,B0_drug_mean,patient,51,0.0049674727757432645,-0.0007326787329723486,0.011627409922661206,True,证据不足,sensitivity: stage2 raw-row protocol
+dual_mlp_pathway_pca_wd02,B0_drug_mean,patient,51,0.004981880467305235,-0.0005812866051620756,0.011115737490044712,True,证据不足,"sensitivity: seed-ensemble, Task-B protocol"
+inner_val_ensemble,B0_drug_mean,fold,5,-0.0007322645371928172,-0.006603393201675756,0.005138864127290121,True,证据不足,primary gate1: seed-mean raw-row fold values vs frozen stage1 B0 (EXP-020 口径)
+inner_val_ensemble,B0_drug_mean,patient,51,0.004230027672128775,-0.0005725125229684607,0.009112441661470348,True,证据不足,"primary gate2: Task-B protocol per-patient deltas, seed-mean"
+inner_val_ensemble,B0_drug_mean,patient,51,0.003084292873973491,-0.0025966949380031995,0.008527905093595299,True,证据不足,sensitivity: stage2 raw-row protocol
+inner_val_ensemble,B0_drug_mean,patient,51,0.002676836311526415,-0.0027345000430821866,0.007883823256167216,True,证据不足,"sensitivity: seed-ensemble, Task-B protocol"
+transfer_calib_b0,B0_drug_mean,fold,5,-0.006009189052228114,-0.011764111430233282,-0.0002542666742229471,False,弱于对照,primary gate1: seed-mean raw-row fold values vs frozen stage1 B0 (EXP-020 口径)
+transfer_calib_b0,B0_drug_mean,patient,51,0.001476862850504273,-0.004053769743782658,0.006964836205474302,True,证据不足,"primary gate2: Task-B protocol per-patient deltas, seed-mean"
+transfer_calib_b0,B0_drug_mean,patient,51,-0.0020496052604872506,-0.0058892752995983975,0.0010289374769432602,True,证据不足,sensitivity: stage2 raw-row protocol
+transfer_calib_b0,B0_drug_mean,patient,51,0.001476862850504273,-0.004053769743782658,0.006964836205474302,True,证据不足,"sensitivity: seed-ensemble, Task-B protocol"

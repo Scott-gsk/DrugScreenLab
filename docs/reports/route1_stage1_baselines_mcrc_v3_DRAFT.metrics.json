@@ -1,0 +1,172 @@
+{
+  "status": "RAN_LOCAL_MCRC_V3",
+  "data": "data/processed/transfer/mcrc_v3",
+  "split": "data/splits/kryeziu_patient_outer5fold_DRAFT.json",
+  "n_patients": 51,
+  "n_drugs": 48,
+  "n_pairs": 3144,
+  "expr_shape": [
+    92,
+    19421
+  ],
+  "summary": [
+    {
+      "model": "drug_train_mean",
+      "ndcg@5_mean": 0.9049584739533849,
+      "ndcg@5_std": 0.007696734243486377,
+      "spearman_mean": 0.7857039518066359,
+      "spearman_std": 0.009744231026001113
+    },
+    {
+      "model": "per_drug_elasticnet_expression",
+      "ndcg@5_mean": 0.8943357496762342,
+      "ndcg@5_std": 0.00924597901142473,
+      "spearman_mean": 0.7679315528797386,
+      "spearman_std": 0.01813710045494838
+    },
+    {
+      "model": "per_drug_ridge_expression",
+      "ndcg@5_mean": 0.8948337313387013,
+      "ndcg@5_std": 0.01062618121419719,
+      "spearman_mean": 0.7813177146701132,
+      "spearman_std": 0.01716383702381557
+    }
+  ],
+  "fold_results": [
+    {
+      "fold": 0,
+      "model": "drug_train_mean",
+      "n_patients": 11,
+      "ndcg@5": 0.8955840935691182,
+      "spearman": 0.7832184084550331,
+      "n_train_rows": 2498,
+      "n_test_rows": 646
+    },
+    {
+      "fold": 0,
+      "model": "per_drug_ridge_expression",
+      "n_patients": 11,
+      "ndcg@5": 0.8972947731890986,
+      "spearman": 0.7715577519408737,
+      "n_train_rows": 2498,
+      "n_test_rows": 646
+    },
+    {
+      "fold": 0,
+      "model": "per_drug_elasticnet_expression",
+      "n_patients": 11,
+      "ndcg@5": 0.893136725629082,
+      "spearman": 0.7633342754232522,
+      "n_train_rows": 2498,
+      "n_test_rows": 646
+    },
+    {
+      "fold": 1,
+      "model": "drug_train_mean",
+      "n_patients": 10,
+      "ndcg@5": 0.8983388409735372,
+      "spearman": 0.7932678593002834,
+      "n_train_rows": 2480,
+      "n_test_rows": 664
+    },
+    {
+      "fold": 1,
+      "model": "per_drug_ridge_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.8761564138269741,
+      "spearman": 0.7992832263515106,
+      "n_train_rows": 2480,
+      "n_test_rows": 664
+    },
+    {
+      "fold": 1,
+      "model": "per_drug_elasticnet_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.8873914566313961,
+      "spearman": 0.7924087587462081,
+      "n_train_rows": 2480,
+      "n_test_rows": 664
+    },
+    {
+      "fold": 2,
+      "model": "drug_train_mean",
+      "n_patients": 10,
+      "ndcg@5": 0.9124334625040253,
+      "spearman": 0.7776458291314368,
+      "n_train_rows": 2560,
+      "n_test_rows": 584
+    },
+    {
+      "fold": 2,
+      "model": "per_drug_ridge_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.9086317255202031,
+      "spearman": 0.7526090607738192,
+      "n_train_rows": 2560,
+      "n_test_rows": 584
+    },
+    {
+      "fold": 2,
+      "model": "per_drug_elasticnet_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.9123499834284379,
+      "spearman": 0.7403743528982929,
+      "n_train_rows": 2560,
+      "n_test_rows": 584
+    },
+    {
+      "fold": 3,
+      "model": "drug_train_mean",
+      "n_patients": 10,
+      "ndcg@5": 0.9152320405658539,
+      "spearman": 0.8002702745424586,
+      "n_train_rows": 2558,
+      "n_test_rows": 586
+    },
+    {
+      "fold": 3,
+      "model": "per_drug_ridge_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.8931818378712956,
+      "spearman": 0.7883603296437554,
+      "n_train_rows": 2558,
+      "n_test_rows": 586
+    },
+    {
+      "fold": 3,
+      "model": "per_drug_elasticnet_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.8878920375039605,
+      "spearman": 0.7609158352228501,
+      "n_train_rows": 2558,
+      "n_test_rows": 586
+    },
+    {
+      "fold": 4,
+      "model": "drug_train_mean",
+      "n_patients": 10,
+      "ndcg@5": 0.9032039321543893,
+      "spearman": 0.7741173876039675,
+      "n_train_rows": 2480,
+      "n_test_rows": 664
+    },
+    {
+      "fold": 4,
+      "model": "per_drug_ridge_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.8989039062859353,
+      "spearman": 0.7947782046406073,
+      "n_train_rows": 2480,
+      "n_test_rows": 664
+    },
+    {
+      "fold": 4,
+      "model": "per_drug_elasticnet_expression",
+      "n_patients": 10,
+      "ndcg@5": 0.8909085451882944,
+      "spearman": 0.7826245421080893,
+      "n_train_rows": 2480,
+      "n_test_rows": 664
+    }
+  ]
+}

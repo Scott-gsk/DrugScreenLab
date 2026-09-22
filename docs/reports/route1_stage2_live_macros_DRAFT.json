@@ -1,0 +1,140 @@
+[
+  {
+    "tag": "dual_mlp_genes_h64_wd02",
+    "ndcg@5_mean": 0.9098381562928415,
+    "ndcg@5_std": 0.008349669514558247,
+    "spearman_mean": 0.7928081173483857,
+    "spearman_std": 0.019461029388392233,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_pathway_pca_reg",
+    "ndcg@5_mean": 0.9095718457535279,
+    "ndcg@5_std": 0.01174841201113595,
+    "spearman_mean": 0.7986545749772913,
+    "spearman_std": 0.013762326327183232,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_tiny_wd05",
+    "ndcg@5_mean": 0.9087529278187706,
+    "ndcg@5_std": 0.014104407356452816,
+    "spearman_mean": 0.7852659368197484,
+    "spearman_std": 0.013931185861911919,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_hallmark_ssgsea",
+    "ndcg@5_mean": 0.9082206440823152,
+    "ndcg@5_std": 0.010505171568771655,
+    "spearman_mean": 0.7803169878737203,
+    "spearman_std": 0.004056400901568168,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_pathway_pca",
+    "ndcg@5_mean": 0.9072668874929825,
+    "ndcg@5_std": 0.010430503873782193,
+    "spearman_mean": 0.7878488626254151,
+    "spearman_std": 0.01111774611871528,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_small_reg_strong",
+    "ndcg@5_mean": 0.9067568879612347,
+    "ndcg@5_std": 0.011609360300389468,
+    "spearman_mean": 0.7918680278516641,
+    "spearman_std": 0.012712558056144569,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_drop05_es",
+    "ndcg@5_mean": 0.9067274927295488,
+    "ndcg@5_std": 0.005951522322549941,
+    "spearman_mean": 0.7903609211585019,
+    "spearman_std": 0.015628921940822313,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_hallmark_h128_wd001",
+    "ndcg@5_mean": 0.9062336262665671,
+    "ndcg@5_std": 0.010904747247774899,
+    "spearman_mean": 0.7851603879199578,
+    "spearman_std": 0.008553464711320196,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_hallmark_ssgsea_reg",
+    "ndcg@5_mean": 0.9052658763023501,
+    "ndcg@5_std": 0.011193630989158435,
+    "spearman_mean": 0.7863543238572086,
+    "spearman_std": 0.009959681292418813,
+    "n_folds": 5
+  },
+  {
+    "tag": "B0_drug_train_mean",
+    "ndcg@5_mean": 0.905,
+    "ndcg@5_std": 0.0077,
+    "spearman_mean": 0.7857,
+    "spearman_std": 0.0097
+  },
+  {
+    "tag": "dual_mlp_small_reg",
+    "ndcg@5_mean": 0.9049211112709681,
+    "ndcg@5_std": 0.008933381404836568,
+    "spearman_mean": 0.7905932366862946,
+    "spearman_std": 0.014738894496115386,
+    "n_folds": 5
+  },
+  {
+    "tag": "RF",
+    "ndcg@5_mean": 0.9047,
+    "ndcg@5_std": 0.0085,
+    "spearman_mean": 0.7085,
+    "spearman_std": 0.0272
+  },
+  {
+    "tag": "dual_mlp_deep",
+    "ndcg@5_mean": 0.9045798405612274,
+    "ndcg@5_std": 0.00831647683126335,
+    "spearman_mean": 0.7878016269928949,
+    "spearman_std": 0.01001972763790121,
+    "n_folds": 5
+  },
+  {
+    "tag": "dual_mlp_base",
+    "ndcg@5_mean": 0.9042,
+    "ndcg@5_std": 0.0106,
+    "spearman_mean": 0.7871,
+    "spearman_std": 0.0112
+  },
+  {
+    "tag": "dual_mlp_pathway_pca_tiny",
+    "ndcg@5_mean": 0.9036432631120235,
+    "ndcg@5_std": 0.011613726618829864,
+    "spearman_mean": 0.7933243539332675,
+    "spearman_std": 0.010410440294749959,
+    "n_folds": 5
+  },
+  {
+    "tag": "HistGBM",
+    "ndcg@5_mean": 0.9036,
+    "ndcg@5_std": 0.0103,
+    "spearman_mean": 0.7837,
+    "spearman_std": 0.0095
+  },
+  {
+    "tag": "hallmark_pathway_ridge",
+    "ndcg@5_mean": 0.9002,
+    "ndcg@5_std": 0.0135,
+    "spearman_mean": 0.7696,
+    "spearman_std": 0.007
+  },
+  {
+    "tag": "dual_mlp_deeper",
+    "ndcg@5_mean": 0.8807,
+    "ndcg@5_std": 0.014,
+    "spearman_mean": 0.7569,
+    "spearman_std": 0.0122
+  }
+]

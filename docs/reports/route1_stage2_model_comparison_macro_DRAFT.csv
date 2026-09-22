@@ -1,0 +1,25 @@
+model,n_folds,ndcg@5_mean,ndcg@5_std,spearman_mean,note
+dual_mlp_genes_h64_wd02,5,0.909838,0.00835,0.792808,genes
+dual_mlp_pathway_pca_reg,5,0.909572,0.011748,0.798655,pathway_pca
+dual_mlp_tiny_wd05,5,0.908753,0.014104,0.785266,genes
+dual_mlp_hallmark_ssgsea,5,0.908221,0.010505,0.780317,pathway_hallmark_ssgsea
+dual_mlp_pathway_pca_h64_wd02,5,0.907331,0.012828,0.790388,pathway_pca
+dual_mlp_pathway_pca,5,0.907267,0.010431,0.787849,pathway_pca
+dual_mlp_small_reg_strong,5,0.906757,0.011609,0.791868,genes
+dual_mlp_drop05_es,5,0.906727,0.005952,0.790361,
+dual_mlp_gene_intersect_xfer_tiny,5,0.906338,0.005817,0.785311,gene_intersect_contract_space
+dual_mlp_hallmark_h128_wd001,5,0.906234,0.010905,0.78516,pathway_hallmark_ssgsea
+dual_mlp_hallmark_h64_wd02,5,0.905571,0.008955,0.77965,pathway_hallmark_ssgsea
+dual_mlp_hallmark_ssgsea_reg,5,0.905266,0.011194,0.786354,pathway_hallmark_ssgsea
+dual_mlp_genes_h32_wd05,5,0.904977,0.006713,0.790049,genes
+dual_mlp_gene_intersect_xfer,5,0.904972,0.005882,0.784856,gene_intersect_contract_space
+dual_mlp_small_reg,5,0.904921,0.008933,0.790593,genes
+random_forest,5,0.904703,0.008464,0.708521,
+dual_mlp_deep,5,0.90458,0.008316,0.787802,genes
+dual_mlp_pathway_pca_tiny,5,0.903643,0.011614,0.793324,pathway_pca
+hist_gradient_boosting,5,0.903613,0.010259,0.78373,
+dual_mlp_genes_h128_wd01,5,0.900364,0.00979,0.793918,genes
+pathway_hallmark_ridge,5,0.900212,0.013533,0.769563,
+gdsc_pdo_transfer_smoke,5,0.899151,0.0103,0.782381,pre-contract smoke
+gdsc_kryeziu_xfer_contract,5,0.904408,0.010989,0.792977,DRAFT transfer contract sha=0fd5fdd7ab9d admission=None
+gdsc_kryeziu_xfer_contract_tiny,5,0.905883,0.009864,0.796136,DRAFT transfer contract sha=0fd5fdd7ab9d admission=None

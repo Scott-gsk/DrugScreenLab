@@ -1,0 +1,77 @@
+{
+  "model": "dual_mlp",
+  "n_folds": 5,
+  "ndcg_at_5_mean": 0.9041765678649385,
+  "ndcg_at_5_std": 0.010571161712758119,
+  "spearman_mean": 0.7870545640178848,
+  "spearman_std": 0.011182505753797891,
+  "where": "local WSL drugscreening-gpu; A5000 GPU0 folds0-2, GPU1 folds3-4",
+  "train_test": "patient outer 5-fold DRAFT; ~40 train / ~10-11 test; 48 drugs; top2000 genes + drug emb",
+  "folds": [
+    {
+      "n_patients": 11,
+      "ndcg@5": 0.9002413650495733,
+      "spearman": 0.7879747846406957,
+      "mae": 4.217923164367676,
+      "fold": 0,
+      "n_train_rows": 2498,
+      "n_test_rows": 646,
+      "n_genes": 2000,
+      "n_drugs": 48,
+      "gpu": 0,
+      "tag": "dual_mlp"
+    },
+    {
+      "n_patients": 10,
+      "ndcg@5": 0.9022005671557374,
+      "spearman": 0.7969132053047938,
+      "mae": 4.149138450622559,
+      "fold": 1,
+      "n_train_rows": 2480,
+      "n_test_rows": 664,
+      "n_genes": 2000,
+      "n_drugs": 48,
+      "gpu": 0,
+      "tag": "dual_mlp"
+    },
+    {
+      "n_patients": 10,
+      "ndcg@5": 0.9153320926776812,
+      "spearman": 0.7733536986029664,
+      "mae": 4.643667697906494,
+      "fold": 2,
+      "n_train_rows": 2560,
+      "n_test_rows": 584,
+      "n_genes": 2000,
+      "n_drugs": 48,
+      "gpu": 0,
+      "tag": "dual_mlp"
+    },
+    {
+      "n_patients": 10,
+      "ndcg@5": 0.9157170290305835,
+      "spearman": 0.8014619898962824,
+      "mae": 4.349135875701904,
+      "fold": 3,
+      "n_train_rows": 2558,
+      "n_test_rows": 586,
+      "n_genes": 2000,
+      "n_drugs": 48,
+      "gpu": 1,
+      "tag": "dual_mlp"
+    },
+    {
+      "n_patients": 10,
+      "ndcg@5": 0.887391785411117,
+      "spearman": 0.7755691416446852,
+      "mae": 4.244545936584473,
+      "fold": 4,
+      "n_train_rows": 2480,
+      "n_test_rows": 664,
+      "n_genes": 2000,
+      "n_drugs": 48,
+      "gpu": 1,
+      "tag": "dual_mlp"
+    }
+  ]
+}

@@ -9,9 +9,18 @@ dependencies:
   - numpy=1.26.4
   - pandas=2.3.3
   - rdkit=2023.9.5
+  # EXP-014 records versions already installed; no environment mutation.
+  - scipy=1.17.1
+  - scikit-learn=1.8.0
+  - pyarrow=23.0.1
+  - openpyxl=3.1.5
+  - matplotlib=3.10.8
   # 训练栈。CUDA 由 `make gpu-check` 单独验证。
   - pytorch=2.5.1
   - pytorch-cuda=12.1
   # 开发与测试栈。
   - pytest=9.0.2
   - pip
+  - pip:
+      - rdata==1.1.0
+      - pyreadr==0.5.6

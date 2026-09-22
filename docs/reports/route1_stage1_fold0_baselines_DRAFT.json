@@ -1,0 +1,26 @@
+{
+  "status": "DRAFT_REAL_FOLD0",
+  "plan_stage": "route1_stage1_baselines",
+  "fold": 0,
+  "data": "data/processed/transfer/mcrc_v3",
+  "n_train_rows": 2498,
+  "n_test_rows": 646,
+  "n_train_patients": 40,
+  "n_test_patients": 11,
+  "drug_mean": {
+    "spearman": 0.7774018530560919,
+    "mae": 3.908081930104772,
+    "ndcg@5_patient_mean": 0.8955840935691182,
+    "n_patients_ndcg": 11
+  },
+  "per_drug_ridge": {
+    "status": "ok",
+    "n_train": 2498,
+    "n_test": 646,
+    "n_drugs_fit": 48,
+    "spearman": 0.7610347115323487,
+    "mae": 4.100326981933841
+  },
+  "label_col": "response",
+  "drug_col": "drug_id"
+}

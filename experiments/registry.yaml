@@ -46,7 +46,7 @@ experiments:
     record: experiments/records/EXP-004.md
   - id: EXP-005
     title: XPert Additive KPGT and UniPert Perturbagen Tokens
-    status: fast_result_ready_no_material_increment
+    status: fast_complete_chemical_backbone_champion_xpert
     hypothesis: >
       在固定的官方 XPert L1000 split、训练预算、loss 与评估契约下，保留官方 HG + UniMol
       路径并将 KPGT、UniPert 作为独立投影 token 追加至官方 drug attention sequence，能够改善
@@ -56,6 +56,455 @@ experiments:
     approved_by: user_autonomous_extension_authorization
     approved_on: 2026-08-13
     record: experiments/records/EXP-005.md
+  - id: EXP-006
+    title: Genetic to Chemical Transfer Under Low Chemical Supervision
+    status: quantitative_complete_genetic_pretrain_hurt_chemical_delta978
+    hypothesis: genetic pretraining reduces chemical perturbation supervision required for exact978 response prediction and downstream screening utility
+    primary_endpoint: frozen_chemical_test_spearman_transfer_minus_chemical_only_at_20pct_and_10pct_unique_compounds
+    approved_by: user_program_direction_reset
+    approved_on: 2026-08-13
+    record: experiments/records/EXP-006.md
+  - id: EXP-007
+    title: Full Observed Oracle Screening Translation
+    status: oracle_near_null_fail_rule_audit_complete
+    hypothesis: >
+      在 Observed chemical ∩ CRC exact contexts ∩ PRISM compounds ∩ canonical dose/time
+      的最大 support 上，Observed Δ978 → Disease Reversal 的 Top-10/20/50 lift 与 NDCG
+      excess 显著高于 line-wise permutation null。
+    primary_endpoint: top10_20_50_lift_and_ndcg_excess_over_permutation_null
+    approved_by: user_program_execution_mandate_2026-08-13
+    approved_on: 2026-08-13
+    record: experiments/records/EXP-007.md
+  - id: EXP-008
+    title: Full SDST Drug-Target-Pathway Residual
+    status: archived_without_result_implementation_removed
+    hypothesis: >
+      在官方完整 SDST（78,453 × 978，10 μM / 24 h）上，冻结官方 XPert 主干，
+      只训练药物–靶点–通路低容量残差后，冷药物全量测试的行宏 Δ978 斯皮尔曼
+      比冻结官方 XPert 至少高 0.02，且预测标准差 > 0.01、相对主干下降不超过 20%。
+    primary_endpoint: cold_drug_full_sdst_row_macro_delta978_spearman_increment_over_frozen_xpert
+    approved_by: user_long_running_execution_authorization
+    approved_on: 2026-08-16
+    record: experiments/records/EXP-008.md
+    supersedes:
+      - legacy_exp008_champion_draft_removed_20260823
+      - disease_signature_swap_gate
+  - id: EXP-010
+    title: PharmaFormer to mCRC PDO to Breast PDO One-Day Validation
+    status: complete_promising_fast_with_limitations
+    hypothesis: >
+      在患者级严格隔离的 mCRC PDO 上，GDSC2/CMP 预训练的 PharmaFormer 经短程
+      mCRC 微调后，比不做微调的同一 checkpoint 提高患者等权药物排序质量，并且该
+      方向能在公开乳腺癌 PDO 分析输入上获得独立、有限范围的外部支持。
+    primary_endpoint: patient_macro_within_pdo_drug_spearman_m3_minus_m2
+    approved_by: user_explicit_implementation_authorization
+    approved_on: 2026-08-23
+    record: experiments/records/EXP-010.md
+    result: >
+      M3 相对 M2 的患者宏 Spearman 提升 0.2486（2000 次患者 bootstrap 95% CI
+      0.2190–0.2769），达到 PROMISING_FAST；但 M3 Spearman 0.7277 未超过 M0 的
+      0.7505。GSE303509 上 M3 五折 ensemble rho 0.4286、14/21，达到限定的 SUPPORTS。
+  - id: EXP-011
+    title: Cell-Line-Gated Multi-Cohort PDO Transfer Validation
+    status: source_audit_required_before_cell_line_gate_decision
+    superseded_by: EXP-012
+    hypothesis: >
+      在冻结的细胞系泛化门槛通过后，GDSC2/CMP 预训练 PharmaFormer 的低容量PDO
+      adapter 能在 mCRC 与肝胆癌直接表达—药敏配对的患者/PDO留出测试中，改善逐药物
+      跨患者排序，同时维持对强线性基线的非劣表现。
+    primary_endpoint: equal_cohort_macro_per_drug_patient_spearman_adapter_minus_source_only
+    approved_by: user_explicit_implementation_authorization
+    approved_on: 2026-08-23
+    record: experiments/records/EXP-011.md
+  - id: EXP-012
+    title: Protocol-corrected PharmaFormer source audit and gated dual-cohort PDO transfer
+    status: approved_running
+    hypothesis: >
+      在补齐 log2(TPM+1) 并分开论文式配对拆分与未见细胞系评测后，若细胞系门槛通过，
+      则 PharmaFormer 低容量类器官适配器能在结直肠与肝胆两个直接表达–药敏队列的
+      患者留出测试中改善逐药物排序，并对 Ridge 非劣。
+    primary_endpoint: equal_cohort_macro_per_drug_patient_spearman_adapter_minus_source_only
+    approved_by: user_explicit_implementation_authorization
+    approved_on: 2026-08-23
+    record: experiments/records/EXP-012.md
+    predecessor: EXP-011
+    artifacts: data/artifacts/EXP-012
+    processed: data/processed/exp012
+  - id: EXP-013
+    title: Cross-model PDO transfer baselines on accessible paired cohorts
+    status: registered_running_baseline_loop
+    hypothesis: >
+      在患者留出且超参冻结的条件下，目标域逐药线性表达模型（B1）相对药物均值
+      （B0）能提供逐药跨患者排序增益；该闭环先在已物化 PDO 队列上建立可复现
+      基准，不宣称细胞系预训练或胰腺癌目标准入已完成。
+    primary_endpoint: per_drug_patient_spearman_B1_minus_B0
+    approved_by: user_explicit_start_without_further_confirmation
+    approved_on: 2026-09-11
+    record: experiments/records/EXP-013.md
+    predecessor: EXP-012
+    artifacts: data/artifacts/EXP-013
+  - id: EXP-014
+    title: Explainable cross-model PDO transfer aligned with the approved source proposal
+    status: P0_implementing
+    hypothesis: Functional priors and selective transfer improve patient-level PDO single-drug ranking under patient-isolated validation.
+    primary_endpoint: patient_macro_ndcg5_difference
+    approved_by: user_explicit_complete_plan_implementation
+    approved_on: 2026-09-12
+    record: experiments/records/EXP-014.md
+    predecessor: EXP-013
+    artifacts: data/artifacts/EXP-014
+  - id: EXP-015
+    title: Direct drug-response transfer feasibility with available paired PDO data
+    status: implementing_source_and_target_verification
+    approved_by: user_explicit_train_and_evaluate_with_alternative_datasets
+    approved_on: 2026-09-13
+    record: experiments/records/EXP-015.md
+    predecessor: EXP-014
+    artifacts: data/artifacts/EXP-015
+  - id: EXP-016
+    title: Source-domain cold-cell expression dependence and repeatability
+    status: one_split_three_seed_permutation_complete_two_splits_pending
+    hypothesis: >
+      在GDSC同研究、训练药物已知、细胞系整组留出的条件下，表达+SMILES双编码器
+      相对药物均值与等容量仅药物结构模型存在可重复增益，且癌种内整行表达置换会
+      降低性能，从而支持细胞特异表达提供了增量信息。
+    primary_endpoint: cold_cell_macro_ndcg5_dual_minus_drug_only_with_within_cancer_expression_permutation
+    approved_by: user_explicit_implementation_plan_2026_09_13
+    approved_on: 2026-09-13
+    registration_note: >
+      cold_cell_v1在本条登记前已运行；该历史产物按事后追溯保留，新的多划分、
+      多种子、置换与drug-only实验按本记录执行，不将旧结果伪装为预注册结果。
+    record: experiments/records/EXP-016.md
+    predecessor: EXP-015
+    artifacts: data/artifacts/EXP-016
+  - id: EXP-017
+    title: Controlled cell-line-to-PDO adaptation under identifiable preprocessing
+    status: selected_policy_negative_sol_reviewed_reporting_defects_under_versioned_correction
+    hypothesis: >
+      在共同基因空间、相同来源checkpoint、患者外五折内三折和固定预算下，
+      冻结输出头、全量微调或向来源参数收缩的低自由度适配，至少一种能够在
+      Zhu开发队列上同时超过B0和PDO-only M1；若不能，则界定该队列上的负迁移边界。
+    primary_endpoint: patient_macro_known_drug_ndcg3_m3_minus_max_b0_m1
+    approved_by: user_explicit_implementation_plan_2026_09_13
+    approved_on: 2026-09-13
+    record: experiments/records/EXP-017.md
+    predecessor: EXP-016
+    artifacts: data/artifacts/EXP-017
+  - id: EXP-018
+    title: Nature organoid auxiliary training for downstream PDO drug ranking
+    status: bounded_single_seed_n0_n1_n3_complete_replication_pending
+    hypothesis: >
+      在等模型容量、等训练步数和相同三维辅助样本下，表达掩码重建N1或类器官
+      依赖辅助监督N3能够改善患者留出PDO药物排序，并且该增益不能由关闭辅助损失
+      或癌种/文库内整行依赖标签置换解释。
+    primary_endpoint: patient_macro_known_drug_ndcg3_n3_minus_equal_step_n0
+    approved_by: user_explicit_implementation_plan_2026_09_13
+    approved_on: 2026-09-13
+    record: experiments/records/EXP-018.md
+    predecessor: EXP-017
+    artifacts: data/artifacts/EXP-018
+  - id: EXP-019
+    title: Zero-shot GDSC-to-PRISM cross-study cold-cell validation
+    status: complete_negative_cross_study_cell_specific_generalization
+    hypothesis: >
+      在PRISM药敏完全不参与训练和选模、且排除所有GDSC来源身份后，冻结的
+      表达+SMILES来源模型能够在跨药敏研究的严格未见细胞系上超过GDSC
+      药物均值与仅药物结构模型，且癌种内整行表达置换会降低性能。
+    primary_endpoint: prism_unseen_cell_macro_ndcg5_dual_minus_drug_only
+    approved_by: user_explicit_implementation_plan_2026_09_13
+    approved_on: 2026-09-13
+    record: experiments/records/EXP-019.md
+    predecessor: EXP-018
+    artifacts: data/artifacts/EXP-019
+    result: >
+      当前身份映射重算得到353个严格未见PRISM细胞系、104种来源已知药物和18,864条
+      反应记录。双编码器NDCG@5为0.8263，低于B0的0.8443和仅药物结构模型的0.8509；
+      相对drug-only差−0.0247，细胞系块bootstrap 95% CI为−0.0321至−0.0171。
+      同癌种表达置换使NDCG@5平均下降0.0131，但表达信号未转化为优于简单基线的跨研究能力。
+  - id: EXP-020
+    title: Route1 Kryeziu local modeling under new protocol (Stage1 baselines + Stage2 variants)
+    status: complete_best_variant_ci_crosses_zero_insufficient_evidence
+    hypothesis: >
+      在患者级外层5折隔离与阶段1指标口径下，基因/通路特征驱动的Stage2 dual_mlp
+      变体相对Stage1药物均值基线B0（NDCG@5=0.9089）能提高患者宏平均NDCG@5，
+      且fold-CI不跨零。
+    primary_endpoint: patient_macro_ndcg5_vs_B0_with_fold_CI
+    approved_by: user_spec_advance_pdo_program_execution
+    approved_on: 2026-09-19
+    registration_note: >
+      事后追溯登记。Stage1/Stage2运行早于本条写入；已跑结果按原样保留并如实
+      回溯表述，不伪装为预注册结果。最佳变体dual_mlp_genes_h64_wd02=0.9098，
+      Δ=+0.0010，fold-CI [-0.0021,0.0038]跨零，证据不足；dual_mlp_deeper
+      -0.0282明显变差；全表以stage2_fold_metrics_SUMMARY_DRAFT.md为准。
+    record: experiments/records/EXP-020.md
+    predecessor: EXP-019
+  - id: EXP-021
+    title: GDSC-to-Kryzei official transfer under bootstrap-2000 EXPLORATORY_TRANSFER_ONLY
+    status: completed_multiseed_evidence_insufficient
+    hypothesis: >
+      在steward admission（EXPLORATORY_ADMITTED 51/60）与gene-space合同下，
+      GDSC源域预训练的迁移变体（M1/M1_source_scaled/M2/M3）相对配对对照能提高
+      Kryzei目标域患者宏平均NDCG@5，且患者级2000次bootstrap 95% CI不跨零。
+    primary_endpoint: patient_macro_ndcg5_transfer_variants_vs_m1_source_scaled_paired_bootstrap2000_95CI
+    approved_by: user_spec_advance_pdo_program_execution
+    approved_on: 2026-09-19
+    registration_note: >
+      已跑seed 20260912/20260913为事后追溯；多种子扩展（新增seed 20260919
+      已完成）与患者级2000次bootstrap CI正式汇总按本条预登记执行。seed2目录
+      （run_b2000_seed2_20260918_223331）实为seed=20260912重复轮，已修正注记，
+      不计入独立种子复现。2026-09-19三真种子汇总：M1/M3相对对照CI全部跨零
+      （证据不足），M2显著负，触发预登记失败条件，判定未证明增益，停止在该
+      协议下追加种子；正式汇总见
+      docs/reports/official_transfer_multiseed_formal_20260919.md。
+    record: experiments/records/EXP-021.md
+    predecessor: EXP-020
+  - id: EXP-022
+    title: Route2 LINCS drug-conditioned perturbation ablation
+    status: complete_ctrl_only_dominant_no_drug_specific_gain_proven
+    hypothesis: >
+      在删除对照建模与pair_random/compound_holdout划分下，药条件头（drug_id
+      嵌入/Morgan指纹/KPGT）及残差头相对ctrl_only线性对照能提高转录响应预测
+      的mean cosine。
+    primary_endpoint: mean_cosine_drug_conditioned_variants_minus_ctrl_only
+    approved_by: user_spec_advance_pdo_program_execution
+    approved_on: 2026-09-19
+    registration_note: >
+      事后追溯登记。结果：pair_random ctrl_only 0.672>drug_id_emb 0.661>
+      morgan 0.620；compound_holdout ctrl_only 0.675>>morgan 0.555；残差头
+      0.618<ctrl 0.672；KPGT长跑ctrl_only 0.713>kpgt_cond 0.674、
+      ctrl+resid_kpgt 0.699<ctrl_only。高分主因为对照结构，未证明药特异扰动
+      增益；ChemPert泄漏键摸底（GSE92742 34702/GSE70138 42978响应）作为
+      EXP-023输入。
+    record: experiments/records/EXP-022.md
+    predecessor: EXP-021
+  - id: EXP-023
+    title: ChemPert formal drug-conditioned perturbation experiment
+    status: completed_drug_conditioned_gain_ci_positive_exploratory
+    hypothesis: >
+      在冻结ChemPert主键/泄漏键合同（Response_ID↔Chemical_ID↔Data_Accession↔
+      Expression_ID，LINCS重合隔离）与分组隔离划分下，药条件头（含结构编码）
+      相对ctrl_only对照在转录响应预测上存在CI不跨零的增益；若跨零或为负，
+      则「对照主导」结论跨库成立。
+    primary_endpoint: paired_mean_cosine_drug_conditioned_minus_ctrl_only_95CI
+    approved_by: user_spec_advance_pdo_program_execution
+    approved_on: 2026-09-19
+    registration_note: >
+      训练前完成合同v2增补（共享基线谱按官方initial-state语义与结构证据
+      升级为对照谱，77,819条true；先登记后训练，v1 FROZEN不动）。结果：
+      两协议（test=GSE92742/GSE70138整组隔离）三药条件臂配对Δ95%CI全为正
+      不跨零（+0.039~+0.049），失败条件未触发；但任务结构与LINCS不同
+      （对照谱被中位36.5化合物共享，ctrl_only结构性不可区分0.01），P1所有
+      模型臂未超global_mean基线，签名795空间覆盖率仅13-16%。结论：
+      ChemPert设定下出现药特异增益（EXPLORATORY，许可待复核），与LINCS
+      对照主导不矛盾——合并表述须区分任务结构。
+    record: experiments/records/EXP-023.md
+    predecessor: EXP-022
+  - id: EXP-024
+    title: Route1 gain design wave under no-widen-no-deepen single-variable constraints
+    status: completed_evidence_insufficient
+    hypothesis: >
+      在不加深加宽、单变量消融约束下，设计空间（头部配置多种子、B0+残差建模、
+      仅内层val选择的头部集成、M3式迁移校准叠加、通路特征设定复选，≤4个新
+      变体）中至少一种设定患者宏平均NDCG@5超过B0且fold-CI与患者级2000
+      bootstrap CI均不跨零；否则报告证据不足并停止该波次，不做循环调参。
+    primary_endpoint: patient_macro_ndcg5_best_variant_minus_B0_dual_CI
+    approved_by: user_spec_advance_pdo_program_execution
+    approved_on: 2026-09-19
+    record: experiments/records/EXP-024.md
+    predecessor: EXP-020
+  - id: EXP-025
+    title: Joint-stage feasibility slice with inner-CV-held-out stacked inputs
+    status: complete_negative_joint_do_not_expand
+    hypothesis: >
+      仅以内层交叉验证留出预测训练的低容量联合模型（直接药敏预测+扰动通路
+      特征+逆转分数+可靠性）在患者内排序上不劣于直接药敏模型，且至少一个
+      指标存在可检验增益；否则联合阶段暂不扩展为共享通路多任务网络。
+    primary_endpoint: patient_macro_ndcg5_joint_minus_direct
+    approved_by: user_spec_advance_pdo_program_execution
+    approved_on: 2026-09-19
+    record: experiments/records/EXP-025.md
+    predecessor: EXP-024
+  - id: EXP-026
+    title: Evaluation reform (nonstructural + residualized endpoints) and data foundation
+    status: completed
+    hypothesis: >
+      在剔除7个结构性极端药物（≥80% PDO组内名次固定）并以训练折药均值残差化后，
+      Kryzei患者内药物排序的可学习空间可被正确度量；第一波「全部变体证据不足」
+      的结论在非结构药子集与残差口径下需重检。同时以单变量消融量化数据清洗
+      选择的影响，冻结CTRPv2源域合同并获取2026 Nature肿瘤类器官依赖图
+      （256 PDO，CRISPR依赖，不作药敏标签）作为迁移检验与域适应数据基座。
+    primary_endpoint: nonstructural_ndcg5_and_residual_spearman_rebaseline
+    approved_by: user_plan_approval_wave2_2026_09_19
+    approved_on: 2026-09-19
+    record: experiments/records/EXP-026.md
+    predecessor: EXP-025
+  - id: EXP-027
+    title: Unified dual-route comparison (direct drug sensitivity vs perturbation mediation)
+    status: completed
+    hypothesis: >
+      在同一冻结患者留出协议与分层终点下，路线A（直接药敏，代表臂M1_source_scaled）
+      相对B0的非结构增益可复核；路线B（药物→预测扰动→Hallmark通路变化→逆转
+      分数→患者内排序）零样本排序信号待定量检验（LINCS版本无信号，ChemPert
+      上游药条件增益CI全正为唯一正向依据）；响应口径候选（逐药标准化/药均值
+      残差）在统一协议下复核。
+    primary_endpoint: nonstructural_ndcg5_routeA_vs_routeB_paired_bootstrap
+    result: >
+      跨路线主比较A2 vs B2 +0.1158（CI [+0.0850,+0.1450]全正，路线A显著优）；
+      路线B三臂vs B0全部显著为负（不含药物主效应校准）；A2 vs B0 +0.0192
+      （CI [-0.0002,+0.0387]边缘触零，降级边缘正向）；零样本B2逐药Spearman
+      宏平均+0.1149与监督A2+0.1153同量级（CI均跨零）——路线B携带与监督路线
+      同量级个性化信号；主线维持直接药敏A2强基线，路线B定位互补特征与解释
+      模块（EXPLORATORY随行）。
+    approved_by: user_plan_approval_wave2_2026_09_19
+    approved_on: 2026-09-19
+    record: experiments/records/EXP-027.md
+    predecessor: EXP-026
+  - id: EXP-028
+    title: Dual-route nonlinear fusion v1 (second-layer GBM/MLP on inner-OOF features)
+    status: completed
+    hypothesis: >
+      路线B预测扰动特征（Hallmark 50维通路变化+逆转分数+种子方差）能为路线A
+      最优单模型M1_source_scaled提供均值基线之外、需非线性交互才能表达的增量
+      （EXP-025线性联合已否定；EXP-027显示路线B携带与监督路线同量级个性化
+      信号+0.115）。第二层按EXP-025内层留出机制在冻结split的val患者上训练。
+    primary_endpoint: nonstructural_ndcg5_fusion_vs_routeA_paired_bootstrap
+    result: >
+      负结果收口（2026-09-20）：主比较F1_GBM_full vs A2_frozen=-0.0375
+      [-0.0561,-0.0178]、F2_MLP_full=-0.0463[-0.0702,-0.0222]，CI全负；
+      cross-fit灵敏度臂同样显著负（-0.0144[-0.0285,-0.0011]）；机制对照
+      F0_MLP与A2无差异（-0.0002跨零）；基线A2_frozen vs B0_frozen
+      +0.0235[+0.0047,+0.0421]全正。按预登记失败条件第1档：融合v1
+      不可行结论成立，v2端到端双分支不迭代；主线维持路线A直接药敏。
+      routeA冻结split重训105次+routeB Hallmark-50扩展特征落盘
+      （artifacts/exp028_fusion/，63375+13248+28296行）。
+    approved_by: user_plan_approval_wave2_2026_09_19
+    approved_on: 2026-09-19
+    record: experiments/records/EXP-028.md
+    predecessor: EXP-027
+  - id: EXP-029
+    title: Cell-line to organoid interpretable transfer audit (T1-T4, no new drug-sensitivity training)
+    status: completed
+    hypothesis: >
+      迁移失败（EXP-019/021）的瓶颈可通过四项只读诊断区分：T1通路级系数
+      方向一致性、T2正交约束自编码器共享/私有分解（GDSC+Kryzei+依赖图255
+      RNA-seq三域联合）、T3近邻误差诊断（源模型193验证细胞系误差是否预测
+      PDO零样本误差）、T4药级变异边界。产出通路×药物×样本三维迁移可行性
+      图谱，预登记判定决定EXP-031优先扩源还是域适应。
+    primary_endpoint: t2_kryzei_shared_capture_fraction + t3_neighbor_error_correlation
+    result: >
+      判定INTERMEDIATE_REPORT_AS_IS（2026-09-20，54秒GPU运行）。
+      T2 Kryzei共享捕获0.315±0.123（GDSC/biobank≈0）；T3近邻误差相关
+      rho=0.010 p=0.943不显著，89% PDO（81/91）与83%类器官（212/255）
+      在GDSC表达分布近邻范围外；T1通路系数方向一致率中位数0.500
+      （代谢类通路0.71-0.79最高、增殖/免疫类0.07-0.29最低，FDR后无显著）；
+      T4药物效应幅度排序跨域一致（SD Spearman 0.613）但零样本逐药
+      可迁移0/7非结构药。规律结论：覆盖缺口+域偏移为迁移瓶颈，群体级
+      规律（药物变异幅度排序、代谢通路方向）跨域保守。EXP-030设计
+      输入：域适应与输出校准为主战场、按有/无近邻分层报告。
+    approved_by: user_plan_approval_wave2_2026_09_19
+    approved_on: 2026-09-19
+    record: experiments/records/EXP-029.md
+    predecessor: EXP-028
+  - id: EXP-030
+    title: Dependency-map transfer test (cell line -> 162 organoid CRISPR dependency)
+    status: completed
+    result: >
+      RULE1_TRANSFER_SUPPORTED_ZS_DIRECT（第二波首个明确正向迁移证据）。
+      主终点逐基因Spearman宏平均：ZS零样本0.0294≈HD从头训练0.0321，
+      CAL校准0.0211反而有害，DA域适应0.0008（OrthoAE共享码R2为负，
+      实现失败非方向失败）；配对差pooled口径ZS vs B0 +0.159
+      [+0.149,+0.168] CI下界全正（B0逐基因常数无定义，pooled负值含
+      折间伪变异，幅度谨慎解读；证据链四点一致：宏平均0.0294、
+      61.3%基因为正、追平HD、源内验证0.1610）。必需基因AUROC
+      0.9971五臂最高。五条规律：①零样本迁移成立②信号集中于必需基因
+      （中位0.079 vs 0.022，3.6倍；Top基因=增殖/基础机器程序TP53/
+      CDK4/MYBL2/ORC，最差=谱系特异TF与特异代谢基因）③有/无近邻
+      无差异（EXP-029覆盖缺口障碍不适用于基因依赖任务，规律由基因
+      本身特性驱动）④CAL小样本校准过拟合（38.2%基因劣于ZS）⑤
+      DA共享码学习失败需换更稳对齐方法。EXP-031输入：必需基因
+      规律可迁移、个性化信号不可迁移；基因级图谱可作药敏辅助特征。
+    hypothesis: >
+      细胞系上学的「表达→基因功能依赖」映射能迁移到类器官（零样本/输出
+      校准/域适应三臂 vs 基因均值基线，individual 整组隔离）。EXP-029
+      规律输入：83%类器官无近邻→零样本预期低、域适应与校准为主战场、
+      按有/无近邻分层检验覆盖缺口可修复性。CRISPR依赖≠药物响应，
+      结论仅用于方法学与域适应证据。
+    primary_endpoint: unseen_organoid_gene_macro_spearman_best_transfer_arm_minus_gene_mean_baseline
+    approved_by: user_plan_approval_wave2_2026_09_19
+    approved_on: 2026-09-19
+    record: experiments/records/EXP-030.md
+    predecessor: EXP-029
+  - id: EXP-031
+    title: Third-wave engineering repair and evaluation reform (work package B)
+    status: completed
+    hypothesis: >
+      在工作包B的合同下：主药敏指标改为患者内全药排序Spearman（每患者>=3药资格、
+      患者内多PDO先聚合、患者等权宏平均），主要比较为相对同监督条件均值基线的
+      配对增益；七药子集因全量标签筛选降为事后探索，结构药改按训练折内重推；
+      患者+PDO双白名单、共享外层划分（5折患者整组/内层3折）与训练侧拟合预处理
+      通过B5十项测试后，复核修正历史口径错误（含受影响模型重训清单）。
+    primary_endpoint: intra_patient_spearman_patient_macro_vs_matched_mean_baseline
+    approved_by: user_preapproval_whole_plan_20260921
+    approved_on: 2026-09-21
+    record: experiments/records/EXP-031.md
+    predecessor: EXP-030
+  - id: EXP-032
+    title: (placeholder) source generalization four-layer matrix (work package C)
+    status: completed
+    result: >
+      L1 GDSC内部: dual 0.7895 vs 药均值 0.7576, +0.0319 [+0.0297,+0.0342] 全正,
+      置换回退 0.0193（来源内有效）；L2 PRISM: dual 0.3935 vs 来源均值
+      (GDSC) 0.4307, -0.0373 [-0.0465,-0.0282] 全负（跨研究失效；同癌种
+      混淆无法控制）；L3 零样本白名单 51/60: 48药 0.455 [0.424,0.485]、
+      14共同药 0.685 vs 来源均值 0.655, +0.030 [-0.003,+0.063] 微跨零
+      （迁移成立但表达条件化增量未达显著）；L4 25/50/100%: 来源预训练
+      增益仅 100% 档显著（C3-C1 +0.025 [0.007,0.041], Holm 0.021）；
+      目标监督各档远超来源零样本与来源均值。
+    record: experiments/records/EXP-032.md
+    predecessor: EXP-031
+  - id: EXP-033
+    title: Third-wave capability gradients dual-route (work package D)
+    status: completed
+    result: >
+      直接路线(100%档): 药均值 0.8027/platform; GBM 调参 +0.0122
+      [+0.0049,+0.0195] Holm 0.010(唯一显著); 双线性网络 +0.0126 跨零
+      (中等层达平台期); 扰动路线(全零标签): 各臂未超过全局扰动均值
+      基线(主比较全部跨零, Holm 均 0.84); XPert 可运行但逆转方向与药敏
+      负相关(-0.168, 如实上报); C4 扰动特征增量 +0.007 跨零(不显著);
+      上游: seen 一致高于 UNK(P1 0.0685 vs 0.0346), 覆盖率制约。
+    record: experiments/records/EXP-033.md
+    predecessor: EXP-032
+  - id: EXP-034
+    title: Third-wave fusion redesign serial/parallel/joint (work package E)
+    status: completed
+    result: >
+      三架构全部不支持扰动增量: E1 串联 3 标量扰动增量 -0.0003 跨零、
+      PCA3 维度匹配特征点估计反超; E3 联合 -0.0111 跨零方向为负(512 源基因
+      ∩795=48, 共享编码器表达重叠有限已登记); E2 并联 8 臂: 扰动增量
+      +0.0856 [-0.0183,+0.2076] p=0.232 跨零且与打乱对照同量级, 双分支
+      优势 0.0206 可完全由容量解释, 指纹/扰动/联合三增量分离完成——
+      撤回历史'仅归因扰动'解释的工程基础落成。
+    record: experiments/records/EXP-034.md
+    predecessor: EXP-033
+  - id: EXP-035
+    title: Third-wave same-disease domain analysis and dependency capacity (work package F)
+    status: completed
+    result: >
+      F2 关键审计修复：EXP-030 predictions.parquet (sample,gene) 标签与数值行序错位
+      （数值 gene-major、标签 sample-major），按标签重建产生跨基因伪相关（HD 层3 0.458、
+      98% 基因 CI 正）；按书写行序重建与 arm_summary 内存口径逐折精确一致后重跑（579s），
+      污染数字归档于收口报告。F1：同癌种域分类平衡准确率 0.903（置换基线 p95 0.588、
+      p=0），泛癌设定 0.356 不可分；跨研究细胞系距离（0.98）大于 PDO-细胞系距离（0.845），
+      平台/文库混杂无法独立归因；误差-距离相关全部跨零（Holm 1.0）——距离不解释误差。
+      F2 三层次：层1 AUROC 引用复核 ZS 0.9971 最高；层2 分癌种宏平均 ZS 0.02-0.03、HD
+      癌种内≈0 至负（HD 0.032 主要由癌种间差异承载），谱系基因训练侧 top-50 留出复现
+      0.325 vs 全基因 0.102（CTNNB1/GATA5 等入选，线索级）；层3 个体化（结直肠 83 患者）
+      ZS 0.023 置换 p=0.0 显著、HD 0.0006 不显著、必需基因 0.049-0.070 高于可变基因、
+      逐基因 CI>0 仅 5-6%——个体化信号存在但微弱、集中于必需基因、仅在零样本臂稳定。
+      F3：100% 档 ridge 0.031 > 低秩多任务 0.028 > MLP 0.015 > 通路掩码 0.012 ≈ 随机分组
+      0.010——固定通路结构无增益。
+    record: experiments/records/EXP-035.md
+    predecessor: EXP-034
 mvps:
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility

@@ -1,19 +1,6 @@
-"""Model implementations for approved DrugScreenLab experiments."""
+"""Model implementations for DrugScreenLab experiments.
 
-from .exp002 import (
-    ContextConditionedMeanBaseline,
-    Delta978Dataset,
-    Delta978Record,
-    GlobalMeanBaseline,
-    load_exp002_config,
-    run_evaluation,
-)
-
-__all__ = [
-    "ContextConditionedMeanBaseline",
-    "Delta978Dataset",
-    "Delta978Record",
-    "GlobalMeanBaseline",
-    "load_exp002_config",
-    "run_evaluation",
-]
+Previous experiment runners and baselines were removed after their results
+were frozen under mvp/ and experiments/records/. New paradigms should add
+modules here as thin adapters.
+"""
