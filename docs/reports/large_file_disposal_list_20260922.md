@@ -9,7 +9,7 @@
 | # | 路径 | 体积 | 产生实验/来源 | 注册表引用 | 建议处置 | 理由 |
 |---|---|---|---|---|---|---|
 | 1 | `data/interim/lincs/GSE92742/` | 143.05 GB | LINCS Level-3 物化（EXP-002 基线，MCPIRE_PDO 迁移） | datasets.json 登记 `lincs_gse92742_*`（asset_type: interim, derived_expression_storage） | **待批准：项目外归档** | 可从 `data/raw/lincs/`（118 GB，保留）重建；EXP-002 已收口（accepted_negative_result） |
-| 2 | `data/artifacts/EXP-012/` | 104.04 GB | EXP-012 PharmaFormer 双队列微调 | registry `artifacts: data/artifacts/EXP-012` | **待批准：项目外归档** | 实验已回填终态 completed_exploratory_artifacts_retained；结论保留于记录，产物可移出 |
+| 2 | `data/artifacts/EXP-012/` | 104.04 GB | EXP-012 PharmaFormer 双队列微调 | registry `artifacts: data/artifacts/EXP-012` | **已执行（2026-09-22 用户批准删除）**：1143 文件/104.04 GB 已删除，registry/PROJECT_STATE/RESULT_LOCATION 已同步注记 | 实验已回填终态 completed_exploratory_artifacts_retained；结论保留于记录，产物可移出 |
 | 3 | `data/raw/lincs/` | 118.34 GB | LINCS 原始 GCTX（只读） | datasets.json 登记（raw） | 默认保留 | 原始数据只读；若路线 B 彻底关闭可另行决策 |
 | 4 | `data/raw/chembl/` | 28.72 GB | ChEMBL 原始（只读） | datasets.json 登记（raw） | 默认保留 | 原始数据只读 |
 | 5 | `data/external/xpert_source/` | 10.39 GB | XPert 基础模型源资产 | PROJECT_STATE：foundation IMPLEMENTATION_REMOVED_RESULTS_RETAINED | **待批准：项目外归档** | 实现已移除、结果保留；复用时可重新获取 |
@@ -39,7 +39,7 @@
 | # | 批准处置 | 备注 |
 |---|---|---|
 | 1 | ☐ 归档 / ☐ 保留 / ☐ 删除 | |
-| 2 | ☐ 归档 / ☐ 保留 / ☐ 删除 | |
+| 2 | ☑ 删除（2026-09-22 已执行） | 用户批准；1143 文件/104.04 GB；结论保留于记录 |
 | 5 | ☐ 归档 / ☐ 保留 / ☐ 删除 | |
 | 6 | ☐ 归档 / ☐ 保留 / ☐ 删除 | |
 | 7 | ☐ 归档 / ☐ 保留 / ☐ 删除 | |

@@ -128,7 +128,7 @@ experiments:
     approved_on: 2026-08-23
     record: experiments/records/EXP-012.md
     predecessor: EXP-011
-    artifacts: data/artifacts/EXP-012
+    artifacts: data/artifacts/EXP-012  # 2026-09-22 产物已经用户批准删除（结论保留于记录；无活跃代码引用）
     processed: data/processed/exp012
   - id: EXP-013
     title: Cross-model PDO transfer baselines on accessible paired cohorts

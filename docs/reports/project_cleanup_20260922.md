@@ -63,6 +63,8 @@
 
 12 项候选共约 330 GB，详见 `docs/reports/large_file_disposal_list_20260922.md`（每项含体积、产生实验、注册表引用、建议处置与批复栏）。前三项：`data/interim/lincs` 143 GB（可从 raw 重建）、`data/artifacts/EXP-012` 104 GB（已收口）、`data/raw/lincs` 118 GB（只读，默认保留）。
 
+> 后记（2026-09-22）：清单 #2 `data/artifacts/EXP-012`（1143 文件/104.04 GB）经用户批准**已删除**，registry/PROJECT_STATE/RESULT_LOCATION 已同步注记，`data/processed/exp012` 保留。
+
 ## 七、遗留豁免项
 
 | 项 | 理由 |
