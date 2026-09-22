@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "cohorts": [
+    {
+      "cohort_id": "gdsc2_cell_line",
+      "role": "SOURCE_TRAIN_AND_COLD_CELL_EVALUATION",
+      "expression_unit": "log2(CMP TPM+1)",
+      "response_name": "1_minus_auc",
+      "higher_is_sensitive": true,
+      "assets": {
+        "samples": {
+          "path": "processed/exp012/gdsc2_cell_line_samples.parquet",
+          "sha256": "1074b62300d62a65f9ea2aa8a8ab0d28225c2acda47aeb21567546d07b6d61d6"
+        },
+        "drugs": {
+          "path": "processed/exp012/gdsc2_cell_line_drugs.parquet",
+          "sha256": "3cf9aa70f990b617578edfe61e9f1fd955dcef4ca01a6c84566520d340102148"
+        },
+        "pairs": {
+          "path": "processed/exp012/gdsc2_cell_line_pairs.parquet",
+          "sha256": "8b499f9b667be3a22aaf509c4b70d7af73a729a8380163384bee6cd7843c3081"
+        },
+        "expression": {
+          "path": "processed/exp012/gdsc2_cell_line_indexed.npz",
+          "sha256": "6aa19a689104b77009b9ed35c1a607eebfe169b5e003844e8ff853ff3acd3083"
+        }
+      },
+      "source_index": "processed/exp012/cohort_index_manifest.json",
+      "source_index_sha256": "1d643999d40b9ad74ad4de26d361c2f1b04e4009a7827283a285524ea73a2b03",
+      "original_source_audit": "required",
+      "external_test_eligible": false,
+      "reason": "Legacy development data; hash verification is not new independent validation."
+    },
+    {
+      "cohort_id": "mcrc_pdo",
+      "role": "PDO_DEVELOPMENT",
+      "expression_unit": "log2(CPM+1) from mCRC source count table",
+      "response_name": "dss",
+      "higher_is_sensitive": true,
+      "assets": {
+        "samples": {
+          "path": "processed/exp012/mcrc_pdo_samples.parquet",
+          "sha256": "ce9bd558b95b7cbda83231a7b011d24a6bc3e46b8e391df489d57ba7846614d1"
+        },
+        "drugs": {
+          "path": "processed/exp012/mcrc_pdo_drugs.parquet",
+          "sha256": "123f4923efdaae028a6cac4c4b91c95dd812c987dccae54c1ae19df7f2bfc4de"
+        },
+        "pairs": {
+          "path": "processed/exp012/mcrc_pdo_pairs.parquet",
+          "sha256": "811a6afd870f428cebc50bebf7d2efeed98b8ceefeeb89113ca52f259e57e805"
+        },
+        "expression": {
+          "path": "processed/exp012/mcrc_pdo_indexed.npz",
+          "sha256": "3918e9d02e07a832ad6da3d9960893cb79eb78b3b3b1ec6c6330065ab1b27b13"
+        }
+      },
+      "source_index": "processed/exp012/cohort_index_manifest.json",
+      "source_index_sha256": "1d643999d40b9ad74ad4de26d361c2f1b04e4009a7827283a285524ea73a2b03",
+      "original_source_audit": "required",
+      "external_test_eligible": false,
+      "reason": "Legacy development data; hash verification is not new independent validation."
+    },
+    {
+      "cohort_id": "zhu_hepatobiliary",
+      "role": "PDO_DEVELOPMENT",
+      "expression_unit": "log2(author RNA-seq abundance + 1); publication unit unlabelled, treated as non-negative abundance",
+      "response_name": "1_minus_auc",
+      "higher_is_sensitive": true,
+      "assets": {
+        "samples": {
+          "path": "processed/exp012/zhu_hepatobiliary_samples.parquet",
+          "sha256": "c6c209b22ed57557245de53eb6b7e9581a209f96b074e153468646b9f7e491a9"
+        },
+        "drugs": {
+          "path": "processed/exp012/zhu_hepatobiliary_drugs.parquet",
+          "sha256": "ffbe4ef2598f0de9c0cb1fa6af4c6ed7460ef10e2b7fc9bdf844f27a30fb5863"
+        },
+        "pairs": {
+          "path": "processed/exp012/zhu_hepatobiliary_pairs.parquet",
+          "sha256": "0153a52f5f149046db677065bb6a437ab6ad90a166fd7b38a3502f49f62a4916"
+        },
+        "expression": {
+          "path": "processed/exp012/zhu_hepatobiliary_indexed.npz",
+          "sha256": "d3aaec0f18bf61aedb33067c79fd0755ed0085ce30421b36288b6a05225c7ba3"
+        }
+      },
+      "source_index": "processed/exp012/cohort_index_manifest.json",
+      "source_index_sha256": "1d643999d40b9ad74ad4de26d361c2f1b04e4009a7827283a285524ea73a2b03",
+      "original_source_audit": "required",
+      "external_test_eligible": false,
+      "reason": "Legacy development data; hash verification is not new independent validation."
+    },
+    {
+      "cohort_id": "kryeziu_mcrc_v3",
+      "alias_of": "mcrc_pdo_v3_processed_transfer",
+      "role": "PDO_DEVELOPMENT_DRAFT",
+      "expression_unit": "log2(CPM+1) from mCRC source count table",
+      "response_name": "DSS",
+      "higher_is_sensitive": true,
+      "assets": {
+        "samples": {
+          "path": "data/processed/transfer/mcrc_v3/samples.parquet",
+          "sha256": "6d2a2fb26c0716dbf0236157967677e01473ab3f1dacb5bad866b5a4b37d53e7"
+        },
+        "drugs": {
+          "path": "data/processed/transfer/mcrc_v3/drugs.parquet",
+          "sha256": "04612cb03ba3d1cbb78a219a53193ab8810af9797c326d8f5593759c847e7515"
+        },
+        "pairs": {
+          "path": "data/processed/transfer/mcrc_v3/pairs.parquet",
+          "sha256": "5254c5a21718abea0b4454bf87b597cbafd7b598963390f80a0407584e293831"
+        },
+        "expression": {
+          "path": "data/processed/transfer/mcrc_v3/indexed.npz",
+          "sha256": "ddbab601e461169a7385ac0658a433a7735581e5e9b99bdfd062e9bec5f4c727"
+        }
+      },
+      "source_index": "data/processed/transfer/mcrc_v3/manifest.json",
+      "source_index_sha256": "35b34c820b61878d509eaca153f07a22abf6ae49900133b57f5e563540dbc471",
+      "target_admission_draft": "data/processed/identity/transfer/kryeziu_mcrc_target_admission_DRAFT.json",
+      "target_admission_draft_sha256": "b1a463753b1a25399b6b7136747104691d825716a22c7b34011951ebe83bdba7",
+      "gene_space_contract_draft": "data/processed/identity/transfer/gdsc_kryeziu_gene_space_contract_DRAFT.json",
+      "original_source_audit": "artifacts/resource_acquisition_20260916/kryeziu_audit/kryeziu_identity_assay_audit.json",
+      "external_test_eligible": false,
+      "status": "DRAFT",
+      "reason": "Alias for admission.cohort_id=kryeziu_mcrc_v3 pointing at processed/transfer/mcrc_v3 (not legacy exp012 mcrc_pdo paths). DRAFT only; not frozen.",
+      "created_at": "2026-09-18T17:39:25+08:00",
+      "path_convention": "project-root relative including data/ prefix (CLI was resolving /processed/... without data/)",
+      "updated_at": "2026-09-18T17:44:17+08:00",
+      "response_name_note": "Must match pairs.response_name exactly (DSS); lowercase dss caused mixed-endpoint reject"
+    }
+  ]
+}

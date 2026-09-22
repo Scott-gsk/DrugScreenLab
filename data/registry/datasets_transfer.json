@@ -1,0 +1,326 @@
+[
+  {
+    "id": "transfer_hcmi_open_manifest",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/hcmi/HCMI_Open_Manifest_1.txt"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://gdc.cancer.gov/system/files/public/file/HCMI_Open_Manifest_1.txt",
+      "source_page": "https://gdc.cancer.gov/about-data/publications/HCMI-CMDC-2026"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "059e6f473a4e25242ce36c08d6a5da320e1c1a6bd39b111a768cdd085a0f9fb7"
+    },
+    "bytes": 7648,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_organoid_biobank_figshare_metadata",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/figshare_28339340.json"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://api.figshare.com/v2/articles/28339340",
+      "source_page": "https://doi.org/10.6084/m9.figshare.28339340"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "65973b7f5e3ac4d90b86c68e3b78078e010ad27a6af188d91dd8da1f4283b647"
+    },
+    "bytes": 19749,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_reactome_human_gene_pathway",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/reactome/NCBI2Reactome_All_Levels.txt"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://reactome.org/download/current/NCBI2Reactome_All_Levels.txt",
+      "source_page": "https://reactome.org/download-data"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "53bbe42b357655e341630898547af8d23badab592e6050c34d4317fbffc04ce4"
+    },
+    "bytes": 98024930,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_reactome_pathway_hierarchy",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/reactome/ReactomePathwaysRelation.txt"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://reactome.org/download/current/ReactomePathwaysRelation.txt",
+      "source_page": "https://reactome.org/download-data"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "fd49a624d80c14eb37ae57a02e141d574d5ede3f60022bb99edbd909448a3f1e"
+    },
+    "bytes": 634259,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_kegg_hsa_gene_pathway",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/kegg/kegg_hsa_gene_pathway.tsv"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://rest.kegg.jp/link/pathway/hsa",
+      "source_page": "https://www.kegg.jp/kegg/rest/keggapi.html"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "9d20c77e4a027e5215717d6eafee1f6ebf10f6bdb64e3b476152ed96d70e9fb5"
+    },
+    "bytes": 924060,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_kegg_hsa_pathway_list",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/kegg/kegg_hsa_pathways.tsv"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://rest.kegg.jp/list/pathway/hsa",
+      "source_page": "https://www.kegg.jp/kegg/rest/keggapi.html"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "345290b203a665fa7604f36ba51d78095a712c6c02820fb09fde82a5a90c0a3a"
+    },
+    "bytes": 22117,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_biobank_63130795",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/CRISPRInferredCommonEssentials.csv"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://ndownloader.figshare.com/files/63130795",
+      "source_page": "10.6084/m9.figshare.28339340.v1"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "200afbd9b5e0c6e4710e1751d69e6971e5426980d110f81e455275934722c6bc"
+    },
+    "bytes": 20364,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_biobank_63130813",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/jaccard_index_sanger_HCMI.csv"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://ndownloader.figshare.com/files/63130813",
+      "source_page": "10.6084/m9.figshare.28339340.v1"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "5339562381381b86f14f3901eae9efc90db9475f4719ed93ccc1b1739ec761cd"
+    },
+    "bytes": 5888,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_biobank_63130822",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/open_targets_dataset.csv"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://ndownloader.figshare.com/files/63130822",
+      "source_page": "10.6084/m9.figshare.28339340.v1"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "5450b37466ed6458d19daa883cbe2d8ecbe77eada1cdc3db548acd075cdc4649"
+    },
+    "bytes": 5510214,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_biobank_63130933",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/data_covariates_ALL-organoids.csv"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://ndownloader.figshare.com/files/63130933",
+      "source_page": "10.6084/m9.figshare.28339340.v1"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "e57603e0ae26780ef112cbdbf063818dd17837858353894ba29e75f6936e9f64"
+    },
+    "bytes": 7770,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "ACQUIRED_EXPLORATORY (EXP-026): auxiliary use only; see transfer_organoid_biobank_paired_dependency_v1"
+  },
+  {
+    "id": "transfer_biobank_63130957",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/data_RNAseq_ALL-organoids.csv"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://ndownloader.figshare.com/files/63130957",
+      "source_page": "10.6084/m9.figshare.28339340.v1"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "92859e18417c3737956236e6990f8001a0d2cc352890b9355b7ed9603b6a6b1e"
+    },
+    "bytes": 65275850,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "ACQUIRED_EXPLORATORY (EXP-026): auxiliary use only; see transfer_organoid_biobank_paired_dependency_v1"
+  },
+  {
+    "id": "transfer_biobank_63191101",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/07_EssMatrix_qnorm_corrected_logFCs.RData"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://ndownloader.figshare.com/files/63191101",
+      "source_page": "10.6084/m9.figshare.28339340.v1"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "0d2f7d3300affee717d87e621a74c90ed6917d8491ae048e4720a89531aabb07"
+    },
+    "bytes": 125803583,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_mcrc_isomeric_pubchem",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/pubchem/mcrc_isomeric_20260912.json"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/10184653,10288191,10331844,10461508,104842,11152667,11167602,11556711,11625818,11640390,11707110,126941,131634760,135539077,135565082,137278711,16720766,176870,208908,23725625,24737642,24748573,24771867,24785538,24788740,24856436,24978538,3062316,3385,444795,44516953,46188928,46215462,46926973,49806720,49846579,50922675,5284616,5330286,53358942,54761306,60750,60823,6442177,68289010,6918837,71481097,86345880,9887053/property/IsomericSMILES,InChIKey/JSON",
+      "source_page": "https://pubchem.ncbi.nlm.nih.gov/"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "b4005a209dc6ce06865f3d799650260093aa19c409e3b724ec342fa60e8e04b7"
+    },
+    "bytes": 9361,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "PENDING"
+  },
+  {
+    "id": "transfer_organoid_biobank_supplementary_tables",
+    "version": 1,
+    "asset_type": "raw",
+    "path": {
+      "relative": "raw/transfer_public_assets/organoid_biobank/41586_2026_10830_MOESM3_ESM.zip"
+    },
+    "immutable": true,
+    "source": {
+      "url": "https://media.springernature.com/original/springer-static/esm/art%3A10.1038%2Fs41586-026-10830-y/MediaObjects/41586_2026_10830_MOESM3_ESM.zip",
+      "source_page": "https://doi.org/10.1038/s41586-026-10830-y"
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "7e83b7551c9c272de0bc0455ea9a0e7803a8043d15d9cfedf5a1c3e609a2a6e2"
+    },
+    "bytes": 127226341,
+    "intended_role": "SOURCE_AUDIT_ONLY",
+    "scientific_admission": "ACQUIRED_EXPLORATORY (EXP-026): auxiliary use only; see transfer_organoid_biobank_paired_dependency_v1"
+  },
+  {
+    "id": "transfer_organoid_biobank_paired_dependency_v1",
+    "version": 1,
+    "asset_type": "processed",
+    "path": {
+      "relative": "processed/transfer/biobank_functional_v1"
+    },
+    "immutable": true,
+    "intended_role": "AUXILIARY_DEPENDENCY_TRANSFER_AND_DOMAIN_ADAPTATION",
+    "scientific_admission": "ACQUIRED_EXPLORATORY (EXP-026): migration testing / domain adaptation / auxiliary pretraining only; CRISPR dependency is NOT drug response and must not be used as drug-sensitivity labels or target-domain evaluation",
+    "schema": {
+      "paired_models": 162,
+      "paired_individuals": 157,
+      "dependency_rows": 2948036,
+      "dependency_rows_after_minlib_dedup": 2683044,
+      "dual_library_models": 16,
+      "dependency_genes": 16562,
+      "expression_genes": 15764,
+      "expression_unit": "author log2TPM; do not re-log",
+      "tissues": {
+        "Colorectal": 85,
+        "Oesophageal": 59,
+        "Ovarian": 11,
+        "Pancreatic": 4,
+        "Gastric": 3
+      },
+      "expression_project_gene_intersection": 14900,
+      "downgrade_threshold": 5000
+    },
+    "checksum": {
+      "algorithm": "sha256",
+      "value": "per-file sha256 re-verified in artifacts/EXP-026/organoid_depmap_admission.json"
+    },
+    "provenance": {
+      "raw_path": "raw/transfer_public_assets/organoid_biobank",
+      "prior_audits": [
+        "artifacts/EXP-014/biobank_audit.json",
+        "artifacts/EXP-015/nature_dependency_pairing.json"
+      ],
+      "admission_audit": "artifacts/EXP-026/organoid_depmap_admission.json",
+      "split_rule": "individual_ID whole-group isolation in all downstream splits",
+      "dual_library_rule": "models with both minLib and v1_1 screens keep minLib only (pre-registered EXP-026)"
+    }
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "cohorts": [
+    {
+      "cohort_id": "gdsc2_v2",
+      "role": "SOURCE_DEVELOPMENT",
+      "expression_unit": "log2(CMP TPM+1)",
+      "response_name": "1_minus_auc",
+      "higher_is_sensitive": true,
+      "assets": {
+        "samples": {
+          "path": "processed/exp014/gdsc_v3/samples.parquet",
+          "sha256": "64441dccdffcc6d8a82212be672884d4140f7e796753b1c10bf52ce72e3a881f"
+        },
+        "drugs": {
+          "path": "processed/exp014/gdsc_v3/drugs.parquet",
+          "sha256": "8f1d0d7456614881bba2900ad2d159c8fdaa6a1dea196268485cd91931db0b9e"
+        },
+        "pairs": {
+          "path": "processed/exp014/gdsc_v3/pairs.parquet",
+          "sha256": "bc9c8d93380277307ee2b4d9db231b7edd3e3653592d5ed983d785b8decff40f"
+        },
+        "expression": {
+          "path": "processed/exp014/gdsc_v3/indexed.npz",
+          "sha256": "2b27c47b72f53d01d1acc609f13f3b6dac96f92542acdc128fb9d22f3a6b68c7"
+        }
+      }
+    }
+  ]
+}

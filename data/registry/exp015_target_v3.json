@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "cohorts": [
+    {
+      "cohort_id": "zhu_hepatobiliary_v3",
+      "role": "PDO_EXPLORATORY_DEVELOPMENT",
+      "expression_unit": "author FPKM unlogged",
+      "response_name": "1_minus_auc",
+      "higher_is_sensitive": true,
+      "assets": {
+        "samples": {
+          "path": "processed/transfer/zhu_v3/samples.parquet",
+          "sha256": "f91d1c3519c30e725298a314eb20b2acd90bff8d67010949bcb66bbed8890454"
+        },
+        "drugs": {
+          "path": "processed/transfer/zhu_v3/drugs.parquet",
+          "sha256": "ccab6ad7788d309d5b93f1c497f6b9afca05221526d22a81e42643d1f3ebabdd"
+        },
+        "pairs": {
+          "path": "processed/transfer/zhu_v3/pairs.parquet",
+          "sha256": "c9dbecf9ab173173b9614c2be959c978a1485112608b28c70f3d8b10af03a0dc"
+        },
+        "expression": {
+          "path": "processed/transfer/zhu_v3/indexed.npz",
+          "sha256": "f35c900311c472f0fb0c58f7993cdfa28dfa6ab82622aebdda14ce1cf66efd27"
+        }
+      }
+    }
+  ]
+}
