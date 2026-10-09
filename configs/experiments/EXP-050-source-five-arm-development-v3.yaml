@@ -1,0 +1,68 @@
+run_id: 20261006_exp050_source_five_arm_development_v3
+status: frozen_development_cpu_comparison
+purpose: >-
+  EXP-050 方案3.5来源域探索性开发比较。以现有3.4精确配对支持为固定公共药物候选域，
+  仅使用9个CTRPv2 TRAIN来源对象，执行对象留一OOF预测；不称独立验证。
+inputs:
+  paired_source_asset: artifacts/experiments/EXP-050/20261001_independent_object_response_drug_effect_v1/paired_object_drug_values.tsv
+  source_role_support: artifacts/experiments/EXP-050/20261001_independent_object_response_drug_effect_v1/object_roles_key_support.tsv
+  source_object_drug_support: artifacts/experiments/EXP-050/20261001_independent_object_response_drug_effect_v1/train_val_exact_object_drug_key_support.tsv
+  xpert_attempt: artifacts/experiments/EXP-050/20261001_xpert_independent_object_fit_v1/attempts/attempt_001
+  read_only_v1_asset_contract_audit: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v1/read_only_asset_audit/audit_receipt.json
+  xpert_source_prediction: artifacts/experiments/EXP-050/20261001_xpert_independent_object_fit_v1/attempts/attempt_001/heldout_source_prediction_target_order.npy
+  xpert_identity_key_map: artifacts/experiments/EXP-050/20261001_xpert_independent_object_fit_v1/attempts/attempt_001/fit_condition_identity_key_map.tsv
+  xpert_gene_axis: data/processed/lincs/GSE92742/continuous_contract_v2/genes.json
+  lincs_drug_registry: data/processed/lincs/GSE92742/continuous_inputs_v2/drugs.parquet
+  lincs_drug_morgan2048: data/processed/lincs/GSE92742/continuous_inputs_v2/drug_morgan2048.npy
+  depmap_expression: data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_log2tpm.npy
+  depmap_row_identity: data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_mapping.json
+  depmap_model_patient: data/raw/depmap/24q2/Model.csv
+  depmap_gene_axis_audit: data/processed/depmap/24q2_rnaseq_exact978/intake_audit.json
+  frozen_identity_split: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+  previous_v2_failed_smoke_receipt: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v2/smoke_failure_attempt_001.json
+  previous_v2_runner_snapshot: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v3/previous_v2_runner_snapshot.py
+  v3_protocol_correction_receipt: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v3/protocol_correction_receipt.md
+  synthetic_candidate_domain_gate_case: tests/evaluation/test_exp050_source_five_arm_candidate_domain_gate.py
+  synthetic_candidate_domain_gate_receipt: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v3/synthetic_candidate_domain_gate_receipt.json
+  prior_v1_cpu_accounting: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v1/cpu_accounting.json
+  prior_v2_cpu_accounting: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v2/cpu_accounting.json
+  cpu_budget_carryover_receipt: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v3/cpu_budget_carryover.json
+repair_of:
+  run_id: 20261006_exp050_source_five_arm_development_v2
+  root_cause: outer-training feature rows retained labels for two frozen-excluded nonunique-Morgan keys
+  single_fix: intersect each outer-training object-key row set with the already-frozen unique-Morgan candidate domain before inner cross-fitting or feature lookup
+protocol:
+  endpoint: CTRPv2 published AAC; larger is more sensitive
+  endpoint_rows: TRAIN role only; exact source PatientID x full InChIKey keys
+  unit_and_split: 9 unique TRAIN PatientID source objects; leave one complete object out
+  candidate_drug_domain: 123-key exact CTRPv2 TRAIN label union from 3.4; two keys with multiple RDKit Morgan vectors under the same full InChIKey are excluded from every arm before fitting, leaving a common chemical-feature-supported domain of 121 exact keys
+  excluded_full_inchikeys_due_to_nonunique_morgan_support: [BNRNXUUZRGQAQC-UHFFFAOYSA-N, GCIKSSRWRFVXBI-UHFFFAOYSA-N]
+  predicted_perturbation_conditions: Use the hash-verified attempt_001 fit_condition_identity_key_map.tsv as the sole condition/exposure mapping; for the nine permitted TRAIN objects all 409 conditions are 10 uM x 24 h. The model explicitly receives dose/time. For each object-key pair, use the median signed predicted 978-gene delta across all frozen mapped target conditions; do not select among conditions. Five pairs have repeated condition rows with different predicted vectors, so preserve the prespecified median aggregation.
+  fold_test_support: held-out object's labeled keys with exact predicted perturbation, baseline expression and Morgan features, present in at least two outer-training objects, and supported by the fold's whole-block shuffle donor
+  training_key_gate: filter every outer-training and inner-validation object-key row through the same frozen unique-Morgan candidate domain before profile, perturbation, or chemical feature lookup
+  arms:
+    direct: Ridge(alpha=1.0) on fold-standardized DepMap baseline expression + exact-key Morgan2048
+    predicted_perturbation: Ridge(alpha=1.0) on fold-standardized frozen XPert predicted delta + exact-key Morgan2048
+    fusion: convex late blend of direct and perturbation Ridge OOF predictions; one blend weight selected on inner leave-one-source-object-out predictions from the current outer-training objects only
+    equal_capacity_direct: OOF blend of two identical direct Ridge fits; same 6,055 nominal fitted parameters including two intercepts and the blend scalar as fusion, with duplicated direct input declared as a rank-deficient parameter-count control
+    shuffled_perturbation: predicted-perturbation Ridge after a deterministic whole-object derangement among the current outer-training objects; held-out input block comes from one outer-training donor
+  block_shuffle: >-
+    For each outer fold, choose a bijective derangement of the eight training-object blocks by maximum
+    shared exact-key support (identity-only, no labels); map each complete 978-gene x drug block as a unit.
+    The held-out donor is selected by maximum exact shared-key support from outer-training objects.
+    Keep the identical train and held-out object-key rows for all five arms by intersecting donor support.
+  references:
+    - outer-fold training-object per-InChIKey AAC mean
+    - fold-fit one-feature ridge on predicted full-978-gene mean absolute perturbation
+  preprocessing: fit gene and drug-feature standardization on current training objects/keys only
+  training_loss: object-equal-weighted Ridge on within-drug AAC residuals; drug means use the same fold training denominator
+  primary_endpoint: per-held-out-object Spearman(predicted AAC, observed AAC), object-macro mean; larger is better
+  secondary_endpoints: per-object RMSE and MAE in AAC units; equal-object macro summaries; per-object paired differences and equal-object mean differences as descriptive development results only; no confidence intervals or significance tests
+  candidate_count: 1 fixed Ridge model family; alpha=1.0; no architecture or seed search
+  label_exposure: CTRPv2 labels were read in earlier EXP-050 source exploration; all results remain exploratory/development and are not independent validation
+  forbidden: [PRISM_numeric_labels, PDO_labels, outer_or_locked_labels, VAL_label_rows, use_of_VAL_or_heldout_to_fill_support, test_based_selection]
+compute:
+  runtime: WSL2 Conda drugscreening-gpu
+  cpu_hard_cap_minutes: 240
+  gpu_hours: 0
+  output_directory: artifacts/experiments/EXP-050/20261006_exp050_source_five_arm_development_v3

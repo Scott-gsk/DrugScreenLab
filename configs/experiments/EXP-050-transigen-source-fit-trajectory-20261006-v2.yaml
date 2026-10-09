@@ -1,0 +1,77 @@
+experiment_id: EXP-050
+run_id: 20261006_transigen_source_fit_trajectory_v2
+purpose: >-
+  Compare the frozen TranSiGen source implementation under its raw-sum/no-clipping
+  update rule and the existing adapter's loss-normalized/global-clip update rule.
+  The comparison is confined to the 512 frozen TRAIN condition keys and 978-gene axis.
+authorization:
+  scope: A-package train-side source fit trajectory
+  package_gpu_cap: 2.0
+  exp050_settled_gpu_hours_before_package: 0.5839411080763866
+  exp050_open_or_reserved_gpu_hours_before_package: 0.0
+  exp050_total_gpu_cap: 48.0
+  smoke_gate_gpu_hours_with_20_percent_margin: 1.8
+  approved_gpu_uuid: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+data:
+  audit_run_id: 20261001_transigen_official_contract_audit_v1
+  key_table: artifacts/experiments/EXP-050/20261001_transigen_official_contract_audit_v1/selected_train512_condition_keys.tsv
+  key_sha256: 91c1ece0f6350688b5314dc5fe7e90b65111fa603dfd644e18371621a514ccf7
+  values_npz: artifacts/experiments/EXP-050/20261001_transigen_official_contract_audit_v1/selected_train512_control_delta_treated.npz
+  value_archive_sha256: 4ab117fe801c70bb2a3fbfee079b48662aa8b459b7522183cbb19473c412c82a
+  genes: 978
+  conditions: 512
+  evaluation_scope: same 512 TRAIN keys after each epoch; no development or held-out labels
+model:
+  implementation: audited upstream TranSiGen model.py
+  initialization: same scratch state for both arms; no checkpoint loading
+  seed: 20261003
+  latent_dim: 100
+  encoder_hidden: [1200]
+  decoder_hidden: [800]
+  feature_dim: 2048
+  feature_embed_dim: [400]
+  beta: 0.1
+  dropout: 0.1
+optimizer:
+  name: Adam
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  batch_size: 64
+  batch_order: frozen key order, contiguous batches, no shuffle
+  epochs: 100
+  endpoint: fixed epoch 100; no early stopping or model selection
+  matched_step_randomness: reset both arms to the same per-epoch/per-batch seed
+arms:
+  official_raw_sum_no_clipping:
+    loss_update: raw sum of the six official component losses
+    gradient_clipping: none
+  adapter_normalized_global_clip_5:
+    loss_update: official summed objective divided by actual batch size times 978 genes
+    gradient_clipping: global gradient norm 5
+shared:
+  batch_norm: normal TRAIN minibatch running-stat updates only; no separate calibration
+  prediction: model delta is x2_pred minus x1; fixed condition and gene axes
+  baselines: zero change and per-gene mean delta fitted only on the same 512 TRAIN rows
+metrics:
+  nmse: >-
+    Per-key mean squared error after division by the per-gene sample standard
+    deviation fitted on the 512 TRAIN deltas; macro-average across keys, excluding
+    only genes with zero TRAIN standard deviation and reporting their count.
+  correlation: >-
+    Pearson correlation across the 978-gene delta profile for each key, then
+    macro-average over keys with nonconstant truth and prediction; report valid n.
+  amplitude: >-
+    Mean absolute predicted delta divided by mean absolute observed delta over
+    the same key-by-gene matrix.
+  prediction_persistence: epoch-100 keyed prediction matrix plus exact key and gene axes
+forbidden_inputs:
+  - inner development response labels
+  - outer-fold or held-out response labels
+  - locked evaluation labels
+  - PDO treatment response labels
+stop_conditions:
+  - do not start formal training unless both 64-key updates and both full 512-key TRAIN evaluation passes pass integrity checks
+  - project the remaining 1598 updates plus 200 complete 512-key epoch-evaluation passes, initialization, logging, and finalization with 20 percent margin
+  - stop before formal training unless projected total is at most 1.8 GPU hours
+  - never exceed 2.0 GPU hours charged to this A package, including smoke and any failure
+  - stop on a non-finite loss, gradient, or parameter update as an implementation failure; retain the evidence

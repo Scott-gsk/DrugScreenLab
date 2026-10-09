@@ -1,0 +1,73 @@
+experiment_id: EXP-057
+run_id: 20261007_exp057_panacea_external_development_v6_20261007T084324Z
+purpose: fixed source-TRAIN global/per-full-InChIKey mean and zero-change baselines on the XPert-author PANACEA paired-response candidate, gated by metadata-only license, exposure, identity, paired-control and 978-axis freeze
+retention: external development candidate only; not an independent final test, unseen-cell validation, PDO efficacy, or clinical benefit
+data:
+  candidate_path: data/external/xpert/figshare_28955141/v1/extracted/processed_data/PANACEA_sdst_352.h5ad
+  official_release_manifest: data/external/xpert/figshare_28955141/v1/figshare_extraction_manifest.json
+  official_gene_info: data/external/xpert/figshare_28955141/v1/extracted/processed_data/l1000_gene_info_978.csv
+  official_drug_crosswalk: data/external/xpert/figshare_28955141/v1/extracted/processed_data/l1000_sdst_drugs_info_8432.csv
+  author_code_root: /mnt/d/Code/XPert
+  prior_metadata_gate: artifacts/experiments/EXP-057/20261007_exp057_panacea_external_development_v5/metadata_gate.json
+  prior_metadata_rows: artifacts/experiments/EXP-057/20261007_exp057_panacea_external_development_v5/metadata_candidate_rows.tsv
+  prior_gene_axis: artifacts/experiments/EXP-057/20261007_exp057_panacea_external_development_v5/metadata_candidate_genes.txt
+  root_metadata_readback: artifacts/experiments/EXP-057/20261007_exp057_panacea_external_development_v6_20261007T084324Z/root_metadata_independent_readback.json
+  source_train_identity_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+  source_train_values_npz: artifacts/experiments/EXP-051/20261007_exp051_low_rank_baselines_v1/baseline_predictions.npz
+  source_gene_axis_mapping: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/gene_axis_mapping.tsv
+  source_gene_axis_receipt: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/gene_axis_receipt.json
+  source_gene_axis_mapping_sha256: 2ec552f4e7943126456b3ae8557d9d3fd23cbba586fd510a09879b27c970bcc8
+  official_gene_info_sha256: 85806fd6d6eb645925c45c04b0ab26e0769be7dba252e545cbc878bdccfa9a60
+  source: XPert author-release Figshare v1 DOI 10.6084/m9.figshare.28955141.v1
+  author_release_license: CC BY 4.0
+  official_article_id: '28955141'
+  official_version: 1
+  official_file_id: '58181296'
+  official_file_bytes: 1579752267
+  official_file_md5: 4a58bc01b42c7909e7adc2ddd40b30ac
+  metadata_only_first: true
+  forbidden_until_gate_pass:
+    - h5ad_X_values
+    - h5ad_layers_values
+    - obsm_control_values
+  source_train_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_train_conditions: 419
+  source_train_objects: 110
+  source_full_inchikeys: 5
+  source_genes: 978
+  required_key: exact_full_inchikey
+  required_key_value: XGALLCVXEZPNRQ-UHFFFAOYSA-N
+  required_control: same_object_drug_dose_time_matched_pre_treatment_or_vehicle_control
+  required_gene_axis: frozen_978_gene_symbols_and_order
+  target_read_gate: metadata_license_lineage_author_exposure_key_control_gene_axis_all_pass_and_frozen_inclusion_table
+  exposure_disclosure: XPert authors' release contains PANACEA processed data and author code/config/evaluation support; external development only
+  never_read: [PDO_numeric_drug_sensitivity, outer_labels_or_responses, locked_labels_or_responses]
+baselines:
+  estimators:
+    - source_train_global_mean_delta
+    - source_train_mean_delta_by_exact_full_inchikey
+    - zero_change
+  no_target_fitted_preprocessing_or_calibration: true
+  exact_common_key_domain_only: true
+metrics:
+  if_expression_scales_are_incompatible: [gene_direction_agreement, gene_rank_correlation, frozen_function_set_direction]
+  forbid_if_expression_scales_are_incompatible: [NMSE, MAE, amplitude_ratio, target_fitted_rescaling]
+  aggregation: equal_weight_by_independent_source_object_then_drug_equal_weight
+  paired_resampling_unit: independent_source_object
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20261007
+functional_sets:
+  resource: MSigDB Hallmark v2023.2.Hs
+  path: data/raw/exp013/msigdb/h.all.v2023.2.Hs.symbols.gmt
+  sha256: 8ff1f036f0988c99d42cf9e5ea24d355f10b8ece5e0d4f6edf26a0458f480780
+  expected_set_count: 50
+  membership: exact_gene_symbol
+  role: fixed descriptive function-set direction only; no pathway significance test
+resources:
+  cpu_minutes_max: 180
+  gpu_hours_max: 0
+execution:
+  phase: metadata_gate_then_fixed_baselines
+  run_id: 20261007_exp057_panacea_external_development_v6_20261007T084324Z
+  output_root: artifacts/experiments/EXP-057/20261007_exp057_panacea_external_development_v6_20261007T084324Z
+  phase_command: cd /mnt/d/Code/DrugScreenLab && PYTHONPATH=src /home/dell/miniconda3/bin/conda run --no-capture-output -n drugscreening-gpu python scripts/evaluation/evaluate_panacea_external_development_baselines.py --config configs/experiments/EXP-057-panacea-development.yaml --phase run

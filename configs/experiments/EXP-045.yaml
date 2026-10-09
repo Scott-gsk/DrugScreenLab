@@ -1,0 +1,255 @@
+experiment_id: EXP-045
+title: DepMap source dependency training and Nature organoid adaptation for PDO drug ranking
+status: D_E_DUAL_STAGE_RECONSTRUCTION_AND_FULL_PARTITION_GROUP_SHUFFLE_CONTRACT_IMPLEMENTED_51_OF_51_SYNTHETIC_TESTS_PASS_OFFICIAL_DEPMAP_LIBRARY_MAPPING_REGISTERED_REAL_FOLD_ADAPTER_IDENTITY_AND_COST_GATES_PENDING_TRAINING_NO_GO
+protocol_source: docs/exec-plans/active/双路线算法研究与验证方案_20260922.md#15
+record: experiments/records/EXP-045.md
+runtime:
+  environment: WSL2
+  conda_env: drugscreening-gpu
+  run_wall_hours_max: 20
+  package_gpu_hours_max: 48
+  device: cuda
+cohort:
+  direct_response_contract: EXP-036
+  target_label_fraction: 0.5
+  outer_patient_folds: 5
+  inner_patient_folds: 3
+  final_seeds: [20260922, 20260923, 20260924]
+  drug_panel: EXP-036 frozen 14-drug InChIKey contract
+  primary_endpoint: patient_macro_within_patient_spearman
+arms: [D-A, D-E, D-C, D-O, D-CO, D-SC, D-SO]
+auxiliary_data:
+  depmap_version: Public_24Q2
+  depmap_expression_registry_id: depmap_public_24q2_rnaseq_raw_v1
+  depmap_dependency_registry_id: depmap_public_24q2_crispr_gene_effect_raw_v1
+  depmap_screen_metadata_registry_id: depmap_public_24q2_crispr_screen_metadata_raw_v1
+  nature_registry_id: transfer_organoid_biobank_paired_dependency_v1
+  depmap_head: independent_chronos_effect_scale
+  nature_head: independent_nature_crispr_lfc_scale
+  missing_labels: masked_not_zero
+  source_cold_test_identity_and_alias_masking: required
+  ambiguous_rna_entrez_mapping: exclude_unless_authoritative_one_to_one_map
+  nature_depmap_overlap_flagged_models: keep_the_13_flagged_individual_groups_quarantined_until_per_object_authoritative_current_input_bridge_or_safe_exclusion
+  unresolved_target_mcrc_identities: quarantine_only_specific_authoritatively_flagged_overlap_groups_or_unresolved_aliases; no_global_51_patient_one_to_one_match
+  unresolved_target_identity_derivatives_and_repeats: resolve_by_source_and_actual_overlap; exclude_only_affected_biological_groups_and_rebuild_affected_folds
+  confirmatory_training_blocked_if_safe_identity_exclusion_set_unavailable: true
+  flagged_depmap_source_ids: exclude_from_source_auxiliary_training_until_crosswalk_resolved
+  prior_identity_audit_evidence_state: contaminated_after_tool_output_exposed_DSS_in_mixed_identity_JSON; all_identity_observations_unaccepted
+  fresh_strict_outcome_blind_review_required: true
+  safe_per_fold_exclusion_sets_frozen: false
+  independent_function_holdout:
+    status: pending_pre_training_reservation
+    reserve_before_first_auxiliary_label_use: true
+    resources: [DepMap_Public_24Q2, Nature_paired_dependency]
+    depmap_group_unit: cell_line_plus_aliases_and_derivative_repeats
+    nature_group_unit: patient_or_donor_plus_all_samples_repeats_and_drug_observations
+    cross_resource_same_entity: merge_into_one_holdout_group
+    labels_excluded_from: [training, pretraining, adaptation, feature_selection, tuning, candidate_selection, threshold_selection, direction_selection, model_or_module_selection]
+    permitted_after_unblinding: EXP046_preregistered_independent_function_validation_only
+    require_frozen_versions_alias_rules_and_hashed_group_manifest: true
+    require_zero_entity_and_label_overlap_with_EXP045_and_EXP046: true
+    insufficient_or_unprovable_holdout: report_unavailable
+    audit_output: per_resource_group_counts_and_zero_overlap_counts_only
+supervision_contract:
+  shared_expression_representation: PharmaFormer_EXP036_gene_encoder
+  drug_sensitivity_head:
+    label_source: EXP036_patient_pairs_response_DSS
+    positive_direction: higher_is_sensitive
+    supervised_on_allowed_training_patients_in_each_fold: true
+    outer_test_and_inner_validation_labels_excluded_from_fit: true
+  dependency_heads:
+    depmap: independent_Chronos_effect_scale
+    nature: independent_Nature_CRISPR_LFC_scale
+    raw_labels_mixed_across_domains: false
+    missing_labels: masked_not_zero
+  inference_inputs: [pre_treatment_expression, frozen_drug_structure]
+  inference_requires_new_patient_CRISPR_measurement: false
+comparison_family:
+  confirmatory_holm:
+    - D-CO_vs_D-E
+    - D-CO_vs_D-C
+    - D-CO_vs_D-O
+    - D-CO_vs_D-SC
+    - D-CO_vs_D-SO
+    - D-CO_vs_matched_drug_mean
+  exploratory: [D-C_vs_D-E, D-O_vs_D-E, domain_interaction]
+search:
+  exact_candidate_values: pending_real_fold_timing_and_sol_freeze
+  equal_search_opportunities_across_D-E_to_D-SO: required
+  label_shuffle_unit: biological_cell_or_patient_group_within_domain_strata
+stopping:
+  no_training_until_identity_axis_smoke_cost_and_sol_review_pass: true
+  stop_D2_unless_inner_D-CO_gain_positive_vs_D-E_D-SC_D-SO_and_source_retention_passes: true
+  stop_D3_unless_D2_gate_and_EXP-047_input_gate_pass: true
+acceptance:
+  deliverables: [identity_and_scale_receipts, frozen_config, keyed_predictions, patient_paired_metrics, holm_results, source_retention, independent_numeric_recheck, independent_review]
+
+model_interface:
+  module: drug_screen.models.exp045_dependency_heads
+  class: PharmaFormerWithDependencyHeads
+  response_path: "delegates to the frozen PharmaFormer drug-sensitivity forward"
+  shared_expression_representation: "feature_extractor.gene_fc1 then gene_fc2 with the official ReLU activations"
+  dependency_heads:
+    depmap_chronos: "independent head; target dimension frozen per training asset"
+    nature_crispr_lfc: "independent head; target dimension frozen per training asset"
+    raw_scales_mixed: false
+    missing_labels: masked_not_zero
+  inference_entrypoints:
+    drug_sensitivity: "predict_drug_sensitivity(pre_treatment_expression, frozen_drug_structure)"
+    dependency_diagnostics: "predict_dependency_heads(expression)"
+    patient_crispr_required_for_drug_inference: false
+  training_driver_contract: "D-A optimizes DSS only; auxiliary arms optimize fold-safe expression reconstruction and the scheduled domain-specific masked dependency loss"
+  synthetic_test:
+    path: tests/models/test_exp045_dependency_heads.py
+    authored_cases: 19
+    sha256: a8ce93b69124c84437f4bf74f4d71333c8ed8599b391814effb9bc9a412a558
+    status: INCLUDED_IN_57_OF_57_COMBINED_SYNTHETIC_CPU_TESTS_WSL2_CONDA_9_19_SECONDS
+  implementation_sha256: 56aaaf3c45293de99d7f1d4ff7908d1b7f628ae8ae5f67f5271846f1e1b0a423
+
+training_objective:
+  protocol_status: sol_reviewed_amendment_pending_exact_weights_cost_and_go
+  dss_head:
+    loss: EXP036_frozen_patient_equal_weighted_Huber_plus_patient_within_ranking
+    preprocessing: fit_on_allowed_training_fold_only
+  dependency_heads:
+    label_transform: per_domain_training_fold_mean_and_population_standard_deviation
+    loss: domain_specific_masked_mean_squared_error_on_domain_standardized_scale
+    missing_labels: masked_not_zero
+    no_valid_labels_or_invalid_zero_std: fail_closed
+    raw_domain_scales_mixed: false
+  combined_objective: "D-A: L_DSS; D-E/D-C/D-O/D-CO/D-SC/D-SO: lambda_R * L_expression_reconstruction + lambda_C * L_Chronos + lambda_N * L_Nature"
+  weights:
+    exact_values: pending_real_slowest_fold_cost_and_sol_freeze
+    explicit_per_arm: true
+    every_auxiliary_arm_requires_positive_explicit_lambda_R: true
+    active_domain_weight_must_be_positive: true
+    inactive_domain_weight_must_be_explicitly_closed: true
+    rescale_by_active_task_count: false
+  empty_scheduled_active_domain_batch:
+    action: fail_this_step_immediately; upper_driver_may_reschedule_only_under_preregistered_sampler
+    zero_loss_optimizer_step: forbidden
+  arm_semantics:
+    stage_order: [depmap_source_training, nature_organoid_adaptation]
+    D-E: both_stages_same_scheduled_fold_scaled_expression_target_and_mask; positive_lambda_R; one_backward_and_optimizer_step_per_valid_batch; dependency_targets_closed
+    D-C: reconstruction_in_both_stages; depmap_true_target_in_source_stage; reconstruction_only_in_nature_adaptation
+    D-O: reconstruction_in_both_stages; reconstruction_only_in_source_stage; nature_true_target_in_adaptation_stage
+    D-CO: reconstruction_in_both_stages; depmap_true_target_in_source_stage_then_nature_true_target_in_adaptation_stage
+    D-SC: reconstruction_in_both_stages; depmap_within_domain_shuffled_source_target_then_nature_true_target_in_adaptation
+    D-SO: reconstruction_in_both_stages; depmap_true_source_target_then_nature_within_domain_shuffled_adaptation_target
+    D-CO_vs_D-E: retain_in_preregistered_holm_family; interpret_as_increment_from_true_dependency_supervision_over_shared_expression_reconstruction_training
+    identity_specific_effect: primarily_assessed_by_D-CO_vs_D-SC_and_D-SO_with_stage_batches_masks_weights_and_updates_matched
+    record_per_arm_and_stage: scheduled_batches_forward_calls_backward_calls_optimizer_steps_failures_effective_mask_denominators_weights
+    formal_driver_must_match: formal_fold_driver_recomputes_one_full_training_partition_parent_mapping_and_each_batch_projection_then_checks_cross_arm_identity_masks_scales_targets_and_update_opportunities; registered_asset_adapter_and_fold_membership_still_unverified
+  training_gate: still_no_go_until_identity_input_cost_exact_weight_candidate_and_sol_go_pass
+  implementation:
+    module: drug_screen.models.exp045_multitask_objective
+    status: masked_expression_reconstruction_batchwise_driver_and_full_partition_parent_plus_batch_projection_group_permutation_contract_implemented; 51_of_51_focused_synthetic_CPU_tests_pass; registered_asset_adapter_and_fold_membership_pending
+    sha256:
+      dependency_heads: 56aaaf3c45293de99d7f1d4ff7908d1b7f628ae8ae5f67f5271846f1e1b0a423
+      multitask_objective: 68b246c16811aa6613fbbd38ac3090508c1534baf7813fc9bc7f1f1cc6bd86d5
+      fold_step: 58ec2b2410df92cd09c354517530561f48f323e3655457aa5f4dbb6dedb297e3
+      formal_fold_driver: 94ccbe1d32f5ed77dae81f5d8206e5528aeb740a5bea23a158bc66d5d3753f47
+      formal_fold_contract_test: f535ba293c5d1e099b2d5db19ba7a3b1a38610b64b7d3e7492e432fe9ba53ac3
+      grouped_permutation_module: 0b281ebbd8614886ac4342dc6cd574b5ca654966771d1fa5f3ce94f5e9b06501
+      grouped_permutation_test: dd3cf3a07576f968340426111ebea5c51dcbcd7b69691438a8194b574c5b0c5d
+  tests:
+    command: "python -m pytest --capture=no tests/models/test_exp045_fold_step.py tests/models/test_exp045_multitask_objective.py tests/models/test_exp045_dependency_heads.py"
+    result: "57_passed_in_9.19_seconds_in_WSL2_Conda_drugscreening-gpu"
+    objective_test_sha256: 37e83a51079692d54107291283d57a7b4bd90ac8e9b301cb63b476c2664dddb2
+    scope: synthetic_engineering_only_no_real_data_labels_or_training
+    formal_fold_contract:
+      command: "python -m pytest --capture=no tests/data/test_exp045_group_permutation.py tests/modeling/test_exp045_formal_fold.py"
+      result: "51_passed_in_8.37_seconds_in_WSL2_Conda_drugscreening-gpu"
+      scope: "synthetic_CPU_only_tests_group_derangement_receipt_recomputation_batchwise_cross_arm_masks_and_true_source_binding; no_registered_real_labels_CUDA_or_training"
+
+auxiliary_fold_step:
+  module: drug_screen.models.exp045_fold_step
+  implementation_sha256: 58ec2b2410df92cd09c354517530561f48f323e3655457aa5f4dbb6dedb297e3
+  coordinator: exp045_auxiliary_batch_step
+  loss_api: exp045_auxiliary_objective
+  stages: [depmap_source_training, nature_organoid_adaptation]
+  stage_gating: "All six auxiliary arms reconstruct the shared fold-scaled expression target; only the scheduled dependency domain receives labels and positive lambda"
+  arm_label_assignments:
+    D-A: direct_only_no_auxiliary_batch
+    D-E: reconstruction_only_both_stages_one_update_per_valid_batch
+    D-C: reconstruction_both_stages_plus_depmap_true_source_stage
+    D-O: reconstruction_both_stages_plus_nature_true_adaptation_stage
+    D-CO: depmap_true_source_stage_then_nature_true_adaptation_stage
+    D-SC: depmap_within_domain_shuffled_source_stage_then_nature_true_adaptation_stage
+    D-SO: depmap_true_source_stage_then_nature_within_domain_shuffled_adaptation_stage
+  counters: [scheduled_batches, forward_calls, backward_calls, optimizer_steps, failures]
+  test:
+    path: tests/models/test_exp045_fold_step.py
+    sha256: 4bc60e2bf151866a5693c6b91d8916fd954288203239907d6281093def43411393
+    status: PASS_57_OF_57_COMBINED_SYNTHETIC_CPU_TESTS_IN_WSL2_CONDA_9_19_SECONDS
+  limitations:
+    - caller_still_owns_fold_safe_inputs_and_complete_group_batching_from_registered_assets
+    - exact_compatible_groups_require_same_observation_count_ordered_strata_and_per_observation_gene_mask; unmatched_groups_are_masked_out_in_all_corresponding_supervision_arms
+    - effective_exchangeable_group_counts_and_per_fold_receipts_not_yet_frozen_from_registered_assets
+    - exposure_only_runtime_tensor_snapshots_add_unmeasured_memory_and_copy_cost_to_be_included_in_full_costing
+    - no_real_data_identity_labels_CUDA_smoke_or_training
+  execution_note: "Implemented by the current task manager; GPT-6 Sol/medium ruled on stage gating; GPT-6 Luna/max read-only code review found no blocking defect after fixes."
+  reconstruction_contract_revision: "D-E now performs the same masked expression reconstruction update opportunity as the other auxiliary arms; see EXP-045 record dated 2026-09-24"
+
+grouped_label_permutation_contract:
+  status: whole_training_partition_parent_mapping_and_batch_projection_contract_implemented; synthetic_tests_pass; real_fold_adapter_pending
+  module: drug_screen.data.exp045_group_permutation
+  unit:
+    D-SC: all_ModelID_observations_linked_by_official_PatientID_and_source_authoritative_alias_or_derivative_relationships
+    D-SO: nature_individual_ID_with_all_eligible_models_samples_and_repeats
+  scope: whole_current_training_partition_within_registered_cancer_and_each_ModelID_contributing_Library_and_ScreenType_profile
+  compatible_groups: exact_observation_count_deterministic_row_mapping_and_per_observation_gene_missing_mask
+  assignment: seeded_group_level_derangement_without_self_mapping
+  nonexchangeable: exclude_domain_dependency_labels_and_apply_same_effective_mask_to_true_and_shuffled_arms; expression_reconstruction_unchanged
+  receipt: parent_binds_full_partition_rows_groups_assets_strata_input_split_axis_scale_mapping_exclusions_and_output_mask; child_binds_parent_sha_batch_order_and_projection
+  adapter_requirement: freeze_one_group_mapping_per_full_training_partition_then_project_by_observation_key_into_each_batch; repeated_exposures_must_have_identical_projection
+  pretraining_gate: freeze_asset_level_and_per_fold_exchangeable_group_counts_before_training; no_valid_permutation_means_D1_control_not_evaluable
+
+gene_axis_contract_20260924:
+  status: "V1_INDEPENDENT_REVIEW_INCONCLUSIVE; V2_AXIS_SOURCE_BINDING_AND_CONSTRUCTOR_GUARD_REVIEW_VALID_WITH_LIMITATIONS; IDENTITY_DATA_BLOCKED; TRAINING_NO_GO"
+  receipt: artifacts/experiments/EXP-045/20260924_gene_axis_audit_v2/axis_contract.json
+  v1_historical_receipt: artifacts/experiments/EXP-045/20260924_gene_axis_audit_v1/axis_contract.json
+  source_index_binding_receipt: artifacts/experiments/EXP-045/20260924_source_index_binding_v1/source_index_binding.json
+  input_expression_axis:
+    n_genes: 14857
+    ordered_sha256: 306aa19290b2bf0d9a3cc17a3d30946f2d4e4088e94f232f088c981432f197a6
+    order: EXP036_order_preserved_exact_three_way_intersection_DepMap_RNA_Nature_expression
+    position_map: feature_input_axis.column_positions
+    source_checkpoint_input_width_from_prior_audit: 19091
+    source_checkpoint_payload_reopened_in_this_audit: false
+  source_order_binding:
+    source_index_path: data/processed/exp011/gdsc2_cell_line_indexed.npz
+    current_source_index_byte_sha256: bc2ffb22628ed95b65d76dd9677e3e04356f37ab4cef9a61f63afa03a616b965
+    prior_exp036_receipt: artifacts/experiments/EXP-036/20260923_pharmaformer_asset_audit/asset_audit.json
+    prior_source_index_byte_sha256: bc2ffb22628ed95b65d76dd9677e3e04356f37ab4cef9a61f63afa03a616b965
+    byte_sha256_match: true
+    npz_opened_for_binding: false
+    independent_review: valid_with_limitations
+    historical_source_path_and_code_hash_reconstructed: false
+    sol_ruling: conditional_future_exact_slice_only_after_independent_review_and_per_fold_current_checkpoint_sha_dimension_transform_and_real_input_smoke_checks
+  dependency_output_axis:
+    n_genes: 16100
+    ordered_sha256: 9881e9f8184b3586c2211b3554f4fa9e76522055ff4384918f60b27576254965
+    order: EXP036_order_preserved_exact_three_way_intersection_DepMap_Chronos_Nature_dependency
+    independent_domain_heads_and_missing_masks: required
+  model_slice:
+    module: drug_screen.models.exp045_gene_axis
+    rule: exact_ordered_gene_fc1_column_and_transform_vector_slice; no_zero_fill; no_in_place_mutation
+    public_plan_constructor_validation: fail_closed_for_normalized_axes_hashes_position_type_length_range_order_and_gene_mapping
+    synthetic_cpu_tests: tests/models/test_exp045_gene_axis.py
+    result: 23_passed_in_WSL2_Conda_drugscreening_gpu_after_constructor_guard_fix
+    constructor_guard_followup_independent_review: valid_with_limitations
+    real_weight_slice_or_real_input_smoke: not_run
+  matching_controls:
+    all_D15_arms_and_matched_DSS_control_must_use_same_14857_input_axis_folds_patients_drugs_transforms_and_search_budget: true
+    historical_EXP036_19091_gene_metrics_are_not_a_matched_baseline: true
+    matched_drug_mean_baseline_must_be_recomputed_on_frozen_D15_folds: true
+  remaining_gates:
+    independent_axis_review: valid_with_limitations
+    constructor_guard_review: valid_with_limitations
+    target_nature_crosswalk: unresolved_51_patients
+    depmap_source_identity: unresolved_3_ids
+    safe_per_fold_exclusions_and_independent_function_holdout: pending
+    nature_repeat_library_missingness_and_domain_scale_audit: pending
+    formal_fold_driver_real_input_smoke_slowest_fold_cost_exact_weights_candidates_and_final_sol_go: pending
+  training_authorized: false

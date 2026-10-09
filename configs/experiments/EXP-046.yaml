@@ -1,0 +1,125 @@
+experiment_id: EXP-046
+title: Hallmark pathway branch transfer and explanation in PDO drug ranking
+status: registered_real_input_and_control_maps_pass_no_go_pending_training_entry_weight_exposure_and_cost_gates
+protocol_source: docs/exec-plans/active/双路线算法研究与验证方案_20260922.md#16
+record: experiments/records/EXP-046.md
+runtime:
+  environment: WSL2
+  conda_env: drugscreening-gpu
+  run_wall_hours_max: 20
+  package_gpu_hours_max: 48
+  device: cuda
+cohort:
+  direct_response_contract: EXP-036
+  target_label_fraction: 0.5
+  outer_patient_folds: 5
+  inner_patient_folds: 3
+  final_seeds: [20260922, 20260923, 20260924]
+  drug_panel: EXP-036 frozen 14-drug InChIKey contract
+  primary_endpoint: patient_macro_within_patient_spearman
+pathway_resource:
+  id: MSigDB_Hallmark
+  version: h.all.v2023.2.Hs.symbols
+  path: data/raw/exp013/msigdb/h.all.v2023.2.Hs.symbols.gmt
+  sha256: 8ff1f036f0988c99d42cf9e5ea24d355f10b8ece5e0d4f6edf26a0458f480780
+  ordered_gene_axis: EXP-036 genes.json
+  ordered_gene_axis_sha256: bf023d7b110bd820b3b41c67ab9ce5ea6b2381ab5753c3ec6440ee2a61340610
+  pathways: 50
+  matched_axis_genes: 4366
+arms: [P-A, P-C, P-R, P-T, P-N]
+random_pathway_maps:
+  seeds: [20260922, 20260923, 20260924]
+  count: 3
+  map_sha256:
+    "20260922": 5163bb6b0821ed65bc962baf743bc35b9c688b211dc6f6f33c8bafc979826232
+    "20260923": 3202bb8581d2b73adea075c662c829303d7aa0b31ea8e7508c9b7ab8c83645f8
+    "20260924": 26f6d700f1f1093ca76a0bdf908bb3f7beaabfd3f43933b996e51df04efc5e6c
+  use_only_registered_seed_to_sha256_entries: true
+  map_seed_is_independent_of_model_initialization_seed: true
+  inner_assignment:
+    search_seed_count_must_be_multiple_of_map_count: true
+    fixed_balanced_rotation: "For each ordered search seed position j and outer fold position k, map index=(j+k) mod 3; use that map for all three inner folds of that candidate/outer-fold/search-seed opportunity. Same schedule for every candidate; no score-based map choice."
+    equal_map_opportunities_per_candidate_per_outer_fold: true
+  final_outer_evaluation:
+    cross_all_registered_maps_with_all_three_final_initializations: true
+    P_R_fits_per_outer_fold: 9
+    other_arm_fits_per_outer_fold: 3
+    map_seed_and_model_seed_both_in_prediction_receipt_and_budget: true
+    patient_score_aggregation: "Compute the registered patient-level ranking metric separately for each P-R map, then equally average the three patient-level scores within the same outer fold and model initialization before paired P-R vs P-T analysis; retain map-specific predictions and report map variability separately; maps and seeds are not independent biological units."
+  match_for_P_R: [per_gene_degree, pathway_size, sparsity, coverage, mapped_initialization, parameter_count, optimization_steps]
+  proposal_stream:
+    prefix: EXP-046-PR-v1
+    proposal_index_start: 0
+    rejected_proposals_count: true
+    lanes: ["0", "1"]
+    digest_integer: unsigned_big_endian
+    index_modulus: 7299
+    edge_array_order: [gene_utf8_bytes, pathway_utf8_bytes]
+    preserve_edge_array_positions_after_swap: true
+    accepted_swaps_minimum_per_edge: 20
+    edge_hamming_fraction_minimum: 0.90
+    edge_hamming_definition: "|E_true symmetric_difference E_random| / (2 * 7299)"
+    proposals_maximum_per_edge: 2000
+    any_seed_failure: "all_three_maps_fail; keep formal training NO-GO"
+ordinary_sparse_control_P_C:
+  salt: EXP-046-PC-ordinary-v1
+  covered_genes: 4366
+  anonymous_slots: 50
+  edges: 7299
+  gene_order: "SHA-256(salt|gene|gene_id), then gene_id UTF-8 bytes"
+  first_edge: "hash_rank modulo 50"
+  second_edge_gene_set: "first 2933 genes in hash order"
+  target_slot_edges: "slots 0..48: 146 each; slot 49: 145"
+  second_edge_cost: "SHA-256(salt|second|gene_id|slot), unsigned big-endian integer"
+  solver: "networkx.network_simplex"
+  solver_tie_rule: "frozen NetworkX version/source hash and fixed node/edge insertion order; implementation-bound deterministic flow"
+  solver_networkx_version: 3.6.1
+  solver_network_simplex_source_sha256: e85d49353d6930432df82dbb1f73ec759605fb9dd2ac932b1da6a443ca43ecd8
+  map_run_id: 20260924_pathway_control_maps_v1
+  map_arrays_sha256: 96cbba6625e1a0f85b961644225ec82f21259891e1d3b4f8b9d235ea38a47f53
+  ordinary_map_sha256: 8350adec898f14a388b6686958393ae7ed1ba2d64078a9cadc5af06fdf86135a
+  match_for_P_C: [covered_gene_set, total_edge_count, slot_count, slot_capacity_profile, branch_parameter_count, optimization_steps]
+source_weight_opportunity:
+  P_C_P_R_P_T: "same outer-fold source entities/masks, source labels, source and PDO steps, search opportunity, and identical cold-start values for parameters with matching names/shapes; same branch operator/width"
+  P_N: "same source-stage computation, then reset all weights, buffers, and optimizer state to the identical cold start before PDO adaptation"
+source_exposure_audit:
+  status: pending_source_artifact_and_mask_mapping
+  required_each_pdo_outer_fold: true
+  evidence: [actual_source_training_entities_and_aliases, executed_mask_logs, checkpoint_lineage, checkpoint_sha256]
+  require_zero_intersection_with_outer_test_entities_and_aliases: true
+  caller_declared_ids_or_hash_only_sufficient: false
+  receipts_may_emit_identity_values: false
+comparison_family:
+  confirmatory_holm: [P-T_vs_P-C, P-T_vs_P-R, P-T_vs_P-N, P-T_vs_matched_drug_mean]
+explanation:
+  require_additive_contribution_reconstruction: true
+  require_train_fitted_masking_reference: true
+  compare_with_random_branch_masking: true
+  stability_axes: [outer_fold, initialization]
+  causal_claim_from_model_masking: false
+independent_function_validation:
+  source: "only a pre-reserved entity-held-out subset of DepMap_24Q2_and_Nature_paired_dependency; never reuse labels or entities consumed by EXP-045/046 training, pretraining, adaptation, tuning, or selection"
+  entities_must_be_held_out_from_EXP-045_and_EXP-046_training_pretraining_and_selection: true
+  reservation_must_precede_first_EXP-045_auxiliary_label_use: true
+  depmap_group_unit: cell_line_plus_aliases_and_derivative_repeats
+  nature_group_unit: patient_or_donor_plus_all_samples_repeats_and_drug_observations
+  cross_resource_same_entity: merge_into_one_holdout_group
+  require_frozen_versions_alias_rules_and_hashed_group_manifest: true
+  verify_entity_and_label_zero_overlap_before_training: true
+  if_independent_entities_insufficient_or_isolation_unprovable: report_mechanism_validation_unavailable
+search:
+  exact_candidate_values: pending_interface_smoke_cost_and_sol_freeze
+  same_patient_splits_and_drug_panel: required
+performance_profile:
+  status: partial_stage_measurements_only_until_profile_protocol_freeze
+  currently_allowed: [static_operation_counts, existing_synthetic_cuda_single_step_timing, unlabeled_input_read_timing, unlabeled_input_preprocessing_timing]
+  unlabeled_inputs: [ordered_gene_axis, expression, drug_encoding, frozen_split_group_keys_and_row_counts]
+  prohibited_inputs_or_outputs: [response_columns, outer_test_labels, model_scores, validation_scores]
+  full_profile_only_requires_separate_freeze: [model_and_maps, batch_size, initialization, synthetic_target_shape, warmup_and_timed_steps, representative_fold_rule, source_stage_timing_basis, repeats_and_slowest_fold_extrapolation]
+  profile_weights_and_predictions: discard_without_selection
+  gpu_accounting: synchronized_wall_seconds_divided_by_3600_including_warmup_failures_and_retries
+stopping:
+  no_training_until_interface_smoke_cost_and_sol_review_pass: true
+  stop_dependency_factorial_unless_inner_pathway_gain_and_source_retention_pass: true
+acceptance:
+  deliverables: [resource_and_axis_receipts, frozen_config, keyed_predictions, patient_paired_metrics, holm_results, contribution_fidelity, stability, source_to_organoid_transfer, independent_function_status, independent_numeric_recheck, independent_review]

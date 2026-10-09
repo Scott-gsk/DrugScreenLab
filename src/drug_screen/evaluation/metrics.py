@@ -5,6 +5,9 @@ Implements:
 - Spearman ρ (任务 A 逐药 / 任务 B 补充)
 - Top-k 重合率 (默认 k=5)
 - MAE / RMSE (同研究终点内数值预测)
+- masked_spearman / masked_pearson（W3-09，2026-09-22 审计修复）：
+  正确并列秩（``scipy.stats.rankdata`` method="average"）+ 显式缺失
+  掩码（pairwise complete）
 """
 
 from __future__ import annotations
@@ -12,6 +15,7 @@ from __future__ import annotations
 from typing import Sequence
 
 import numpy as np
+from scipy.stats import rankdata
 
 ArrayLike = Sequence[float] | np.ndarray
 
@@ -72,6 +76,8 @@ def spearman_rho(y_true: ArrayLike, y_pred: ArrayLike) -> float:
     """Spearman rank correlation (average ranks for ties).
 
     Returns NaN when either side has zero variance in ranks (undefined).
+    输入须为有限值（含 NaN 时抛错）；缺失掩码（pairwise complete）版本
+    见 ``masked_spearman``。
     """
     truth = _as_1d(y_true, "y_true")
     pred = _as_1d(y_pred, "y_pred")
@@ -80,33 +86,83 @@ def spearman_rho(y_true: ArrayLike, y_pred: ArrayLike) -> float:
     if truth.size < 2:
         return float("nan")
 
-    def _rank(a: np.ndarray) -> np.ndarray:
-        sorter = np.argsort(a, kind="mergesort")
-        ranks = np.empty(a.size, dtype=float)
-        ranks[sorter] = np.arange(1, a.size + 1, dtype=float)
-        # average ties
-        _, start_idx, counts = np.unique(a, return_index=True, return_counts=True)
-        # unique on unsorted a: recompute via sorted values
-        sorted_a = a[sorter]
-        i = 0
-        while i < sorted_a.size:
-            j = i + 1
-            while j < sorted_a.size and sorted_a[j] == sorted_a[i]:
-                j += 1
-            if j - i > 1:
-                avg = (i + 1 + j) / 2.0
-                ranks[sorter[i:j]] = avg
-            i = j
-        return ranks
-
-    rt = _rank(truth)
-    rp = _rank(pred)
+    rt = rankdata(truth, method="average")
+    rp = rankdata(pred, method="average")
     rt_c = rt - rt.mean()
     rp_c = rp - rp.mean()
     denom = float(np.sqrt(np.sum(rt_c**2) * np.sum(rp_c**2)))
     if denom == 0.0:
         return float("nan")
     return float(np.sum(rt_c * rp_c) / denom)
+
+
+def _pairwise_valid(
+    a: ArrayLike, b: ArrayLike, mask: ArrayLike | None, name_a: str, name_b: str,
+) -> tuple[np.ndarray, np.ndarray, int]:
+    """成对完整（pairwise complete）有效位置：isfinite(a) & isfinite(b)
+    & (mask 若给定)。返回 (a[valid], b[valid], n_valid)。"""
+    arr_a = np.asarray(a, dtype=float).reshape(-1)
+    arr_b = np.asarray(b, dtype=float).reshape(-1)
+    if arr_a.shape != arr_b.shape:
+        raise ValueError(f"{name_a} and {name_b} must have the same shape")
+    if arr_a.size == 0:
+        raise ValueError("inputs must be non-empty")
+    valid = np.isfinite(arr_a) & np.isfinite(arr_b)
+    if mask is not None:
+        m = np.asarray(mask, dtype=bool).reshape(-1)
+        if m.shape != arr_a.shape:
+            raise ValueError("mask must have the same shape as the inputs")
+        valid = valid & m
+    return arr_a[valid], arr_b[valid], int(valid.sum())
+
+
+def masked_spearman(
+    a: ArrayLike,
+    b: ArrayLike,
+    mask: ArrayLike | None = None,
+) -> tuple[float, int]:
+    """显式缺失掩码的 Spearman 相关（W3-09）。
+
+    有效位置 = isfinite(a) & isfinite(b) & (mask 若给定)——pairwise
+    complete 缺失处理 + 正确并列秩（``rankdata`` method="average"）。
+
+    Returns
+    -------
+    (rho, n_used)：有效数 < 2 或任一侧秩零方差（常数）→ (NaN, n_used)。
+    """
+    x, y, n_used = _pairwise_valid(a, b, mask, "a", "b")
+    if n_used < 2:
+        return float("nan"), n_used
+    rx = rankdata(x, method="average")
+    ry = rankdata(y, method="average")
+    rx_c = rx - rx.mean()
+    ry_c = ry - ry.mean()
+    denom = float(np.sqrt(np.sum(rx_c**2) * np.sum(ry_c**2)))
+    if denom == 0.0:
+        return float("nan"), n_used
+    return float(np.sum(rx_c * ry_c) / denom), n_used
+
+
+def masked_pearson(
+    a: ArrayLike,
+    b: ArrayLike,
+    mask: ArrayLike | None = None,
+) -> tuple[float, int]:
+    """显式缺失掩码的 Pearson 相关（W3-09：pairwise complete）。
+
+    Returns
+    -------
+    (rho, n_used)：有效数 < 2 或任一侧零方差 → (NaN, n_used)。
+    """
+    x, y, n_used = _pairwise_valid(a, b, mask, "a", "b")
+    if n_used < 2:
+        return float("nan"), n_used
+    x_c = x - x.mean()
+    y_c = y - y.mean()
+    denom = float(np.sqrt(np.sum(x_c**2) * np.sum(y_c**2)))
+    if denom == 0.0:
+        return float("nan"), n_used
+    return float(np.sum(x_c * y_c) / denom), n_used
 
 
 def top_k_overlap(

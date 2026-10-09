@@ -7,9 +7,10 @@ RULES = ROOT / "AGENTS.md"
 AGENT_DIR = ROOT / ".codex" / "agents"
 
 
-def test_agent_rules_are_concise_and_point_to_authoritative_state():
+def test_agent_rules_point_to_authoritative_state_and_governance():
     text = RULES.read_text()
-    assert len(text) < 5_000
+    # 用户于2026-09-24明确取消机械字数上限，按实际约束维护入口。
+    assert "docs/AGENT_GOVERNANCE.md" in text
     for path in (
         "PROJECT_STATE.yaml",
         "experiments/registry.yaml",
@@ -61,11 +62,11 @@ def test_agent_rules_forbid_destructive_git_cleanup():
     assert "删除前确认路径、引用和恢复点" in text
 
 
-def test_agent_rules_define_orchestration_roles_without_model_binding():
+def test_agent_rules_define_orchestration_and_current_user_configuration():
     text = RULES.read_text()
     assert "复杂研究采用先进模型" in text
     assert "可由 Manager 调用子 Agent" in text
-    assert "`AGENTS.md` 只能规定编排策略" in text
+    assert "用户当前配置" in text
     assert "Manager 必须复核执行方（子 Agent）" in text
 
 
@@ -81,3 +82,7 @@ def test_optional_agent_templates_remain_well_formed():
     templates = {path.name: tomllib.loads(path.read_text()) for path in AGENT_DIR.glob("*.toml")}
     assert {name: template["name"] for name, template in templates.items()} == expected
     assert templates["reviewer.toml"]["sandbox_mode"] == "read-only"
+    for template in templates.values():
+        assert template["model"] == "gpt-6-luna"
+        assert template["model_reasoning_effort"] == "max"
+        assert "docs/AGENT_GOVERNANCE.md" in template["developer_instructions"]

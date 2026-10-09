@@ -1,0 +1,111 @@
+experiment_id: EXP-060
+title: TranSiGen frozen-checkpoint inference randomness diagnostic
+record: experiments/records/EXP-060.md
+authorization:
+  user_scope: EXP060-FROZEN-INFERENCE-0103
+  owner_role: model_engineer
+  requested_model: gpt-6-luna
+  requested_reasoning_effort: xhigh
+  device: cpu
+  cuda_visible_devices: ""
+  gpu_hours_cap: 0
+  new_package_cpu_cap_seconds: 1800
+  inherited_exp059_cpu_cap_seconds: 7200
+  inherited_exp059_cpu_settled_seconds: 2810.203837950108
+  inherited_exp059_cpu_remaining_seconds: 4389.796162049892
+  new_package_pre_registration_shell_failure_seconds: 35
+  margin_fraction: 0.20
+  first_inference_is_formal_seed_20261006: true
+data:
+  source_experiment_id: EXP-051
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  split: EXP-051 frozen train/inner_dev object-disjoint contract
+  train_conditions: 419
+  train_source_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_source_objects: 24
+  object_overlap: 0
+  full_inchikeys: 5
+  genes: 978
+  source_response_rows: train_only_for_candidate_selection
+  inner_dev_numeric_access: only_after_train_selection_receipt_frozen_for_one_selected_candidate
+  forbidden_numeric_inputs:
+    - PDO_drug_sensitivity
+    - PDO_treated_transcript_response
+    - outer_labels
+    - locked_labels
+    - PANACEA_numeric_values
+  checkpoint:
+    path: artifacts/experiments/EXP-059/20261008_exp059_transigen_lr1e4_bindingfix_v2/fit_attempt_001/TranSiGen_final_epoch_300.pt
+    sha256: fa75ce08d6013c42ee52f503230cfc0f1bbe4a30036b11c4e705f7d2981d92f2
+    epoch: 300
+    role: frozen_fixed_epoch_300_main_endpoint
+  baseline_artifacts:
+    train_metrics: artifacts/experiments/EXP-059/20261008_exp059_transigen_lr1e4_bindingfix_v2/fit_attempt_001/train_baseline_metrics.json
+    inner_dev_metrics: artifacts/experiments/EXP-059/20261008_exp059_transigen_lr1e4_bindingfix_v2/postcheckpoint_inner_dev_evaluation_recovery_v1/recovered_fixed300_evaluation.json
+model:
+  architecture: upstream_original_TranSiGen
+  checkpoint_mode: frozen_inference_only
+  model_eval: true
+  no_grad: true
+  optimizer_loaded: false
+  optimizer_updates: 0
+  batchnorm_updates: 0
+  batch_size: 64
+  stochastic_inference_seeds:
+    - 20261006
+    - 20261007
+    - 20261008
+    - 20261009
+    - 20261010
+    - 20261011
+    - 20261012
+    - 20261013
+    - 20261014
+    - 20261015
+    - 20261016
+    - 20261017
+    - 20261018
+    - 20261019
+    - 20261020
+    - 20261021
+  candidates:
+    - mc16_mean
+    - mu_both_levels
+  deterministic_latent_policy: replace_each_sample_latent_call_with_its_mu
+  deterministic_expectation_claim: false
+  model_state_must_be_tensor_exact_before_after: true
+selection:
+  primary_random_reference: arithmetic_mean_of_16_single_inference_object_macro_nmse
+  candidate_min_nmse_reduction_vs_random_reference: 0.10
+  candidate_min_nmse_reduction_vs_train_per_full_inchikey_mean: 0.10
+  candidate_amplitude_ratio_range: [0.5, 2.0]
+  winner: lowest_train_nmse_among_candidates_passing_all_gates
+  tie_break: mu_both_levels
+  inner_dev_candidate_count_max: 1
+  no_candidate_passes_means_no_inner_dev_numeric_access: true
+metrics:
+  primary: object_macro_nmse
+  secondary:
+    - object_macro_mae
+    - object_macro_direction_agreement
+    - object_macro_gene_correlation
+    - object_macro_amplitude_ratio
+    - per_full_inchikey_metrics
+  bootstrap:
+    unit: source_object
+    repeats: 2000
+    rng_seed: 2060
+    selection_use: false
+  standardized_prediction_variance: per_gene_variance_of_16_predictions_divided_by_train_response_variance
+  denominator: full_keyed_conditions_times_train_nonconstant_genes
+execution:
+  run_id: 20261008_exp060_frozen300_inference_v1
+  attempt_id: fit_attempt_001
+  artifact_root: artifacts/experiments/EXP-060
+  overwrite_existing_output: false
+  cost_gate_after_first_full_train_prediction: true
+  continue_only_if_projected_full_package_plus_margin_fits_both_cpu_caps: true
+  fixed_post_inference_and_readback_overhead_seconds: 300
+  preserve_each_seed_prediction: true
+  cuda_initialization_forbidden: true

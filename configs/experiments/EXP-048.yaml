@@ -1,0 +1,144 @@
+experiment_id: EXP-048
+title: Exploratory nine-drug cross-route fusion in PDO drug ranking
+status: protocol_frozen_with_scoped_interpretation; existing_user_authorization_bound_to_actual_Sol_shared_allocation; WSL_GPU_QUEUE_PREFLIGHT_PASS; awaiting_coordinator_start_dispatch; no_training_started
+predecessor: EXP-047
+protocol_authority:
+  - approved_dual_route_plan_and_mandatory_fusion_scope
+  - user_2026-09-26_instruction_superseding_nine_drug_authorization_pending_status
+  - experiments/records/EXP-047.md#2026-09-26-gpt-6-sol-medium-once-candidate-ruling
+  - artifacts/experiments/EXP-048/20260926_target_missingness_sol_ruling/decision.json
+  - artifacts/experiments/EXP-048/20260926_shared_tranche_reallocation_sol_ruling/decision.json
+  - artifacts/experiments/EXP-048/20260926_fusion_protocol_freeze_sol_ruling/decision.json
+runtime:
+  environment: WSL2
+  conda_env: drugscreening-gpu
+  formal_run_wall_hours_max: 20
+  resource_accounting: artifacts/experiments/EXP-037/20260926_conditional_v2_folds3_4_budget_amendment_v2/queue_ledger.jsonl
+  shared_authorized_tranche_gpu_hours_max: 40
+  current_priority: EXP048_user_authorized_full_five_fold_five_arm_queue; actual_Sol_allocation_and_existing_40h_ledger_bound; queue_preflight_passed; await_coordinator_start_dispatch
+  exp048_allocated_package_gpu_hours: 14.5
+  exp048_first_fold_profile_cap_gpu_hours: 2.0
+  shared_allocation_event_timestamp_utc: 2026-09-26T13:03:27Z
+  shared_settled_gpu_hours_at_preflight: 11.07065661950389
+  shared_reserved_gpu_hours_at_preflight: 0.8
+  shared_available_gpu_hours_at_preflight: 28.12934338049611
+  authorized_gpu_uuid: GPU-28e12675-3061-2ea8-76ae-71109edf5dd7
+  historical_48h_gpu_usage: UNKNOWN_UNRECOVERED
+  attempt_charge_rule: reserved_hours_before_spawn_then_wall_elapsed_gpu_hours_on_finish; every_failed_or_resumed_attempt_counts; no_reset_or_split
+cohort:
+  task: exploratory_cross_route_fusion_on_direct_pdo_drug_response
+  target_label_fraction: 0.5
+  outer_patient_folds: 5
+  inner_patient_folds: 3
+  seeds: [20260922, 20260923, 20260924]
+  target_patient_axis: EXP-036_frozen_51_patient_axis
+  primary_metric: patient_macro_within_patient_spearman
+  minimum_observed_drugs_per_patient: 3
+  target_missingness_ruling: ALLOW_OBSERVED_KEY_PATIENT_MACRO_SCORING_CONDITIONALLY; all_51_eligible; shared_patient_specific_observed_keys_across_all_arms_and_seeds; no_imputation; no_patient_specific_substitution
+drug_panel:
+  size: 9
+  source: artifacts/experiments/EXP-047/20260926_alt_common_panel_protocol_v1/receipt.json
+  target_indices: [0, 1, 3, 4, 5, 7, 9, 12, 13]
+  target_inchikeys:
+    - AAKJLRGGTJKAMG-UHFFFAOYSA-N
+    - AHJRHEGDXFFMBM-UHFFFAOYSA-N
+    - BKWJAKQVGHWELA-UHFFFAOYSA-N
+    - FDLYAMZZIXQODN-UHFFFAOYSA-N
+    - GHASVSINZRGABV-UHFFFAOYSA-N
+    - LIRYPHYGHXZJBZ-UHFFFAOYSA-N
+    - NDAZATDQFDPQBD-UHFFFAOYSA-N
+    - ZBNZXTGUTAYRHI-UHFFFAOYSA-N
+    - ZLHFILGSQDJULK-UHFFFAOYSA-N
+pert_ids:
+  - BRD-K70401845
+  - BRD-K51313569
+  - BRD-K54256913
+  - BRD-K02113016
+  - BRD-K24844714
+  - BRD-K12343256
+  - BRD-K41859756
+  - BRD-K49328571
+  - BRD-K75295174
+source_reference_input:
+  source_cell: MCF7
+  dose_molar: 0.00001
+  time_hours: 24
+  gene_count: 978
+  oof_rule: each_source_cell_uses_only_its_held_out_fold_predictions; three_seed_mean_then_equal_weight_over_shared_source_cells_and_exposure_keys
+  current_receipt: artifacts/experiments/EXP-048/20260926_nine_drug_mcf7_fusion_inputs_v1/receipt.json
+arms:
+  F-A_direct: [pretreatment_PDO_expression, drug_structure]
+  F-B_perturbation_only: [drug_structure, frozen_source_cell_OOF_perturbation]
+  F-F_fusion: [pretreatment_PDO_expression, drug_structure, same_frozen_source_cell_OOF_perturbation]
+  F-C_equal_capacity_direct: [pretreatment_PDO_expression, drug_structure, matched_ordinary_direct_branch]
+  F-S_shuffled_perturbation: [pretreatment_PDO_expression, drug_structure, source_identity_shuffled_perturbation]
+comparisons:
+  primary_family: [F-F_vs_F-A, F-F_vs_F-B, F-F_vs_F-C, F-F_vs_F-S]
+  paired_unit: patient
+  bootstrap_replicates: 2000
+  sign_flip_replicates: 10000
+  multiplicity: Holm_across_four_registered_fusion_comparisons
+current_input_result:
+  source_vector_status: PASS
+  source_vector_shape: [9, 978]
+  source_holdout_fold: 3
+  target_patients_with_all_nine_labels: 0
+  target_patient_drug_count_histogram: {"7": 51}
+  target_response_values_decoded_during_input_check: false
+  target_feature_binding_status: TARGET_FEATURE_IDENTITY_AND_SHARED_KEY_MASK_PASS
+  target_feature_binding_receipt: artifacts/experiments/EXP-048/20260926_target_feature_binding_v1/receipt.json
+  target_feature_binding_receipt_sha256: 4877ba04d628258033f42770728bce52c56bcf94a2c0335a20464bb80fae6caf
+  patient_expression_shape: [51, 19091]
+  drug_ordinal_shape: [14, 128]
+  common_patient_drug_key_mask_rows: 459
+  target_missingness_decision: artifacts/experiments/EXP-048/20260926_target_missingness_sol_ruling/decision.json
+  target_missingness_decision_sha256: 2371b175f479eb57f19d253289ea67ab422ef386ead4a44e68cfcb4d6bdec12b
+  formal_training_scope_user_authorized: true
+  formal_training_start_gate: actual_Sol_medium_exp048_allocation_in_existing_40h_shared_ledger_and_idle_A5000_index_1_UUID_check
+fusion_protocol_package:
+  status: FROZEN_WITH_SCOPED_INTERPRETATION_NO_TRAINING
+  sol_decision: artifacts/experiments/EXP-048/20260926_fusion_protocol_freeze_sol_ruling/decision.json
+  sol_decision_sha256: 6f3cdb509529a2002ef5283f372a7bc2d678bf20efde616953b73c665d350d4b
+  actual_decision_model: gpt-6-sol
+  actual_reasoning_effort: medium
+  source_cell_and_exposure: MCF7_10uM_24h_only; no_patient_specific_perturbation_claim
+  source_oof_aggregation: heldout_source_fold_per_condition; equal_mean_of_three_fixed_seeds; equal_weight_across_exact_shared_cell_exposure_keys
+  target_panel: fixed_nine_drug_global_candidate; evaluate_each_patient_on_their_seven_observed_keys
+  frozen_backbone: shared_registered_source_checkpoint; dynamically calculate sequence slots from actual gene_hidden_size+drug_hidden_size divided by feature_dim; official example is 66 slots with 64 expression and 2 drug slots
+  frozen_fusion: F_F adds GELU(linear_978_to_h(source_OOF)) to PDO expression latent before official concatenation_and_transformer
+  frozen_perturbation_only: F_B never reads_or_computes PDO expression; perturbation projection fills all gene_expression_latent sequence slots; PDO expression encoder unused_and_frozen
+  frozen_search: reuse_EXP036_STANDARD_CANDIDATES_exactly_18_per_arm_x_3_inner_patient_folds_then_3_fixed_seed_refits_max_100_epochs_patience_10
+  frozen_equal_capacity_control: F_C adds ordinary h_to_r_to_h expression residual MLP; choose_r_from_actual_checkpoint_to_match_F_F_added_parameters_within_0_2pct; interpret_as_approximate_capacity_and_update_control
+  frozen_shuffle_control: F_S uses cyclic_shift_by_one_over_frozen_InChIKey_order_no_fixed_points_same_for_all_folds_and_seeds_before_response_access; sensitivity_control_not_mechanism_proof
+  frozen_added_module_initialization: deterministic_per_registered_seed; perturbation_projection_and_adapter_up_weight_normal_std_1e-4_bias_zero; adapter_down_weight_torch_default_deterministic
+  cpu_gate: scripts/modeling/exp048_fusion_cpu_preflight.py; F_F_and_F_S_perturbation_delta_RMS_over_F_A_expression_latent_RMS_at_most_1pct; F_C_residual_RMS_ratio_at_most_1pct; F_B_must_not_access_expression_and_reports_perturbation_projection_norm; added_module_gradients_finite_and_nonzero
+  shared_statistics: patient_macro_spearman; 4_registered_F_F_pairwise_contrasts; patient_bootstrap_2000; finite_corrected_sign_flip_10000; Holm
+  gpu_cost: low_confidence_plan_estimate_from_EXP036_50pct_fold_charges; not_an_EXP048_measurement; use_full_package_cap_from_latest_Sol_allocation
+  decision: FROZEN_SCOPED_COMPARISON; no_new_budget_GPU_profile_or_launch_authorized_by_this_review
+execution:
+  trainer: scripts/modeling/exp048_fusion_fold.py
+  budget_queue: scripts/modeling/run_exp048_fivefold_queue.py
+  post_prediction_scorer: scripts/evaluation/aggregate_exp048_fusion.py
+  output_root: artifacts/experiments/EXP-048/20260926_fusion_training_v1
+  authorization_receipt: artifacts/experiments/EXP-048/20260926_fivefold_gpu_authorization/authorization.json
+  queue_preflight_receipt: artifacts/experiments/EXP-048/20260926_fusion_training_preflight_final/receipt.json
+  queue_order: [0, 1, 2, 3, 4]
+  reuse_completed_fold_predictions: true
+  resume_requires: matching_input_and_code_hashes; all_prior_attempts_closed_or_reconciled; explicit_resume_after_failure_flag
+  outer_test_labels_loaded_during_training_or_selection: false
+  stdout_before_final_scoring: status_hash_progress_only
+  accepted_prediction_keys: 51_frozen_patients_x_7_shared_observed_keys_x_5_arms_x_3_seeds
+  scoring_output: artifacts/experiments/EXP-048/20260926_fusion_fivefold_scoring_v1
+planning_cost:
+  actual_reference: artifacts/experiments/EXP-037/20260926_conditional_v2_folds3_4_budget_amendment_v2/queue_ledger.jsonl
+  exp036_50pct_fold_gpu_hours: {"2": 0.759133, "3": 0.748552, "4": 0.795202}
+  arithmetic_assumption: exp048_has_5_arms_vs_exp036_4_arms_with_same_18_candidates_x_3_inner_folds_x_3_final_seeds; linear_5_over_4_wall_time_scaling; architecture_and_label_split_costs_assumed_comparable
+  estimated_exp048_gpu_hours_per_fold_sensitivity_range: [0.9357, 0.9940]
+  estimated_exp048_fivefold_gpu_hours_sensitivity_range: [4.6784, 4.9700]
+  estimated_exp048_fivefold_point: 4.7977
+  uncertainty: low_confidence_planning_extrapolation_only; 3_measured_exp036_folds_not_a_prediction_interval; no_EXP048_GPU_timing_exists; failures_and_recovery_need_additional_reserved_headroom
+stopping:
+  never_change_drug_panel_per_patient: true
+  never_impute_missing_target_responses: true
+  no_training_before_core_and_shared_cost_gate: true
+  no_external_test_selection: true

@@ -1,0 +1,27 @@
+experiment_ids: [EXP-066, EXP-067]
+protocol_version: response_benefit_shared_contract_v1
+data:
+  lincs_conditions_path: data/processed/lincs/GSE92742/continuous_conditions_v2/conditions.parquet
+  lincs_conditions_manifest_path: data/processed/lincs/GSE92742/continuous_conditions_v2/manifest.json
+  lincs_gene_axis_path: data/processed/lincs/GSE92742/continuous_contract_v2/genes.json
+  lincs_delta_path: data/processed/lincs/GSE92742/continuous_conditions_v2/condition_delta.npy
+  lincs_treatment_instances_path: data/processed/lincs/GSE92742/continuous_contract_v2/treatments.parquet
+  lincs_control_groups_path: data/processed/lincs/GSE92742/continuous_contract_v2/controls.parquet
+  lincs_pert_info_path: data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_pert_info.txt.gz
+  identity_split_path: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+  ctrp_identity_path: data/artifacts/resource_acquisition_20260916/ctrp_parse/ctrp_depmap_identity_map.csv
+  depmap_model_path: data/raw/depmap/24q2/Model.csv
+  depmap_exact978_mapping_path: data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_mapping.json
+  depmap_expression_matrix_path: data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_log2tpm.npy
+  depmap_audit_path: data/processed/depmap/24q2_rnaseq_exact978/intake_audit.json
+  ctrp_drugs_path: data/processed/exp013/ctrp_v2/drugs.csv
+  ctrp_response_path: data/processed/exp013/ctrp_v2/responses.csv
+  max_conditions: 20000
+  target_axis_sha256: b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623
+model:
+  folds: 5
+  seed: 660067
+resources:
+  shared_metadata_cpu_cap_seconds: 300
+outputs:
+  shared_dir: artifacts/experiments/EXP-066/EXP-067

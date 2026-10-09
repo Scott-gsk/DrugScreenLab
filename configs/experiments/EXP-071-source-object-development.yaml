@@ -1,0 +1,91 @@
+experiment_id: EXP-071
+title: TranSiGen fixed-checkpoint source-object development evaluation
+parent_experiment: EXP-070
+run_id: 20261009_transigen_source_object_dev_v1
+protocol_status: FROZEN_SOURCE_TRAIN_INTERNAL_DEVELOPMENT
+question: Does the fixed EXP-070 2100-update TranSiGen checkpoint predict responses for source-TRAIN objects excluded from all fitting?
+
+model:
+  checkpoint: artifacts/experiments/EXP-070/20261009_transigen_fixed_updates_v1/fixed2100_attempt_001/epoch_2100_checkpoint.pt
+  checkpoint_epoch: 2100
+  model_training: false
+  architecture: upstream_original_TranSiGen
+  initialization_seed: 20261006
+  author_evaluation_seed: 20261006
+  author_evaluation_batch_size: 64
+  prediction: predicted_delta_equals_predicted_treated_expression_minus_control_expression
+
+inputs:
+  source_train_conditions: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+  frozen_fit_keys: artifacts/experiments/EXP-069/transigen/20261009_transigen_train_reliability_v1/shared_train32_keys.tsv
+  gene_axis_mapping: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/gene_axis_mapping.tsv
+  source_numeric_inputs: existing_EXP055_verified_419_condition_TRAIN_contract
+  fit_conditions: 32
+  fit_objects: 25
+  development_conditions: 316
+  development_objects: 85
+  drugs: 5
+  genes: 978
+  development_rule: remove every source_object_id represented among the 32 fixed fit keys, then score every remaining legal source-TRAIN condition
+  excluded_fit_object_rows: 103
+  excluded_fit_rows: 32
+  excluded_same_object_nonfit_rows: 71
+  train_only_data: true
+  source_train_internal_development: true
+  old_93_dev_values_read: false
+  outer_locked_values_read: false
+  pdo_values_read: false
+  breast_response_values_read: false
+
+metrics:
+  primary_target: delta_expression_X_minus_X_ctl
+  primary_gene_variance_fit_scope: only_the_32_fixed_fit_labels
+  variance_ddof: 0
+  zero_variance_threshold: 1.0e-12
+  zero_variance_genes: exclude_and_report_ids_and_count
+  normalization_aggregation: per_condition_mean_squared_error_over_positive_training_gene_variances_then_conditions_equal_within_object_then_objects_equal
+  metrics: [object_macro_nmse, object_macro_mae, object_macro_direction_agreement, object_macro_amplitude_ratio]
+  direction_zero_threshold: 1.0e-12
+  additional_comparison_denominator: original_419_source_TRAIN_population_gene_variance_from_EXP070
+  paired_object_bootstrap_replicates: 10000
+  paired_object_bootstrap_seed: 20261006
+  paired_object_bootstrap_interval: percentile_95_percent
+  primary_contrast: strongest_fixed_reference_baseline_minus_TranSiGen_object_macro_NMSE
+  strongest_baseline_selection: minimum_full_cohort_object_macro_NMSE_among_zero_global_mean_per_drug_mean_and_fixed_ridge
+  bootstrap_strongest_baseline: choose_the_lowest_mean_baseline_NMSE_within_each_paired_object_resample
+
+baselines:
+  fit_scope: only_the_32_fixed_fit_labels
+  methods: [zero_change, global_mean_delta, per_drug_mean_delta]
+  model_selection: none
+
+linear_reference:
+  name: ridge_control_expression_plus_ECFP4
+  input: concatenate_unscaled_control_expression_978_and_audited_ECFP4_2048
+  scaler: one_StandardScaler_fit_only_on_32_fit_rows
+  target: raw_delta_expression
+  alpha: 1.0
+  fit_intercept: true
+  search: false
+
+acceptance:
+  relative_nmse_reduction_vs_strongest_fixed_reference: 0.10
+  amplitude_ratio_inclusive: [0.5, 2.0]
+  paired_object_bootstrap_absolute_nmse_improvement_ci_lower: greater_than_zero
+  final_author_evaluation_all_finite: true
+  interpretation: pass_is_internal_development_signal_only_and_does_not_approve_breast_panel_or_PDO_evaluation
+
+resources:
+  device: cpu
+  cuda_visible_devices: ""
+  gpu_hours: 0
+  cpu_threads: 1
+  model_training_or_finetuning: false
+
+outputs:
+  root: artifacts/experiments/EXP-071/20261009_transigen_source_object_dev_v1
+  full_keyed_prediction_archive: predictions_316_keyed.npz
+  per_method_metrics: per_method_metrics.tsv
+  per_object_metrics: per_object_metrics.tsv
+  paired_bootstrap_draws: paired_object_bootstrap.npz
+  summary: result.json

@@ -1,0 +1,30 @@
+experiment_id: EXP-054
+run_id: 20261007_exp054_exp053_per_drug_decomposition_retry1
+title: EXP-053 fixed TRAIN OOF per-drug heterogeneity decomposition
+authorization_basis: continuous_algorithm_research_plan_20261006_section_exp051_followup_path_cpu_only_analysis_of_authorized_train_oof
+purpose: descriptive stratification of one completed object-level OOF comparison to determine whether the aggregate negative state-residual result is uniform across its five already-seen drugs
+retention: preserve the immutable EXP-053 run; no new model fitting, no candidate selection, and no claim beyond the fixed TRAIN OOF drug strata
+source_run_dir: artifacts/experiments/EXP-053/20261007_exp053_drug_shared_state_residual_v1
+recovery_run_dir: artifacts/experiments/EXP-053/20261007_exp053_drug_shared_state_residual_recovery_v1
+frozen_train_key_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+gene_axis_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/gene_axis_mapping.tsv
+output_root: artifacts/experiments/EXP-054
+data_role:
+  input: saved EXP-053 TRAIN-only object-OOF truth and predictions; frozen TRAIN metadata and gene axis for identity checks only
+  forbidden: [inner_dev_numeric_responses, PDO_drug_sensitivity, outer_labels, locked_labels, new_public_response_data]
+analysis:
+  denominator: 419 TRAIN conditions x 978 genes, grouped into 110 held-out source objects and 5 full InChIKeys
+  aggregation: condition errors normalized by the same fold-training gene variance, then equal-weight objects within each InChIKey
+  comparisons: [per_drug_mean_vs_state_residual, shuffled_state_vs_state_residual]
+  bootstrap_unit: held-out source_object_id within each fixed drug stratum
+  bootstrap_replicates: 20000
+  bootstrap_seed: 54053
+  interpretation: exploratory fixed-domain decomposition; intervals are descriptive and do not test generalization to new drugs
+resources:
+  cpu_cap_minutes: 30
+  gpu_hours: 0
+stopping:
+  exactly_one_run: true
+  require_root_verified_exp053_recovery: true
+  do_not_refit_or_reassign_folds: true
+  no_multiple_comparison_or_new_candidate_selection: true

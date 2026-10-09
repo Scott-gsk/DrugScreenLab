@@ -1,0 +1,29 @@
+experiment_id: EXP-069
+record: experiments/records/EXP-069.md
+status: REGISTERED_DIAGNOSTICS_IMPLEMENTING
+seed: 20261006
+training_device: cpu
+cpu_hard_cap_seconds: null
+gpu_hours_cap: 0
+data_roles: train_only_existing_authorized_source
+forbidden: [inner_dev_new_reads, outer, locked, PDO, breast_threeway_response_new_reads]
+subset_size: 32
+gene_axis_size: 978
+transigen:
+  epochs: 300
+  learning_rate: 0.001
+  batch_size: 64
+  weight_decay: 0.00001
+  loss: original_seven_raw_sum_no_clip
+xpert:
+  epochs: 2500
+  learning_rate: 0.004
+  batch_size: 128
+  weight_decay: 0.00001
+  loss_weights: [0.2, 0.003, 0.2, 1]
+  validation_early_stopping: false
+acceptance:
+  minimum_training_relative_error_reduction: 0.10
+  amplitude_ratio_min: 0.5
+  amplitude_ratio_max: 2.0
+  scope: diagnostic_not_generalization

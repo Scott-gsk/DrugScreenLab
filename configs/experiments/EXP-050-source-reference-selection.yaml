@@ -1,0 +1,80 @@
+experiment_id: EXP-050
+run_id: 20261006_source_reference_selection_v1
+protocol: experiments/records/EXP-050.md#方案3.2来源参照选择开发比较
+scope: fixed-source leave-one-source-cell-out development diagnostic; not independent PDO validation
+environment: WSL2 Conda drugscreening-gpu
+cpu_cap_minutes: 240
+gpu_hours: 0
+expected_domain:
+  exact_InChIKeys: 108
+  exposure_conditions: 1285
+  measured_genes: 978
+  hallmark_sets: 50
+source_models:
+  - model_id: ACH-000536
+    label: BT20_basal_A
+    subtype: basal_A
+  - model_id: ACH-000148
+    label: HS578T_basal_B
+    subtype: basal_B
+  - model_id: ACH-000768
+    label: MDAMB231_basal_B
+    subtype: basal_B
+  - model_id: ACH-000019
+    label: MCF7_luminal
+    subtype: luminal
+baseline_selection:
+  dataset: DepMap 24Q2 OmicsExpressionProteinCodingGenesTPMLogp1.csv
+  transformation: supplied log2(TPM+1), no refit
+  metric: Spearman correlation across the frozen 978-gene source axis
+  decision: for each held-out source model, select the highest-correlation other model once; ties break by source_models order
+  response_firewall: commit the selection table and receipt before loading the source perturbation delta array
+comparisons:
+  all_source: equal mean of all other eligible fixed source models
+  exact_subtype: equal mean of other fixed source models with the same frozen LegacyMolecularSubtype; missing if none
+  pretreatment_nearest: single source selected from the frozen DepMap baseline expression only
+  random_reference: enumerate every equally likely subset among remaining fixed sources, matching the selection arm source count
+  random_one_source_count: 1
+statistics:
+  primary_metrics:
+    - gene_spearman_rho
+    - gene_nonzero_sign_agreement
+    - gene_rmse
+    - gene_mae
+    - hallmark_direction_agreement
+  within_drug: average fixed dose-time exposure metrics equally within each exact full InChIKey
+  across_drugs: equal weight across the 108 unique full InChIKeys
+  paired_bootstrap_replicates: 10000
+  paired_bootstrap_seed: 20261006
+  paired_unit: exact full InChIKey
+  interval_interpretation: descriptive uncertainty over the observed drug domain only; not patient or subtype population inference
+  hallmark_resource: data/raw/exp013/msigdb/h.all.v2023.2.Hs.symbols.gmt
+  hallmark_direction: average each Hallmark gene set within the 978 axis after equal exposure aggregation within drug; retain same, opposite, target-zero and prediction-zero categories
+inputs:
+  response_vectors: artifacts/experiments/EXP-050/20261006_breast_subtype_pairwise_comparison_v1/full/condition_vectors.npz
+  parent_summary: artifacts/experiments/EXP-050/20261006_breast_subtype_pairwise_comparison_v1/full/summary.json
+  strict_condition_metrics: artifacts/experiments/EXP-050/20261006_breast_subtype_pairwise_comparison_v1/full/condition_metrics.tsv
+  parent_domain: artifacts/experiments/EXP-050/20261006_breast_subtype_measured_transfer_v1/source_domain_common_exposures.tsv
+  model_identity: artifacts/experiments/EXP-050/20261006_breast_subtype_measured_transfer_v1/lincs_breast_cell_model_identity.tsv
+  depmap_models: data/raw/depmap/24q2/Model.csv
+  depmap_baseline_expression: data/raw/depmap/24q2/OmicsExpressionProteinCodingGenesTPMLogp1.csv
+  gse70138_gene_info: data/raw/transfer_public_assets/gse_breast_drug_response/GSE70138/GSE70138_Broad_LINCS_gene_info_2017-03-06.txt.gz
+  hallmark_gmt: data/raw/exp013/msigdb/h.all.v2023.2.Hs.symbols.gmt
+reported_preflight_attempts:
+  - attempt: root_readonly_fifth_source_check_wrong_dose_column
+    status: failed_before_result
+    cpu_seconds_approx: 5.7
+  - attempt: root_readonly_fifth_source_check_unclosed_expression
+    status: failed_before_result
+    cpu_seconds_approx: 4.0
+  - attempt: root_readonly_fifth_source_check_corrected
+    status: passed
+    cpu_seconds_approx: 4.9
+  - attempt: root_four_source_gate_result
+    status: passed
+    cpu_seconds_approx: 0.0
+    note: root independently verified 1282/1285 for SKBR3 and 1285/1285 for each frozen source
+  - attempt: agent_wsl_system_python3_numpy_probe
+    status: failed_before_data_load
+    cpu_seconds_approx: 0.0
+    note: Used disallowed WSL system python3 instead of Conda; numpy import failed before any NPZ access; no data read or output written

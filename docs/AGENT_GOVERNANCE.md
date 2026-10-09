@@ -1,225 +1,85 @@
-# Agent 治理与研究生命周期
+# Agent 协作与实验推进规则
 
-## 角色可用性与激活
+修订：2026-09-24。用途：让多代理持续产出可验证的实验，控制算力与 token。入口为 `AGENTS.md`；本文件替换旧版逐 EXP 口令审批、强制新建上下文及逐操作监督流程。用户明确指令和实际工具权限优先，旧模板不能复活已废止要求。
 
-DrugScreenLab 定义六个 logical roles，但 `Role availability != Role activation`。角色
-模板描述责任、独立性与读写边界；它们不证明当前 Codex runtime 会加载模板或能启动
-独立 subagent。Research Manager 在首次委派时必须检测真实的 subagent spawning、独立
-上下文、隔离 worktree 与角色配置加载能力，不得伪装 delegation 已发生。
+## 1. 研究闭环与依据
 
-Research Manager 是唯一默认用户入口和 orchestration owner。除非用户明确要求只实现、
-只审查、只检查数据或指定其他角色，普通会话均由 Manager 接收。用户通常只需要给出
-research idea、`APPROVE EXP-###`，以及最终 `ACCEPT` 或 `REJECT`。
+参考用户提供的《ScientistTwo: Pioneering the Human Knowledge Frontier with Autonomous AI》（2026-09-18，arXiv:2609.19644v1），图3、第3.1–3.4节及第5页 Listing 1：提出有依据的假设、先小规模比较、再完整实验、消融解释、根据证据改进；每阶段允许有限次数的接受、修订或淘汰。这是流程参照，不承诺本项目达到论文宣称的成功率，也不把自动评分当真实同行认可。
 
-| Logical role | 独立责任边界 | 主要输出 |
-| --- | --- | --- |
-| Research Manager | 路由、EXP-ID、审批包、证据汇总 | 单一 hypothesis、任务包、最终状态 |
-| Scientific Analyst | 科学理由、机制、文献、基线与可证伪性 | rationale、主张边界、风险、建议 |
-| Data & Bioinformatics Steward | 数据身份、role、provenance、split 与 leakage | `DATA_READY`、`DATA_PARTIAL` 或 `DATA_BLOCKED` |
-| Model Engineer | 已批准的模型实现、训练与可复现配置 | 代码、测试、config、训练/评估 evidence |
-| Evaluation & Statistics Analyst | 指标、benchmark、统计稳健性和解释 | 评估结论、置信度、偏差风险 |
-| Independent Reviewer / Red Team | 与执行分离的可信度审查 | `VALID`、`INVALID` 或 `INCONCLUSIVE` |
+本项目采用：**明确问题 → 复用基线 → 训练侧小规模真实数据完整链路 → 冻结协议的正式比较 → 消融和泛化 → 接受、限域否定或单点改进**。工程 smoke 检验程序可运行；小规模科学筛选使用独立开发/内层验证数据并报告真实基线比较。二者不混写，正式外层测试不参与反复改进。已批准必做实验不能因开发成绩负向而自行取消；淘汰对象是候选实现或可选扩展。
 
-Scientific Analyst 不承担主要实现；Data Steward 不为模型成功放宽数据规范；Model
-Engineer 不改变 dataset role、split、endpoint、external test、disease definition 或
-hypothesis；Evaluation & Statistics Analyst 不调整模型以改善结果；Reviewer 不实现、
-debug 或调参。禁止按技术对象创建角色，例如 XPert、UniPert、LINCS、Organoid、Pathway
-或 PRISM Agent。
+## 2. 当前用户指定的模型和角色
 
-## 自适应并行编排
+下列为当前项目配置，可由用户修改；不是普遍模型能力或价格结论。
 
-使用 `ADAPTIVE_AGENT_BUDGET`，不设固定角色上限。Manager 将 EXP 拆为 dependency graph，
-独立工作优先 parallelize，只有真实数据或结果定义依赖才 serialize。简单任务通常使用 2--3
-个角色；标准研究 EXP 默认允许 Manager、Data Steward、Model Engineer、Evaluation Analyst
-和 Reviewer；复杂科学设计或外部事实风险可激活全部六个角色。
+| 职责 | 模型与推理强度 | 可交付的完整任务 |
+|---|---|---|
+| Coordinator（主负责人，日常调度） | GPT-6 Luna / xhigh，`gpt-6-luna` | 对研究主线的完整比较负责：读取任务卡、分配文件/设备、执行已冻结队列、整合结果、判断下一轮及更新状态；不能只交付调度回执 |
+| Scientific Director（关键科学决策） | GPT-6.1 Sol / medium，`gpt-6.1-sol` | 一次冻结协议/成块授权、判定实质协议修改、解除争议阻断、继续/停止及阶段结论 |
+| Idea Generator / Refiner | GPT-6 Luna / xhigh，按需 | 文献/失败原因核查，最多提出两个可消融候选及预算；不为已有队列重新发散 |
+| Evaluator / Coding | 一个或多个 GPT-6 Luna / xhigh | 数据准入到真实输入小样例、完整训练入口、子集/正式运行及可复算预测；每人负责一个完整工作包 |
+| Analyzer / Ablation | GPT-6 Luna / xhigh | 固定输出评价、配对统计、预定消融、误差与通路解释、推荐一次有证据的改进 |
+| Critic（工程或证据核验） | GPT-6 Luna / xhigh，按节点启用 | 一次集中检查实现与冻结协议、数据隔离和结果；重大争议再交 Director |
 
-```text
-Research Manager -> parallel Specialist evidence -> Evidence Merge -> Independent Reviewer
-```
+当前不设 Writer Agent、Peer-Review Agent、Meta-Review Agent；必要的实验可信度核验继续保留，不运行模拟论文审稿循环。角色是职责，不是一角色一常驻进程：同一 Luna 可顺序承担想法、编码和分析；其不能再自称对应结果的独立 Critic。
 
-Manager 按每个工作包的主要风险路由：
+实际并发不超过工具上限，目前最多4个活动席位（含主负责人）。通常主负责人 + 两个无依赖的 Luna 工作包 + 一个机动席位；Sol 只在节点调用并占用机动席位，不与每条命令同步伴跑。有两张合格 A5000 时最多一张卡一个正式训练任务；CPU/I/O资源需同时考虑，不能为利用率牺牲身份或预算。
 
-| 主要任务 | Primary Specialist |
-| --- | --- |
-| 数据身份、preprocessing、leakage、provenance、split | Data & Bioinformatics Steward |
-| 模型、training、architecture implementation | Model Engineer |
-| 新机制、literature、hypothesis 可行性 | Scientific Analyst |
-| benchmark、metrics、cross-study、significance | Evaluation & Statistics Analyst |
+调用必须显式传 `model`、`reasoning_effort`，用最小上下文任务包；记录返回的代理身份和实际设置。用户已要求上述委派。当前主任务模型不能靠文档热切换；若主任务仍为其他模型，可将成块执行交给 Luna，自己只作关键协调并披露实际配置。不可用时准确说明，不假装调用成功。日常任务复用同一工作包执行上下文，独立核验另开未参与实现的上下文；不为每个 helper 新建代理，子代理不得递归派发代理。
 
-Data Steward 应先冻结 `DATA CONTRACT`：input/output schema、gene universe、control、
-identity、split、forbidden data。contract 足以稳定结果定义后，Data Steward 可继续数据工作，
-Model Engineer 可开发 pipeline/baseline，Evaluation Analyst 可定义 split/metrics，Scientific
-Analyst 可验证外部依据；四者只要无写入或数据依赖冲突就并行。Reviewer 仅在主要 evidence
-完成并合并后独立审查，不参与设计、preprocessing、debug、metric tuning 或 threshold selection。
-Manager 不承担可委派的大量执行工作，也不重复执行 Specialist 已完成的任务。
+**模板兼容**：2026-09-24 已同步 `.codex/agents/` 六个现有模板，默认 `gpt-6-luna` / `xhigh`，职责覆盖协调、想法、数据、编码、分析和 Critic；Sol 决策用默认类型代理显式指定模型/强度。已运行的代理可能仍持有旧指令，文件修改不热更新其上下文。新派发须核模板实际加载；仍携带旧审批 developer 指令时，完成当前安全边界后用默认类型新代理接续任务卡，不能依赖提示词覆盖更高优先级指令，不中断其已启动的训练进程。
 
-每项 Evidence Level 只检查当前 EXP 的实际依赖：`Delta978` core 只检查其 core data
-contract；reliable gene expansion 才要求 WTS supervision/calibration；cell-line screening
-才要求 PRISM/CTRP/GDSC；organoid adaptation 才要求相应 organoid 数据。不得以整个项目
-P0 未全部 READY 阻断早期独立 EXP。
+## 3. 成块授权与职责边界
 
-## Primary-Source Verification Gate
+用户已批准总方案时，Director 一次审核一个完整工作包：问题、数据角色及禁用信息、划分、模型/对照、候选与算力预算、终点、停止条件和验收。批准内容写入实验记录，后续相同协议的折次、种子、基线、消融、测试、必要复算及分析按队列自动推进。内部 Director 的科学审核不等于再次向用户索取批准；应先核对最新用户授权及其用途，再判断是否真正越界。方案外正式研究与增加预算遵循用户批准规则，专项额度不得自行改作其他用途。
 
-任何可能导致 `BLOCKED`、`DATA_BLOCK`、Go/No-Go、关键 dataset 排除、下一 Evidence Level
-阻断、ground-truth 否定、方法不可复现或关键 preprocessing 改变的外部事实判断，必须先完成
-`PRIMARY_SOURCE_VERIFICATION`。证据优先序为：官方 dataset/database documentation、原始论文
-Methods/Supplement、accession metadata、作者官方代码、secondary source。科学方案定义要测试
-什么；primary source 定义外部数据或方法实际上是什么。
+源码搜索、阅读完整相关模块、公开文档核验、登记资产哈希、元数据检查、许可训练数据/标签读取、常规修复与定向测试由执行者自主完成。不能将“保护测试标签”扩为“禁止读取一切真实数据”，也不将计算原始字节哈希视为已用标签选模。明确的用户访问限制、受控数据条件、真实工具拒绝仍须遵守；不得因为赶进度擅自放行不可信 pickle。
 
-## Research 生命周期
+内层验证可用于预登记选模；外层测试只用于冻结后的评价。身份审计可使用字段投影避免无关标签接触，通常不需要为每个列名、源码行窗再次申请 Sol 批准。读取失败/未知一律给具体原因，不能创建新的无限等待审批链。
 
-以下属于 research idea：新模型、模块、表示、数据用法、loss、训练策略、feature、
-evaluation hypothesis、研究性改进，以及“试一下 X”“X 会不会更好”“我有一个新想法”。
-它们必须遵循：
+只有以下决定提交 Director：新增研究假设或范围；改变输入/标签角色、划分、正式模型比较臂、损失、主终点、候选预算；影响结果解释的修复；核心证据冲突及阶段科学结论。已批准协议内的候选选择、故障恢复和工程实现由工作包负责人处理；把这些事项逐项升级会打断完整实验。Director 可作内部科学取舍，涉及用户授权边界的变更仍须交用户，Sol 不能代替用户授权。
 
-```text
-IDEA -> Manager -> EXP-ID -> APPROVE -> parallel evidence work -> Reviewer -> Manager -> ACCEPT / REJECT
-```
+## 4. 有界审查与阻断处理
 
-IDEA 阶段，Manager 必须读取 `AGENTS.md`、`PROJECT_STATE.yaml`、
-`experiments/registry.yaml` 和相关 dataset registry；若 runtime 提供
-`research-experiment` skill 则使用该 skill。随后从 `research.next_experiment_id` 分配
-唯一 EXP-ID，设计一个主要 hypothesis，写明数据、baseline、训练/评估、主要指标、风险
-和复现记录要求，并等待明确 `APPROVE EXP-###`。批准前禁止实现、训练、研究性数据
-处理、修改正式研究代码、执行角色或扩展第二 hypothesis。
+硬阻断必须同时写出：**具体证据或缺失证据 → 哪个当前动作会无效/不合规 → 最小解除动作 → 负责人及期限**。身份/轴错位、实际泄漏、协议未冻结、未授权数据和预算超限可阻断相关动作；无关文件格式、额外稳健性建议、未证实的假设风险不自动阻断整个项目。未知可阻断确实依赖该事实的动作，但不等于已确认缺陷。
 
-APPROVE 后，Manager 检测 runtime capability，再以实际可用方式派发。若不能真正启动
-独立子 Agent，必须明确：`当前会话无法真正启动独立子 Agent。` 此时可串行完成权限内
-工作或请求用户在 Codex App 中启动独立 thread/worktree，但不得声称已完成独立审查。
-若支持隔离 worktree，parallel Specialist 使用独立 worktree，Reviewer 使用与实现隔离的
-worktree；否则 Manager 只能分配无重叠 allowed paths 或只读工作，并记录限制。
+不同研究的患者通常没有一一对应关系；跨域辅助训练要求排查交叉身份、衍生模型与重复对象，并不要求每个药敏患者都在辅助库有同一患者。独立性可由权威研究来源/来源清单/招募与生物样本关系等组合证据支持；编号不同不能单独证明独立。无法解决的可疑对象按获批排除规则处理；影响样本范围或比较定义时先作明确协议修订。
 
-## Token 与上下文经济
+每个成块任务默认30–60分钟交付一个可执行阶段；长 I/O/训练按已测时长另列。准备60分钟没有新证据，或同一阻断连续两轮未解除，Coordinator 必须提交 Director 一次取舍：最小修复、符合协议的替代路径、仅相关臂延后并继续其他队列，或向用户提出有证据的外部需求。阻断只影响依赖它的动作；即使某臂暂缓，负责人也须完成其余已批准比较和结果分析。时限不是科学质量豁免；不可自动跳过硬门槛。
 
-## Large-data execution discipline
+每阶段默认一轮集中 Critic + 一轮针对性复核。再次未过时 Director 对剩余具体风险作继续修复/替代/限域停止的决定，并限定下一批修改；禁止无限轮审查。Critic 一次列全可发现问题，分为影响结论的阻断、应修工程问题、可延后建议；已关闭问题无新证据不重开。结果独立核验保留，不能由参与调试的同一上下文冒充。
 
-对预计耗时较长或需要大规模 I/O 的正式数据构建与实验运行，必须先完成
-`SMALL-SCALE DRY RUN`，再进入 full-data execution。dry run 只验证工程链路，不得用于
-报告 scientific metrics 或替代获批正式数据。
+## 5. 从准备进入实验
 
-dry run 必须覆盖完整代码路径的最小 fixture 或可审计 slice，并验证：input/output schema、
-function signatures、metric path、zero-vector edge cases、cache metadata、provenance、config
-binding、split-manifest binding、artifact writing，以及 restart/recovery。dry run 的 command、
-fixture/slice identity、结果和预期 full-run resource boundary 必须记录在 EXP evidence package。
+每轮至少交付一种实质进展：真实完整链路及成本、正式运行/有效恢复、完整比较结果、解除硬阻断、或有证据的候选淘汰决定。合成测试/文档更新是支持性产物，不单独作为一天进展。
 
-对 large raw/interim matrix 的 extraction，provenance 已验证的 processed asset 应作为版本化
-数据构建产物登记并在后续获批 EXP 中复用。若重新扫描完整源矩阵，Research Manager 必须在运行前
-记录不可复用的具体原因，例如 source revision、preprocessing contract、extraction runner 或
-integrity verification 发生变化。
+已完成部分折次的主比较优先于新模块泛化框架。按科学问题排队：先补齐强基线与主候选的完整比较，再完成必要消融、泛化和双路线融合对照；可选局部调优排在这些关键证据之后。不同数据、设备和文件的独立工作包可与训练并行，不把功能/通路迁移、扰动路线或融合全部串行挂在一项训练上。身份与最小工程门通过后，即按冻结队列运行，不为假设性防御、全部历史资产审计或论文级文档等待。新候选先在训练侧固定小规模设计比较基线；选择规则/次数/种子事前锁定，不缩减正式患者、折次或对照来凑阳性。失败区分实现故障与有效负结果；前者修复，后者限制假设并保留，只有预算内可选候选按规则淘汰。
 
-## GitHub Audit Checkpoints
+资源账从实际命令起止、设备分配、运行回执核算，失败和重跑计入，复用只计一次。缺账时给可追溯区间/保守上界；证明拟启动任务落在预算内才启动，无法证明则提交具体预算决定，不能长期只写“余额未知”。GPU空闲只触发可执行队列检查，不强行启动受阻训练。
 
-GitHub 是用户和外部 Reviewer 的只读研究审计界面。它必须包含足以理解实验动机、数据身份、
-执行方法、主要结果和 Reviewer verdict 的 tracked text/code/config/provenance，但不是 raw data
-或大体量 artifact 的镜像。不要为 debug、小修复或单一 seed push；默认只同步以下稳定状态到
-当前项目约定的远程分支。
+WSL普通调用出现权限拒绝时，按平台许可申请同一命令提升权限，仍使用指定 Conda 绝对路径；不得无限重试相同失败命令或换Windows Python。工具明确拒绝则说明具体限制并继续其他合法任务。
 
-### DESIGN READY
+## 6. 测试、持久化和 token
 
-Manager 写完正式审批包、尚未实施时，必须更新 `experiments/registry.yaml`、
-`experiments/records/EXP-###.md` 和必要的 config/contract/metadata，运行适用的验证，commit 并
-push。commit 后严格停止研究实施，等待 `APPROVE EXP-###`。审批包必须能让外部 Reviewer 只依赖
-GitHub tracked 内容理解 hypothesis、现有 evidence、数据角色、baseline、endpoint、Go/No-Go、
-failure modes 与 agent dependency graph。
+定向测试覆盖本次真实风险；共享行为/数据合同/注册表结构变更在整批集成后一次全量回归与数据验证。纯状态、文档与时间戳变更只解析和检查一致性；不因刷新执行矩阵重复全量。失败修复后跑受影响测试，只有新增风险才扩范围。已验证、版本和输入未变的证据复用，不反复读大文件或另写同结论回执。
 
-### RESULT REVIEWED
+Coordinator 独占写 `PROJECT_STATE.yaml`、实验注册表和方案当前摘要；其他代理提交紧凑结果，不并发修改台账。代码文件明确单写者，必要时独立 worktree；不覆写其他任务修改。正式运行保持代码版本，修复使用新运行版本，不混合未验证产物。
 
-所有执行、Evaluation 与 Independent Reviewer 完成后，必须更新 EXP record、experiment registry 和
-`PROJECT_STATE.yaml`，在同一稳定 checkpoint 提交代码、config、tests、compact metrics、evidence
-summary、Reviewer verdict 与 provenance，再 commit 并 push。不得把未完成或未审查的中间运行描述为
-正式结果；push 后等待用户 `ACCEPT / REJECT`。
+任务卡保存在既有实验记录，状态文件仅引用/列当前摘要：**问题/阶段、端到端负责人及实际模型、授权协议、读写范围、完整比较的产物与验收、预算、仅受影响的阻断及解除、下一命令/动作、最近实质进展**。新会话或上下文压缩后先恢复此卡，再核必要产物，不从头审计。长训练期间给出实际进程、日志和产物位置及下一检查时点；任务结束前交代谁或什么已配置的自动机制负责接续，不能把文档中的“持续推进”当作后台进程仍在运行的证据。只在阶段、决定或真实状态变化时更新同一当前表，保留重要历史回执，不每轮追加整张矩阵。
 
-Git 不得跟踪 raw datasets、大型 processed matrices、cache、model checkpoints、大型 predictions、
-temporary logs 或任何 `.gitignore` 排除资产。每个未跟踪但对结论必要的大资产必须在 tracked
-metadata 中提供 asset/dataset ID、local relative path、version、checksum、source、generator revision、
-config 和 reproducible command。
+委派正文建议≤800中文字，返回摘要≤400字，复杂协议链接原文件；默认不继承完整聊天。Sol 收到一页问题与证据，一次作整包决定；累计用量可得时记录，不能取得时不编造节省比例。进程与GPU监控交脚本，10–15分钟或候选完成时检查；只汇报结果、异常、明确决策和预计时间显著变化，不反复报存活。
 
-## Coarse-to-fine ML Research Policy
+## 7. 完成标准
 
-`COARSE_TO_FINE_ML_RESEARCH_POLICY` 的顺序是：`Explore fast -> Integrate early -> Scale only after signal`。
-严谨度应跟随 decision value，而不是默认跟随每个局部 metric。每项设计须包含 `Expected Decision Value`、
-`Expected Cost` 与 cheapest falsification。
+完整模型比较、必要消融、真实独立核验及结论边界达到获批方案标准才接受；负结果可接受，未执行标明未完成。最终交付代码/配置、逐键预测、配对统计、数据/划分版本、运行资源和关键决定；不能用测试数、文件数或代理数代替科学进展。
 
-| Loop | 用途 | 允许范围 | 输出 / Review |
-| --- | --- | --- | --- |
-| FAST LOOP | 判断想法是否有信号 | Tiny/Small subset、1 seed、简单模型/metric、少量 epoch 与参数 | `PROMISING` / `NO_SIGNAL` / `BROKEN`；非正式结论，无 Reviewer |
-| MVP LOOP | 端到端系统可行性 | 真实 public data、已有 processed asset、最简单 learned baseline、MVP Full | 可复现端到端 artifact；milestone 后最多一次主要 Reviewer |
-| RIGOROUS LOOP | 正式科学证据或重大投入决策 | full data、多 seed、cold split、CI、ablation、外部验证 | Formal EXP + 完整 provenance + Independent Reviewer |
+本次不生成论文和模拟审稿，也不要求先建通用多代理平台。模型路由由实际工具调用实现；文档规则持久化不等于后台任务已经重读或运行模型已经切换。
 
-Engineering Check 不创建正式 EXP。Fast Research Probe 也不自动成为 Formal EXP。MVP Integration 可以
-包含多个必要模块，因为它检验 system feasibility，不主张单因素因果归因。新模型按
-`Tiny -> Small -> MVP Full -> Formal Full` 推进；除非操作本身只能全量完成，禁止从 idea 直接进入
-65 GB full scan 与论文级统计。MVP 成功前，优先成熟模型或最简单合理 learned baseline；复杂新架构
-必须先证明简单 baseline 不够。局部 perturbation metric 的提高只有可能改变 reversal/ranking/efficacy
-决策时才应升为高优先级。
+## 8. 原定模型比较的执行保护
 
-## EXP-scoped Agent Lifecycle
-
-`EXP_SCOPED_AGENT_LIFECYCLE` 是正式 research EXP 的运行时身份契约：
-
-- Research Manager 可以跨 EXP 保持，作为 persistent orchestrator。
-- Specialist 与 Reviewer 默认 `EXP-scoped + role-scoped + fresh context`；实际 Agent 名称必须
-  包含 `EXP-ID + Role`，或在工具限制下使用可一一映射的 `exp_###_role` 标识。
-- 旧 EXP Specialist、dry-run Agent 和旧 Reviewer 不得进入新的正式 EXP，也不得通过改名复用。
-- 极少数跨 EXP 复用必须在执行前记录 `CROSS_EXP_AGENT_REUSE_JUSTIFICATION`；没有记录即禁止。
-- Manager 的 routing plan 不是实际 delegation。只有 runtime 返回了真实 child identity 且已分配
-  task，才能汇报 `actual child agent spawned`；Manager 自己执行必须记为 `Manager execution`。
-- EXP close 后终止或释放不再需要的 active Specialist；已完成 Reviewer 仅保留 provenance。
-
-每个实验记录都必须包含简洁的 `AGENT_EXECUTION_MANIFEST`，至少记录：
-
-```text
-EXP-ID
-Research Manager: persistent / active
-Agents:
-  - agent_name
-  - logical_role
-  - spawned_for_exp
-  - task
-  - fresh_context
-  - worktree/isolation
-  - status
-  - started_at
-  - completed_at
-```
-
-manifest 只保存 orchestration metadata，不保存完整 conversation。面向用户汇报时必须分别说明
-`logical role available`、`role selected`、`actual child agent spawned`、`task assigned` 和
-`agent status`，不得用计划或模板存在性代替真实 runtime evidence。
-
-### Minimal Context Principle
-
-子 Agent 不继承完整 Manager conversation。Manager 必须建立最小 task packet，只包含：
-
-- EXP-ID、role、一个具体问题或任务、approved hypothesis。
-- 直接相关的文件、dataset registry entries、allowed paths、forbidden operations。
-- acceptance criteria 与必要 upstream evidence。
-
-Specialist 按顺序窄读 EXP plan、直接相关文件、必要 registry/config 和必要代码；不得
-默认递归读取整个 repository。优化目标是减少每个 Agent 的上下文，而不是减少必要 Agent
-数量。
-
-### Structured evidence handoff
-
-Agent 间传递 structured evidence package，而非完整 conversation。Specialist 到 Reviewer
-至少包含：EXP-ID、approved hypothesis、commit/diff、config、dataset/split identifiers、
-tests、primary metrics、artifacts 和 known deviations。Reviewer 可以按需读取原始文件，
-并对 implementation fidelity、data leakage、dataset-role compliance、split、metrics、
-statistical interpretation、reproducibility、unsupported claims、cherry-picking 与 repository
-pollution 独立核查。
-
-## Runtime 与模板
-
-`.codex/agents/` 保存六个角色的最小配置模板。它们仅定义 logical role availability，
-不代表项目范围配置被当前 Codex runtime 自动加载。真正 delegation 由 Manager 的能力
-检测和调度政策决定；所有角色默认以简体中文面向用户，代码、identifier、schema key、
-dataset ID、EXP-ID 和状态代码保持英文。
-
-## 治理验证
-
-验证时检查：六个角色责任不重叠；Research Manager 仍为唯一默认入口；不存在固定三角色
-上限且存在 `ADAPTIVE_AGENT_BUDGET`；独立任务优先 parallel；Reviewer 保持独立；
-`EXP_SCOPED_AGENT_LIFECYCLE`、fresh context、可审计命名、关闭后释放与 claimed delegation 的
-runtime evidence 规则存在；Minimal Context Principle、structured evidence handoff、
-`PRIMARY_SOURCE_VERIFICATION` 存在；以及现有
-`IDEA -> APPROVE -> execution -> Reviewer -> ACCEPT / REJECT` 人工审批闭环保持兼容。
+- 均值、线性和小网络是参照；原定代表模型、必要消融及泛化比较保留独立验收状态。基线已完成不提升为主方案已完成，基线负结果不自动删除代表模型。
+- 旧权重训练来源未知只阻断该权重的可信复用；先评估同架构按当前训练划分重新训练。训练入口、基因重排、特征轴绑定、预测保存等缺口是编码任务，给端到端负责人和可执行修复动作，不登记为无限期外部等待。
+- 数据身份冲突只阻断依赖冲突对象的真实运行。训练器、验证器、恢复和输出接口的实现可并行继续。排除对象、缩小面板或新增正式比较须冻结修订并核对授权；不得默默缩小后把原目标标记完成。
+- 60分钟无新证据或连续两轮阻断，决策者应结束重复检查并选择具体修复路径；实现有新进展可继续。时间盒用于避免无效审计，不要求60分钟内完成全部模型，也不允许用简单方案顶替原方案。
+- 对模型负结果同时交付训练损失、训练/验证指标曲线、选停依据及小样本拟合检查。诊断区分实现故障、优化困难和泛化失败。单批反向成功、正常退出及早停均不能单独证明模型充分拟合；有噪声的小样本拟合检查也不要求真实数据达到零误差。
+- Coordinator 收口逐项核对原方案必做比较。每项写明已完成结果、尚缺实现或真实外部需求、负责人与接续动作。选择合规替代时同时保留原模型缺口，不用可运行性代替科学等价性。

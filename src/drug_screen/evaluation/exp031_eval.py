@@ -12,6 +12,21 @@
 - 配对 bootstrap + Holm 校正 ``paired_bootstrap_ci``、``holm_correct``（B4）。
 - 常数预测守卫 ``constant_prediction_guard``（B5 #6）。
 
+W3-07~W3-11 审计修复新增（2026-09-22，docs/reports/audit_repair_wave3_
+20260922.md）：
+
+- W3-07 种子统计口径：``aggregate_seed_patient_scores``（先逐种子计算
+  患者分数 → 患者的种子分数平均 → 患者级配对统计；预测平均集成另列为
+  独立模型）与 ``patient_score_paired_bootstrap``（患者分数级配对统计）。
+- W3-08 折内同药跨患者相关性：``per_fold_drug_patient_correlation``
+  （按折评价；常数记 NaN+原因；严禁跨折池化负基线）与
+  ``per_fold_gain``（折内对齐增益，基线缺失折不跨折借用）。
+- W3-10 多重比较 family：``ComparisonFamily`` 声明式结构（可序列化
+  预注册）+ ``holm_correct_family``（Holm 在 family 内执行；跨种子
+  平均 p 值拒绝）。
+- 统一 canonical 入口：``run_formal_comparison``——正式实验比较固定
+  走 比较检查器 → 患者等权主指标 → 患者级配对统计 链路。
+
 研究性口径一律按工作包 B 合同实现，不自行改动判定规则（例如：资格不足
 记 NaN 并列明原因、宏平均跳过 NaN 不填零、药物 / 标签不一致拒绝比较而
 不取交集）。
@@ -26,6 +41,8 @@ import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
 
+from drug_screen.evaluation.metrics import masked_spearman
+
 __all__ = [
     "intra_patient_spearman_patient_macro",
     "target_drug_mean_baseline",
@@ -37,6 +54,21 @@ __all__ = [
     "paired_bootstrap_ci",
     "holm_correct",
     "constant_prediction_guard",
+    # W3-07 种子统计口径
+    "SeedAggregation",
+    "aggregate_seed_patient_scores",
+    "patient_score_paired_bootstrap",
+    # W3-08 折内同药跨患者相关性
+    "per_fold_drug_patient_correlation",
+    "per_fold_gain",
+    # W3-10 多重比较 family
+    "ComparisonSpec",
+    "ComparisonFamily",
+    "ComparisonPValue",
+    "holm_correct_family",
+    # 统一 canonical 入口
+    "FormalComparisonResult",
+    "run_formal_comparison",
 ]
 
 REASON_INSUFFICIENT_DRUGS = "insufficient_drugs"
@@ -44,6 +76,7 @@ REASON_CONSTANT_OBSERVED = "constant_observed"
 REASON_CONSTANT_PREDICTED = "constant_predicted"
 REASON_CONSTANT_WITHIN_FOLD = "constant_within_fold"
 REASON_CONSTANT_ACROSS_FOLDS = "constant_across_folds"
+REASON_INSUFFICIENT_PATIENTS = "insufficient_patients"
 
 _REQUIRED_SCHEMA_COLUMNS = (
     "experiment_id",
@@ -610,3 +643,557 @@ def constant_prediction_guard(
 
     df["undefined_constant_reason"] = reason
     return df
+
+
+# ---------------------------------------------------------------------------
+# W3-07 种子统计口径（2026-09-22 审计修复）
+# ---------------------------------------------------------------------------
+
+
+def _assert_single_seed(frame: pd.DataFrame, what: str) -> None:
+    """多种子输入守卫：先经 ``aggregate_seed_patient_scores`` 明确口径。
+
+    逐种子患者分数平均（主分析）与预测平均集成（独立模型）是两种
+    不同口径，直接把多种子行混入会静默退化为跨种子平均预测。
+    """
+    if "seed" in frame.columns:
+        n = int(frame["seed"].nunique(dropna=False))
+        if n > 1:
+            raise ValueError(
+                f"{what} contains {n} seeds; aggregate via "
+                "aggregate_seed_patient_scores first (逐种子患者分数平均与"
+                "预测平均集成是两种独立口径，不得混用)")
+
+
+@dataclass(frozen=True)
+class SeedAggregation:
+    """多种子三种统计口径（W3-07）。
+
+    - ``per_seed_patient_scores``：逐种子患者分数
+      （index=patient_id，columns=seed，未定义为 NaN）
+    - ``seed_mean_patient_scores``：患者的种子分数平均（主分析口径，
+      跳过 NaN 种子；``n_seeds_used`` 记录每患者实际使用的种子数）
+    - ``ensemble_predictions`` / ``ensemble_patient_scores``：预测平均
+      集成（逐 (patient, drug) 跨种子平均预测后重算）——独立模型口径，
+      不得与逐种子平均混淆
+    """
+
+    per_seed_patient_scores: pd.DataFrame
+    seed_mean_patient_scores: pd.Series
+    n_seeds_used: pd.Series
+    ensemble_predictions: pd.DataFrame
+    ensemble_patient_scores: pd.Series
+
+
+def aggregate_seed_patient_scores(
+    preds_by_seed: Mapping[int, pd.DataFrame] | pd.DataFrame,
+    *,
+    seed_col: str = "seed",
+    patient_col: str = "patient_id",
+    drug_col: str = "drug_id",
+    observed_col: str = "observed",
+    predicted_col: str = "predicted",
+    min_drugs: int = 3,
+) -> SeedAggregation:
+    """多种子统计口径聚合（W3-07）。
+
+    主分析口径：先逐种子计算患者分数（患者内全药物排序 Spearman），
+    再对患者的种子分数平均（``seed_mean_patient_scores``），最后做患者
+    级配对统计（``patient_score_paired_bootstrap``）。预测平均集成
+    （``ensemble_*``）另列为一个独立模型，不得与逐种子平均混淆。
+
+    Parameters
+    ----------
+    preds_by_seed:
+        ``{seed: 预测长表}`` 或含 ``seed_col`` 的单一长表（每行
+        patient / drug / observed / predicted）。各 seed 的
+        ``(patient, drug)`` 键集合与 observed 值必须一致（否则抛错，
+        不取交集——先经 ``assert_comparable``）。
+    min_drugs:
+        每患者共同实测药物数资格阈值（透传主指标）。
+    """
+    required = (patient_col, drug_col, observed_col, predicted_col)
+    if isinstance(preds_by_seed, pd.DataFrame):
+        _require_columns(preds_by_seed, (seed_col, *required), "prediction frame")
+        frames: dict[str, pd.DataFrame] = {
+            str(s): sub for s, sub in preds_by_seed.groupby(seed_col, sort=True)}
+    elif isinstance(preds_by_seed, Mapping):
+        frames = {}
+        for s, sub in preds_by_seed.items():
+            _require_columns(sub, required, "prediction frame")
+            frames[str(s)] = sub
+    else:
+        raise ValueError(
+            "preds_by_seed must be a DataFrame or a mapping seed -> DataFrame")
+    if not frames:
+        raise ValueError("preds_by_seed must contain at least one seed")
+
+    agg: dict[str, pd.DataFrame] = {}
+    for seed, sub in frames.items():
+        table = sub[list(required)].copy()
+        table[patient_col] = table[patient_col].astype(str).str.strip()
+        table[drug_col] = table[drug_col].astype(str).str.strip()
+        for col in (observed_col, predicted_col):
+            table[col] = pd.to_numeric(table[col], errors="raise").astype(float)
+        agg[seed] = (
+            table.groupby([patient_col, drug_col], sort=True)
+            .agg(observed=(observed_col, "mean"),
+                 predicted=(predicted_col, "mean"))
+            .reset_index()
+        )
+
+    reference = next(iter(agg.values()))
+    ref_obs = {
+        (patient, drug): value
+        for patient, drug, value in zip(
+            reference[patient_col], reference[drug_col], reference["observed"])
+    }
+    for seed, table in agg.items():
+        got = {
+            (patient, drug): value
+            for patient, drug, value in zip(
+                table[patient_col], table[drug_col], table["observed"])
+        }
+        if set(got) != set(ref_obs):
+            raise ValueError(
+                f"seed {seed}: (patient, drug) key set differs across seeds; "
+                "run assert_comparable first (拒绝取交集)")
+        for key, value in ref_obs.items():
+            if not np.isclose(got[key], value, rtol=1e-9, atol=1e-12):
+                raise ValueError(
+                    f"seed {seed}: observed differs at {key} "
+                    f"({got[key]} vs {value}); labels must match across seeds")
+
+    seeds = sorted(agg)
+    per_seed: dict[str, pd.Series] = {}
+    for seed in seeds:
+        _, _, per_patient = intra_patient_spearman_patient_macro(
+            agg[seed], min_drugs=min_drugs)
+        per_seed[seed] = per_patient.set_index("patient_id")[
+            "intra_patient_spearman"]
+    all_patients = sorted({
+        patient for series in per_seed.values() for patient in series.index})
+    per_seed_frame = pd.DataFrame(
+        {seed: per_seed[seed].reindex(all_patients) for seed in seeds},
+        index=all_patients)
+    seed_mean = per_seed_frame.mean(axis=1, skipna=True)
+    n_used = per_seed_frame.notna().sum(axis=1)
+
+    base = reference[[patient_col, drug_col, "observed"]].copy()
+    key_index = pd.MultiIndex.from_frame(base[[patient_col, drug_col]])
+    pred_matrix = np.column_stack([
+        agg[seed].set_index([patient_col, drug_col])["predicted"]
+        .reindex(key_index).to_numpy()
+        for seed in seeds
+    ])
+    base["predicted"] = pred_matrix.mean(axis=1)
+    ensemble_predictions = base.reset_index(drop=True)
+    _, _, ens_per_patient = intra_patient_spearman_patient_macro(
+        ensemble_predictions, min_drugs=min_drugs)
+    ensemble_scores = ens_per_patient.set_index("patient_id")[
+        "intra_patient_spearman"]
+
+    return SeedAggregation(
+        per_seed_patient_scores=per_seed_frame,
+        seed_mean_patient_scores=seed_mean.rename("seed_mean_patient_score"),
+        n_seeds_used=n_used.rename("n_seeds_used"),
+        ensemble_predictions=ensemble_predictions,
+        ensemble_patient_scores=ensemble_scores.rename("ensemble_patient_score"),
+    )
+
+
+def patient_score_paired_bootstrap(
+    scores_a: pd.Series,
+    scores_b: pd.Series,
+    *,
+    n: int = 2000,
+    seed: int = 0,
+) -> PairedBootstrapCI:
+    """患者分数级配对 bootstrap（W3-07 主统计口径）。
+
+    输入为"患者 → 分数"Series：逐种子平均后的患者分数（主分析）、
+    预测平均集成的患者分数（独立模型）或单模型患者分数皆可——集成作为
+    独立模型参与比较，不得与逐种子平均混淆。
+
+    索引按患者对齐（集合不一致抛错）；差值存在 NaN 抛错（先经资格
+    过滤与对齐检查）。
+    """
+    if not isinstance(scores_a, pd.Series) or not isinstance(scores_b, pd.Series):
+        raise ValueError("scores must be pandas Series indexed by patient")
+    if n < 2:
+        raise ValueError("n must be >= 2")
+
+    def _normalized(series: pd.Series) -> pd.Series:
+        return pd.Series(
+            series.to_numpy(dtype=float),
+            index=[str(i) for i in series.index],
+        ).sort_index()
+
+    a = _normalized(scores_a)
+    b = _normalized(scores_b)
+    if not a.index.equals(b.index):
+        raise ValueError(
+            "patient sets differ between score series; run "
+            "assert_comparable first")
+    delta = a.to_numpy(float) - b.to_numpy(float)
+    if not np.all(np.isfinite(delta)):
+        raise ValueError(
+            "undefined (NaN) paired patient scores; filter ineligible "
+            "patients first")
+
+    point = float(np.mean(delta))
+    rng = np.random.default_rng(seed)
+    m = delta.size
+    boots = np.empty(n, dtype=float)
+    for i in range(n):
+        idx = rng.integers(0, m, size=m)
+        boots[i] = float(np.mean(delta[idx]))
+    return PairedBootstrapCI(
+        point_estimate=point,
+        low=float(np.quantile(boots, 0.025)),
+        high=float(np.quantile(boots, 0.975)),
+        n_units=m,
+        n_resamples=n,
+        seed=seed,
+        unit="patient_id",
+        deltas=tuple(delta.tolist()),
+    )
+
+
+# ---------------------------------------------------------------------------
+# W3-08 折内同药跨患者相关性（2026-09-22 审计修复）
+# ---------------------------------------------------------------------------
+
+
+def per_fold_drug_patient_correlation(
+    pred: pd.DataFrame,
+    *,
+    fold_col: str = "fold",
+    patient_col: str = "patient_id",
+    drug_col: str = "drug_id",
+    observed_col: str = "observed",
+    predicted_col: str = "predicted",
+    min_patients: int = 3,
+) -> pd.DataFrame:
+    """折内同药物跨患者相关性（W3-08）。
+
+    按 ``(fold, drug)`` 分组：先患者内等权平均（多 PDO / 多行），
+    再在折内计算跨患者 Spearman（``masked_spearman``：正确并列秩 +
+    pairwise complete 缺失掩码）。
+
+    - 有效患者数 < ``min_patients`` → NaN + ``insufficient_patients``
+    - 折内观测零方差 → NaN + ``constant_observed``
+    - 折内预测零方差 → NaN + ``constant_predicted``
+    - 严禁跨折池化：跨折池化含折间伪变异，其负基线不得作为增益依据
+      （增益计算见 ``per_fold_gain``，基线缺失折不跨折借用）。
+
+    Returns
+    -------
+    ``[fold, drug_id, n_patients, spearman, reason]`` 长表。
+    """
+    _require_columns(
+        pred, (fold_col, patient_col, drug_col, observed_col, predicted_col),
+        "prediction frame")
+    _assert_single_seed(pred, "prediction frame")
+    table = pred[[fold_col, patient_col, drug_col, observed_col,
+                  predicted_col]].copy()
+    table[patient_col] = table[patient_col].astype(str).str.strip()
+    table[drug_col] = table[drug_col].astype(str).str.strip()
+    for col in (observed_col, predicted_col):
+        table[col] = pd.to_numeric(table[col], errors="coerce").astype(float)
+
+    per_patient = (
+        table.groupby([fold_col, patient_col, drug_col], sort=True)
+        .agg(observed=(observed_col, "mean"), predicted=(predicted_col, "mean"))
+        .dropna(subset=["observed", "predicted"])
+        .reset_index()
+    )
+
+    rows: list[dict[str, object]] = []
+    for (fold, drug), group in per_patient.groupby([fold_col, drug_col],
+                                                   sort=True):
+        y = group["observed"].to_numpy(float)
+        p = group["predicted"].to_numpy(float)
+        n_patients = int(len(y))
+        row: dict[str, object] = {
+            "fold": fold, "drug_id": drug, "n_patients": n_patients,
+            "spearman": float("nan"), "reason": None,
+        }
+        if n_patients < min_patients:
+            row["reason"] = REASON_INSUFFICIENT_PATIENTS
+            rows.append(row)
+            continue
+        if np.ptp(y) == 0:
+            row["reason"] = REASON_CONSTANT_OBSERVED
+            rows.append(row)
+            continue
+        if np.ptp(p) == 0:
+            row["reason"] = REASON_CONSTANT_PREDICTED
+            rows.append(row)
+            continue
+        rho, _ = masked_spearman(y, p)
+        row["spearman"] = rho
+        rows.append(row)
+    return pd.DataFrame(
+        rows, columns=["fold", "drug_id", "n_patients", "spearman", "reason"])
+
+
+def per_fold_gain(
+    model_per_fold: pd.DataFrame,
+    baseline_per_fold: pd.DataFrame,
+    *,
+    value_col: str = "spearman",
+    fold_col: str = "fold",
+    drug_col: str = "drug_id",
+) -> pd.DataFrame:
+    """折内增益（W3-08）：按 ``(fold, drug)`` 对齐求差，禁止跨折借用基线。
+
+    输入为 ``per_fold_drug_patient_correlation`` 输出（或含
+    ``[fold, drug, value_col]`` 的等价表）。baseline 缺失该
+    ``(fold, drug)`` 行或值为 NaN → 该格 gain 为 NaN（不跨折借用；
+    跨折池化负基线不得作为增益依据）。
+
+    Returns
+    -------
+    ``[fold, drug_id, model, baseline, gain, gain_defined, baseline_reason]``。
+    """
+    _require_columns(model_per_fold, (fold_col, drug_col, value_col),
+                     "model frame")
+    _require_columns(baseline_per_fold, (fold_col, drug_col, value_col),
+                     "baseline frame")
+    merged = model_per_fold[[fold_col, drug_col, value_col]].merge(
+        baseline_per_fold[[fold_col, drug_col, value_col]],
+        on=[fold_col, drug_col], how="outer",
+        suffixes=("_model", "_baseline"))
+    merged = merged.rename(columns={
+        f"{value_col}_model": "model",
+        f"{value_col}_baseline": "baseline",
+    })
+    if "reason" in baseline_per_fold.columns:
+        reasons = baseline_per_fold[[fold_col, drug_col, "reason"]].rename(
+            columns={"reason": "baseline_reason"})
+        merged = merged.merge(reasons, on=[fold_col, drug_col], how="left")
+    else:
+        merged["baseline_reason"] = None
+    merged["gain"] = merged["model"] - merged["baseline"]
+    merged["gain_defined"] = merged["gain"].notna()
+    return merged
+
+
+# ---------------------------------------------------------------------------
+# W3-10 预注册多重比较 family（2026-09-22 审计修复）
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class ComparisonSpec:
+    """单个预注册比较（W3-10）。"""
+
+    name: str
+    description: str = ""
+
+    def __post_init__(self) -> None:
+        if not isinstance(self.name, str) or not self.name.strip():
+            raise ValueError("comparison name must be a non-empty string")
+
+
+@dataclass(frozen=True)
+class ComparisonFamily:
+    """声明式多重比较 family（W3-10）：比较范围由预注册明确。
+
+    family 定义可序列化（``to_dict`` / ``from_dict``）落盘登记；
+    Holm 校正只在 family 内执行（``holm_correct_family``）。
+    """
+
+    name: str
+    comparisons: tuple[ComparisonSpec, ...]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "comparisons", tuple(self.comparisons))
+        if not isinstance(self.name, str) or not self.name.strip():
+            raise ValueError("family name must be a non-empty string")
+        if not self.comparisons:
+            raise ValueError("family must contain at least one comparison")
+        names = [c.name for c in self.comparisons]
+        if len(set(names)) != len(names):
+            raise ValueError(f"duplicate comparison names: {names}")
+
+    @property
+    def comparison_names(self) -> tuple[str, ...]:
+        return tuple(c.name for c in self.comparisons)
+
+    def to_dict(self) -> dict[str, object]:
+        """序列化（供预注册落盘登记）。"""
+        return {
+            "name": self.name,
+            "comparisons": [
+                {"name": c.name, "description": c.description}
+                for c in self.comparisons
+            ],
+        }
+
+    @classmethod
+    def from_dict(cls, obj: Mapping[str, object]) -> "ComparisonFamily":
+        if "name" not in obj or "comparisons" not in obj:
+            raise ValueError("family dict requires 'name' and 'comparisons'")
+        comps = obj["comparisons"]
+        if isinstance(comps, (str, bytes)) or not isinstance(comps, Sequence):
+            raise ValueError("'comparisons' must be a sequence of dicts")
+        specs = []
+        for item in comps:
+            if not isinstance(item, Mapping) or "name" not in item:
+                raise ValueError("each comparison requires a 'name'")
+            specs.append(ComparisonSpec(
+                name=str(item["name"]),
+                description=str(item.get("description", "")),
+            ))
+        return cls(name=str(obj["name"]), comparisons=tuple(specs))
+
+
+@dataclass(frozen=True)
+class ComparisonPValue:
+    """带来源纪律的比较 p 值（W3-10）。
+
+    ``n_seeds_averaged > 1`` 表示跨种子平均 p 值——禁止充当汇总检验
+    （``holm_correct_family`` 拒绝；多种子应先按
+    ``aggregate_seed_patient_scores`` 聚合患者分数再检验）。
+    """
+
+    comparison: str
+    p_value: float
+    n_seeds_averaged: int = 1
+
+    def __post_init__(self) -> None:
+        if not np.isfinite(self.p_value) or not 0.0 <= self.p_value <= 1.0:
+            raise ValueError("p_value must be finite within [0, 1]")
+        if self.n_seeds_averaged < 1:
+            raise ValueError("n_seeds_averaged must be >= 1")
+
+
+def holm_correct_family(
+    family: ComparisonFamily,
+    p_values: Mapping[str, float | ComparisonPValue],
+    *,
+    alpha: float = 0.05,
+) -> pd.DataFrame:
+    """family 内 Holm 校正（W3-10）。
+
+    - ``p_values`` 键必须与 family 预注册比较一一对应（多余 / 缺失抛错
+      ——比较范围由预注册明确，不得事后增删）
+    - ``ComparisonPValue.n_seeds_averaged > 1`` → 抛错（跨种子平均 p
+      值不得充当汇总检验；多种子按 ``aggregate_seed_patient_scores``
+      口径先聚合分数再检验）
+
+    Returns
+    -------
+    ``[comparison, p_raw, p_holm, reject_holm]``（保持 family 注册顺序）。
+    """
+    given = dict(p_values)
+    registered = list(family.comparison_names)
+    missing = [c for c in registered if c not in given]
+    extra = [c for c in given if c not in set(registered)]
+    if missing or extra:
+        raise ValueError(
+            "p_values must match the pre-registered family exactly: "
+            f"missing={missing}, extra={extra}")
+
+    raw: dict[str, float] = {}
+    for name in registered:
+        value = given[name]
+        if isinstance(value, ComparisonPValue):
+            if value.comparison != name:
+                raise ValueError(
+                    f"ComparisonPValue comparison {value.comparison!r} "
+                    f"does not match key {name!r}")
+            if value.n_seeds_averaged > 1:
+                raise ValueError(
+                    f"comparison {name!r}: 跨种子平均 p 值不得充当汇总检验"
+                    f"（n_seeds_averaged={value.n_seeds_averaged}）；"
+                    "先按 aggregate_seed_patient_scores 聚合患者分数")
+            raw[name] = float(value.p_value)
+        else:
+            raw[name] = float(value)
+
+    adjusted = holm_correct([raw[name] for name in registered])
+    rows = pd.DataFrame({
+        "comparison": registered,
+        "p_raw": [raw[name] for name in registered],
+        "p_holm": adjusted,
+    })
+    rows["reject_holm"] = rows["p_holm"] < alpha
+    return rows
+
+
+# ---------------------------------------------------------------------------
+# 统一 canonical 入口（W3-07~W3-11 接入点）
+# ---------------------------------------------------------------------------
+
+
+@dataclass(frozen=True)
+class FormalComparisonResult:
+    """正式比较 canonical 链路（``run_formal_comparison``）的结果。"""
+
+    comparison: str
+    point_estimate: float
+    low: float
+    high: float
+    crosses_zero: bool
+    n_patients: int
+    model_patient_scores: pd.Series
+    baseline_patient_scores: pd.Series
+
+
+def run_formal_comparison(
+    a_frame: pd.DataFrame,
+    b_frame: pd.DataFrame,
+    *,
+    comparison: str = "model_minus_baseline",
+    min_drugs: int = 3,
+    n_bootstrap: int = 2000,
+    seed: int = 0,
+    allow_seed_mismatch: bool = False,
+) -> FormalComparisonResult:
+    """正式实验比较的统一 canonical 入口（W3-07~11）。
+
+    链路顺序固定：
+
+    1. ``assert_comparable``——比较检查器（面板 / 标签 / 键 / 种子一致）
+    2. ``intra_patient_spearman_patient_macro``——患者等权主指标
+    3. ``patient_score_paired_bootstrap``——患者级配对统计
+
+    多种子输入必须先经 ``aggregate_seed_patient_scores`` 明确口径：
+    逐种子患者分数平均（主分析）或预测平均集成（独立模型，另列），
+    不得混用；多重比较经 ``holm_correct_family`` 在预注册 family 内
+    执行。患者级配对在双侧均有定义的患者上成对（pairwise complete）。
+    """
+    _assert_single_seed(a_frame, "a_frame")
+    _assert_single_seed(b_frame, "b_frame")
+    assert_comparable(a_frame, b_frame, allow_seed_mismatch=allow_seed_mismatch)
+
+    _, _, per_a = intra_patient_spearman_patient_macro(
+        a_frame, min_drugs=min_drugs)
+    _, _, per_b = intra_patient_spearman_patient_macro(
+        b_frame, min_drugs=min_drugs)
+    scores_a = per_a.set_index("patient_id")["intra_patient_spearman"]
+    scores_b = per_b.set_index("patient_id")["intra_patient_spearman"]
+    common = sorted(
+        set(scores_a.index[scores_a.notna()])
+        & set(scores_b.index[scores_b.notna()]))
+    if not common:
+        raise ValueError(
+            "no patients with defined scores on both sides "
+            "(constant / ineligible); comparison undefined")
+
+    ci = patient_score_paired_bootstrap(
+        scores_a.reindex(common), scores_b.reindex(common),
+        n=n_bootstrap, seed=seed)
+    return FormalComparisonResult(
+        comparison=comparison,
+        point_estimate=ci.point_estimate,
+        low=ci.low,
+        high=ci.high,
+        crosses_zero=ci.low <= 0.0 <= ci.high,
+        n_patients=ci.n_units,
+        model_patient_scores=scores_a.reindex(common).rename("model"),
+        baseline_patient_scores=scores_b.reindex(common).rename("baseline"),
+    )

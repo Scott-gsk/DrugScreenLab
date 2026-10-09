@@ -1,0 +1,54 @@
+experiment_id: EXP-047
+title: Required dual-route perturbation and direct drug-response fusion
+status: registered_sol_reviewed_input_contract_corrected_no_go_pending_upstream_inputs_cost_and_final_freeze
+protocol_source:
+  - docs/exec-plans/active/双路线算法研究与验证方案_20260922.md#8
+  - docs/exec-plans/active/双路线算法研究与验证方案_20260922.md#13.5
+record: experiments/records/EXP-047.md
+runtime:
+  environment: WSL2
+  conda_env: drugscreening-gpu
+  run_wall_hours_max: 20
+  package_gpu_hours_max: 48
+  device: cuda
+cohort:
+  direct_response_contract: EXP-036
+  target_label_fraction: 0.5
+  outer_patient_folds: 5
+  inner_patient_folds: 3
+  final_seeds: [20260922, 20260923, 20260924]
+  drug_panel: EXP-036 frozen 14-drug InChIKey contract
+  primary_endpoint: patient_macro_within_patient_spearman
+perturbation_input:
+  initial_mode: reference_cell_predicted_perturbation
+  must_be_labeled_as_patient_conditioned: false
+  patient_conditioned_mode_requires_expression_scale_admission: true
+  reference_cell_predictions: source_cell_out_of_fold_with_identity_exposure_audit
+  patient_conditioned_predictions: PDO_patient_inner_fold_out_of_fold_no_validation_or_test_patient_exposure
+  prediction_and_axis_hashes: required
+arms: [F-A_direct, F-B_perturbation, F-F_fusion, F-C_equal_capacity_direct, F-S_shuffled_perturbation]
+arm_inputs:
+  F-A_direct: [pretreatment_PDO_expression, drug_structure]
+  F-B_perturbation: [drug_structure, frozen_source_cell_OOF_predicted_perturbation_features]
+  F-F_fusion: [pretreatment_PDO_expression, drug_structure, frozen_source_cell_OOF_predicted_perturbation_features]
+  F-C_equal_capacity_direct: [pretreatment_PDO_expression, drug_structure, matched_ordinary_direct_branch]
+  F-S_shuffled_perturbation: [pretreatment_PDO_expression, drug_structure, source_cell_identity_shuffled_perturbation_features]
+arm_input_constraints:
+  F-B_must_not_include_PDO_pretreatment_expression: true
+  F-B_is_the_mandatory_perturbation_only_comparison: true
+  patient_conditioned_perturbation_is_a_separate_extension_not_a_substitute_for_F-B: true
+comparison_family:
+  confirmatory_holm: [F-F_vs_F-A, F-F_vs_F-B, F-F_vs_F-C, F-F_vs_F-S]
+fairness:
+  common_patients_drugs_supervision_splits: required
+  matched_search_and_update_opportunities: required
+  matched_capacity_control: required
+  shuffle_unit: unique_biological_perturbation_identity_then_broadcast
+search:
+  exact_candidate_values: pending_upstream_input_smoke_cost_and_sol_freeze
+stopping:
+  no_training_until_input_identity_scale_crossfit_and_sol_review_pass: true
+  single_route_positive_result_not_required: true
+  negative_result_is_acceptable: true
+acceptance:
+  deliverables: [input_admission_receipts, crossfit_cache, frozen_config, keyed_predictions, patient_paired_metrics, holm_results, capacity_and_shuffle_controls, independent_numeric_recheck, independent_review]

@@ -1,0 +1,55 @@
+{
+  "status": "REPORT_FIGURES_WRITTEN",
+  "route1_sources": {
+    "25": {
+      "path": "artifacts/experiments/EXP-036/20260927_25pct_learning_curve_aggregate_v1/run_summary.json",
+      "sha256": "8c1e30670e5ee6bbf03b3d547d9bff4cbe1d810495b3e3d80fc304d86c1aafa9"
+    },
+    "50": {
+      "path": "artifacts/experiments/EXP-036/20260926_pharmaformer_transfer_50pct/fivefold_aggregate_v1/run_summary.json",
+      "sha256": "fc1aceaf04f1e63314282d238b88beb3bb6b8546ddeebd109a1d20f98f45a9da"
+    },
+    "100": {
+      "path": "artifacts/experiments/EXP-036/20260927_100pct_learning_curve_aggregate_v1/run_summary.json",
+      "sha256": "e02ae2757ef9069cefa1b6104b51ff501df89c052a1570f86e10e3f494adc60a"
+    },
+    "route_a_stage_acceptance": {
+      "path": "artifacts/experiments/EXP-041/20260923_adapter_a3_audit_v1/stage_acceptance_v1.json",
+      "sha256": "2b1393228b2129bb227b3ce33796771a1ed326d8dc08f6ed2e2a583c8a4abce4"
+    }
+  },
+  "route1_complete_label_fractions": [
+    25,
+    50,
+    100
+  ],
+  "fusion": {
+    "status": "SCOPED_RESULT_ACCEPTED_AFTER_SOL_AND_INDEPENDENT_REVIEW",
+    "summary": "artifacts/experiments/EXP-048/20260927_100pct_fivefold_aggregate_v1/run_summary.json",
+    "summary_sha256": "fede00635320fb412467b978b56ed528ceb5ddae99f6f5673169a4c574641571",
+    "independent_review": {
+      "path": "artifacts/experiments/EXP-048/20260927_fivefold_independent_review/review.json",
+      "sha256": "e4157ea0f4a911d6e522cf8f89b5fec4e41382a103d5d020e96706fa60686fae",
+      "decision": "PASS_SCOPED_EXP048_NINE_DRUG_FIVEFOLD_RESULT",
+      "summary_hash_matches": true
+    },
+    "sol_decision": {
+      "path": "artifacts/experiments/EXP-048/20260927_fivefold_stage_conclusion/sol_decision.json",
+      "sha256": "bdb8a7e9a33978f5a9e2055b491c30cee11ab32ce38143f21f51aa62f5c3d741",
+      "decision": "CONDITIONALLY_ACCEPT_SCOPED_NINE_DRUG_FIVEFOLD_RESULT_PENDING_INDEPENDENT_REVIEW"
+    }
+  },
+  "outer_scores_used_for_model_or_direction_selection": false,
+  "files": [
+    "figure_manifest.json",
+    "fusion_arm_means.csv",
+    "fusion_contrast_design.csv",
+    "fusion_five_arm_contrasts.png",
+    "fusion_five_arm_contrasts.svg",
+    "fusion_paired_differences.csv",
+    "route1_model_means.csv",
+    "route1_paired_differences.csv",
+    "route1_transfer_summary.png",
+    "route1_transfer_summary.svg"
+  ]
+}

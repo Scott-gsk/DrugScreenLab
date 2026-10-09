@@ -460,6 +460,10 @@ experiments:
       （迁移成立但表达条件化增量未达显著）；L4 25/50/100%: 来源预训练
       增益仅 100% 档显著（C3-C1 +0.025 [0.007,0.041], Holm 0.021）；
       目标监督各档远超来源零样本与来源均值。
+      （2026-09-22 审计更正："迁移成立"表述收窄为有限迁移收益（+0.030
+      CI 跨零、无等效检验）；L1/L2/L3/L4 来源检查点不统一（三个不同
+      检查点），层间比较链待统一冻结检查点后重评，见
+      docs/reports/audit_repair_wave3_20260922.md 条目 W3-01/W3-12。）
     record: experiments/records/EXP-032.md
     predecessor: EXP-031
   - id: EXP-033
@@ -472,6 +476,12 @@ experiments:
       基线(主比较全部跨零, Holm 均 0.84); XPert 可运行但逆转方向与药敏
       负相关(-0.168, 如实上报); C4 扰动特征增量 +0.007 跨零(不显著);
       上游: seen 一致高于 UNK(P1 0.0685 vs 0.0346), 覆盖率制约。
+      （2026-09-22 审计更正："中等层达平台期"表述收窄为双线性未检出
+      显著增益（CI 跨零）、不构成平台期证据；GBM 调参内层流程（表达
+      筛选/标准化/缺失处理入内层折）与 XPert 方向/药物面板/表达单位/
+      剂量时间编码待核查复核；C2/C3 初始化对照未在本实验模型上执行
+      （原方案尚未完成），见 docs/reports/audit_repair_wave3_20260922.md
+      条目 W3-04/W3-18/W3-21/W3-24。）
     record: experiments/records/EXP-033.md
     predecessor: EXP-032
   - id: EXP-034
@@ -484,6 +494,14 @@ experiments:
       +0.0856 [-0.0183,+0.2076] p=0.232 跨零且与打乱对照同量级, 双分支
       优势 0.0206 可完全由容量解释, 指纹/扰动/联合三增量分离完成——
       撤回历史'仅归因扰动'解释的工程基础落成。
+      （2026-09-22 审计更正："双分支优势可完全由容量解释"收窄为容量
+      对照同量级、无法排除容量解释但缺交互能力直接模型基线与患者信息
+      打乱对照、主指标未恢复全药排序，"完全"不成立；E1 仅三标量版本
+      （通路 delta/landmark 维度扰动表示未恢复，原方案尚未完成，三标量
+      版本保留为历史摘要特征基线）；E3 缺辅助损失权重为零对照、更新次数/
+      训练预算/选模未匹配；"工程基础落成"降级为三标量版本下未检出扰动
+      增量，见 docs/reports/audit_repair_wave3_20260922.md 条目
+      W3-02/W3-25~W3-28。）
     record: experiments/records/EXP-034.md
     predecessor: EXP-033
   - id: EXP-035
@@ -503,9 +521,584 @@ experiments:
       逐基因 CI>0 仅 5-6%——个体化信号存在但微弱、集中于必需基因、仅在零样本臂稳定。
       F3：100% 档 ridge 0.031 > 低秩多任务 0.028 > MLP 0.015 > 通路掩码 0.012 ≈ 随机分组
       0.010——固定通路结构无增益。
+      （2026-09-22 审计更正："距离不解释误差"收窄为未检出误差-距离相关
+      （CI 全跨零）、不等于距离不解释误差，距离待基因顺序核查修复后重算；
+      域分类 0.903 待按患者分组+标准化/主成分放入训练折后重训复核；谱系
+      基因为线索级候选、未确立稳定可迁移基因清单；层3 置换 p=0.0 待有限
+      次数修正（p<1/101）；F3"ridge 最优"为点估计、未做配对显著性检验，
+      见 docs/reports/audit_repair_wave3_20260922.md 条目
+      W3-03/W3-05/W3-29~W3-34。）
     record: experiments/records/EXP-035.md
     predecessor: EXP-034
-mvps:
+  - id: EXP-036
+    title: Direct drug response benchmark and source-weight test under the dual-route plan
+    status: folds_0_4_verified; 50pct_fivefold_A1_A2_A3_and_route_a_Holm_independently_reviewed_stage_accepted; 25pct_fivefold_scoped_secondary_result_accepted; 100pct_folds0_1_verified_promoted_fold2_active_folds3_4_pending; legacy_48h_UNKNOWN_UNRECOVERED
+    hypothesis: >
+      在未见结直肠癌类器官患者中，表达与药物交互是否提供超出同监督条件
+      药物均值及仅药物模型的个体化排序信息；来源权重在 50% 目标训练患者档
+      是否优于相同来源预处理的随机初始化。
+    primary_endpoint: patient_within_all_common_drugs_spearman_paired_gain
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-22
+    record: experiments/records/EXP-036.md
+    predecessor: EXP-035
+
+  - id: EXP-037
+    title: Continuous drug perturbation prediction in unseen cell states
+    status: conditional_v2_folds_0_4_verified; fivefold_B1_accepted_after_independent_recalculation_no_conditional_gain; EXP038_B2_scoped_result_accepted; Route_B_Holm_pending_B5; shared_40_GPUh_incremental_tranche_19.238129_settled_of_40_no_reset_or_split; original_48_GPUh_history_UNKNOWN_UNRECOVERED; XPerT_6994_input_HARD_NO_GO_on_84_node_158_ID_InChIKey_rule (6830_ID_unlabeled_CPU_profile_is_engineering_only); TranSiGen_input_gate_open; EXP047_five_arm_fusion_mandatory
+    hypothesis: >
+      在药物结构、剂量与时间给定时，给药前细胞状态能否改善未见细胞的
+      978 个直接测量基因连续处理减对照表达变化预测。
+    primary_endpoint: cell_equal_train_scaled_delta_mse_improvement
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-22
+    record: experiments/records/EXP-037.md
+    predecessor: EXP-036
+
+  - id: EXP-038
+    title: CRC disease signature and measured molecular reversal ranking benchmark
+    status: baseline_controls_accepted; B2_fourarm_scored_and_independent_score_recalc_PASS; independent_statistics_review_PASS; SOL_ACCEPT_SCOPED_B2_RESULT; B1_B2_B5_Holm_not_closed; CPU_only_0_GPUh
+    hypothesis: >
+      固定结直肠癌疾病签名下，未见细胞的药物预测扰动所给逆转排序能否
+      重现同条件真实处理与载体对照表达产生的逆转排序。
+    primary_endpoint: cell_equal_predicted_vs_measured_reversal_spearman
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-22
+    record: experiments/records/EXP-038.md
+    predecessor: EXP-037
+
+  - id: EXP-039
+    title: Bidirectional gene-ranking supervision for perturbation reversal fidelity
+    status: partial_interrupted_fold_0_no_formal_result_15_inner_score_cache_equivalence_pass_candidate_selection_unassessed_sol_review_required_0_2597_gpuh_charged
+    hypothesis: >
+      在同一连续扰动模型和未见细胞划分下，按实测扰动构造的双向基因排序
+      损失能否提高预测与实测疾病逆转药物排序的一致性。
+    primary_endpoint: heldout_cell_spearman_predicted_vs_measured_reversal_gain
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-039.md
+    predecessor: EXP-037
+
+  - id: EXP-040
+    title: External phenotype association of frozen reversal rankings in CRC PDOs
+    status: preregistered_data_gate_pass_waiting_for_exp037_exp038_exp039_verified_scores
+    hypothesis: >
+      在不使用 PDO 药敏训练或选模的前提下，冻结的跨细胞逆转药物排序
+      是否与结构匹配的结直肠癌 PDO 患者药敏排序正相关。
+    primary_endpoint: patient_macro_spearman_b5_reversal_score_vs_pdo_sensitivity
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-040.md
+    predecessor: EXP-039
+
+  - id: EXP-041
+    title: Parameter-efficient PharmaFormer adaptation for CRC PDO drug ranking (A3)
+    status: shared_EXP036_folds0_4_verified_promoted; A3_fivefold_and_route_a_Holm_independently_reviewed_stage_accepted; 25pct_100pct_curves_pending
+    hypothesis: >
+      在相同来源权重、患者划分与目标标签量下，冻结主干并训练小型残差适配器，
+      相对来源模型全参数微调能否提高患者内药物排序或降低固定种子间波动。
+    primary_endpoint: patient_macro_spearman_source_adapter_minus_source_full
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-22
+    record: experiments/records/EXP-041.md
+    predecessor: EXP-036
+
+  - id: EXP-042
+    title: Source cold-cell generalization on the shared drug panel
+    status: result_reviewed_source_internal_gain_pending_program_closeout
+    hypothesis: >
+      在来源细胞身份外五折中，逐药表达 Ridge 能否在每细胞药物排序上超过
+      仅使用来源训练细胞逐药均值的固定排序。
+    primary_endpoint: source_cell_macro_spearman_gain_over_train_drug_mean
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-042.md
+    predecessor: EXP-036
+
+  - id: EXP-043
+    title: Zero-target-label PDO ranking with frozen source PharmaFormer weights
+    status: result_independently_verified_negative_in_current_pdo_panel
+    hypothesis: >
+      冻结来源权重在不读取 PDO 药敏拟合或选模时，能否在患者内药物排序上
+      超过相同来源训练身份的逐药均值，且真实患者表达对应优于表达身份置换。
+    primary_endpoint: patient_macro_spearman_gain_over_matched_source_drug_mean
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-043.md
+    predecessor: EXP-036
+
+  - id: EXP-044
+    title: Historical PRISM cross-study re-evaluation with frozen source PharmaFormer
+    status: evaluation_v4_scored_independent_statistical_recheck_v5_pass_result_chain_static_review_valid_scope_limited
+    hypothesis: >
+      在固定 13 药结构共同面板和严格未见 GDSC 细胞身份上，冻结来源 PharmaFormer
+      能否超过同来源训练身份拟合的逐药均值排序。
+    primary_endpoint: strict_unseen_cell_macro_spearman_gain_over_source_train_drug_mean
+    approved_by: user_whole_dual_route_plan_start_20260922
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-044.md
+    predecessor: EXP-019
+    result: >
+      New evaluation_v4 and numerical recheck v5 PASS; a fresh independent static result-chain review is VALID within its stated scope and did not recalculate values. Historical PRISM only:
+      161 eligible strict-unseen cell lines; PharmaFormer cell-macro Spearman 0.5167 versus source-training drug-mean
+      0.5443; paired difference -0.02763, 95% bootstrap interval [-0.03974, -0.01538], sign-flip p=0.000100.
+
+  - id: EXP-045
+    title: DepMap source dependency training and Nature organoid adaptation for PDO drug ranking
+    status: D_E_two_stage_masked_reconstruction_contract_82_of_82_focused_synthetic_CPU_tests_pass_but_real_adapter_fairness_pending; DepMap_20_fold_capacity_outer_970_to_982_groups_924_to_945_exchangeable_inner_928_to_947_and_884_to_906; Nature_20_fold_capacity_79_groups_77_exchangeable_2_singletons_conditional_on_13_group_quarantine; published_HCMI_Sanger_Broad_DepMap_cohort_overlap_confirmed_but_13_group_to_24Q2_ModelID_bridge_unresolved; official_Table2_scope_retains_13_groups_14_samples_17_pairs_5_extra_yes_keys_outside_frozen_162_sample_input; v2_provisional_nested_CPU_masks_roundtrip_verified_and_compared_with_v1; PT_9eMhTl_full_candidate_group_excluded_from_three_affected_inner_masks_but_SIDM00117_identity_unresolved; SIDM01117_bound_to_ACH-003071_with_current_input_zero_row_projection_across_five_affected_slots_but_checkpoint_exposure_UNKNOWN_UNBOUND; real_prepare_fold_mask_receipts_independent_function_holdout_and_budget_pending; 40_of_40_fold_slots_still_DATA_BLOCKED; no_D1_scientific_comparison_or_training
+    hypothesis: >
+      DepMap cell-line dependency training and Nature organoid dependency adaptation, using
+      separate domain heads on a shared expression representation, may improve patient-paired
+      PDO drug ranking beyond matched direct-response and extra-expression controls.
+    primary_endpoint: patient_macro_within_patient_spearman_gain_over_matched_drug_mean
+    approved_by: user_dual_route_plan_and_d15_d16_fusion_scope_20260923
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-045.md
+    config: configs/experiments/EXP-045.yaml
+    predecessor: EXP-036
+
+  - id: EXP-046
+    title: Hallmark pathway branch transfer and explanation in PDO drug ranking
+    status: real_unlabeled_51x19091_to_51x50_pathway_input_profile_CPU_0.30603_seconds_five_graphs_7299_edges_each_no_labels_predictions_or_GPU_source_checkpoint_lineage_and_mask_pending_training_NO_GO
+    hypothesis: >
+      A drug-conditioned Hallmark branch transferred from source cells may improve unseen PDO
+      patient drug ranking and produce stable, prediction-faithful pathway contributions.
+    primary_endpoint: patient_macro_within_patient_spearman_gain_over_matched_drug_mean
+    approved_by: user_dual_route_plan_and_d15_d16_fusion_scope_20260923
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-046.md
+    config: configs/experiments/EXP-046.yaml
+    predecessor: EXP-036
+
+  - id: EXP-047
+    title: Required dual-route perturbation and direct drug-response fusion
+    status: registered_sol_reviewed_input_contract_corrected; fivefold_train_side_drug_mean_recomputation_pass; EXP037_conditional_vectors_folds0_4_verified; original_14_drug_input_remains_blocked; nine_drug_MCF7_10uM_24h_EXP048_user_authorized; actual_GPT6_Sol_medium_allows_shared_observed_key_scoring_conditionally; core_transfer_cost_and_five_arm_freeze_pending; mandatory_fusion_no_training
+    hypothesis: >
+      In a shared PDO patient split, panel, supervision, and search budget, predicted
+      perturbation information may add ranking value beyond direct drug-response prediction,
+      matched capacity, and shuffled perturbation controls.
+    primary_endpoint: patient_macro_within_patient_spearman_fusion_gain_over_direct_model
+    approved_by: user_dual_route_plan_and_d15_d16_fusion_scope_20260923
+    approved_on: 2026-09-23
+    record: experiments/records/EXP-047.md
+    config: configs/experiments/EXP-047.yaml
+    predecessor: EXP-036
+
+  - id: EXP-048
+    title: Exploratory nine-drug cross-route fusion in PDO drug ranking
+    status: "actual_GPT6_Sol_medium_FROZEN_WITH_SCOPED_INTERPRETATION; fold0_fold1_fold2_five_arm_predictions_complete_and_label_blind_verified; fold3_attempt001_active_after_fresh_launch_bound_cost_gate_PASS; fold4_not_started; no_outer_scores_yet"
+    hypothesis: >
+      在固定九药候选总体与相同患者、折次、监督和模型机会下，来源细胞留出预测的扰动表示
+      是否能为 PDO 患者内药物排序增加信息；比较五臂并使用每位患者共同的实测药物键。
+    primary_endpoint: patient_macro_within_patient_spearman_gain_over_direct_model
+    approved_by: user_2026_09_26_scoped_nine_drug_authorization
+    approved_on: 2026-09-26
+    record: experiments/records/EXP-048.md
+    config: configs/experiments/EXP-048.yaml
+    predecessor: EXP-047
+
+  - id: EXP-049
+    title: Exploratory cold-start Hallmark topology diagnostic in PDO drug ranking
+    status: protocol_frozen_CPU_input_preflight_PASS_post_freeze_outer_test_label_access_disclosed_Sol_conditional_continue_budget_pending_no_training
+    hypothesis: >
+      在外折0固定50%训练侧的20名类器官患者和预登记内层折上，冷启动 PharmaFormer 的 Hallmark 分支
+      能否改善患者内14药排序，相对匹配随机分组、普通稀疏图及训练侧逐药均值。
+    primary_endpoint: patient_paired_PH_minus_equal_mean_random_map_spearman
+    approved_by: user_2026_09_27_cold_start_pathway_diagnostic_request_and_actual_gpt_6_sol_medium_protocol_decision
+    approved_on: 2026-09-27
+    record: experiments/records/EXP-049.md
+    config: configs/experiments/EXP-049.yaml
+    predecessor: EXP-046
+    related_experiment: EXP-036
+
+  - id: EXP-050
+    title: Breast organoid drug-induced transcription response and cell-line transfer
+    status: v7_descriptive_transfer_reviewed; TranSiGen_XPert_inner_validation_replay_exact_match; source_validation_baseline_score_pass_development_only_selection_biased; source_64_gene_mask_sensitivity_pass; source_LINCS_CTRPv2_association_v3_complete_exploratory_only; source_LINCS_PRISM_24Q2_association_v1_complete_exploratory_6_drugs_n_ge_10_mixed_signs_sparse; source_24h_control_scale_reconstruction_v1_complete_affine_selected_on_13_train_LOO_and_below_baseline_on_2_frozen_validation_objects; GSE288798_single_organoid_GEX_descriptive_summary_complete_readback_pass; Chen_PDO_IC50_asset_coverage_only_complete_47_drug_labels_78_identifiers_1_of_5_name_overlap_doxorubicin_only_unpaired_no_IC50_values_read; original_121_8_and_5pct_response_gate_withdrawn; actual_PDO_target_prediction_no_go_pending_author_scale_missing_gene_and_exposure_contract_3_2_source_domain_and_3_6_candidate_frame_cpu_only_completed_root_verified_no_pdo_matched_efficacy_GSE216540_FULV_500nM_4d_identity_key_unresolved_active_research_goal_incomplete
+    hypothesis: >
+      实测乳腺癌类器官药物诱导转录变化中，是否存在可在乳腺癌细胞系同药扰动中保留的基因与功能响应，
+      以及在冻结开发数据后，TranSiGen/XPert预测能否为这些实测响应和真实药敏参照提供增量信息。
+    primary_endpoint: paired_organoid_cell_line_response_correlation_on_frozen_unique_common_gene_axis
+    approved_by: user_2026_09_30_authorized_seven_day_breast_transfer_plan_and_48_gpu_hour_increment
+    approved_on: 2026-09-30
+    record: experiments/records/EXP-050.md
+    config: configs/experiments/EXP-050.yaml
+    predecessor: EXP-010
+    related_experiment: EXP-037
+
+  - id: EXP-051
+    title: Pre-treatment state contribution to cross-domain perturbation-response prediction
+    status: active_original_architecture_comparison_incomplete_xpert_fit_gate_failed_transigen_attempt007_and_exp052_closed_exp053_train_oof_completed_clip_candidate_user_decision_required
+    hypothesis: >
+      在共享药物扰动效应之外，处理前细胞状态是否能增加未见来源对象的固定978基因
+      药物诱导转录响应预测信息，并在未见药物及经过身份与暴露审核的独立公开研究中保留。
+    primary_endpoint: source_object_macro_response_nmse_978_on_frozen_common_domain
+    approved_by: user_20261006_continuous_algorithm_authorization_and_actual_GPT6_Sol_medium_representative_comparison_package_freeze
+    approved_on: 2026-10-06
+    record: experiments/records/EXP-051.md
+    config: configs/experiments/EXP-051-representative-compare.yaml
+    predecessor: EXP-050
+    related_experiment: EXP-037
+
+  - id: EXP-052
+    title: TranSiGen one-shot low-learning-rate stability candidate
+    status: closed_failed_train_gradient_safety_stop_after_epoch1_batch3_root_readback_pass
+    hypothesis: >
+      在保持原 TranSiGen 架构、raw-sum 目标、训练键和其他训练条件不变时，单次降低学习率能否
+      避免 EXP-051 attempt007 观察到的 TRAIN 数值发散，并通过预登记的拟合门。
+    primary_endpoint: train_object_macro_response_nmse_978_at_epoch_300
+    approved_by: user_20261006_continuous_algorithm_authorization_plus_existing_one_repair_reserve_and_internal_sol_medium_ruling
+    approved_on: 2026-10-07
+    record: experiments/records/EXP-052.md
+    config: configs/experiments/EXP-052-transigen-lr-stability.yaml
+    predecessor: EXP-051
+    related_experiment: EXP-050
+
+  - id: EXP-053
+    title: Drug-shared perturbation effect with pre-treatment state residual
+    status: completed_root_verified_recovered_train_object_oof_development
+    hypothesis: >
+      在五个已见药物的共享转录响应效应之上，预处理前的来源细胞表达状态是否能在未见来源对象的训练内交叉预测中提供可重复的逐基因响应残差增量。
+    primary_endpoint: object_macro_nmse_gain_over_fold_training_per_drug_mean
+    authorized_by: continuous_algorithm_research_plan_20261006_section_exp051_followup_path
+    registered_on: 2026-10-07
+    record: experiments/records/EXP-053.md
+    config: configs/experiments/EXP-053-drug-shared-state-residual.yaml
+    predecessor: EXP-052
+    related_experiment: EXP-051
+
+  - id: EXP-054
+    title: Per-drug decomposition of fixed EXP-053 source-object OOF results
+    status: completed_root_verified_posthoc_train_oof_per_drug_descriptive_analysis
+    hypothesis: >
+      在五个已见药物的训练来源对象留一预测中，处理前状态残差相对逐药均值的总体差异是否在药物间方向一致。
+    primary_endpoint: per_drug_object_macro_nmse_difference_state_residual_vs_per_drug_mean
+    authorized_by: continuous_algorithm_research_plan_20261006_section_exp051_followup_path_cpu_only_analysis_of_authorized_train_oof
+    registered_on: 2026-10-07
+    record: experiments/records/EXP-054.md
+    config: configs/experiments/EXP-054-exp053-per-drug-decomposition.yaml
+    predecessor: EXP-053
+    related_experiment: EXP-051
+
+  - id: EXP-055
+    title: Representative original TranSiGen and XPert architecture comparison under verified full training schedules
+    status: cpu_norm_recovery_failed_closed_true_nonfinite_training_loss_epoch212_batch3; root_readback_pass; fixed300_endpoint_missing; no_inner_dev_score; original_architecture_comparison_incomplete; no_retry_without_new_protocol_authorization
+    hypothesis: >
+      在EXP-051固定TRAIN来源键和978基因轴上，按核验后的TranSiGen原始训练合同及XPert完整官方日程训练原架构，
+      能否通过TRAIN拟合门并在预登记inner-dev提供相对强基线的可复核增量信息。
+    primary_endpoint: train_object_macro_response_nmse_978_with_frozen_inner_dev_selection
+    approved_by: user_direct_authorization_20261006_representative_original_architecture_full_training
+    approved_on: 2026-10-07
+    record: experiments/records/EXP-055.md
+    config: configs/experiments/EXP-055-representative-models.yaml
+    predecessor: EXP-051
+    related_experiment: EXP-050
+    result: >-
+      Prior fresh CPU attempt remains immutable FAILED_CLOSED at epoch9; its read-only epoch8 replay passed root readback but did not isolate a unique cause. New exact-resume CPU attempt 20261007_exp055_transigen_cpu_resume_v1/fit_attempt_001 passed the cumulative fixed300 CPU cost gate, then FAILED_CLOSED at epoch211 batch4 on a nonfinite gradient under the registered stop rule. Last completed finite epoch210 had 409782/409782 finite TRAIN main-delta values but object-macro NMSE4.78133e53 vs per-drug mean1.04427 and amplitude ratio3.72204e25. This is severe TRAIN-only numerical divergence, not a valid generalization score. Root weights_only readback verified the matching epoch210 checkpoint and 161/161 finite tensors; failure context did not identify a specific parameter gradient or unique cause. CPU total charge761.901/7200s including prior checks/allowance; GPU0; no inner-dev values loaded and no fixed300 endpoint. No retry; further TranSiGen training requires a new explicitly authorized protocol. The independent GPU-route cap remains separate.
+  - id: EXP-056
+    title: Low-rank pre-treatment state by drug interaction residual development comparison
+    status: completed_manager_verified_negative_development_candidate_stopped
+    hypothesis: >
+      在五个已见药物的冻结响应数据中，处理前来源状态与药物的低秩交互残差，能否在固定逐药平均响应锚点之上提升未见来源对象的响应预测，并优于无状态容量对照和对象块打乱状态对照。
+    primary_endpoint: inner_dev_source_object_macro_nmse_gain_over_strongest_control
+    approved_by: user_continuous_algorithm_research_and_scoped_followup_package_20261006
+    approved_on: 2026-10-07
+    record: experiments/records/EXP-056.md
+    config: configs/experiments/EXP-056-low-rank-state-drug-interaction.yaml
+    predecessor: EXP-053
+    related_experiment: EXP-055
+    result: >
+      固定来源开发域内，rank4状态×药物交互NMSE=1.095775，劣于逐药均值1.059270（相对恶化3.45%）；配对对象bootstrap改善区间全低于0，10/24对象改善。rank8及无状态、对象块打乱对照均未形成候选增量。根独立读回PASS；GPU0；保留负结果并停止，不声称独立来源或PDO泛化。
+
+  - id: EXP-057
+    title: XPert-author PANACEA external development fixed baselines
+    status: completed_root_verified_fixed_baselines_external_development_only
+    hypothesis: >
+      在经许可、完整化学身份、匹配控制与978基因轴门核验的PANACEA配对响应中，固定来源TRAIN全局均值和完整InChIKey逐药均值能否提供方向/秩层面的外部开发参照。
+    primary_endpoint: source_object_macro_gene_direction_agreement_and_rank_correlation
+    authorized_by: user_direct_followup_authorization_existing_EXP057_official_data_access_and_fixed_comparison_20261007
+    registered_on: 2026-10-07
+    record: experiments/records/EXP-057.md
+    config: configs/experiments/EXP-057-panacea-development.yaml
+    predecessor: EXP-055
+    related_experiment: EXP-051
+    result: >-
+      Fixed global source TRAIN mean delta, exact-full-InChIKey per-drug TRAIN mean delta, and zero-change baselines completed on the frozen 11 PANACEA objects (one exact gefitinib key, 978 genes). Root independent numerical recomputation PASS: keyed predictions and target treatment-minus-control values match; 33/33 condition metrics, 33/33 object metrics, per-drug metrics, all 9 summary/bootstrap metrics, and all 9 paired differences match. Global vs exact-key direction agreement 0.52812 vs 0.52691; Spearman 0.10678 vs 0.11069; Hallmark direction 0.52000 vs 0.49455. Paired differences are small and mixed; external development only, author-exposed, one drug and 11 objects, not independent validation or PDO efficacy. Cross-platform scale mismatch retained; no NMSE/MAE/amplitude fit. GPU0.
+
+  - id: EXP-058
+    title: Nonlinear pretreatment-state-conditioned source response residual development comparison
+    status: completed_negative_root_readback_pass_singlepoint_gate_failed
+    hypothesis: >-
+      在固定来源TRAIN逐完整InChIKey药物均值响应之上，处理前来源状态经固定16维PCA及单隐藏层非线性残差模型，能否在未参与拟合的inner-dev来源对象上提供超过线性、容量匹配drug-only及对象状态整块打乱对照的增量预测信息。
+    primary_endpoint: inner_dev_source_object_macro_nmse_gain_over_strongest_registered_control
+    authorized_by: continuous_breast_transfer_research_authorization_and_supervisor_frozen_candidate_20261007
+    registered_on: 2026-10-07
+    record: experiments/records/EXP-058.md
+    config: configs/experiments/EXP-058-state-conditional-residual.yaml
+    current_run_config: configs/experiments/EXP-058-state-conditional-residual-recovery.yaml
+    predecessor: EXP-056
+    related_experiment: EXP-051
+    result: >-
+      Recovery run completed with first-epoch full-package cost gate PASS: 18.685min projection including 20% margin for full 300-epoch schedule, prior 60s debit, and final I/O, under fixed120min CPU cap; GPU0. Early stopping selected epochs54/19/18, all arms ended at epoch84. Fixed inner-dev candidate NMSE1.059566 vs strongest per-drug mean1.059270 (relative gain -0.0279%); candidate failed >=5% gate and was slightly worse than strongest control. Direction-correct objects24/24; amplitude ratio0.50668; descriptive candidate-NMSE-improvement objects13/24. Root independent NPZ/key/axis/denominator/metric/per-drug readback PASS: summary max error3.11e-10, per-drug max error1.26e-9; receipt SHA256 1afa14f40b631e18f056b127cd803fafa16ad80d853f58d11bb0ff7f07d0db7d. Preserve original failed attempt; no additional search, no PDO/outer/locked/PANACEA values.
+  - id: EXP-059
+    title: TranSiGen learning-rate stability and fixed-300 fit comparison
+    status: completed_root_verified_fixed300_negative_source_development_fit; v1_entry_failure_and_v2_postcheckpoint_loader_failure_preserved_immutable
+    hypothesis: >-
+      在固定的419条TRAIN来源条件、110个对象、5个完整InChIKey及978基因轴上，原TranSiGen架构与其余训练配方不变时，唯一将学习率由1e-3降低至1e-4能否稳定完成固定300轮，并在冻结的inner-dev对象上相对TRAIN逐药均值改善响应预测。
+    primary_endpoint: inner_dev_source_object_macro_nmse_gain_over_per_full_inchikey_train_mean_at_fixed_epoch_300
+    authorized_by: user_direct_authorization_EXP059_LR_STABILITY_2303_plus_user_binding_fix_0003_within_existing_package
+    registered_on: 2026-10-07
+    record: experiments/records/EXP-059.md
+    config: configs/experiments/EXP-059-transigen-lr-stability.yaml
+    predecessor: EXP-055
+    related_experiment: EXP-051
+    current_run_id: 20261008_exp059_transigen_lr1e4_bindingfix_v2
+    current_attempt: fit_attempt_001
+    result: >-
+      v2 completed the fresh-init fixed300 run (419 TRAIN conditions/110 objects/5 full keys/978 genes; LR1e-4; raw-sum/no-clip; CPU-only). After an immutable post-checkpoint loader indexing error, frozen endpoint evaluation was recovered without retraining. Root readback passed keyed predictions, axes, finite arrays, metrics, unchanged checkpoint/attempt hashes, post-freeze inner-dev access and forbidden-data isolation. Inner-dev object-macro NMSE 14.08495 vs per-drug mean1.05927 and zero1.21485; direction53.57%, amplitude4.117x. This is a valid strong negative fixed-source development fit result; it does not establish universal architecture failure or PDO transfer. Cumulative CPU conservative charge2810.204/7200s; GPU0; no active process/reservation. No further candidate is authorized.
+
+  - id: EXP-060
+    title: TranSiGen frozen-checkpoint inference randomness diagnostic
+    status: completed_root_verified_train_only_no_candidate_passed
+    hypothesis: >-
+      在EXP-059固定epoch300检查点和已冻结来源数据上，固定16次原作者随机推理均值或双层潜变量均值推理，是否在TRAIN对象宏NMSE上同时优于随机单次参考及逐完整InChIKey均值基线，并达到预登记幅度门。
+    primary_endpoint: train_object_macro_nmse_with_preregistered_two_baseline_and_amplitude_gates
+    authorized_by: user_direct_authorization_EXP060_FROZEN_INFERENCE_0103
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-060.md
+    config: configs/experiments/EXP-060-transigen-frozen-inference.yaml
+    predecessor: EXP-059
+    related_experiment: EXP-051
+    current_run_id: 20261008_exp060_frozen300_inference_v1
+    current_attempt: fit_attempt_001
+    result: >-
+      All 16 fixed-seed CPU predictions and both deterministic/mean candidates completed on 419 TRAIN conditions/110 objects/5 full keys/978 genes. Candidate TRAIN NMSE 10.68165 and 10.77303 versus stochastic single-draw reference10.69534; both fail the required 10% gains over the random reference and per-drug mean, and amplitudes 3.559/3.578 fail the 0.5-2 gate. No inner-dev numeric rows were loaded. Root independent readback PASS (d675b41e73e23d4c8fe2c178afee3cd9ffa1e30e87d9d62c493a4b655de5891b). Conservative CPU charge130.282s including failed verifier calls and immutable-receipt refusal; GPU0. Candidate closed; no further inference search authorized.
+
+  - id: EXP-061
+    title: Hallmark-constrained pretreatment-state response residual development comparison
+    status: completed_root_verified_negative_fixed_source_development_candidate_closed
+    hypothesis: >-
+      在处理前状态输入与响应残差输出均受固定Hallmark基底约束时，逐完整InChIKey的TRAIN均值之上，固定线性映射能否在未参与拟合的来源inner-dev对象上增益，并胜过随机功能映射、对象键随机输入和TRAIN状态整块错配。
+    primary_endpoint: inner_dev_source_object_macro_nmse_gain_over_exact_key_train_mean_with_fixed_paired_interval
+    authorized_by: EXP061-FUNCTION-RESIDUAL-0203
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-061.md
+    config: configs/experiments/EXP-061-function-constrained-state.yaml
+    predecessor: EXP-060
+    related_experiment: EXP-051
+    result: >-
+      User-authorized fixed package completed and root independently verified. TRAIN object-macro NMSE was 1.04275786 versus per-drug mean 1.04427059 (only about 0.145% gain). On 93 inner-dev conditions/24 non-overlapping objects/5 exact full InChIKeys/978 genes, the Hallmark-state residual reached object-macro NMSE 1.05899564 versus exact-key per-drug mean 1.05927037 (absolute gain 0.00027472; relative gain 0.02594%). Paired-object 95% interval [-0.00035969, 0.00084254] includes zero; amplitude ratio 0.44908 is below the 0.5 gate; 17/24 objects beat the mean and all three registered controls were beaten by tiny margins. The fixed candidate fails the registered 5% gain, positive-CI and amplitude gates and is closed without search expansion. Root receipt SHA256 6f030b1859baa3e1a68a5178f10a940ea5a64179626d6148d967bfb8eaf042c3. Conservative CPU charge 274/1800s; inherited EXP-055 cumulative CPU about3214.486/7200s; GPU0; no PDO/outer/locked/PANACEA numeric values read.
+
+  - id: EXP-062
+    title: Source drug-coverage expansion for the fixed state-residual model
+    status: completed_root_verified_negative_source_coverage_candidate_closed
+    hypothesis: >-
+      The prior EXP-058 fixed-state model was only fairly compared on five complete drug keys. Expanding response-blind
+      source drug coverage to at most twenty eligible exact-key drugs may determine whether that narrow panel limited
+      the fixed candidate's source-development comparison; no new algorithm or independent/PDO test is claimed.
+    primary_endpoint: inner_dev_source_object_macro_nmse_gain_over_strongest_fixed_control
+    authorized_by: user_direct_authorization_source_coverage_EXP062_SOURCE_COVERAGE_0312
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-062.md
+    config: configs/experiments/EXP-062-source-coverage.yaml
+    predecessor: EXP-061
+    related_experiments: [EXP-051, EXP-053, EXP-058]
+    result: >-
+      Stage M passed root-independent readback for 20 exact full InChIKeys, 1982 conditions, 1291 TRAIN/93 objects, 691 inner-dev/48 disjoint objects and 978 genes. Stage V attempt_001 remains immutable FAILED_CLOSED for a metrics parser implementation error; the new attempt_002 completed the full frozen comparison and root numeric readback PASS (receipt SHA256 0fcf9709c8e3d4dcb3671bfd574253b77b10c149289135cbaf49c354454bd6b6). Inner-dev state-residual NMSE 1.125861 versus strongest per-drug mean 1.119362 (relative gain -0.5806%; paired 95% interval for control-minus-candidate [-0.014142,-0.001103]); 18/48 objects improved and candidate amplitude ratio 0.4971. It failed the predeclared gain, interval, object-fraction, amplitude and all-controls gates; closed without search expansion. Fixed source-development only, not independent drug/PDO validation. Conservative CPU 2367.974/3600s; inherited EXP-055 CPU 5582.460/7200s; GPU0; global GPU settled 1.670268/48h.
+
+  - id: EXP-063
+    title: XPert original architecture fit on the frozen 20-drug source-development panel
+    status: closed_cost_gate_failed_after_epoch1_root_verified_budget_decision_pending
+    hypothesis: >-
+      在EXP-062冻结的20个完整InChIKey/1982条件/978基因来源开发域上，按XPert原架构及作者训练合同从头拟合，是否能在固定inner-dev来源对象上优于同域逐药均值及已冻结状态/线性/容量对照。
+    primary_endpoint: inner_dev_source_object_macro_nmse_against_exact_key_train_mean
+    authorized_by: user_authorized_EXP063_XPERT_COVERAGE20_0512
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-063.md
+    config: configs/experiments/EXP-063-xpert-coverage20.yaml
+    predecessor: EXP-062
+    related_experiments: [EXP-051, EXP-062]
+    current_run_id: coverage20_official_v1
+    current_attempt: fit_attempt_003
+    result: >-
+      Response-blind native-axis gate and root readback passed for 20 exact keys/1982 rows/978 genes (1291 TRAIN/93 objects; 691 inner-dev/48 objects; overlap 0). fit_attempt_001 failed closed on stale runner SHA binding before expression/GPU; fit_attempt_002 failed closed on a fixed-baseline alias before CUDA updates; both immutable. fit_attempt_003 completed one real epoch then failed the preregistered full-schedule cost gate: 2500-epoch projection with 20% margin and terminal reserve is 22.121672 GPUh vs 9.025406 GPUh cap, excess 13.096266 GPUh. Root readback PASS, SHA256 f2de572a4231aa493c965c7dad68e5bbddbec600804d08677d53b5ad8af9769f. Only epoch1 cost-gate descriptives exist; no full XPert fit/validation score and no scientific negative claim. CPU 392.838/900s; actual GPU 0.0093787250h; global settled GPU 1.679646760848/48h; no active process or reservation. Package closed without shortening or budget increase.
+
+    resource_decision_status: submitted_to_human_pending_response
+    current_approved_package_gpu_hours: 9.025406
+    current_single_run_cap_gpu_hours: 20
+    proposed_package_gpu_hours: 23.2
+    proposed_single_run_cap_gpu_hours: 22.2
+    proposed_reallocation_gpu_hours: 13.2
+    reallocation_sources_gpu_hours: {candidate_reserve: 6, multiseed_reserve: 4, generalization_reserve: 3.2}
+    global_gpu_cap_hours_unchanged: 48
+    approval_received: false
+    active_pid: null
+    active_gpu_reservation_hours: 0
+  - id: EXP-064
+    title: TRAIN-only source pretreatment-state nearest-neighbor OOF comparison
+    status: completed_root_verified_source_train_oof
+    hypothesis: >-
+      Within the fixed 20-drug XPert source-development TRAIN domain, choosing three same-drug source objects using
+      only pretreatment state improves held-out TRAIN-object response prediction over the per-drug mean and a fixed
+      random-three-object reference.
+    primary_endpoint: common_denominator_object_macro_fold_train_gene_variance_nmse
+    authorized_by: user_authorized_EXP064_TRAIN_STATE_NEIGHBOR_OOF_64064
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-064.md
+    config: configs/experiments/EXP-064-state-neighbor-oof.yaml
+    predecessor: EXP-063
+    related_experiments: [EXP-051, EXP-062, EXP-063]
+    current_run_id: coverage20_oof_v1
+    current_attempt: fit_attempt_001
+    result: >-
+      Completed all five object-level OOF folds on the fixed EXP-062 TRAIN domain (1291 conditions/93 objects/20 exact keys/978 genes; common denominator 1291/93, no missing conditions). Object-macro NMSE: per-drug mean 1.080905, pretreatment nearest3 1.218417, random3 1.354454, zero 1.283834. Nearest3 beats random3 (paired mean improvement 0.136036, 95% object-bootstrap CI 0.099711 to 0.174423; 82/93 objects) but loses to per-drug mean (-0.137512, CI -0.163963 to -0.110694; nearest better in 8/93). Fixed-source TRAIN OOF development result only; no inner-dev/PDO/outer/locked values read. Root independent numeric readback PASS, SHA256 BCC0F2A52494B342C91134D145BEAF6F711AE0AC34544DF94806FBF6F88DF13E. CPU conservatively 250/900 seconds (inherited EXP-055 CPU 6225.30/7200), GPU0; no active process. Package closed without search expansion.
+
+  - id: EXP-065
+    title: Fixed-count shrinkage mechanism check on EXP-064 TRAIN OOF predictions
+    status: completed_root_verified_fixed_count_shrinkage_candidate_closed
+    hypothesis: >-
+      A preregistered count-based shrinkage lambda=3/(N+3) may reduce the fixed-source
+      OOF error of the three pretreatment-state nearest same-drug objects relative to
+      the per-drug mean and the capacity-matched shrunk random-three reference.
+    primary_endpoint: common_denominator_object_macro_fold_train_gene_variance_nmse
+    authorized_by: user_authorized_EXP065_FIXED_COUNT_SHRINK_0713
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-065.md
+    config: configs/experiments/EXP-065-neighbor-shrinkage.yaml
+    predecessor: EXP-064
+    related_experiments: [EXP-062, EXP-064]
+    current_run_id: fixed_count_shrinkage_v1
+    current_attempt: fit_attempt_005
+    result: >-
+      Root readback PASS on 1291 TRAIN OOF conditions/93 objects/20 exact InChIKeys/978 genes. Nearest3 count-shrunk NMSE=1.074562
+      vs per-drug mean=1.080905 (0.5868% gain, below the preregistered 5% gate); beats matched random3 shrinkage NMSE=1.081882.
+      Candidate closed. CPU 176.890/600 sec, GPU 0; EXP-055 inherited CPU balance 797.811 sec. No DEV/PDO/outer/locked values read.
+
+  - id: EXP-066
+    title: Pretreatment state and full-structure prediction of LINCS response
+    status: COMPLETED_ROOT_VERIFIED_NEGATIVE_FIXED_SOURCE_DEVELOPMENT
+    hypothesis: >-
+      DepMap pretreatment RNA plus full chemical structure may improve prediction of matched-control LINCS response over per-drug means,
+      zero change, an equal-capacity no-state model and whole-object state shuffling on one fixed response-blind development domain.
+    primary_endpoint: patient_equal_weighted_fold_train_gene_variance_nmse
+    authorized_by: user_authorized_parallel_transcript_prediction_and_drug_sensitivity
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-066.md
+    config: configs/experiments/EXP-066-response-prediction.yaml
+    predecessor: EXP-065
+    related_experiments: [EXP-002, EXP-007, EXP-051, EXP-063, EXP-066, EXP-067]
+    current_run_id: 20261008_exp066_response_prediction_v2
+    current_attempt: fit_attempt_001
+    active_pid: null
+    active_gpu_reservation_hours: 0
+    result: >-
+      Root readback PASS on the fixed 2830-condition/34-object/138-key/978-gene domain. Five-fold object-macro NMSE: state+structure 1.020316, per-drug mean 0.981994, equal-capacity no-state 0.972619, whole-object shuffle 1.031209, zero 1.062620. Candidate is 3.90% worse than per-drug mean and 4.90% worse than no-state; fixed-source development only. Root receipt e685a65ce4ad2334f66c255b9594f7cefa378cd3d5e4d1d82f6760fa90e13718. CPU model 700.978 sec; GPU0. Candidate closed.
+    package_gpu_cap_hours: 1.0
+    single_run_cap_gpu_hours: 20.0
+    shared_candidate_gpu_pool_hours: 10.0
+    package_cpu_cap_seconds: 1500
+    model_cpu_cap_seconds: 1200
+    shared_metadata_cpu_cap_seconds: 300
+    shared_AB_cpu_cap_seconds: 3600
+
+  - id: EXP-067
+    title: Cross-fitted transcript-response benefit for drug-sensitivity prediction
+    status: COMPLETE_CANDIDATE_CLOSED_ROOT_VERIFIED_NO_INCREMENTAL_RESPONSE_BENEFIT
+    hypothesis: >-
+      Cross-fitted predicted LINCS response features may improve CTRP drug sensitivity prediction beyond pretreatment RNA and full drug structure,
+      capacity-matched direct prediction and an object-shuffled response control.
+    primary_endpoint: patient_equal_weighted_within_cell_drug_spearman
+    authorized_by: user_authorized_parallel_transcript_prediction_and_drug_sensitivity
+    registered_on: 2026-10-08
+    record: experiments/records/EXP-067.md
+    config: configs/experiments/EXP-067-response-benefit.yaml
+    predecessor: EXP-066
+    related_experiments: [EXP-007, EXP-013, EXP-016, EXP-066]
+    current_run_id: 20261009_exp067_response_benefit_resume_v1
+    current_attempt: fit_attempt_001
+    active_pid: null
+    result: >-
+      Shared response-blind metadata freeze/root readback PASS: 2830 LINCS conditions, 34 PatientID source objects/cell lines, 138 exact keys, 4187 CTRP cell-drug metadata pairs, 978 genes. The complete CPU-only run 20261009_exp067_response_benefit_resume_v1 produced five outer-fold OOF predictions across 3965 finite cell-drug pairs and all four arms; root independently verified full keys, nested PatientID isolation, four inner OOF folds, exact common finite domain, overall object-macro metrics, paired 2000-resample object bootstrap and the frozen candidate gate. The response-augmented arm RMSE was 1.648105 versus 1.618042 direct (1.86% worse); within-object drug Spearman was 0.738320 versus 0.747494 direct. Paired 95% CI for RMSE reduction versus direct was -0.050441 to -0.009426, and only 29.41% of objects improved versus direct, below the 60% gate. It beat the capacity-matched and object-shuffled controls by point estimates, but did not pass the frozen promotion gate; close this candidate without further search. Fold0 copy was separately compared against immutable v3 source: all 816 keyed rows and five numeric columns matched exactly. No PDO/outer/locked/PANACEA/CDS-B values were read. Claims remain fixed-source development only.
+    scientific_denominators:
+      lincs_conditions: 2830
+      cell_drug_pairs: 3965
+      source_objects: 34
+      full_inchikeys: 138
+      genes: 978
+      outer_folds: 5
+      arms: 4
+    root_independent_readback: artifacts/experiments/EXP-067/20261009_exp067_response_benefit_resume_v1/root_independent_readback.json
+    root_independent_readback_sha256: 19583f6fa9244572a835cc22e9c6a8f469dec442d1eb4e0ee61312eb3cf52e31
+    fold0_resume_provenance_readback: artifacts/experiments/EXP-067/20261009_exp067_response_benefit_resume_v1/root_fold0_resume_provenance_readback.json
+    fold0_resume_provenance_readback_sha256: 30919f71f1586b1e44266df3fa89b462ee65105068475ec65655c8fdc82c02dd
+    run_summary_sha256: a64b028a2aa5fe58d632b64b29fde4ad588fbea4e79ca2d82513c7163483c5ad
+    root_cost_gate_readback: artifacts/experiments/EXP-067/20261008_exp067_nested_response_benefit_v3/root_cost_gate_readback.json
+    root_cost_gate_readback_sha256: f88d4e6962543ac268e50d093f4d4a69cfdf7ba9e413af57d60f539ddc322df7
+    root_verifier_script_sha256: 42831b80f92267e12fa8d737447434f680f33419fa847a5bf826c10163e61a9d
+    cpu_accounting_seconds: >-
+      Historical B package precharge 1605.5639088s and shared A+B precharge 2555.5639088s preserved. Runner CPU was 212.5235942s; add 40s of prelaunch engineering registered after config read and 60s conservative post-run root verification/accounting. Final EXP-067 cumulative conservative CPU is 1918.087503s and shared A+B is 2868.087503s. CPU caps were removed by the user; GPU0.
+    recovery_engineering:
+      status: completed_synthetic_resume_validation_and_root_verified_full_fivefold_run
+      cpu_seconds_conservative: 178.0
+      test_file: tests/modeling/test_exp067_response_benefit_helpers.py
+      tests_passed: 16
+      real_fold_fit_started: true
+      real_run_status: COMPLETE_CANDIDATE_CLOSED_ROOT_VERIFIED_NO_INCREMENTAL_RESPONSE_BENEFIT
+    package_gpu_cap_hours: 1.0
+    gpu_hours_spent: 0
+    single_run_cap_gpu_hours: 20.0
+    shared_candidate_gpu_pool_hours: 10.0
+    package_cpu_cap_seconds: null
+    shared_AB_cpu_cap_seconds: null
+    historical_package_cpu_cap_seconds: 1800
+    historical_shared_AB_cpu_cap_seconds: 3600
+
+  - id: EXP-068
+    title: Breast cancer cell-line RNA, drug-sensitivity and measured perturbation coverage with subtype harmonization
+    status: COMPLETED_ROOT_VERIFIED_METADATA_ONLY; RELIABILITY_GATE_NO_GO_FOR_PANEL_OR_PDO
+    hypothesis: >-
+      A complete, exact-identity inventory can determine which breast-origin cell models have baseline RNA identity,
+      CTRP drug-sensitivity pairs and measured LINCS perturbations under the same full InChIKey, while subtype claims
+      remain bounded by traceable ER/PR/HER2 evidence and separate historical/PAM50 labels.
+    primary_endpoint: exact_cell_and_full_inchikey_threeway_intersection_with_auditable_independent_denominators
+    authorized_by: user_direct_priority_adjustment_2026_10_09
+    registered_on: 2026-10-09
+    record: experiments/records/EXP-068.md
+    config: configs/experiments/EXP-068-breast-data-coverage.yaml
+    related_experiments: [EXP-050, EXP-051, EXP-055, EXP-063, EXP-067]
+    current_run_id: 20261009_attempt_005
+    current_attempt: threeway_attempt_005_and_subtype_attempt_005
+    active_pid: null
+    active_gpu_reservation_hours: 0
+    result: >-
+      Root independent metadata readback PASS: 5 exact breast models/5 independent PatientIDs, 229 exact cell-drug
+      pairs, 128 complete full InChIKeys, 1,832 LINCS dose-time metadata rows. Receptor evidence is source-traced;
+      PAM50 missing 5/5, PR missing 5/5 in DepMap; no basal-to-TNBC inference. Existing model evidence does not
+      support proceeding to the conditional top/bottom drug panel or PDO wet validation. No response/expression
+      numeric values were accessed in EXP-068.
+    cpu_hard_cap_seconds: null
+    gpu_hours_spent: 0
+    gpu_cap_hours: 0
+
+  - id: EXP-069
+    title: Author architecture source TRAIN fitting reliability diagnostics
+    status: REGISTERED_DIAGNOSTICS_IMPLEMENTING
+    authorized_by: user_continue_after_data_delivery_2026_10_09
+    registered_on: 2026-10-09
+    record: experiments/records/EXP-069.md
+    config: configs/experiments/EXP-069-training-reliability-diagnostics.yaml
+    related_experiments: [EXP-055, EXP-059, EXP-063, EXP-068]
+    cpu_hard_cap_seconds: null
+    gpu_cap_hours: 0
+  - id: EXP-070
+    title: Fixed-update TRAIN fitting sufficiency diagnostic
+    status: COMPLETED_TRAIN32_FIT_GATE_PASS
+    authorized_by: user_continue_cell_model_reliability_2026_10_09
+    registered_on: 2026-10-09
+    record: experiments/records/EXP-070.md
+    config: configs/experiments/EXP-070-fixed-update-diagnostic.yaml
+    related_experiments: [EXP-059, EXP-069]
+    cpu_hard_cap_seconds: null
+    gpu_cap_hours: 0
   - id: MVP-001
     title: End-to-End DrugScreenLab Cell-Line Core Feasibility
     status: result_reviewed
@@ -518,3 +1111,6 @@ mvps:
     result_case: CORE_MVP_FEASIBILITY_PROMISING
     reviewer: mvp/reviews/MVP-001_independent_reviewer.md
     record: mvp/records/MVP-001.md
+
+
+

@@ -12,6 +12,8 @@ dependencies:
   # EXP-014 records versions already installed; no environment mutation.
   - scipy=1.17.1
   - scikit-learn=1.8.0
+  # EXP-046 freezes network_simplex tie behavior and records the source hash.
+  - networkx=3.6.1
   - pyarrow=23.0.1
   - openpyxl=3.1.5
   - matplotlib=3.10.8

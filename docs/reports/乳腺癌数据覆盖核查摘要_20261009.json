@@ -1,0 +1,61 @@
+{
+  "scope": "metadata inventory only; no response or perturbation numeric labels read",
+  "depmap_breast_model_records": 97,
+  "model_types": {
+    "IDC": 37,
+    "BRCA": 23,
+    "ILC": 14,
+    "DCIS": 6,
+    "ZIMMBR": 6,
+    "BRCNOS": 5,
+    "BNNOS": 4,
+    "BRCANOS": 2
+  },
+  "baseline_RNA_available_models": 67,
+  "legacy_subtypes": {
+    "missing": 34,
+    "luminal": 17,
+    "basal_A": 16,
+    "HER2_amp": 13,
+    "basal_B": 11,
+    "basal": 4,
+    "luminal_HER2_amp": 2
+  },
+  "CTRP_breast_cells": 40,
+  "CTRP_breast_cells_with_response_rows": 40,
+  "CTRP_breast_unique_drugs": 544,
+  "CTRP_breast_unique_cell_drug_pairs": 16825,
+  "depmap_models_exact_RRID_CTRP_match": 40,
+  "RNA_and_CTRP_models": 40,
+  "LINCS_breast_base_cell_ids": [
+    "BT20",
+    "HME1",
+    "HS578T",
+    "MCF10A",
+    "MCF7",
+    "MDAMB231",
+    "SKBR3"
+  ],
+  "processed_LINCS_five_tumor_background_metadata": {
+    "BT20": {
+      "conditions": 1406,
+      "perturbation_ids": 176
+    },
+    "HS578T": {
+      "conditions": 1400,
+      "perturbation_ids": 176
+    },
+    "MCF7": {
+      "conditions": 24852,
+      "perturbation_ids": 11204
+    },
+    "MDAMB231": {
+      "conditions": 1405,
+      "perturbation_ids": 176
+    },
+    "SKBR3": {
+      "conditions": 1393,
+      "perturbation_ids": 176
+    }
+  }
+}

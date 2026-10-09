@@ -1,0 +1,98 @@
+experiment_id: EXP-051
+title: Pre-treatment state contribution to cross-domain perturbation-response prediction
+status: registered_first_package_frozen_not_started
+record: experiments/records/EXP-051.md
+plan: docs/exec-plans/active/乳腺癌转录响应持续算法研究方案_20261006.md
+run_id: 20261006_exp051_contract_fit_smoke_v1
+authorization:
+  user_scope: continuous_algorithm_research_until_goal_complete
+  package_gpu_cap: 5.0
+  package_cpu_preparation_cap_minutes: 120
+  first_fit_smoke_gpu_cap: 2.0
+  repair_gpu_cap: 3.0
+  exp_gpu_cap: 48.0
+  exp_settled_gpu_hours_before_run: 0.584830054434155
+  exp_available_gpu_hours_before_run: 47.415169945565845
+  run_gpu_cap: 20.0
+  current_gpu_reserved: 0.0
+  current_run_started: false
+  training_device_policy: approved_A5000_only
+data:
+  upstream_training_asset:
+    path_windows: D:/Code/XPert/processed_data/l1000_sdst_78453.h5ad
+    path_wsl: /mnt/d/Code/XPert/processed_data/l1000_sdst_78453.h5ad
+    origin: XPert_author_processed_H5AD_derived_from_L1000_Level3_replicate_collapsed_zscore; current_numeric_scale_to_be_verified
+    role: source_training_only
+    response_blind_selection_max_conditions: 512
+    target: "experiment_defined_response_delta = X - obsm['X_ctl']; not claimed as upstream XPert native label"
+    gene_axis: fixed_978
+    exclude_legacy_l5_metrics_from_direct_numeric_comparison: true
+    no_unverified_rescaling_or_inverse_transform: true
+    require_numeric_scale_and_bin_compatibility_receipt_before_fit: true
+  sampling:
+    key_order: independent_source_coverage_desc_then_full_InChIKey_asc
+    preferred_min_sources_per_drug: 4
+    fallback_min_conditions_per_drug: 3
+    fallback_min_sources_per_drug: 2
+    conditions_per_drug_source: 1
+    choose_by: frozen_dose_time_and_full_condition_key
+    keep_complete_drug_groups: true
+    response_values_used_for_sampling: false
+  split:
+    grouping_unit: independent_source_cell_object
+    freeze_before_response_read: true
+    roles: [training, inner_development]
+    external_development_candidate: PANACEA_sdst_352.h5ad
+    final_locked_test_candidate: CDSDB_mdmt_613.h5ad
+    metadata_only_gates_before_matrix_read: [source_provenance, object_identity, drug_full_key, dose_time, control_pairing, gene_axis, old_exposure, cross_domain_overlap]
+    disqualify_domain_only: true
+  forbidden_inputs:
+    - PDO_numeric_drug_sensitivity
+    - outer_fold_or_locked_response_labels
+    - PANACEA_or_CDSDB_response_matrix_before_role_and_identity_freeze
+    - existing_trained_checkpoints_without_verified_lineage
+models:
+  TranSiGen:
+    architecture: upstream_original
+    initialization: scratch
+    max_epochs: 100
+    update_schedule: upstream_verified_contract
+    output: paired_control_response_delta; no_upstream_inverse_transform_assumed
+  XPert:
+    architecture: upstream_original
+    initialization: scratch
+    max_epochs: 100
+    schedule: upstream_verified_L1000_schedule_keep_first_70_epoch_stage_transition
+    early_stop_on_epoch_1: false
+  shared_conditions_and_axes: true
+baselines:
+  - zero_change
+  - global_mean_delta_train_only
+  - per_drug_mean_delta_train_only
+  - structural_linear_low_rank_if_identity_coverage_passes
+  - expression_structure_low_rank_if_identity_coverage_passes
+metrics:
+  primary: object_macro_response_nmse_978
+  secondary: [object_macro_gene_correlation, direction_agreement, amplitude_ratio, mae]
+  normalize_using: train_only_gene_standard_deviation
+  undefined_or_zero_denominator: report_undefined_with_absolute_error
+fit_gate:
+  compare_against: strongest_non_degenerate_of_zero_and_per_drug_train_mean
+  required_train_nmse_relative_reduction: 0.10
+  prediction_to_observed_mean_absolute_amplitude_ratio: [0.5, 2.0]
+  continue_if_baseline_error_zero: report_absolute_error_no_relative_gate
+  fit_failure_interpretation: implementation_or_optimization_diagnostic_only
+resource:
+  run_id: 20261006_exp051_contract_fit_smoke_v1
+  total_exp_cap_gpu_hours: 48.0
+  first_package_cap_gpu_hours: 5.0
+  first_package_cpu_preparation_cap_minutes: 120
+  first_fit_smoke_cap_gpu_hours: 2.0
+  one_evidence_based_repair_cap_gpu_hours: 3.0
+  failures_and_retries_count: true
+  per_run_cap_gpu_hours: 20.0
+continuation:
+  later_packages_gpu_hours: [10.0, 10.0, 9.0, 8.0]
+  reserve_gpu_hours: 5.415169945565845
+  total_remaining_gpu_hours: 47.415169945565845
+  no_new_candidate_after_goal_close: true

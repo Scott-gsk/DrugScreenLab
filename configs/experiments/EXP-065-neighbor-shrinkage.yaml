@@ -1,0 +1,69 @@
+experiment_id: EXP-065
+run_id: fixed_count_shrinkage_v1
+protocol_id: EXP065-FIXED-COUNT-SHRINK-0713
+predecessor: EXP-064
+
+source:
+  experiment_id: EXP-064
+  run_id: coverage20_oof_v1
+  attempt_id: fit_attempt_001
+  attempt_dir: artifacts/experiments/EXP-064/coverage20_oof_v1/fit_attempt_001
+  source_receipt_sha256: bcc0f2a52494b342c91134d145beaf6f711ae0ac34544df94806fbf6f88df13e
+  source_prediction_sha256: 3b97b18cc44c687b179c9702f5e5a5d1814989b03cae1551cd763397f39a1f2d
+  fold_assignment_sha256: 90d9e9f722486ed887708e8b540702e3a4cc8f881825afa0679643e2c32cb2d1
+  fold_preprocessing_sha256: 34ea9de0060ce8915664e433048f2b748a6420552d26817ddc1448cbc706c378
+  train_domain: [1291, 93, 20, 978]
+
+train_metadata:
+  fold_assignment: artifacts/experiments/EXP-064/coverage20_oof_v1/fit_attempt_001/fold_assignment.tsv
+  neighbor_manifest: artifacts/experiments/EXP-064/coverage20_oof_v1/fit_attempt_001/neighbor_selection.tsv
+  columns: [full_condition_key, source_object_id, full_inchikey, fold_id]
+  role: TRAIN_only
+
+shrinkage:
+  neighbor_count: 3
+  formula: lambda=3/(N+3)
+  N_definition: distinct_same_full_inchikey_source_objects_in_fold_train_metadata
+  excludes_heldout_object: true
+  uses_response_or_oof_targets_to_set_lambda: false
+  applied_equally_to: [nearest3_state, random3_same_drug]
+  output_arms: [zero_change, per_drug_mean, nearest3_state, nearest3_count_shrunk, random3_same_drug, random3_count_shrunk]
+
+metrics:
+  primary: object_macro_fold_train_gene_variance_nmse
+  aggregation: conditions_within_object_then_equal_weight_objects
+  common_denominator_only: true
+  paired_object_bootstrap_replicates: 20000
+  paired_object_bootstrap_seed: 64065
+  normalized_error_decomposition: residual_variance_minus_twice_mean_error_covariance
+  required_contrasts: [nearest_shrunk_vs_per_drug_mean, nearest_shrunk_vs_random_shrunk]
+  continuation_gate: nearest_shrunk_relative_gain_vs_per_drug_mean_at_least_0.05_and_nmse_below_random_shrunk
+
+resources:
+  cpu_package_cap_seconds: 600
+  package_precharge_seconds: 158
+  inherited_exp055_cpu_cap_seconds: 7200
+  inherited_exp055_cpu_settled_start_seconds: 6225.298222
+  inherited_exp055_cpu_remaining_start_seconds: 974.701778
+  gpu_hours_cap: 0
+  first_fold_cost_gate: true
+  full_schedule_margin_fraction: 0.20
+  root_readback_reserve_seconds: 180
+  aggregation_closeout_reserve_seconds: 60
+
+output:
+  root: artifacts/experiments/EXP-065/fixed_count_shrinkage_v1
+  attempt_id: fit_attempt_005
+  first_fold_predictions: fold0_shrinkage_predictions.npz
+  keyed_predictions: keyed_shrinkage_predictions.npz
+  metrics: metrics.json
+  paired_object_differences: paired_object_differences.tsv
+  object_metrics: object_metrics.tsv
+  per_drug_metrics: per_drug_metrics.tsv
+  count_table: counts_by_fold_drug.tsv
+  decomposition_table: normalized_error_decomposition_by_object.tsv
+  normalized_error_decomposition: normalized_error_decomposition.json
+  cost_gate: first_fold_cost_gate.json
+  root_readback: root_independent_readback.json
+
+forbidden_numeric_roles: [DEV, inner_dev, outer, locked, PDO, PANACEA, CDSDB]

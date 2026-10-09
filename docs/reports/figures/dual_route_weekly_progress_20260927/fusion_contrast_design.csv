@@ -1,0 +1,5 @@
+﻿contrast_key,contrast,question,status
+F-F_vs_F-A,F-F − F-A,Does fusion exceed the direct model?,pending_full_fivefold_result
+F-F_vs_F-B,F-F − F-B,Does PDO expression add information?,pending_full_fivefold_result
+F-F_vs_F-C,F-F − F-C,Does gain exceed model-capacity effects?,pending_full_fivefold_result
+F-F_vs_F-S,F-F − F-S,Does correct perturbation alignment matter?,pending_full_fivefold_result

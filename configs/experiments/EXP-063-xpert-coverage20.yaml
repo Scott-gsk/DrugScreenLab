@@ -1,0 +1,63 @@
+experiment_id: EXP-063
+run_id: coverage20_official_v1
+record: experiments/records/EXP-063.md
+authorization:
+  package: EXP063-XPERT-COVERAGE20-0512
+  basis: user_authorized_frozen_xpert_coverage20_supervision_correction
+  owner: root_coordinator
+  implementation_model: gpt-6-luna
+  reasoning_effort: xhigh
+  training_device_policy: approved_A5000_only
+data:
+  source_experiment_id: EXP-062
+  source_run_id: 20261008_exp062_coverage20_fixed_v3
+  source_attempt_id: fit_attempt_002
+  source_root_readback: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3/root_independent_readback_fit_attempt_002_v5/root_independent_readback.json
+  metadata_freeze_sha256: 1fa504accc314ac056f66f4c37cdd5b92797a37c80ea0d7cfb500994dc0ad9c9
+  metadata_root_readback_sha256: 05159a8fe0730778921abb60194a9e36bd9ba751aa2e429d64048f4e19dd0e40
+  numeric_root_readback_sha256: 0fcf9709c8e3d4dcb3671bfd574253b77b10c149289135cbaf49c354454bd6b6
+  source_key_file: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3/response_blind_conditions.tsv
+  source_prediction_file: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3/fit_attempt_002/keyed_predictions.npz
+  source_h5ad: /mnt/d/Code/XPert/processed_data/l1000_sdst_78453.h5ad
+  allowed_arrays: [X, obsm.X_ctl]
+  rows: 1982
+  genes: 978
+  full_inchikey_count: 20
+  train_conditions: 1291
+  train_objects: 93
+  inner_dev_conditions: 691
+  inner_dev_objects: 48
+  forbidden_numeric_roles: [pdo, outer, locked, panacea, cdsdb]
+  target: X_minus_X_ctl
+model:
+  architecture: upstream_XPertNet
+  initialization: fresh_upstream_init_weights
+  native_drug_features: [unimol_atom_embeddings, HG_embeddings]
+  native_feature_binding: h5ad_pert_idx_to_verified_XPert_feature_axis
+  batch_size: 128
+  train_lr: 0.004
+  weight_decay: 0.00001
+  max_epochs: 2500
+  init_epoch_transition: 70
+  patience: 50
+  official_selection_metric: val_loss4
+  loss_weights: [0.2, 0.003, 0.2, 1]
+  seed: 20261006
+comparison:
+  fixed_baselines_from_exp062: [zero_change, global_train_mean, exact_key_train_mean, linear_state_ridge, nonlinear_state_residual, capacity_matched_drug_only, whole_object_state_shuffle]
+  primary_metric: inner_dev_source_object_macro_nmse
+  secondary_metrics: [object_macro_mae, gene_correlation, direction_agreement, amplitude_ratio]
+  aggregation: conditions_within_object_then_objects_equally_weighted
+  official_objective_reported_separately: true
+resources:
+  cpu_hard_cap_seconds: 900
+  package_gpu_cap_hours: 9.025406
+  single_run_gpu_cap_hours: 20
+  global_gpu_cap_hours: 48
+  global_gpu_settled_baseline_hours: 1.670268035804
+  allowed_gpu_uuid: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+  first_epoch_full_package_projection_margin: 0.20
+  projection_uses_full_max_epoch_schedule: true
+output:
+  root: artifacts/experiments/EXP-063/coverage20_official_v1
+  independent_root_readback_required: true

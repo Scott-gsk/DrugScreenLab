@@ -1,0 +1,81 @@
+experiment_id: EXP-055
+title: Original TranSiGen and XPert representative model comparison
+record: experiments/records/EXP-055.md
+run_id: 20261007_exp055_representative_models_v1
+source_experiment_id: EXP-051
+source_run_id: 20261006_exp051_contract_fit_smoke_v1
+fit_kind: representative
+artifact_root: artifacts/experiments/EXP-055
+
+authorization:
+  user_scope: continue_approved_original_architecture_comparison
+  package_gpu_cap: 10.0
+  package_settled_gpu_hours_before_artifact_ledgers: 0.5469069945105702
+  first_phase_gpu_cap: 5.0
+  first_fit_smoke_gpu_cap: 0.25
+  cpu_preparation_cap_minutes: 120
+  exp_gpu_cap: 48.0
+  exp_settled_gpu_hours_before_artifact_ledgers: 1.2241092560986186
+  training_device_policy: approved_A5000_only
+  allowed_device_uuid: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+  one_internal_reallocation_within_package: true
+
+data:
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_run_root: artifacts/experiments/EXP-051
+  source_files_read_only: true
+  frozen_conditions: 512
+  genes: 978
+  train_conditions: 419
+  train_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_objects: 24
+  full_inchikeys: 5
+  roles: [TRAIN, inner_dev]
+  forbidden_inputs: [PDO_numeric_sensitivity, PDO_transcript_response, outer_labels, locked_labels, EXP-050_frozen_cases]
+
+models:
+  TranSiGen:
+    architecture: upstream_original
+    initialization: scratch
+    objective: raw_sum
+    gradient_clipping: false
+    learning_rate: 0.001
+    weight_decay: 0.00001
+    batch_size: 64
+    shuffle_train: true
+    normal_batchnorm_updates: true
+    max_epochs: 300
+    checkpoint_epochs: [100, 300]
+    checkpoint_final: true
+  XPert:
+    architecture: upstream_original
+    initialization: scratch
+    config: D:/Code/XPert/configs/config_l1000.yaml
+    max_epochs: 2500
+    batch_size: 128
+    learning_rate: 0.004
+    weight_decay: 0.00001
+    warmup_stage_epochs: 70
+    patience: 50
+    selection: upstream_early_stopping_checkpoint_by_inner_dev_delta_pcc_loss
+
+fit_gate:
+  baseline_source: EXP-051 root-independent readbacks
+  strongest_train_baseline: min(object_macro_nmse of zero_change and per_drug_mean_delta)
+  minimum_train_nmse_relative_reduction: 0.10
+  amplitude_ratio_range: [0.5, 2.0]
+  metrics: [object_macro_nmse, object_macro_gene_correlation, direction_agreement, amplitude_ratio, mae]
+  prediction_keying: full_condition_key_and_source_object_id
+
+resource:
+  run_id: 20261007_exp055_representative_models_v1
+  package_gpu_cap_hours: 10.0
+  package_settled_before_artifact_ledgers_gpu_hours: 0.5469069945105702
+  first_phase_cap_gpu_hours: 5.0
+  paired_smoke_cap_gpu_hours: 0.25
+  total_exp_cap_gpu_hours: 48.0
+  exp_settled_before_artifact_ledgers_gpu_hours: 1.2241092560986186
+  failures_and_smokes_count: true
+  reallocation_once_if_projected_total_exceeds_first_phase_and_not_package_cap: true
+  margin_fraction: 0.20

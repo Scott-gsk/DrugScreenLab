@@ -1,0 +1,63 @@
+experiment_id: EXP-066
+title: Pretreatment-state and full-structure prediction of measured LINCS response
+authority: user_authorized_parallel_transcript_prediction_and_drug_sensitivity
+metadata_gate_status: PASS
+metadata_gate_receipt_sha256: dc4b649d960a326916bb53c1734c0204f67bd877e4cce9467f35a255779633c9
+target_axis_hash: b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623
+a_cpu_limit_seconds: 1200
+a_b_cpu_cap_seconds: 3600
+a_b_cpu_spent_before_seconds: 150
+metadata_gate:
+  status: PASS
+  run_id: 20261008_exp066067_shared_metadata_v2
+  shared_dir: artifacts/experiments/EXP-066/EXP-067/20261008_exp066067_shared_metadata_v2
+  root_receipt_sha256: dc4b649d960a326916bb53c1734c0204f67bd877e4cce9467f35a255779633c9
+  target_axis_sha256: b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623
+  fingerprint_contract_sha256: 76a5d8d5ce318062277f941cbd97ca293208b46fa5c227b9e3826158f76e4ccc
+data:
+  lincs_conditions: data/processed/lincs/GSE92742/continuous_conditions_v2/conditions.parquet
+  lincs_response_matrix: data/processed/lincs/GSE92742/continuous_conditions_v2/condition_delta.npy
+  depmap_expression_dir: data/processed/depmap/24q2_rnaseq_exact978
+  depmap_identity: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+  drug_structure_table: data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_pert_info.txt.gz
+  ctrp_drug_table: data/processed/exp013/ctrp_v2/drugs.csv
+  ctrp_cell_identity: data/artifacts/resource_acquisition_20260916/ctrp_parse/ctrp_depmap_identity_map.csv
+  ctrp_response_table: data/processed/exp013/ctrp_v2/responses.csv
+  max_conditions: 20000
+  exact_gene_axis: 978
+  source_role_policy: include development train+val, exclude locked; 5 PatientID grouped folds
+  structure_features: Morgan radius=2 n_bits=2048; exact full InChIKey; fold-invariant RDKit contract hash
+  exposure_features: [log10_dose_uM, log10_time_hours]
+  exposure_selection: per full InChIKey, response-blind dose/time pair with maximal eligible development-object coverage; canonicalized numeric tie-break
+  exact_depmap_expression_axis_sha256: b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623
+  depmap_rows: one exact978 row per mapped ModelID; PatientID is only the split/statistical unit
+  matched_controls: exact treatment/control instance IDs traced through continuous_contract_v2 metadata; condition_delta target is the pre-materialized treatment-minus-matched-control vector
+  train_gene_variance_epsilon: 1.0e-8
+  direction_tie_rule: literal sign equality including zero equals zero
+  spearman_rule: condition-wise over 978 genes; constant prediction or target is undefined and remains null
+model:
+  family: rank16_reduced_rank_ridge
+  alpha: 1.0
+  max_rank: 16
+  state_pca_components: 16
+  drug_pca_components: 16
+  interaction_dimensions: 256
+  folds: 5
+  fold_group: PatientID
+  fold_assignment: greedy condition-balanced on metadata, stable-hash tie-break; fixed before response reads
+  seed: 660067
+metrics:
+  primary: object_equal_weighted_fold_train_gene_variance_nmse
+  practical_gain_threshold: 0.05
+resources:
+  cpu_seconds_package_cap: 1500
+  shared_metadata_cpu_cap_seconds: 300
+  gpu_hours_package_cap: 1.0
+  gpu_hours_single_run_cap: 20.0
+  total_candidate_gpu_pool_hours: 10.0
+  global_gpu_cap_hours: 48.0
+  cost_gate: first complete held-out fold plus all closeout/readback, extrapolate full 5-fold and add 20 percent margin
+  never_shorten_folds_or_remove_controls: true
+outputs:
+  root_dir: artifacts/experiments/EXP-066
+  shared_dir: artifacts/experiments/EXP-066/EXP-067

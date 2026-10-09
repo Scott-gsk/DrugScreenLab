@@ -8,57 +8,138 @@ runtime:
   environment_doc: docs/ENVIRONMENT.md
   data_root_env: DRUGSCREEN_DATA_ROOT
 research:
-  active_experiment: null
+  orchestration_revision_20260924:
+    authority: docs/AGENT_GOVERNANCE.md
+    plan_section: 17
+    coordinator_and_workers: gpt-6-luna/xhigh
+    critical_decisions: gpt-6.1-sol/medium
+    status: rules_and_six_role_templates_updated_runtime_reload_not_verified
+    next_action: "Historical 2026-09-24 orchestration revision; current work is tracked in research.active_plan_status and experiments/records/EXP-055.md."
+    excluded_roles: [Writer, Peer-Review, Meta-Review]
+  active_experiment: EXP-068
+  current_task_card: experiments/records/EXP-068.md
+  current_parallel_experiments: []
   active_mvp: MVP-001
   proposed_mvp: null
   mvp_status: trained_exploratory_models_under_controlled_validation
   mvp_result: PARTIAL_SOURCE_DOMAIN_SIGNAL_PDO_TRANSFER_NOT_ESTABLISHED
   mvp_result_case: EXP016_COLD_CELL_POSITIVE_EXP017_ZHU_NEGATIVE_EXP019_PRISM_NEGATIVE
   last_accepted_experiment: EXP-002
-  last_completed_experiment: EXP-035
-  evidence_level: source_cold_cell_internal_signal_zhu_pdo_transfer_negative_prism_cross_study_negative
+  last_completed_experiment: EXP-067
+  evidence_level: source_cold_cell_internal_signal; PDO_transfer_not_established; EXP-059_fixed300_completed_root_verified_negative_source_development_fit; EXP-060_frozen_checkpoint_inference_candidates_failed_train_gates_root_verified; EXP-061_fixed_Hallmark_state_residual_root_verified_negative_source_development; EXP-062_20_drug_coverage_candidate_closed_root_verified_negative_source_development; EXP-063_XPert_original_architecture_cost_gate_closed_no_full_fit_root_verified; EXP-064_fixed_source_TRAIN_OOF_state_nearest_beats_random_but_loses_to_per_drug_mean_root_verified; EXP-065_count_shrinkage_root_verified_nearest_gain_0.5868pct_below_5pct_gate_closed; EXP-066_state_plus_structure_response_candidate_negative_root_verified; EXP-067_full_nested_fivefold_response_benefit_complete_root_verified_no_incremental_gain_over_direct_baseline
   accepted_model: null
   current_champion: exp016_dual_encoder_internal_cold_cell_only
   current_baseline: target_domain_drug_mean_B0
   program_checkpoint: DRUGSCREENLAB_PROGRAM_EXECUTION_CHECKPOINT.md
-  program_decision: WAVE3_CLOSED_20260922_ALL_WORK_PACKAGES_COMPLETE
-  cross_study_status: PRISM_353_STRICT_UNSEEN_CELL_LINES_104_KNOWN_DRUGS_EXP019_NEGATIVE
-  next_experiment_id: EXP-036
-  extension_status:
-    foundation: IMPLEMENTATION_REMOVED_RESULTS_RETAINED
-    pharmaformer_pdo: EXP010_COMPLETE_EXP012_ARTIFACTS_DELETED_20260922_USER_APPROVED_RUNNERS_REMOVED
-    organoid_readiness: EXP013_BASELINE_LOOP_ON_ACCESSIBLE_PDO
-    preferred_pancreatic_target: HRA010277_NOT_REGISTERED
-    preferred_source_ctrp: EXPLORATORY_ADMITTED_SOURCE_DOMAIN_MATERIALIZED_TABLES_FROZEN
-  notes:
-    - 2026-09-19 收口：EXP-020~025 全部完成（020/021/024 证据不足、022 LINCS 对照主导、023 ChemPert 药条件增益 CI 全正 EXPLORATORY、025 联合 DO_NOT_EXPAND）；pytest 162 通过、数据注册表 PASS；GPU 空闲，下一波需用户批准后自 EXP-026 预登记启动；收口报告 docs/reports/program_closeout_20260919.md。
-    - 2026-09-19 二波启动：用户批准第二波方案（.trae/documents/第二波研究方案_双路线对比与可解释融合_EXP026-030.md）；EXP-026 预登记（评价改革：非结构药子集+残差口径双主终点；数据清洗消融；CTRPv2 冻结；引入 2026 Nature 肿瘤类器官依赖图 256 PDO，仅作迁移检验/域适应/辅助任务，不作药敏标签）。
-    - 2026-09-19 EXP-026 完成：6/6 任务交付——结构药 FROZEN（7 结构/7 非结构）、分层终点模块、重打分（M1_source_scaled +0.0186 CI 不跨零 EXPLORATORY-POSITIVE，第一波结论部分翻转）、清洗消融（扩交集显著有害 -0.0059；归一化/通路无差异；响应口径唯一正向 0.854/0.859 跨零；合同固定 top-2000+z-score+基因直接输入）、CTRPv2 冻结（14/14，ctrp_v2_materialized_tables_v1 EXPLORATORY_ADMITTED）、依赖图准入（10/10，交集 14900 不降级，transfer_organoid_biobank_paired_dependency_v1 ACQUIRED_EXPLORATORY）；EGA 申请 EGAD00001015468 为用户人工行动项；下一实验 EXP-027（双路线统一对比）。
-    - 2026-09-20 EXP-027 完成：ChemPert 上游重训（66,173 可编码行×3 种子，206 秒）+ Kryzei 零样本特征（13,248 行）+ 统一双路线对比——跨路线主比较 A2 vs B2 +0.1158（CI 全正，路线 A 显著优）；路线 B 三臂 vs B0 全部显著为负；A2 vs B0 +0.0192（CI 下界 -0.0002 边缘触零，降级边缘正向）；关键发现：零样本 B2 逐药跨患者 Spearman 宏平均 +0.1149 与监督 A2 +0.1153 同量级（CI 均跨零），路线 B 携带与监督路线同量级个性化信号；主线维持直接药敏 A2 强基线，路线 B 定位互补特征与解释模块；A5/A6 响应口径候选 CI 跨零不纳入合同；pytest 188 通过；报告 docs/reports/route_comparison_EXP027_20260920.md；下一实验 EXP-028（双路线融合，A2 强基线）。
-    - 2026-09-20 EXP-028 完成（负结果收口）：路线 A 冻结 5 折重训 105 次（outer 15 + inner 15 + cross-fit 75，577 秒）落盘 routeA_frozen_predictions.parquet（63,375 行）+ 路线 B Hallmark-50 通路 delta 特征（与 EXP-027 一致性核查通过）+ 融合 v1 第二层（GBM/MLP，2,103 维）；8 项预登记 bootstrap：主比较 F1_GBM_full vs A2 -0.0375 [-0.0561, -0.0178]、F2_MLP_full vs A2 -0.0463 [-0.0702, -0.0222] 均 CI 全负；机制对照 F0_MLP vs A2 -0.0002 跨零（第二层本身无害）；特征增量 F1 vs F0 -0.0244、F2 vs F0 -0.0462 显著有害；cross-fit 灵敏度臂 -0.0144 [-0.0285, -0.0011] 仍显著负（排除功率不足）；基线 A2 vs B0 +0.0235 [+0.0047, +0.0421] 全正（基线有效）；预登记失败条件第 1 档触发——v2 端到端双分支不迭代，主线维持路线 A 直接药敏，路线 B 保留为解释模块与 EXP-029 素材；按药分层 14 已知药 8 正 6 负呈向零回归，无稳定获益子集；报告 docs/reports/fusion_EXP028_20260920.md；下一实验 EXP-029（迁移可解释审计）。
-    - 2026-09-20 EXP-029 完成（只读迁移审计，判定 INTERMEDIATE_REPORT_AS_IS）：零样本推断 3,183 行 + T1-T4 四项诊断（54 秒）。四条数据规律——规律 1 覆盖缺口：89% PDO（81/91）与 83% 类器官（212/255）在源域表达近邻范围外（最近距离中位 0.775），近邻误差相关 rho=0.010 p=0.943（近邻不能解释迁移失败，纯粹够不着）；规律 2 表示共享低：T2 Kryzei 共享捕获仅 0.315±0.123，域分类器在共享码上 0.735（两域共同语言少但存在）；规律 3 通路方向中位一致率 0.5：代谢类通路最一致（炎症/过氧化物酶体 0.786、OXPHOS 0.714），增殖凋亡类最不一致（雌激素早期 0.071、E2F/MYC 0.214-0.286），FDR 校正后无显著（线索级）；规律 4 群体规律保守：药物效应幅度排序跨域 Spearman 0.613，但零样本逐药可迁移 0/7 非结构药。综合结论：个性化预测搬不过去（分布够不着+表示不共享），群体规律搬得过去 → EXP-030 域适应/校准为主战场、按有/无近邻分层报告。DepMap 24Q2 细胞系 CRISPR 基因效应（CRISPRGeneEffect.csv，419MB）经 figshare 下载并登记 depmap_public_24q2_crispr_gene_effect_raw_v1；报告 docs/reports/transfer_interpretability_EXP029_20260920.md；下一实验 EXP-030（依赖图迁移五臂检验，预登记完成）。
-    - 2026-09-20 EXP-030 完成（判定 RULE1_TRANSFER_SUPPORTED_ZS_DIRECT，第二波首个明确正向迁移证据）：五臂依赖图迁移（1,066 细胞系→162 类器官，13,448 配对基因，individual 整组 5 折，7,524 秒）。主终点逐基因 Spearman 宏平均：ZS 零样本 0.0294 追平 HD 从头训练 0.0321（源内验证 0.1610，61.3% 基因为正）；CAL 校准 0.0211 有害、DA 域适应 0.0008 失败。配对差 pooled 口径 ZS vs B0 +0.159 [+0.149,+0.168] 2000 次重采样全正（B0 逐基因常数无定义、pooled 负值含折间伪变异，幅度谨慎解读）。必需基因 AUROC 0.9971 五臂最高。五条规律：①零样本迁移成立 ②信号集中于必需基因（中位 0.079 vs 0.022 3.6 倍，Top 基因=增殖/基础机器 TP53/CDK4/MYBL2/ORC，最差=谱系特异 TF HOXC13/ELAVL2 与特异代谢 ACSS1/ETFDH；与目标域方差无关 p=0.16）③有/无近邻无差异（EXP-029 覆盖缺口障碍不适用基因依赖任务，边界澄清）④CAL 小样本校准过拟合（38.2% 基因劣于 ZS）⑤DA 共享码 R2 为负+域分类 0.81（实现失败非方向失败，需换 CORAL/对抗对齐）。EXP-031 输入：必需基因规律与基因级图谱可作药敏辅助特征；CAL/OrthoAE 路径不再投入。运行前 pytest 188 通过；报告 docs/reports/dependency_transfer_EXP030_20260920.md；下一实验 EXP-031（多来源闸门，待预登记）。
-    - 2026-09-21 第三波启动（执行方案 docs/exec-plans/active/复核审计与文档治理执行方案_20260921.md 已登记；旧执行计划已标注历史/已替代）：阶段0盘点完成（git 339 项未提交、registry EXP-012~015 状态过期、docs 导航补建）；阶段1历史审计完成——周报 v2 修订（13+3 项更正：七药子集筛选含全量标签降为事后探索、ChemPert 绝对余弦 0.01~0.06 更正、撤回总体路线优劣与 EXP-030 迁移成立判定、域分类无基线数字撤除、融合归因撤回等，更正记录见周报附录B）；审计证据表 docs/reports/audit_evidence_20260921.md；原周报归档 docs/reports/history/。审查状态：自检完成、未经独立审查。下一阶段：工作包 B（数据合同与工程修复，需用户批准后启动）。
-    - 2026-09-21 EXP-031 完成（工作包 B，214 测试含新 26 项+注册表 PASS）：主药敏指标改患者内全药排序 Spearman（≥3 药资格、患者内多 PDO 先聚合、患者等权、相对同监督条件均值基线配对增益）；准入双白名单 51 患者/60 PDO（Pt120 确认参与 EXP-021 训练，B0/M1/M1_source_scaled/M3 受影响，30 个待确认样本存在于旧训练/预测）；结构药训练折内重推（fold4 Venetoclax 0.725→0.818 变 pan_resistant）；共享外层 5 折/内层 3 折划分；训练侧拟合预处理；三类均值基线+统一 schema+比较检查器+常数守卫落地（exp031_eval.py）。执行 Agent 实际启动 2 个（evaluation_stats_core / data_split_core），无独立 Reviewer。
-    - 2026-09-21 EXP-032 完成（工作包 C 四层矩阵）：L1 来源内有效（dual−药均值 +0.0319 全正，置换回退 0.0193）；L2 跨研究失效（−0.0373 全负，353 未见 PRISM 细胞系，同癌种混淆无法控制）；L3 零标签迁移成立（48 药 0.455、14 共同药 0.685 vs 来源均值 0.655，+0.030 微跨零，表达条件化增量未达显著）；L4 25/50/100% 档来源预训练增益仅 100% 档显著（C3−C1 +0.025，Holm 0.021）；目标监督各档远超来源迁移。复用 EXP-015 固定来源模型贯穿 L1-L4。
-    - 2026-09-21 EXP-033 完成（工作包 D 能力梯度）：直接路线 100% 档药均值 0.8027/platform；GBM 调参 +0.0122 Holm 0.010 唯一显著；双线性网络 +0.0126 跨零；扰动路线全零标签下各臂未超全局扰动均值基线（主比较全部跨零）；XPert 可运行但逆转方向与药敏负相关 −0.168（如实上报）；C4 扰动特征增量 +0.007 跨零；上游 seen>UNK（0.0685 vs 0.0346，覆盖率制约）。
-    - 2026-09-21 EXP-034 完成（工作包 E 融合三架构）：E1 串联扰动增量 −0.0003 跨零；E2 并联扰动增量 +0.0856 [−0.0183,+0.2076] p=0.232 跨零且与打乱对照同量级，双分支优势 0.0206 可由容量完全解释；E3 联合 −0.0111 方向为负（源 512∩ChemPert 795=48 共享表达有限已登记）；指纹/扰动/联合三增量分离完成，历史"仅归因扰动"解释撤回的工程基础落成。主线维持路线 A 直接药敏。
-    - 2026-09-22 EXP-035 完成（工作包 F 域差异与依赖能力，F2 经当日审计修复重跑）：F2 关键修复——EXP-030 predictions.parquet (sample,gene) 标签与数值行序错位（gene-major 数值 vs sample-major 标签），09-21 版按标签重建产生伪相关（HD 层3 0.458/98% CI 正），按书写行序重建与 arm_summary 逐折精确一致后重跑（HD 真实 0.0006）。F1：同癌种域分类 0.903（置换 p95 0.588）、泛癌 0.356 不可分、跨研究细胞系距离 0.98>PDO-细胞系 0.845（混杂不可归因）、误差-距离相关全跨零。F2：层1 AUROC ZS 0.9971；层2 ZS 分癌种 0.02-0.03、HD 癌种内≈0 至负、谱系基因留出复现 0.325 vs 0.102（CTNNB1/GATA5 入选）；层3 个体化 ZS 0.023（置换 p=0.0）显著、HD 0.0006 不显著、必需基因 0.049-0.070、逐基因 CI>0 仅 5-6%——个体化信号微弱、集中于必需基因、仅在零样本臂稳定。F3：ridge 0.031>低秩 0.028>MLP 0.015>通路掩码 0.012≈随机分组 0.010（固定通路结构无增益）。
-    - 2026-09-22 第三波收口（阶段 7 + 工作包 G）：全量 pytest 214 passed（258.5s）+ 数据注册表 PASS；收口报告 docs/reports/program_closeout_20260922.md、专题报告 docs/reports/domain_dependency_EXP035_20260922.md；registry EXP-031~035 全部 completed 并回填 result；docs/README.md 导航更新；AGENTS.md 规则冲突统一（受控容量诊断例外+整体预批准入口）。结论主线：群体级规律可迁移（依赖必需基因 AUROC 0.9971、药物变异幅度排序、代谢通路方向），个性化药敏预测跨体系迁移未建立；下一步启动门槛=新同癌种患者队列或新监督条件带来可配对稳定增量证据。遗留用户行动项：EGA EGAD00001015468 申请。
-    - 2026-09-22 工作树状态：稳定 checkpoint 已提交（见 git log）；EXP-030 predictions.parquet 标签错位缺陷登记不改写原产物（正确读取方式已记入 EXP-035 记录与报告）。
-    - 2026-09-22 工程清理（不创建 EXP）：按批准的 11 批次执行结构清理——根目录/tmp/scripts/docs/data-registry/src/logs 逐区处置；DRAFT 与会话残留归档至项目外 D:\Code\DrugScreenLab_archive\cleanup_20260922\（含 sha256 manifest）；保留被实验记录/正式报告引用的 8 个 DRAFT 脚本、loaders_kryeziu_DRAFT、EXP-020 运行配置组与 3 个数据合同注册文件并跟踪；registry EXP-012~015 过期状态回填；.trae/.workbuddy 列入 .gitignore 豁免；AGENTS.md 模型绑定措辞移除与治理测试同步；清理收口报告见 docs/reports/project_cleanup_20260922.md。
-data:
-  default_root: data
-  root_env: DRUGSCREEN_DATA_ROOT
-  registry: data/registry
-  status: migrated
-workflow:
-  orchestration: manager
-  human_approval_required: true
-  wave3_user_preapproval: full_plan_execution_20260921
-legacy:
-  project: MCPIRE_PDO
-  status: retired
-  previous_mvp_status: result_reviewed
-  previous_mvp_result: PROMISING
-  previous_mvp_result_case: CORE_MVP_FEASIBILITY_PROMISING
+  program_decision: WAVE3_RUN_COMPLETE_ITEMIZED_REVIEW_20260922
+  active_plan: docs/exec-plans/active/乳腺癌转录响应持续算法研究方案_20261006.md
+  exp050_latest_gse320583_birinapant_transfer: artifacts/experiments/EXP-050/20261001_gse320583_birinapant_transfer_v3/summary.json
+  exp050_gse320583_birinapant_transfer_result: "GSE70138 full-key MCF7 source (Birinapant 3 plate replicates, 10uM x 24h) vs GSE320583 GEO-labeled target (target InChIKey absent), 3 PDO models, 961 common genes: Spearman -0.0056/-0.0489/-0.0376; sign agreement 48.5%/46.3%/50.2%; 50 Hallmark targets 16 consistent/34 mixed; source-target 82/150 set directions same. No p-value, amplitude comparison or drug-sensitivity labels; pooled libraries are not independent replicates. CPU-only 5.789 min, 0 GPUh; 15/15 output hashes match; GSE70138 official SHA512s pass; cumulative EXP050 0.5825016765/48 GPUh."
+  active_plan_status: >-
+    2026-10-09 11:33+08：EXP-068响应盲三方身份交集和乳腺细胞受体证据已完成并由root独立复核。三方交集为5个模型/5个独立PatientID、229个细胞—完整InChIKey组合/128个唯一完整键、1,832条LINCS条件元数据；CTRP无剂量/时间字段。5/5无PAM50，DepMap PR 5/5缺失；不得从历史basal/basal_B推断TNBC。既有模型可靠性证据未通过选药/类器官实验门：EXP-059明显差于逐药均值，EXP-061增益0.02594%且幅度门失败，EXP-067完整五折中加入预测响应劣于直接基线。故不推进条件性前10/后10面板或PDO湿实验；此结论不否定所有架构或生物响应信息。EXP-068没有读取DepMap表达值、CTRP响应值、LINCS响应数值或PDO/outer/locked/PANACEA/CDS-B数值；GPU=0。
+    EXP-067五折药效增量完整证据保留在EXP-067记录。EXP-063预算提案仍独立待可信人类答复，不自动恢复或挪用预算。真实PDO迁移所需的同一模型处理前/匹配溶剂/处理后RNA、可追溯药物身份剂量时间、独立培养重复和同模型定量药敏仍未提供。
+  current_status_authority: USER_DIRECT_PRIORITY_ADJUSTMENT_20261009_EXP068_METADATA_ONLY_THREEWAY_AND_SUBTYPE; EXP-068_METADATA_COMPLETE_ROOT_VERIFIED; EXISTING_CELL_LINE_RELIABILITY_GATE_DOES_NOT_SUPPORT_PANEL_OR_PDO; EXP-063_PROPOSAL_PENDING_NO_TRANSFER
+  current_execution_priority:
+    package: "EXP-068响应盲元数据交付已完成并root独立读回PASS；基于已完成模型证据，当前可靠性门不支持条件性药物面板或PDO湿实验。GPU=0；EXP-068未读取表达/响应数值。"
+    queue_status: >-
+      EXP-068已完成并关闭。三方交集root receipt SHA256 12404cb3ea2c449d47472f1eaa50331988a29016a70b4c75a290a70578e592f；分型权威v2 root receipt SHA256 16ca976120467c330adf50f15c6fd0a645db79a0a96db0091796082c1da2146d。当前无已批准可自动启动的数值模型包；不扩候选、不重跑关闭包。EXP-067保留其完整五折结果。真实PDO评价仍需同一独立模型的处理前RNA、匹配溶剂RNA、处理后RNA、完整药物身份/剂量/时间、独立培养重复和同模型定量药敏。EXP-063预算提案仍独立待答复，无预算转移。
+
+    status: EXP068_COMPLETE_ROOT_VERIFIED_METADATA_ONLY; EXISTING_MODEL_EVIDENCE_NO_GO_FOR_PANEL_AND_PDO; EXP066_COMPLETE_ROOT_VERIFIED; EXP067_COMPLETE_ROOT_VERIFIED_NEGATIVE_INCREMENTAL_RESPONSE_UTILITY
+    active_pid: null
+    active_cpu_reservation_seconds: 0
+    active_gpu_reservation_hours: 0
+    current_run_id: 20261009_attempt_005
+    current_run_started_at: null
+    current_run_completed_at: 2026-10-09T11:33:00+08:00
+    current_first_fold_measured_cpu_seconds: null
+    current_first_fold_projected_full_run_seconds_including_20pct: null
+    current_receipt_path: artifacts/experiments/EXP-068/threeway_inventory_v1/20261009_attempt_005/root_independent_readback.json
+    current_receipt_sha256: 12404cb3ea2c449d47472f1eaa50331988a29016a70b4c75a290a70578e592f
+    subtype_root_receipt_path: artifacts/experiments/EXP-068/subtype_evidence_v1/attempt_005/root_independent_readback_v2.json
+    subtype_root_receipt_sha256: 16ca976120467c330adf50f15c6fd0a645db79a0a96db0091796082c1da2146d
+    current_fold0_resume_provenance_receipt_path: null
+    current_fold0_resume_provenance_receipt_sha256: null
+    current_run_summary_sha256: null
+    current_outer_folds_completed: null
+    current_pair_count: 229
+    current_object_count: 5
+    current_full_inchikey_count: 128
+    current_gene_count: 978
+    previous_partial_run_id: null
+    previous_partial_run_receipt_sha256: null
+    current_domain: {status: metadata_only_complete_root_verified; reliability_gate_no_go_for_panel_or_PDO, response_values_read: false, expression_values_read: false}
+    next_action: "EXP-068交付已完成；现有细胞系模型证据未支持选药面板或PDO湿实验，当前不启动新候选。收到EXP-063资源决定或符合合同的真实PDO输入时，只推进其依赖的工作；保持其他关闭包不可重跑。"
+    cpu_ledger:
+      exp066_shared_metadata_cap_seconds: 300
+      exp066_package_cap_seconds: 1500
+      exp067_package_cap_seconds: null
+      exp066_exp067_absolute_cap_seconds: null
+      exp067_historical_package_cap_seconds: 1800
+      exp066_exp067_historical_shared_cap_seconds: 3600
+      exp066067_conservative_cpu_charged_before_A_v2_seconds: 150
+      exp066_v1_failed_entry_wall_seconds: 6.872309
+      exp066_v1_failed_entry_cpu_seconds: null
+      exp066_v1_model_fit_started: false
+      exp066_freeze_internal_cpu_seconds: 29.053650862
+      exp066_exp067_metadata_shared_cost_conservative_seconds: 75
+      exp067_v1_failed_entry_cpu_seconds: 1.3421683
+      exp067_v2_failed_entry_cpu_seconds: 342.5898651
+      exp067_package_preflight_cpu_seconds: 400
+      exp067_fold0_measured_cpu_seconds: 1123.9739088
+      exp067_root_verification_cpu_seconds_conservative: 23.59
+      exp067_recovery_engineering_cpu_seconds_conservative: 98.0
+      exp067_resume_root_verification_cpu_seconds_conservative: 60.0
+      exp067_total_cpu_seconds_conservative: 1918.087503
+      exp067_package_precharge_before_resume_seconds: 1645.5639088
+      exp067_resume_config_precharge_snapshot_seconds: 1605.5639088
+      exp067_post_config_prelaunch_engineering_charge_seconds: 40.0
+      exp067_resume_attempt_cpu_seconds: 212.5235942
+      exp067_resume_cumulative_cpu_seconds_from_runner_snapshot: 1818.087503
+      exp067_post_config_engineering_and_root_readback_cpu_seconds_conservative: 100.0
+      exp067_package_remaining_cpu_seconds: null
+      exp068_cpu_seconds_actual: null
+      exp066_exp067_shared_charged_cpu_seconds_conservative: 2868.087503
+      exp066_exp067_shared_remaining_cpu_seconds: null
+    gpu_ledger:
+      global_cap_gpu_hours: 48
+      global_settled_gpu_hours: 1.6796467608483334
+      exp066_package_cap_gpu_hours: 1
+      exp067_package_cap_gpu_hours: 1
+      exp066_exp067_gpu_hours: 0
+      exp055_cap_gpu_hours: 10
+      exp055_settled_gpu_hours: 0.9745936742161081
+      exp055_recovery_subcap_remaining_gpu_hours: 0.9649683438
+      active_reservations_gpu_hours: 0
+      exp068_gpu_hours: 0
+    next_action: "完成EXP-068逐细胞-药物精确三方交集与可追溯分型统一并由root独立复核；之后再评估细胞系预测是否可靠。正式前10/后10面板与PDO验证仍为条件性设想。EXP-063资源提案保持独立待人类决定，不自动恢复。"
+  current_recovery_summary:
+    route1: "EXP036/041 50pct fivefold A1/A2/A3 and Route-A Holm accepted; 25pct secondary result retained within scope; 100pct secondary fivefold curve independently verified and Sol-reviewed: target drug mean 0.768088, random_full 0.751139, source_head 0.757801, source_full 0.746164, source_adapter 0.760773 (n=51). source_adapter-source_full +0.014610, unadjusted 95% CI +0.003678 to +0.025361, p=0.009999; secondary only, no cross-fraction inference; source_full vs target mean mixed-supervision descriptive. EXP048 nine-drug fivefold fusion scoped accepted with no demonstrated gain over four controls. Legacy 48h usage UNKNOWN_UNRECOVERED; shared tranche not reset or split."
+    route1_transfer_pattern: "GPT-6_Sol_medium_ruling_across_EXP042_043_044: source_cold_cell_signal_does_not_guarantee_fixed_source_PharmaFormer_zero_target_label_transfer_above_source_mean; Ridge_GDSC_+0.14756_vs_PDO_PharmaFormer_-0.03352_and_historical_PRISM_-0.02763; distinct_models_cohorts_endpoints_units_no_pooled_effect; EXP043_044_share_checkpoint_and_PRISM_was_seen_in_EXP019; route2_and_mandatory_EXP047_unaffected"
+    route2: "EXP037 conditional_v2 fivefold B1 complete and independently reviewed: 70 unseen cells/176785 conditions; conditional mean NMSE 1.408658 vs state_ablated 1.338838 and train_drug_mean 1.379573; no demonstrated conditional gain, limited to LINCS continuous perturbation prediction. EXP038 B2 accepted after independent score/statistics review: 30 unseen cells/40642 conditions; conditional reversal-rank Spearman 0.30007 vs null 0, but paired below train_drug_mean by 0.04089 and state_ablated by 0.04799; not a treatment claim. B1/B2/B5 Route-B Holm remains open until EXP039. XPert/TranSiGen remain separate input branches. Mandatory EXP047 five-arm fusion remains open."
+    EXP038_B2: "fixed GSE74602 v2 B2 four-arm five-fold comparison; 30 cells, 40642 measured conditions; independent per-score recalculation PASS, independent statistics review confirms point estimates and direction; actual GPT-6 Sol/medium ACCEPT_SCOPED_B2_RESULT; result is positive ranking agreement vs null 0 but below train_drug_mean and state_ablated; zero-arm Spearman undefined; Holm pending B1/B2/B5; CPU-only 0 GPUh"
+    EXP039: Luna_resource_audit_6.4_GPUh_conservative_reserve_and_v3_0.259652_GPUh_upper_bound_may_overlap; actual_balance_unquantified; GPT_6_Sol_medium_decision_internal_records_exhausted_formal_GPU_HARD_NO_GO; require_2026_09_23_host_or_scheduler_PID_job_allocation_intervals_for_PID2547_v3_and_fold0_profile_then_deduplicate
+    EXP045: "D-E two-stage masked reconstruction contract has 82/82 focused synthetic CPU tests; real adapter fairness remains unverified. Versioned v2 nested CPU masks were roundtrip verified against unchanged v1; the full PT-9eMhTl candidate group is excluded in three affected inner masks, with only sidecar row ACH-000837 removed per slot and all retained availability bits unchanged. SIDM01117 is officially bound to ACH-003071; current RNA/CRISPR/sidecar inputs are zero-row across five affected slots, including a new two-slot CPU key projection; no mask changed. Historical checkpoint exposure remains UNKNOWN_UNBOUND. For the 13-group/14-sample Nature bridge, all 14 Sanger IDs returned HTTP 200 from Passport but no parseable model object and 0 exact current Model/RNA/CRISPR hits; this is not evidence of object absence. Real prepare_fold binding, independent function holdout and budget remain open. 40/40 slots DATA_BLOCKED; no D1 scientific comparison."
+    EXP046_EXP047: "EXP046 pathway transfer remains blocked by source checkpoint lineage/mask evidence. Original fourteen-drug EXP047 fusion remains mandatory and is blocked at the exact identity map. A new read-only official CLUE /api/perts request returned User Key required; no mapping row was retrieved. Exact external need is an authorized read-only CLUE user_key configured outside the repository or a versioned publisher crosswalk with full InChIKeys, target GSE92742 pert_ids/axis proof, checksum, alias precedence and conflict correction. Separate nine-drug EXP048 fivefold result is scored and scoped-accepted; it does not complete EXP-047."
+    budget_gate: "20h/run; shared tranche cap40 GPUh; settled25.0647977225; active reservations0; unreserved14.9352022775; curve cap12.2, settled8.4203896753, unreserved3.7796103247; EXP048 cap14.5, settled5.5737514277, remaining8.9262485723; protected contingency2.2293433805; legacy48h UNKNOWN_UNRECOVERED; no reset or split"
+    supervisory_decisions: prior_D_E_definition_and_cross_batch_fixes_remain_within_approved_protocol; actual_GPT6_Sol_medium_EXP038_baseline_result_ruling_ACCEPT_BASELINE_CONTROL_RESULT_no_B2_or_Holm_closure; actual_GPT6_Sol_medium_20260925_identity_ruling_permits_only_no_label_CPU_outer_inner_fold_preflight_with_object_scoped_exclusion_and_keeps_D1_NO_GO_without_any_51_patient_one_to_one_requirement; actual_GPT6_Sol_medium_source_only_ruling_allows_DepMap_fold_membership_and_whole_group_exclusion_preflight_but_requires_ModelID_by_frozen_gene_mask_and_keeps_D1_NO_GO; actual_GPT6_Sol_medium_EXP045_mask_scope_reruling_ALLOWS_one_bounded_CPU_validity_sidecar_scan_supersedes_prior_narrow_BLOCKED_scope; actual_GPT6_Sol_medium_20260925_fold_mask_stage_ruling_keeps_D1_DATA_BLOCKED_TRAINING_NO_GO_and_allows_only_unlabelled_CPU_identity_exclusion_capacity_and_static_mask_path_work; actual_GPT6_Sol_medium_budget_gate_says_current_caps_are_not_new_queue_authorization_and_unknown_history_is_not_zeroed; actual_GPT6_Sol_medium_SIDM01117_binding_scope_ruling_binds_to_ACH003071_and_authorizes_only_two_slot_key_projection_with_checkpoint_exposure_UNKNOWN_UNBOUND; actual_GPT6_Sol_medium_Nature_Table2_scope_ruling_retains_current_13_group_14_sample_17_pair_quarantine_five_extra_yes_keys_outside_frozen_162_input; actual_GPT6_Sol_medium_five_slot_mask_execution_ruling_authorizes_outer_test_union_inner_validation_exclusion_then_whole_PatientID_closure; actual_GPT6_Sol_medium_SIDM00117_ruling_allows_PT_9eMhTl_whole_group_exclusion_in_three_specified_inner_masks_but_does_not_resolve_identity_or_checkpoint_exposure; actual_GPT6_Sol_medium_EXP048_target_missingness_allows_common_observed_key_scoring_conditionally_no_GPU_authorized; actual_GPT6_Sol_medium_EXP036_fold2_outer_metric_exposure_include_and_disclose_no_data_driven_change; actual_GPT6_Sol_medium_20260926_shared_40h_reallocation_funds_curves12.2_EXP04814.5_EXP0460_contingency2.229343; Luna_max_followup_confirms_published_cohort_overlap_but_not_current_24Q2_ModelID_bridge; XPert_panel_SOL_NO_GO_is_limited_to_that_arm; resource_decisions_do_not_reject_either_route; EXP047_five_arm_fusion_remains_mandatory
+    engineering: "EXP036/041 100pct folds0-4 promoted; frozen fivefold summary independently recomputed with exact numerical/hash agreement; Sol conditional scope condition satisfied by Luna/max PASS. Report tables and results plots updated from frozen summaries. EXP048 fivefold scored, independent review PASS, Sol scoped condition satisfied; original EXP047 remains open."
+    runtime_gate: "WSL2 drugscreening-gpu snapshot 2026-09-27: no DrugScreenLab training/test/audit process; both A5000 GPUs 0 percent and idle; Quadro RTX 4000 7 percent/4261MiB use unattributed. No active queue reservation."
+    active_work_packages: "EXP037 B1 fivefold and EXP038 B2 remain separately scoped Route-B results; EXP039 B5 remains hard NO-GO under actual Sol accounting decision; EXP036/041 100pct secondary curve accepted after independent review; EXP048 nine-drug fusion accepted within scope; EXP047 original 14-drug fusion mandatory and blocked only at exact identity input bridge; EXP045/046 retain their separate current data/provenance gates."
+    next_action: "Historical recovery summary; current EXP-055 action and budget gate are recorded in research.active_plan_status and experiments/records/EXP-055.md."
+  latest_continuation_20260925:
+    EXP039: Luna_max_existing_output_audit_found_only_33_of_36_inner_candidate_events_and_no_selection_table_fold_summary_outer_predictions_or_checkpoint; frozen_B5_4_vs_4_comparison_not_constructible; no_GPU_or_tests
+    EXP046_D16: actual_GPT6_Sol_medium_lineage_ruling_remains_source_checkpoint_and_mask_NO_GO; new_real_unlabeled_pathway_input_profile_51x19091_to_51x50_five_graphs_CPU_0.30603s_7299_edges_each; no_labels_predictions_checkpoint_load_or_GPU; request_original_host_provenance_before_full_cost_profile
+    EXP045: "DepMap/Nature whole-group capacities recomputed: source outer 970-982 groups with 924-945 exchangeable; source inner 928-947 with 884-906; target 79 groups with 77 exchangeable and 2 singletons in each of five outer and fifteen 50% inner slots conditional on the known 13-group quarantine. Full official Table2 18 Yes keys intersect frozen 162 input at 13, five are outside; actual Sol/medium keeps approved 13 groups/14 samples/17 pairs. D-E contract 82/82 focused synthetic tests pass. 40/40 folds remain DATA_BLOCKED; no performance comparison/training; object bridge, source aliases, checkpoint exposure, real adapter mask receipt and historical GPU balance pending."
+    EXP045_HCMI_axis_receipt: artifacts/experiments/EXP-045/20260925_nature_hcmi_actual_input_axis_bridge_v1/receipt.json_SHA256_7b6476ba41c8709dbbd45712854bd9d7268af17447ba36a313cf6166116d53af; script_sha256_5afd9c627343f764d79b51ec5f6a97d50fa95a2a439bea54bff841aae62f9208; first_column_only; identity_audit_not_scientific_comparison
+    EXP045_Sanger_passport_bridge: artifacts/experiments/EXP-045/20260925_nature_sanger_passport_depmap_bridge_v1/receipt.json_SHA256_1420FB93B5B0DB33A7CCB48224E5CECADA30F2E8059843520A7F4CC1DFE5A0F1; 14_of14_HTTP200_0_parseable_Passport_objects_0_exact_24Q2_Model_RNA_CRISPR_hits; query_result_only_not_object_absence; request_authoritative_per_object_crosswalk
+    EXP036_stage_result: "GPT-6 Sol / medium accepted 20260922_ridge_interaction_v2 as a complete candidate-level negative comparison: versus drug-only Ridge, patient-within-drug-ranking Spearman deltas are -0.20920, -0.23020, -0.13513 at 25/50/100%; not a route-wide conclusion or EXP036/041 family closeout."
+    EXP037_XPert_panel: "Official numeric row axis is verified. Complete 6,994-ID panel remains HARD_NO_GO because 84 feature nodes/158 IDs have unresolved full-InChIKey/alias semantics. The 6,836 original-ID unconflicted subset maps to 6,830 nodes and passed one unlabeled CPU feature-read profile; input engineering only, no model or science result. This supersedes the older missing-row-axis status."
+    EXP047_protocol_package: "experiments/records/EXP-047.md section 2026-09-25: proposed one common source-cell set with complete OOF profiles over the exact panel/dose-time intersection; equal cell and condition weights; all five arms share the frozen 14-drug panel; no imputation; static reference feature is not patient-specific. Current exact identity map remains 9/14 unique, so package is not frozen and F-B/F-F remain NO-GO."
+    EXP037_F34_continuation: "Superseded by user_approval.json and priority_reallocation_20260926.json under artifacts/experiments/EXP-037/20260926_conditional_v2_folds3_4_budget_amendment_v2: user-approved 40 GPUh incremental tranche, then explicitly reallocated first to EXP036/041 50pct fivefold core and next to 25pct/100pct curves if balance permits; cumulative 10.5734186948 settled, 29.4265813052 remaining; original 48h history UNKNOWN_UNRECOVERED; no reset or split. The former request for a fresh EXP037 continuation approval is closed/superseded; current GPU profile for EXP048 still needs a separate later user allocation decision."
+    EXP037_inner_method_diagnostic: "WSL2 reaggregation of folds0-2 inner_selection: conditional-minus-state_ablated selected mean NMSE +0.048661,+0.045032,+0.039215; train-side development evidence only; actual Sol/medium selected cross-fitted shared-effect residual state learning as main hypothesis and grouped macro-risk only as an imbalance-triggered backup; no protocol or training approval."
+    EXP042_Sol_stage_ruling: "actual_GPT6_Sol_medium_followup_confirms_earliest_reusable_complete_fivefold_source_cold_cell_comparison; cell_equal_rank_Spearman_Ridge_0.70151_vs_train_side_per_drug_mean_0.55395; delta_0.14756_CI_0.13574_to_0.15999_n961; GDSC_source_domain_only_not_PDO_transfer_or_reversal; no_new_formal_GPU_run_until_charge_records_or_user_approved_bounded_queue."
+    EXP045_D_E: approved_dual_domain_masked_expression_reconstruction_control_retained; current driver/config verified positive reconstruction updates in both stages and zero dependency losses; 82_of82 focused synthetic tests pass; no_real_fold_fairness_or_scientific_result
+    EXP045_source_slug: "Superseded for HCMI sample-key lookup by corrected HCM prefix and actual 14-key CMP query: 13 objects, 1 HTTP 404, zero exact matches to current Model/RNA/CRISPR input keys. GPT-6 Sol/medium stopped only this limited path pending authoritative per-object crosswalk; zero matches do not prove absence. The 13 groups/14 samples remain quarantined; the three unresolved DepMap Sanger source aliases are a separate task; checkpoint/mask lineage and budget gates remain."
+    EXP037_B1: "full 6994/6994 exact pert_id+full-InChIKey identity intersection frozen in artifacts/experiments/EXP-037/20260925_xpert_b1_feature_row_crosswalk_v1; SHA 8d398a456025ee7616cf053238d341ca95790cf64c48ff5a295e42acfa2146f9. Official numeric pert_idx-to-UniMol/HG row axis verified; official canonical SMILES agrees with idx2smi for 176/176 global and 158/158 panel collision records, while publisher full InChIKey agrees with RDKit reconstruction for only 72/176 and 69/158. Actual GPT-6 Sol/medium keeps complete 6994 input HARD NO-GO; permits only original-ID verified-unconflicted subset for unlabeled low-cost CPU input profile. No model comparison or GPU."
+    budget_gate: "20h/run; shared tranche cap 40 GPUh; settled 14.1639960533; active reservations EXP036/041 100pct fold0 1.8 and EXP048 fold1 2.3; available 21.7360039467; curve package 12.2 with 8.3576172683 unreserved; EXP048 cap14.5, settled1.0509567021, remaining after fold1 reservation11.1490432979; Sol envelope 11.5 with 2.2293433805 emergency allocation protected once and shared headroom ceiling11.6490432979; legacy 48h UNKNOWN_UNRECOVERED; no reset or split"
+    next_action: "Historical 2026-09-25 continuation snapshot; current run state is recorded in research.active_plan_status and experiments/records/EXP-055.md."

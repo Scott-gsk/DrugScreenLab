@@ -1,0 +1,32 @@
+experiment_id: EXP-068
+title: Breast cell-line RNA, drug-sensitivity, perturbation coverage and subtype harmonization
+status: completed_root_verified_metadata_only; current_cell_line_reliability_gate_no_go_for_panel_or_PDO
+run_id: 20261009_attempt_005
+execution:
+  platform: WSL2
+  conda_environment: drugscreening-gpu
+  device: cpu
+  gpu_hours: 0
+  cpu_hard_cap_seconds: null
+inputs:
+  depmap_model_metadata: data/raw/depmap/24q2/Model.csv
+  depmap_expression_identity_only: data/raw/depmap/24q2/OmicsExpressionProteinCodingGenesTPMLogp1.csv
+  ctrp_cells: data/processed/exp013/ctrp_v2/cells.csv
+  ctrp_drugs: data/processed/exp013/ctrp_v2/drugs.csv
+  ctrp_response_identity_only: data/processed/exp013/ctrp_v2/responses.csv
+  ctrp_depmap_exact_identity: data/artifacts/resource_acquisition_20260916/ctrp_parse/ctrp_depmap_identity_map.csv
+  lincs_approved_cell_identity: artifacts/experiments/EXP-050/20261006_breast_subtype_measured_transfer_v1/lincs_breast_cell_model_identity.tsv
+  lincs_condition_metadata: data/processed/lincs/GSE92742/continuous_conditions_v2/conditions.parquet
+  lincs_drug_metadata: data/processed/lincs/GSE92742/continuous_inputs_v2/drugs.parquet
+  supervisor_coverage_inventory: docs/reports/乳腺癌细胞数据覆盖清单_20261009.csv
+  supervisor_coverage_summary: docs/reports/乳腺癌数据覆盖核查摘要_20261009.json
+data_access_contract:
+  allowed: [identity_columns, subtype_annotations_with_provenance, compound_full_inchikey, exposure_metadata, treatment_instance_metadata]
+  forbidden: [depmap_expression_values, ctrp_response_values, lincs_delta_values, lincs_control_values, pdo_values, outer_locked_values, panacea_values, cds_b_values]
+identity:
+  cell_keys: [DepMap_ModelID, DepMap_RRID, CTRP_Cellosaurus_Accession, approved_LINCS_cell_crosswalk]
+  drug_key: full_exact_InChIKey
+outputs:
+  threeway_directory: artifacts/experiments/EXP-068/threeway_inventory_v1
+  subtype_directory: artifacts/experiments/EXP-068/subtype_evidence_v1
+  supplementary_report: docs/reports/乳腺癌三方交集与分型统一_20261009.md

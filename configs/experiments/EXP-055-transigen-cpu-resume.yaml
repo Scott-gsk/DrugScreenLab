@@ -1,0 +1,80 @@
+experiment_id: EXP-055
+title: TranSiGen fixed-300 CPU continuation from verified epoch-8 checkpoint
+record: experiments/records/EXP-055.md
+run_id: 20261007_exp055_transigen_cpu_resume_v1
+source_experiment_id: EXP-051
+source_run_id: 20261006_exp051_contract_fit_smoke_v1
+fit_kind: representative
+artifact_root: artifacts/experiments/EXP-055
+
+authorization:
+  user_scope: approved_exp055_cpu_checkpoint8_readonly_replay_and_exact_resume
+  training_device_policy: cpu_only_zero_gpu
+  allowed_device_uuid: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+  cpu_total_cap_minutes: 120
+  prior_cpu_charged_seconds: 92.741
+  checkpoint_replay_cpu_cap_seconds: 600
+  gpu_hours_cap: 0
+  source_checkpoint: artifacts/experiments/EXP-055/20261007_exp055_transigen_cpu_representative_v1/fit_attempt_001/TranSiGen_last_finite.pt
+  source_checkpoint_sha256: 266fc19656503362a94349e1cdb16e033c3fc755d78b20fe58010225302a9805
+
+data:
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_run_root: artifacts/experiments/EXP-051
+  source_files_read_only: true
+  frozen_conditions: 512
+  genes: 978
+  train_conditions: 419
+  train_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_objects: 24
+  full_inchikeys: 5
+  roles: [TRAIN, inner_dev]
+  forbidden_inputs: [PDO_numeric_sensitivity, PDO_transcript_response, outer_labels, locked_labels, EXP-050_frozen_cases]
+  inner_dev_numeric_access: after_epoch_300_checkpoint_freeze_only
+
+model:
+  architecture: upstream_original_TranSiGen
+  initialization: restore_exact_epoch8_model_optimizer_batchnorm_rng
+  seed: 20261006
+  objective: raw_sum
+  gradient_clipping: false
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  batch_size: 64
+  shuffle_train: true
+  normal_batchnorm_updates: true
+  resume_from_absolute_epoch: 8
+  next_epoch: 9
+  max_epochs: 300
+  diagnostic_epoch: 100
+  main_endpoint_epoch: 300
+  model_selection: none
+
+evaluation:
+  train_evaluation: every_epoch_all_419_conditions
+  pre_epoch100_nonfinite_main_delta: null_full_denominator_continue_to_fixed_checkpoint
+  epoch100_nonfinite_main_delta: close_without_valid_score
+  epoch300_nonfinite_main_delta: close_without_valid_score
+  inner_dev: only_after_epoch_300_checkpoint_freeze
+  baselines: [zero_change, per_drug_mean_delta_fitted_on_train]
+  prediction_keys: [full_condition_key, source_object_id, full_inchikey, genes]
+  require_exact_checkpoint_readback: true
+  require_exact_keyed_prediction_readback: true
+
+resource:
+  run_id: 20261007_exp055_transigen_cpu_resume_v1
+  cpu_wall_cap_minutes: 120
+  cumulative_prior_cpu_seconds: 92.741
+  gpu_hours_cap: 0
+  gpu_device_uuid_recorded_but_not_used: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+  continuation_cost_gate_source: artifacts/experiments/EXP-055/20261007_exp055_transigen_cpu_representative_v1/fit_attempt_001/cpu_cost_gate.json
+  continuation_projection_includes_margin: true
+  fixed_schedule_epochs: 300
+  margin_fraction: 0.20
+
+reproducibility:
+  cpu_gpu_rng_float_trajectory_equivalence_claimed: false
+  source_checkpoint_immutable: true
+  save_rng_state_in_checkpoint: true
+  no_optimizer_update_during_replay: true

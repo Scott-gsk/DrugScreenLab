@@ -1,0 +1,97 @@
+experiment_id: EXP-061
+run_id: 20261008_exp061_functional_state_rootrepair_v3
+attempt_id: fit_attempt_001
+record: experiments/records/EXP-061.md
+purpose: Test whether a fixed Hallmark-constrained linear state-to-response residual adds source-development value beyond exact-key drug means and matched controls
+retention: One fixed source-development comparison; cannot replace the incomplete original TranSiGen representative comparison or establish PDO/independent-domain transfer
+
+authorization:
+  basis: EXP061-FUNCTION-RESIDUAL-0203; user-authorized continuous research plan; complete package and limits frozen by project director
+  owner: root_model_engineer
+  implementation_model: gpt-6-luna
+  reasoning_effort: xhigh
+
+data:
+  source_experiment_id: EXP-051
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_key_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+  source_values: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/frozen_train_inner_values.npz
+  frozen_gene_axis_mapping: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/gene_axis_mapping.tsv
+  gene_map: /mnt/d/Code/XPert/processed_data/l1000_gene_info_978.csv
+  gene_map_sha256: 85806fd6d6eb645925c45c04b0ab26e0769be7dba252e545cbc878bdccfa9a60
+  gene_map_expected_axis_rows: 978
+  hallmark_gmt: data/raw/exp013/msigdb/h.all.v2023.2.Hs.symbols.gmt
+  hallmark_registry_id: msigdb_hallmark_2023_2_hs_gmt_raw_v1
+  hallmark_gmt_sha256: 8ff1f036f0988c99d42cf9e5ea24d355f10b8ece5e0d4f6edf26a0458f480780
+  hallmark_minimum_axis_coverage: 5
+  train_conditions: 419
+  train_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_objects: 24
+  train_dev_object_overlap: 0
+  exact_full_inchikeys: 5
+  genes: 978
+  fixed_exposure: 10.0 uM x 24.0 h
+  allowed_roles: [train, inner_dev]
+  inner_dev_use: Final frozen development scoring and the preregistered paired descriptive intervals only; no fitting, debugging, axis construction, or candidate changes
+  forbidden_numeric_inputs: [PDO_drug_sensitivity, PDO_transcript_response, outer, locked, PANACEA]
+
+functional_basis:
+  gene_identity_join: exact ordered gene_id agreement between the EXP-051 frozen axis map and hash-bound l1000_gene_info_978.csv; exact gene_symbol only; ambiguous symbols fail this input closed
+  set_rule: Use registered Hallmark v2023.2 gene sets with at least five unique genes mapped to the frozen 978 axis; selection does not use response values
+  column_rule: B[g,h]=1/sqrt(covered_size_h) for member genes and 0 otherwise; overlapping sets are retained
+  uncovered_genes: Keep all 978 output genes and full denominator; their residual prediction is zero so the prediction remains the exact-key drug-mean anchor there
+
+model:
+  ridge_alpha: 1.0
+  form: delta_hat_i = exact_full_InChIKey_train_mean_delta_d + B A_d q_i; q_i=B^T z_i for biological-state arms
+  state: Object-mean X_ctl; per-gene mean and population standard deviation fitted only on the 110 TRAIN object states; nonfinite/zero/<=1e-12 scales are set to 1 and recorded
+  fit_scope: One independent fixed mapping A_d per exact full InChIKey, TRAIN rows of that drug only, with equal total weight per TRAIN source object within the drug
+  loss: Sum_i w_i * mean_g[((delta_hat_ig-delta_ig)^2 / v_g)] + alpha*||A_d||_F^2; w_i=1/(n_objects_for_drug*n_rows_for_object_and_drug); v_g=population variance of all 419 TRAIN target rows; all 978 genes retained
+  ridge: alpha=1.0 fixed, no search; objective/weight normalization common across four arms
+  output_projection: Weighted least-squares projection into B's column space under diag(1/v_g); same frozen objective for each arm
+  parameter_count: One H x H matrix per full InChIKey, no intercept; H is the number of eligible Hallmark sets and is frozen from coverage metadata before responses are scored
+
+arms:
+  random_gene_map_seed: 61062
+  random_object_state_seed: 61063
+  train_state_mismatch_seed: 61064
+  functional_hallmark: Biological object-state features q=B^T z; output basis B
+  random_gene_set_map: One fixed gene-row permutation of B (seed 61062) simultaneously defines state features and output basis; set sizes, overlap structure and parameter count preserved
+  random_object_state: Replace biological state by a fixed, independently hash-seeded H-dimensional standard-normal vector per source_object_id (seed 61063); output basis remains B; explicitly an ID-keyed random-capacity control, not expression state
+  train_state_mismatch: TRAIN state vectors mapped by a fixed no-fixed-point source-object derangement (seed 61064; whole-object mapping); inner-dev prediction uses each object's true state; response rows are never shuffled
+baselines:
+  - zero_change
+  - exact_full_inchikey_train_mean_delta
+
+selection:
+  bootstrap_replicates: 2000
+  bootstrap_seed: 61065
+  resampling_unit: Paired source_object_id within each fixed split; descriptive, not population inference
+  minimum_inner_dev_relative_nmse_improvement_over_drug_mean: 0.05
+  ci_rule: Paired improvement (drug_mean_object_NMSE - candidate_object_NMSE) 95% percentile interval lower bound must exceed 0
+  minimum_inner_dev_objects_with_lower_nmse_than_drug_mean: 15
+  amplitude_ratio_range: [0.5, 2.0]
+  must_beat_controls: [random_gene_set_map, random_object_state, train_state_mismatch]
+  failure_action: Close this fixed candidate; no alpha, threshold, seed, set, gene or model search
+
+resources:
+  cpu_cap_seconds: 1800
+  inherited_exp055_cpu_cap_seconds: 7200
+  exp055_cpu_settled_before_package_seconds: 2940.485736078125
+  inherited_exp055_cpu_remaining_seconds: 4259.514263921875
+  pre_run_package_cpu_seconds_charged: 120.0
+  projection_margin_fraction: 0.20
+  gpu_hours_cap: 0
+  cpu_threads: 1
+  fit_arm_cost_gate: First complete drug fit-predict-save across all four arms is part of the formal run; continue only if projection for remaining drugs, full metrics, all keyed output, bootstrap, root independent readback and closeout with 20% margin fits both CPU caps
+  no_shortening: true
+  failures_and_readback_charged: true
+
+output:
+  root: artifacts/experiments/EXP-061/20261008_exp061_functional_state_rootrepair_v3
+  immutable_attempt: true
+  prediction_archive: keyed_predictions.npz
+  metrics: metrics.json
+  paired_intervals: paired_object_bootstrap.json
+  root_readback: root_independent_readback.json

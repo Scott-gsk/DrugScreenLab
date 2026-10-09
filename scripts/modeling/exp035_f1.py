@@ -35,6 +35,7 @@ from sklearn.model_selection import StratifiedKFold, cross_val_score, cross_val_
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix
 
+from drug_screen.data.gene_alignment import assert_gene_alignment
 from drug_screen.transfer.cohorts import load_registered_cohort, sha256
 from drug_screen.evaluation.exp031_eval import holm_correct
 
@@ -208,6 +209,12 @@ def main() -> None:
     gi = np.array([g_idx[g] for g in inter])
     ki = np.array([k_idx[g] for g in inter])
     bi = np.array([b_idx[g] for g in inter])
+    # W3-30 工程加固（2026-09-22）：三域矩阵列轴按显式交集清单组装后，
+    # 断言列名、顺序、长度完全一致（只加断言，不改计算；阶段三距离
+    # 重算复跑时防基因顺序漂移——EXP-030 parquet 错位的同类风险点）。
+    assert_gene_alignment([g_genes[i] for i in gi], inter)
+    assert_gene_alignment([k_genes[i] for i in ki], inter)
+    assert_gene_alignment([b_genes[i] for i in bi], inter)
 
     g_int_fill, g_fill_cols = fill_nan(g_expr[:, gi])
     g_z = zscore(g_int_fill)

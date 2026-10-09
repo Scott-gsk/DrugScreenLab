@@ -1,0 +1,55 @@
+experiment_id: EXP-053
+run_id: 20261007_exp053_drug_shared_state_residual_v1
+record: experiments/records/EXP-053.md
+authorization_basis: active_plan_exp051_alternative_after_one_shot_exp052_failure
+purpose: train-source object-OOF diagnostic of pretreatment-state residual gain beyond shared per-drug response
+retention: keep one fixed CPU-only development comparison; cannot replace original TranSiGen/XPert architecture evaluation
+data:
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_key_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+  source_h5ad: /mnt/d/Code/XPert/processed_data/l1000_sdst_78453.h5ad
+  role: TRAIN_only
+  conditions: 419
+  source_objects: 110
+  full_inchikeys: 5
+  genes: 978
+  forbidden: [inner_dev_numeric_responses_before_any_gate, PDO_numeric_drug_sensitivity, outer_or_locked_response, external_response_matrices]
+cv:
+  grouping: source_object_id
+  folds: 5
+  seed: 53053
+  assignment: label_blind_randomized_object_order_round_robin
+models:
+  zero_change: true
+  per_drug_mean: fit_fold_train_only_by_full_inchikey
+  state_residual:
+    formula: fold_train_per_drug_mean_plus_ridge(pre_treatment_X_ctl_object_mean_to_delta_residual)
+    ridge_alpha: 1.0
+    solver: lsqr
+    input_scaling: fit_mean_and_sd_on_fold_train_objects_only
+    observation_weighting: equal_total_weight_per_training_object
+    hyperparameter_search: false
+  shuffled_state_capacity_control:
+    type: object_block_derangement_within_train_and_test_partition
+    seed: 53054
+    estimator_matches_state_residual: true
+metrics:
+  primary: object_macro_nmse_gain_over_fold_train_per_drug_mean
+  secondary: [object_macro_mae, condition_gene_correlation, direction_agreement, amplitude_ratio]
+  bootstrap_unit: source_object_id
+  bootstrap_replicates: 20000
+  bootstrap_seed: 53053
+  practical_amplitude_ratio: [0.5, 2.0]
+resources:
+  gpu_hours: 0
+  cpu_cap_minutes: 240
+stopping:
+  exactly_one_run: true
+  stop_if_any_fold_lacks_any_train_drug_key: true
+  stop_if_key_or_object_denominator_changes: true
+  no_model_or_alpha_search: true
+reporting:
+  output_root: artifacts/experiments/EXP-053/20261007_exp053_drug_shared_state_residual_v1
+  full_keyed_predictions: true
+  include_root_readback: true
+  pdo_generalization_claim: false

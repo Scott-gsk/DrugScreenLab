@@ -1,0 +1,568 @@
+experiment_id: EXP-050
+title: 乳腺癌类器官药物诱导转录响应与细胞系迁移
+status: v7_descriptive_comparison_reviewed; frozen_functional_transfer_complete; candidate_breast_source_coverage_complete; GSE288798_cross-platform_gate_failed; target_input_no_go; quantitative_pharmacology_linkage_pending
+authorization:
+  source: docs/exec-plans/active/乳腺癌转录响应迁移与筛药实施方案_20260930.md
+  approved_by: user
+  approved_on: 2026-09-30
+  execution_start_local: "2026-09-30T16:46:35+08:00"
+  execution_deadline_local: "2026-10-07T16:46:35+08:00"
+  additional_gpu_hours: 48
+  single_run_gpu_hours_max: 20
+  historical_budget_reconciled: false
+  new_budget_ledger: artifacts/experiments/EXP-050/gpu_ledger.jsonl
+inputs:
+  organoid_response:
+    - accession: GSE287429
+      raw_processed_matrix: data/external/exp010/geo/gse287429/GSE287429_normalized_counts_allsample.txt.gz
+      reusable_matrix: data/processed/exp010/gse287429_author_normalized.parquet
+      reusable_sample_context: data/processed/exp010/gse287429_context.parquet
+      verified_shape: [12, 12719]
+      axis: rows=samples, columns=Ensembl_gene_ids
+      condition_keys: [CTR, DOX_23h, DOX_47h, BTZ_23h, BTZ_47h]
+      transform: author_normalized_scale_to_be_verified
+      official_sample_key_coverage: "12/12 GSM titles map uniquely to expression keys; see data/raw/transfer_public_assets/gse_breast_drug_response/GSE287429/GSE287429_sample_metadata.tsv"
+      patient_ids: unresolved; do not treat 12 RNA samples as 12 patients
+      dose_and_replicate_type: dose absent; replicate nature unspecified
+    - accession: GSE216540
+      raw_dir: data/raw/transfer_public_assets/gse_breast_drug_response/GSE216540
+      matrix: data/raw/transfer_public_assets/gse_breast_drug_response/GSE216540/GSE216540_allData_tpm_human.txt.gz
+      series_matrix: data/raw/transfer_public_assets/gse_breast_drug_response/GSE216540/GSE216540_series_matrix.txt.gz
+      family_soft: data/raw/transfer_public_assets/gse_breast_drug_response/GSE216540/GSE216540_family.soft.gz
+      expected_gsm_count: 40
+      expected_table_shape_with_annotations: [59428, 48]
+      transform: TPM
+      object_crosswalk: "GSM and author TPM keys verified; series design #8/#10/#26 crosswalk to GEO labels #28/#30/#46 unresolved"
+      grouping_contract: "retain GEO-labeled groups #28/#30/#46; report group-level descriptive responses only; no patient-level CI"
+      response_contract: "within group x medium x batch, mean(log2(TPM+1)) Fulvestrant minus mean(log2(TPM+1)) DMSO; no replicate-number pairing claim"
+      batch_contract: "#28/#30 have batch1 and batch2; #46 has batch1 explicitly in all eight GSM titles"
+      dose_time: "Fulvestrant 500 nM for 4 days; DMSO sample-specific duration is not stated"
+  cell_line_response:
+    source: GSE92742_Broad_LINCS_Level5
+    raw_root: data/raw/lincs/GSE92742
+    processed_conditions: data/processed/lincs/GSE92742/continuous_conditions_v2
+    processed_contract: data/processed/lincs/GSE92742/continuous_contract_v2
+    drug_structure_crosswalk:
+      DOX: "PubChem full InChIKey AOJJSUZBOXZQNB-TZSSRYMLSA-N exactly matches BRD-K92093830"
+      BTZ: "PubChem full InChIKey GXJABQQUPOEUTA-RDJZCZTQSA-N exactly matches BRD-K88510285"
+      FULV: "PubChem full InChIKey VWUXBMIQPBEWFH-WCCTWKNTSA-N has no exact full-key match among the three LINCS Fulvestrant rows; excluded from same-drug scoring"
+    source_pages:
+      DOX: https://pubchem.ncbi.nlm.nih.gov/compound/doxorubicin
+      BTZ: https://pubchem.ncbi.nlm.nih.gov/compound/Bortezomib
+      FULV: https://pubchem.ncbi.nlm.nih.gov/compound/fulvestrant
+comparison:
+  target_role: organoid_post_treatment_response_for_frozen_evaluation
+  development_role: source_cell_line_perturbation_responses
+  forbidden_target_use: [feature_selection, cell_line_selection, direction_selection, model_selection, threshold_selection, seed_selection]
+  source_only_missing_gene_sensitivity:
+    run_id: 20260930_missing_gene_input_sensitivity_v1
+    purpose: "Estimate how masking the 64 target-unavailable genes changes frozen-model predictions on the 914-gene visible axis; engineering sensitivity only"
+    source_partition: "EXP-037 fixed 10 uM x 24 h inner training and validation; no outer test"
+    missing_gene_set: "LINCS exact978 genes minus frozen EXP-050 target common914 genes"
+    imputation: "For each gene, compute the median of per-cell median control expression across unique EXP-037 inner-training cells; substitute only the 64 missing inputs"
+    comparator: "unmodified source validation predictions from the same frozen checkpoints"
+    metrics: [mean_absolute_prediction_change, p95_absolute_prediction_change, per_condition_pearson_on_visible914, visible_gene_sign_agreement]
+    response_labels_read: false
+    target_treated_responses_read: false
+    outer_test_values_read: false
+    selection_or_tuning: false
+    output: artifacts/experiments/EXP-050/20260930_missing_gene_input_sensitivity_v1/summary.json
+    attempt_gpu_reservation_hours: 0.25
+  source_validation_prediction_evaluation:
+    run_id: 20260930_source_validation_model_vs_baselines_v1
+    purpose: "Descriptively evaluate frozen TranSiGen and XPert response predictions against measured source inner-validation deltas and training-only baselines; no checkpoint or model selection"
+    partition: "EXP-037 10 uM x 24 h inner split: 32,094 train conditions in 121 cells; 4,954 held-out validation conditions in 8 cells"
+    response_labels: "Read only the 4,954 source inner-validation delta rows after predictions/checkpoints were frozen; training labels used only for gene scaling and per-drug mean baseline"
+    outer_test_values: false
+    target_treated_responses: false
+    models: [frozen_TranSiGen_best_checkpoint, frozen_XPert_best_checkpoint]
+    baselines: [zero_change, inner_training_per_drug_mean]
+    primary_metric: "Per-gene squared error divided by inner-training gene SD squared; average genes within condition, conditions within drug, drugs equally within cell, then average the 8 held-out cell scores"
+    secondary_metrics: [per_condition_gene_Pearson, per_condition_gene_Spearman, nonzero_gene_sign_agreement]
+    undefined_metrics: preserve_with_valid_denominator_and_reason
+    interpretation: "Development-set descriptive comparison only: both checkpoint stopping epochs were selected using these same inner-validation labels; do not treat scores or intervals as independent generalization evidence"
+    output: artifacts/experiments/EXP-050/20260930_source_validation_model_vs_baselines_v1/summary.json
+    gpu_hours: 0
+  exposure_matching:
+    GSE287429_DOX_BTZ: "exact structure-matched drug; target dose unknown and target 23/47h differs from LINCS MCF7 6/24h; report all QC-eligible source conditions without selecting a best exposure"
+    GSE216540_FULV: "not scored against LINCS until exact chemical identity mapping is resolved"
+  frozen_gene_axis:
+    id: EXP050_COMMON_LINCS_LANDMARK_914_V1
+    definition: "exact intersection of GSE287429 Ensembl IDs mapped by GSE216540 static annotation to HGNC symbols and LINCS continuous_contract_v2 exact978 symbols; ordered by LINCS genes.json"
+    count: 914
+    axis_file: artifacts/experiments/EXP-050/20260930_keyed_response_v7/EXP050_common_gene_axis_914.tsv
+    hash: cb6250bd7feb49b054d6aa31c0e87241ff20af154d544603bc80f7749b1b8ea3
+  frozen_transfer_metrics:
+    - Pearson gene-response correlation
+    - Spearman gene-response correlation
+    - sign agreement among finite pairs with both responses nonzero
+  functional_response_summary:
+    resource: "MSigDB Hallmark v2023.2.Hs"
+    method: "exact HGNC-symbol membership; per-contrast mean/median response change and set coverage"
+    interpretation: "descriptive gene-set summaries only; no pathway p-values or inferred pathway activity"
+  source_condition_universe:
+    cells: [MCF7]
+    eligible_condition_counts: {DOX: 18, BTZ: 10}
+    QC: "all conditions from existing EXP-037 continuous_contract_v2, MCF7, exact perturbagen IDs, QC_PASS with finite treatment and matched control"
+    official_breast_line_audit: "GSE92742_Broad_LINCS_cell_info tumor + breast + cell line; all seven official lines and zero/nonzero exact-drug eligible-condition counts are written to the run output; runtime verifies condition rows against the QC-pass treatment contract"
+    eligible_breast_source_lines_by_drug: {DOX: [MCF7], BTZ: [MCF7]}
+    reference_arms_not_estimable: "only MCF7 occurs among the eligible breast-cancer cell lines; all-breast, subtype, pretreatment-nearest, and random references cannot be distinguished"
+  reference_arms:
+    - all_eligible_breast_cell_lines_mean
+    - same_molecular_subtype_mean
+    - pretreatment_expression_nearest_cell_lines
+    - count_matched_random_cell_line_reference
+  endpoint_freeze_status: frozen_descriptive_gene_signature_similarity_only; exact exposure/population transfer remains unavailable
+  missing_and_undefined: preserve_as_missing_with_reason_and_valid_denominator
+statistics:
+  biological_unit: unique_organoid_or_patient_verified_from_official_metadata
+  genes_or_cells_as_independent_n: prohibited
+  condition_levels: separate_exact_exposure_from_cross_exposure
+  transfer_inference: "56 fixed same-drug GSE287429-vs-MCF7 condition comparisons; no p-values, no biological n from genes/conditions, no absolute cross-platform amplitude comparison"
+budget:
+  gpu_hours_cap: 48
+  settled_gpu_hours: 0.08852212025499992
+  reserved_gpu_hours: 0
+  run_cap_gpu_hours: 20
+  separate_from_unknown_legacy_ledgers: true
+stop_rules:
+  - stop_scoring_if_sample_or_drug_identity_conflicts
+  - stop_formal_transfer_if_unique_common_gene_axis_or_response_unit_unverified
+  - do_not_convert_undefined_or_missing_metrics_to_zero
+  - no_outer_test_selection_or_target_outcome_based_cell_line_choice
+
+source_lincs_ctrp_association_exploratory:
+  run_id: 20261001_lincs_ctrp_transfer_association_v3
+  status: preregistered_exploratory_pending_execution
+  role: "方案3.4来源域分析；CTRPv2药敏仅作转录响应关联的参照，不训练或排名直接药敏模型"
+  inputs:
+    ctrp_endpoint: "data/processed/exp013/ctrp_v2/responses.csv:aac_published; higher means more sensitive"
+    ctrp_cell_identity: "unique normalized Cellosaurus RRID -> DepMap Model.RRID, using frozen exact identity map; name-only candidates excluded"
+    lincs_cell_identity: "frozen artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json exact DepMap/LINCS identities joined to response-blind split_assignments; include train/val only and exclude locked_eval"
+    drug_identity: "unique exact full InChIKey between CTRPv2 drugs.csv and LINCS pert_info trt_cp; name-only and prefix matches excluded"
+    lincs_response: "EXP-037 condition-level continuous deltas v1; mean matched-control delta over the frozen exact978 axis"
+    patient_unit: "DepMap PatientID source-origin key (cell-line donor origin, not PDO participants); lines sharing one PatientID are aggregated and count once"
+  protocol:
+    split_contract: "Use frozen response-blind DepMap identity assignments; include train/val identities and exclude locked_eval before converting or aggregating AAC values; no model fitting, hyperparameter choice, or test statistic"
+    ctrp_replicates: "median finite aac_published across experiment/media rows within cellid x drugid; then median across mapped cell lines sharing PatientID"
+    lincs_replicates: "median exact-identity pert_id condition magnitudes within LINCS cell x InChIKey x dose x time; then median across mapped cell lines sharing PatientID"
+    exposure_selection: "per drug, choose the exact dose x time with the greatest number of unique matched PatientIDs using identity/coverage metadata only; ties resolve by lower dose, then shorter time; report chosen exposure"
+    response_feature: "mean absolute matched-control delta across all 978 genes; genes are features, not independent statistical units"
+    comparison: "within each exact drug, Spearman association between patient-level response magnitude and patient-level CTRPv2 AAC; do not pool drugs"
+    minimum_n: "at least 10 unique DepMap PatientID source-origin keys per drug; otherwise report coverage and omit rho"
+    inference: "descriptive exploratory only; no p-values, confidence intervals, candidate selection, model selection, or generalization claim"
+  exposure_disclosure: "Before this protocol was frozen, an inspection command accidentally emitted part of responses.csv in tool output. Treat every result from this run as exploratory, with no independent/confirmatory claim."
+  forbidden: [target_treated_organoid_expression, outer_test_labels, locked_eval_labels, name_only_joins, model_training, drug_ranking]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_lincs_ctrp_transfer_association_v3
+    files: [coverage_summary.json, patient_level_pairs.parquet, per_drug_association.tsv, run_manifest.json]
+
+source_lincs_ctrp_functional_increment_exploratory:
+  run_id: 20261001_lincs_ctrp_functional_increment_v1
+  status: completed_exploratory
+  role: "方案3.4 CPU-only来源探索：检验预定义Hallmark基因集响应能否在逐药均值、整体扰动幅度及增殖/应激控制外改善来源对象药敏预测；不验证PDO药效、不选药"
+  inputs:
+    source_pairs: artifacts/experiments/EXP-050/20261001_lincs_ctrp_transfer_association_v3/patient_level_pairs.parquet
+    source_response: "source_pairs.aac; CTRPv2 published AAC, higher means more sensitive; reuse train/val-only exact-identity pairs and metadata-selected LINCS exposures"
+    lincs_conditions: data/processed/lincs/GSE92742/continuous_conditions_v2/conditions.parquet
+    lincs_deltas: data/processed/lincs/GSE92742/continuous_conditions_v2/condition_delta.npy
+    lincs_gene_axis: data/processed/lincs/GSE92742/continuous_contract_v2/genes.json
+    lincs_gene_symbols: data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_gene_info.txt.gz
+    hallmark_sets: data/raw/exp013/msigdb/h.all.v2023.2.Hs.symbols.gmt
+    identity_split: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+  protocol:
+    analysis_unit: "One DepMap PatientID source-origin x exact full InChIKey selected dose/time pair. Cell lines sharing a PatientID count once; source-origin objects are not PDO patients."
+    exposure_and_compounds: "Reuse v3 exact full-InChIKey patient_level_pairs and its metadata-only selected dose/time. Retain compounds with at least 10 unique source origins by coverage only; never read v3 rho to select a drug or feature. Do not reselect dose/time from AAC."
+    features: "Recompute the existing 978-gene mean absolute response magnitude and verify parity with v3. Map all 50 Hallmark v2023.2 gene sets to exact LINCS Entrez-symbol rows; each feature is the mean signed matched-control delta across genes in that set, aggregated median by LINCS cell then median by source origin at the frozen drug exposure."
+    nuisance_controls: "Per-drug AAC training-fold mean; overall 978-gene absolute perturbation magnitude; six predeclared Hallmarks: E2F targets, G2M checkpoint, MYC targets V1 (proliferation), unfolded-protein response, TNFA/NFKB signaling, and reactive-oxygen response (stress)."
+    model: "One fixed Ridge regression (alpha=1.0); predict AAC residuals after fold-training per-drug centering/scaling. Center response features within drug and standardize using training-fold rows only. No hyperparameter search, feature selection, or candidate selection."
+    grouped_validation: "Deterministic five-fold GroupKFold on the unique PatientID source-origin key; all drug observations of a source origin stay in one fold. The 10 frozen locked_eval identities remain excluded before outcome values are read."
+    primary_endpoint: "Out-of-fold normalized squared AAC error, each squared residual divided by that drug's training-fold AAC standard deviation squared; average drugs within each source origin and then average source origins equally. Lower is better. Primary increment = nuisance-control error minus full 50-Hallmark error; positive favors Hallmark features. Preserve exact row keys and denominators."
+    equal_size_random_control: "50 panels; each panel adds 44 random gene groups to the same nuisance baseline, matching the exact LINCS-axis gene count of each of the 44 non-control Hallmark sets. Sample genes without replacement within each group, use fixed seed 20261001, and do not consult AAC."
+    source_object_permutation: "99 deterministic permutations. Within every fold separately permute the entire source-origin feature block among training origins and among held-out origins; map all drug observations by the same origin permutation and exact drug key. Do not shuffle individual genes, rows, or compounds independently. Drop unmatched donor-origin x drug feature pairs and report effective denominators."
+    inference_boundary: "Previously viewed CTRPv2 outputs make the work package exploratory even with grouped folds. Report point estimates, random-control distribution, source-object permutation distribution, exact-key paired out-of-fold predictions and negative/undefined cases; no p-value, interval, independent confirmation, PDO efficacy, drug ranking, or generalization claim."
+  forbidden: [target_pdo_expression, target_treated_expression, outer_test_labels, locked_eval_labels, target_prediction, dose_time_reselection_from_aac, drug_ranking, candidate_selection, hyperparameter_search, p_value_claim, independent_confirmation]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_lincs_ctrp_functional_increment_v1
+    files: [summary.json, oof_predictions.parquet, random_panel_scores.tsv, source_object_permutation_scores.tsv, per_drug_fold_coverage.tsv, run_manifest.json]
+
+source_rnaseq_to_lincs_scale_reconstruction:
+  run_id: 20261001_source_scale_mapping_v1
+  status: preregistered_pending_execution
+  role: "来源侧尺度重建开发；评估DepMap log2(TPM+1)能否映射到LINCS 24h X_ctl基线，仅回答来源尺度重建，不支持PDO预测或药效结论"
+  inputs:
+    depmap_expression: data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_log2tpm.npy
+    depmap_mapping: data/processed/depmap/24q2_rnaseq_exact978/ccle_24q2_exact978_mapping.json
+    depmap_identity: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+    lincs_controls: data/processed/lincs/GSE92742/continuous_contract_v2/controls.parquet
+    lincs_control_matrix: data/processed/lincs/GSE92742/exact978_cache_v1/exact978_cache.npy
+    lincs_gene_axis_contract: data/processed/lincs/GSE92742/continuous_contract_v2/genes.json
+  protocol:
+    identity: "Frozen response-blind EXP-007 identity and split assignments only; verify exact DepMap/LINCS cell identity, PatientID source-origin grouping, aliases/derived lines, and one source object per independent unit; exclude locked_eval."
+    eligible_pairs: "Only exact 24-hour LINCS control groups with finite controls. Coverage audit predicts 13 training and 2 validation source objects; recalculate from metadata and stop on mismatch until explained."
+    target_boundary: "No PDO expression, target treated expression, target labels, outer test, or locked_eval data. No target prediction."
+    aggregation: "Average finite technical control instances within control_group_id, then average unique finite control-group profiles within source object so each source object receives equal weight. DepMap rows sharing one verified PatientID are aggregated before fitting/scoring."
+    baseline: "Per-gene median LINCS control vector fit from the current training fold only."
+    candidate_1: "Per-gene affine OLS predicting LINCS X_ctl from DepMap log2(TPM+1), fit on the current training fold only; fit 978 independent gene-wise intercept/slope pairs."
+    candidate_2: "Per-gene robust location-scale transfer: train-fold DepMap median and MAD, mapped to train-fold LINCS-control median and MAD; predict target median + source robust z-score * target MAD. All statistics use the current training fold only; zero-MAD genes map to the target median."
+    selection: "13-object leave-one-source-object-out CV; select at most one candidate only if its mean equal-object, equal-gene train-CV normalized MSE is lower than the fold-specific median baseline. If neither improves, report a negative result and stop."
+    primary_metric: "Per-object mean squared error over 978 genes, scaled by the current fold's per-gene LINCS control SD squared; average genes equally and then source objects equally. Lower is better. Preserve per-object scores and all zero-SD exclusions."
+    secondary_metrics: "Per-object Pearson and Spearman across genes; raw LINCS control-expression profile MAE/RMSE and mean bias. Undefined values remain null with reasons and denominators."
+    validation: "After development selection, refit the selected candidate on all 13 training source objects and evaluate once on the 2 frozen validation source objects; no tuning or model choice from validation. Report each validation object separately; no bootstrap, p-value, or broad generalization claim."
+    decision_boundary: "This answers only whether a simple mapping reconstructs LINCS baseline better than the median among these 13 source origins and whether two held-out origins show obvious failure. It does not establish GSE287429 scale compatibility, dose/time match, target missing-gene handling, PDO transfer, or screening utility."
+  exposure_disclosure: "An earlier protocol review used an unsupported 121/8 cohort and 5% mapped-model-response gate. GPT-6.1-Sol/medium withdrew that gate after exact 24h coverage audit; this preregistration uses the verified 13/2 source-object set and no target-model gate."
+  forbidden: [target_pdo_expression, target_treated_expression, outer_test_labels, locked_eval, ctrp_endpoint, drug_ranking, target_prediction]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_source_scale_mapping_v1
+    files: [coverage.json, source_object_crosswalk.tsv, cv_scores.tsv, validation_scores.tsv, model_parameters.npz, summary.json, run_manifest.json]
+
+source_lincs_prism_association_exploratory:
+  run_id: 20261001_lincs_prism_transfer_association_v1
+  status: completed_exploratory
+  role: "方案3.4来源域药敏参照；仅关联冻结LINCS转录扰动幅度与PRISM直接药敏，不训练、选模或排名直接药敏模型，也不评价PDO药效"
+  inputs:
+    prism_response: "data/processed/exp012/prism_extended_primary_pairs.parquet; cohort_index_manifest fixes response as -LFC, higher means more sensitive"
+    prism_sample_identity: data/processed/exp012/prism_extended_primary_samples.parquet
+    prism_drug_identity: data/processed/exp012/prism_extended_primary_drugs.parquet
+    prism_cohort_manifest: data/processed/exp012/prism_extended_primary_raw_manifest.json
+    exp012_contract: data/processed/exp012/cohort_index_manifest.json
+    lincs_source_features: artifacts/experiments/EXP-050/20261001_lincs_ctrp_transfer_association_v3/patient_level_pairs.parquet
+    identity_split: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+  protocol:
+    source_roles: "Strict DepMap ModelID identity join to frozen EXP-007 source crosswalk; include train and val only, exclude locked_eval before returning response rows for numeric analysis. Do not join cell names or aliases."
+    prism_sample_join: "PRISM sample_id and cell_line_id must equal the exact DepMap ModelID; require unique sample_id and exact sample-to-model identity."
+    drug_join: "Exact full InChIKey only between PRISM drugs and LINCS exact-identity features; exclude alias-only, prefix, name-only, ambiguous, and unmatched compounds."
+    response_unit: "DepMap PatientID source-origin object, not a PDO patient. Aggregate repeated PRISM cell-line rows by median within exact source-origin x drug; shared source origins count once."
+    perturbation_feature: "Reuse the frozen per-drug LINCS exposure and 978-gene mean absolute matched-control delta from the already completed CTRPv2 source association. Do not reselect exposure based on PRISM coverage or values; exclude CTRPv2 AAC from the join."
+    comparison: "Within each exact drug, Spearman association between source-origin LINCS mean absolute response magnitude and PRISM -LFC sensitivity score. Genes are features, not independent observations; do not pool drugs."
+    minimum_n: "At least 10 unique DepMap PatientID source-origin keys per drug; below that, report coverage only and preserve rho as missing."
+    inference: "Descriptive source-reference association only; no p-values, confidence intervals, model or candidate selection, response ranking, or generalization claim. Results do not feed back into EXP-012 training/selection."
+    locked_eval_filter: "Apply exact sample_id inclusion filter to the PRISM table scan before converting returned response rows or aggregating; assert no locked_eval sample is returned or present in output."
+    target_boundary: "No PDO expression, target-treated expression, target drug-response labels, outer-test labels, or locked_eval labels; no target prediction."
+  forbidden: [alias_only_drug_joins, name_only_cell_joins, target_pdo_expression, target_treated_expression, locked_eval_labels, outer_test_labels, model_training, model_selection, drug_ranking]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_lincs_prism_transfer_association_v1
+    files: [coverage_summary.json, patient_level_pairs.parquet, per_drug_association.tsv, run_manifest.json]
+
+gse288798_single_organoid_expression_only:
+  run_id: 20261001_gse288798_expression_only_v1
+  status: descriptive_gex_summaries_complete_readback_pass
+  role: "方案2/3.1后置TNBC类器官单细胞表达描述；只补充细胞群响应异质性，不替代主线实测迁移，也不作药敏标签或患者泛化证据"
+  source:
+    accession: GSE288798
+    official_supplementary_file: "GSE288798_Organoid_TNBC_JQ1_MS177_24hr_3_conditions_with_gene_activity_with_cluster_identities_with_doublets_classification_01082025.rds.gz"
+    url: "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE288nnn/GSE288798/suppl/GSE288798_Organoid_TNBC_JQ1_MS177_24hr_3_conditions_with_gene_activity_with_cluster_identities_with_doublets_classification_01082025.rds.gz"
+    expected_bytes: 2936166213
+    official_sample_metadata: "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE288798"
+  protocol:
+    biological_unit: "One TNBC organoid model; conditions are DMSO/control, JQ1, MS177 at 24 h. Six GSM libraries include three GEX and three ATAC modalities; cells are not independent biological replicates."
+    modality: "Read/convert GEX expression only. Do not analyze ATAC/gene-activity matrices in this package."
+    assignment: "Use official GSM metadata and source RDS sample/condition labels; stop if their exact condition mapping is ambiguous."
+    parser: "Use only the already-installed rdata parser in WSL2 Conda drugscreening-gpu; do not add dependencies or invoke Windows/system R. Record peak-memory and conversion details."
+    analysis: "Summarize per-condition and existing-cell-cluster expression distributions / pathway scores descriptively. Cell counts are coverage, never independent n. No p-values, FDR, confidence intervals, response ranking, model fitting, or generalization claim."
+    boundary: "No viability/sensitivity labels, no assumption that expression change implies efficacy, no target prediction. If the RDS object cannot be safely converted or GSM identity is unresolved, preserve intake evidence and block only this optional branch."
+    gpu_hours: 0
+  outputs:
+    raw_directory: data/raw/transfer_public_assets/gse_breast_drug_response/GSE288798
+    directory: artifacts/experiments/EXP-050/20261001_gse288798_expression_only_v1
+    files: [intake_summary.json, cluster_expression_summary.parquet, descriptive_pathway_scores.tsv, run_manifest.json, readback_verification.json]
+
+chen_pdo_drug_asset_overlap_v1:
+  run_id: 20261001_breast_pdo_drug_asset_overlap_v1
+  status: coverage_only_complete_readback_hashes_verified
+  role: "方案3.6的CPU-only数据覆盖盘点；确定Chen 2021 PDO IC50附件与5种现有实测转录响应药物的名称层面覆盖，不做药效分析或候选排序"
+  source:
+    dataset_id: chen_2021_breast_pdo_pmc_supplements_v1
+    file: data/raw/breast_pdo_chen_2021/v1/ADVS-8-2101176-s003.xlsx
+    sha256: b66e558a82f11e607d13019bd3ad7701b081d3a371f20a87989f90031d37aa2b
+    title: "IC50 values (μM) of each drug in the breast cancer organoid lines"
+  protocol:
+    workbook_cells: "只读取工作表Sheet1的尺寸元数据、D2:CC2的PDO标签和A4:A52的药物名称；不读取其他单元格，不访问任何数值IC50响应格。若工作表名或55×81尺寸不符则停止。"
+    expression_compounds: "固定5种现有实测响应药：GSE287429中的DOX→Doxorubicin、BTZ→Bortezomib；GSE216540中的Fulvestrant；GSE288798中的JQ1、MS177。此映射仅用于药物名称覆盖，不构成Chen附件的结构身份连接。"
+    comparison: "仅比较去首尾空格及大小写归一后的精确药物标签；不做模糊匹配、结构匹配、IC50排序、阈值分箱、敏感性关联或模型选择。"
+    sample_identity: "记录PDO标签总数与唯一数；不因数字后缀相同连接不同研究对象。当前合同不建立Chen与GEO样本/患者交叉表。"
+    boundary: "不读取、输出或汇总IC50数值；不产生药物疗效、药敏分组或目标PDO推断；本盘点不增加GPU小时。"
+  forbidden: [numeric_ic50_access, ic50_summary_or_ranking, sensitivity_binning, sample_join_by_numeric_label, structure_join_without_chen_key, drug_efficacy_inference, model_training, target_prediction]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_breast_pdo_drug_asset_overlap_v1
+    files: [summary.json, protocol_snapshot.yaml, run_manifest.json]
+
+source_sensitivity_candidate_frame_v1:
+  run_id: 20261001_source_sensitivity_candidate_frame_v1
+  status: completed_exploratory_source_frame
+  role: "方案3.6的泛来源细胞系AAC高低两端取数框架；尚未核实乳腺来源覆盖，不是乳腺癌筛药面板，不作为患者预测或临床药物排序"
+  inputs:
+    source_pairs: artifacts/experiments/EXP-050/20261001_lincs_ctrp_transfer_association_v3/patient_level_pairs.parquet
+    identity_split: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+    ctrp_drug_names: data/processed/exp013/ctrp_v2/drugs.csv
+    transcript_migration: artifacts/experiments/EXP-050/20260930_keyed_response_v7/GSE287429_MCF7_all_exposure_similarity_56.tsv
+    response_compound_keys: configs/experiments/EXP-050.yaml
+    chen_drug_label_coverage: artifacts/experiments/EXP-050/20261001_breast_pdo_drug_asset_overlap_v1/summary.json
+  protocol:
+    source_selection: "Only frozen train-role DepMap PatientID source origins may rank candidate compounds; validation and locked_eval outcomes do not affect selection. Candidate data remains exploratory because source labels were previously exposed."
+    eligibility: "Reuse exact full-InChIKey source pairs; require at least 10 distinct train-role PatientID source origins per drug. Do not select by earlier response-association rho or transcript feature scores."
+    extreme_rule: "Summarize one AAC value per train source-origin x exact InChIKey. Higher AAC means more sensitive. Select the 10 highest and 10 lowest drug-wise median AAC values; ties break by ascending complete InChIKey. Report n, median, mean, IQR, minimum and maximum. No significance test or interval."
+    identity: "Join names and evidence only by a unique exact full InChIKey. Preserve unresolved aliases as unknown; do not use name-only matching to transfer response evidence."
+    transcript_coverage: "Cross-check exact keys against the two frozen GSE287429 measured response drugs and report whether each selected candidate has direct same-drug transcript evidence. Do not use transcript response to change the top/bottom selection."
+    chen_coverage: "Compare selected CTRP compound names with the already audited Chen 2021 drug-label list using exact case-insensitive trimmed name only; no numeric IC50 cell may be read. A name match is not a sample crosswalk or paired efficacy evidence."
+    inference_boundary: "Source sensitivity extremes define a prospective coverage frame only. They are not PDO response labels, efficacy predictions, clinical recommendations, or a validated 20-drug panel. Independent PDO response measurement and transcriptomics remain required."
+  forbidden: [locked_eval_label_access, validation_based_candidate_selection, rho_based_selection, transcript_based_reselection, fuzzy_name_join, ic50_value_access, drug_efficacy_inference, patient_prediction, clinical_ranking, p_value_or_interval_claim, model_training]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_source_sensitivity_candidate_frame_v1
+    files: [candidate_panel_source_reference.tsv, candidate_coverage_summary.json, run_manifest.json]
+
+gse303509_baseline_intake_v1:
+  run_id: 20261001_gse303509_baseline_intake_v1
+  status: completed_metadata_and_RSEM_structure_QC
+  role: "方案所列GSE303509基线RNA-seq接入与有限药敏参照准入；不作为处理后转录响应或目标PDO药效数据"
+  inputs:
+    dataset_id: gse303509_bui_breast_pdo_rnaseq_raw_v1
+    raw_archive: data/raw/gse303509/v1/GSE303509_RAW.tar
+    sample_metadata: "NCBI GEO family SOFT: https://ftp.ncbi.nlm.nih.gov/geo/series/GSE303nnn/GSE303509/soft/GSE303509_family.soft.gz"
+    public_article: "Peer-reviewed Cell Reports Medicine article, PMID 42561946, PMCID PMC13522806, DOI 10.1016/j.xcrm.2026.102973; use its selected in-vitro cases only as qualitative direct-sensitivity reference"
+  protocol:
+    identity: "Require exact GSM accession equality between all family SOFT samples and one archive member each; retain TORG culture labels as labels, not verified independent-patient IDs."
+    expression_qc: "Stream the registered TAR members without extraction; validate RSEM header, gene-ID uniqueness, numeric finiteness/nonnegativity, feature count, expected-count estimates, TPM and FPKM summaries. Do not build a cross-sample model or differential-expression test."
+    annotation: "Keep 12 Ensembl75/batch-1 and 2 GENCODE49/GRCh38.p14/batch-2 profiles stratified. Shared gene keys do not harmonize reference/quantification pipelines."
+    treatment_scope: "Use sample SOFT fields to test for treatment/drug labels. In absence of a verified sample-level exposure, treat expression as baseline-state context only; no treated-expression or response pairing."
+    pharmacology_scope: "GEO archive has no drug-response panel. Final article's selected TORG40/TORG58/TORG139/TORG146 cases may be crosswalked by exact TORG label and cited only as qualitative same-paper direct-sensitivity context; no numeric result extraction, model training, efficacy inference or selection."
+    forbidden: [treated_expression_claim, drug_response_join, numeric_paper_curve_digitization, target_prediction, drug_ranking, model_training, patient_count_inference, locked_eval_access]
+    gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_gse303509_baseline_intake_v1
+    files: [sample_manifest.tsv, expression_file_qc.tsv, summary.json, run_manifest.json]
+
+gse303509_published_case_crosswalk_v1:
+  run_id: 20261001_gse303509_published_case_crosswalk_v1
+  status: completed_published_four_case_crosswalk
+  role: "将最终同行评审论文中四个VP药敏验证TORG标签精确对应到GSE303509基线RNA档案；仅为直接药敏参照，不用于评估EXP-050或转录响应迁移"
+  inputs:
+    series_soft: tmp/exp050_gse303509_intake/GSE303509_family.soft.gz
+    baseline_manifest: artifacts/experiments/EXP-050/20261001_gse303509_baseline_intake_v1/sample_manifest.tsv
+    publication: "NCBI EFetch PMC13522806; PMID 42561946; DOI 10.1016/j.xcrm.2026.102973"
+  protocol:
+    identity: "Exact TORG culture-label match from final Figure 4E-F to the GEO-derived sample manifest; this does not establish independently verified patient identity."
+    scope: "Four author-selected model validation cases only; three of four qualitative ordinal categories match, with TORG58 predicted intermediate but described as resistant in vitro."
+    response_data: "No figure digitization or raw response-value extraction; no external contact. GEO contains baseline RSEM only, without treated RNA or a PDO-by-drug response panel."
+    interpretation: "Same-paper selected-case direct-sensitivity reference; not independent validation, model accuracy, PDO efficacy ranking, or transcript-response migration evidence."
+    forbidden: [treated_expression_claim, independent_accuracy_claim, numeric_paper_curve_digitization, response_value_extraction, target_prediction, drug_ranking, model_training, external_contact, patient_count_inference, locked_eval_access]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_gse303509_published_case_crosswalk_v1
+    files: [published_case_response_crosswalk.tsv, summary.json, run_manifest.json]
+
+frozen_functional_direction_transfer_v1:
+  run_id: 20261001_frozen_functional_transfer_v2
+  failed_preflight_run: artifacts/experiments/EXP-050/20261001_frozen_functional_transfer_v1/run_failure.json
+  status: completed_frozen_functional_direction_transfer_descriptive
+  role: "复用冻结的DOX/BTZ实测迁移向量，对照目标PDO药物×时间与全部合格MCF7来源暴露的Hallmark功能方向和排序；列方向反例及大小/914轴覆盖精确匹配随机基因组参考，不用于药物排序或模型选模"
+  inputs:
+    frozen_vectors: artifacts/experiments/EXP-050/20260930_keyed_response_v7/GSE287429_MCF7_all_exposure_response_vectors.parquet
+    frozen_comparisons: artifacts/experiments/EXP-050/20260930_keyed_response_v7/GSE287429_MCF7_all_exposure_similarity_56.tsv
+    source_condition_contract: artifacts/experiments/EXP-050/20260930_keyed_response_v7/LINCS_MCF7_DOX_BTZ_QC_eligible_exposures.tsv
+    frozen_gene_axis: artifacts/experiments/EXP-050/20260930_keyed_response_v7/EXP050_common_gene_axis_914.tsv
+    hallmark_resource: data/raw/exp013/msigdb/h.all.v2023.2.Hs.symbols.gmt
+  protocol:
+    comparison_frame: "Keep all 56 pre-frozen comparisons: two exact-key drugs (DOX and BTZ), target times 23/47 h, one MCF7 source cell line, and every QC-eligible LINCS 6/24 h exposure (18 DOX, 10 BTZ). Never choose a best source exposure from target scores."
+    functional_summary: "For each of 50 Hallmark sets, use exact HGNC symbol intersection with the frozen 914-gene axis; report original set size, axis coverage, mean-direction class, within-set gene sign agreement and rank. Compare signed set-score ordering by Spearman only; do not compare platform-specific score magnitudes."
+    random_control: "Generate 1,000 random 50-group panels per source-target comparison. Each random group matches its Hallmark group's GMT size and exact number of members on the shared 914-gene axis; report descriptive rank reference quantiles and percentile, not p-values or confidence intervals."
+    inference_boundary: "56 condition-level pairs and 2,800 set-level labels are descriptive and are not independent biological n. Target dose is missing; target 23/47 h and LINCS 6/24 h are cross-time. No PDO prediction, model fit, locked-eval access or GPU use."
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_frozen_functional_transfer_v2
+    files: [functional_transfer_by_source_condition.tsv, hallmark_direction_and_ranks.tsv, hallmark_status_by_target_contrast.tsv, functional_transfer_by_target_contrast.tsv, matched_random_set_control_summary.tsv, functional_direction_counterexamples.tsv, summary.json, run_manifest.json]
+
+gse288798_compound_eligibility_v2:
+  run_id: 20261001_gse288798_compound_eligibility_v2
+  failed_or_superseded_run: artifacts/experiments/EXP-050/20261001_gse288798_compound_eligibility_v1
+  status: completed_identity_and_scale_eligibility_no_go
+  role: "确认GSE288798单类器官JQ1/MS177标签到PubChem完整化学键，再与注册LINCS精确键和已有尺度准入逐项核验；只有全部门通过才可作同药跨平台功能比较"
+  inputs:
+    official_geo_soft: artifacts/experiments/EXP-050/20261001_gse288798_expression_only_v1/intake_summary.json
+    registered_lincs_pert_info: data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_pert_info.txt.gz
+    registered_lincs_condition_contract: data/processed/lincs/GSE92742/continuous_conditions_v2/conditions.parquet
+    registered_scale_provenance_check: artifacts/experiments/EXP-050/20261001_gse288798_expression_only_v1/readback_verification.json
+  protocol:
+    identity: "GEO labels JQ1 and MS177 are resolved using PubChem PUG to full InChIKey, then exact-key joined to registered LINCS pert_info and QC-passing breast conditions. No fuzzy synonym or name-only joins."
+    scale: "Treat RNA.data transformation provenance as unresolved unless documented in the deposited object. No expression comparison if normalization/transform source cannot be confirmed."
+    result: "JQ1 CID 46907787, DNVXATUJJDPFDM-KRWDZBQOSA-N; MS177 CID 139413605, LRMNSTSNSCJHGZ-UHFFFAOYSA-N. Neither full key occurs in LINCS pert_info; zero matched IDs/conditions. RNA.data NormalizeData.RNA provenance unresolved; scale gate fails. No cross-platform functional comparison."
+    lineage: "Eligibility v1 had a misnamed LINCS-condition verification summary field; v2 corrected the field and reports the registered condition-table verification PASS."
+    forbidden: [name_only_join, fuzzy_identity, cross_platform_expression_comparison, target_prediction, efficacy_claim, drug_ranking, model_training, external_contact, locked_eval_access]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_gse288798_compound_eligibility_v2
+    files: [gse288798_compound_identity_scale_eligibility.tsv, exact_key_breast_lincs_exposure_coverage.tsv, summary.json, run_manifest.json]
+
+candidate_breast_source_coverage_v3:
+  run_id: 20261001_candidate_breast_source_coverage_v3
+  failed_or_superseded_runs:
+    - artifacts/experiments/EXP-050/20261001_candidate_breast_source_coverage_v1/run_failure.json
+    - artifacts/experiments/EXP-050/20261001_candidate_breast_source_coverage_v2
+  status: completed_exact_key_breast_source_coverage
+  role: "为冻结的20药泛来源AAC高低框架逐一核对LINCS完整InChIKey、官方乳腺来源细胞、base_cell_id独立来源数、所有质控通过剂量/时间条件及现有PDO转录响应证据；不按覆盖或表达重排候选"
+  inputs:
+    frozen_general_source_candidate_frame: artifacts/experiments/EXP-050/20261001_source_sensitivity_candidate_frame_v1/candidate_panel_source_reference.tsv
+    official_perturbagen_registry: data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_pert_info.txt.gz
+    official_cell_registry: data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_cell_info.txt.gz
+    verified_condition_contract: data/processed/lincs/GSE92742/continuous_conditions_v2/conditions.parquet
+    response_drug_identity_crosswalk: artifacts/experiments/EXP-050/20260930_keyed_response_v7/EXP050_drug_identity_crosswalk.tsv
+  protocol:
+    identity: "Join candidate and source perturbagen only by exact full InChIKey; carry all QC-passing breast line/dose/time conditions. Count independent origins by official base_cell_id so MCF7 derivatives do not inflate n."
+    candidate_frame: "Keep original train-only AAC top/bottom 10 order exactly. DOX/BTZ appear only as separate mechanism-reference rows and are excluded from the 20-candidate denominator."
+    subtype: "Report official broad carcinoma/adenocarcinoma field only; do not infer PAM50 or another intrinsic breast subtype."
+    direct_sensitivity_context: "Veliparib shares a label with the final-paper cisplatin-plus-veliparib combination cases, but this does not isolate veliparib response or create an exact-key candidate/PDO crosswalk. Do not change candidate order."
+    failure_lineage: "v1 stopped before reading candidate labels because of JSON nesting mismatch; v2 core table was superseded to include the limited direct-sensitivity context; v3 is the enriched current receipt."
+    result: "20/20 exact LINCS full-key matches and at least one QC-passing breast exposure. Among the 20 candidates, 16 have one unique base_cell_id source origin and four have five. Condition count range 2-57. No candidate has an exact-key match to registered PDO treated-transcript evidence. This is source availability, not breast-PDO sensitivity or efficacy."
+    procurement: "List exact identity, supplier/catalog, lot/purity, solvent/storage/stability, organoid-medium solubility/vehicle, and quantity/access requirements for later feasibility review; no vendor lookup, contact, or purchase."
+    forbidden: [rank_change, locked_eval_label_access, PDO_prediction, clinical_ranking, drug_efficacy_inference, supplier_contact, purchase, wet_lab_execution, model_training]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_candidate_breast_source_coverage_v3
+    files: [candidate_panel_breast_source_coverage.tsv, candidate_breast_source_exposure_conditions.tsv, summary.json, run_manifest.json]
+
+transigen_fit_diagnostic_v1:
+  run_id: 20261001_transigen_fit_diagnostic_v1
+  status: completed_manager_verified_fit_diagnostic_unsuccessful
+  latest_repair_run_id: 20261001_transigen_fit_diagnostic_v1_bn_train256_precal_v1
+  repair_protocol_snapshot: artifacts/experiments/EXP-050/20261001_transigen_fit_diagnostic_v1/repair_protocol_snapshot.json
+  repair_diff: artifacts/experiments/EXP-050/20261001_transigen_fit_diagnostic_v1/repair_diff.patch
+  key_ruling: "GPT-6.1-Sol/medium: GO for one train-only BatchNorm running-stat calibration repair, treated as revised implementation; no new EXP or user authorization."
+  role: "对来源侧TranSiGen进行一次训练侧小样本拟合诊断，逐项检查输入尺度、处理表达/差值构造、重建与潜变量损失及首个非有限梯度；不评价PDO迁移或药效"
+  ownership:
+    end_to_end_owner: "gpt-6-luna / xhigh model_engineer"
+    manager_and_acceptance: "本线程负责人"
+    key_decision_model: "gpt-6.1-sol / medium"
+  inputs:
+    prepared_root: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared
+    manifest: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/manifest.json
+    conditions: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/conditions.parquet
+    permitted_train_key_mask: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/train121.npy
+    frozen_inner_dev_key_mask: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/validation.npy
+    control_expression: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/control.npy
+    treated_expression_delta: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/delta.npy
+    drug_features: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/ecfp4.npy
+    gene_axis_map: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/source_to_target.npy
+    frozen_counts: "32,094 permitted train condition_id keys and 4,954 inner-development condition_id keys; identities must be verified against the manifest before selection"
+  protocol:
+    subset: "Use only the 32,094 unique condition_id keys admitted by train121.npy. From their response-blind metadata, rank pert_id values by descending number of distinct cell_id keys, ties by ascending pert_id, and select the first 16. For each selected pert_id, rank its distinct eligible cell_id keys by SHA-256 of the UTF-8 string 'EXP050-TRANSIGEN-FIT-256-v1|' + pert_id + '|' + cell_id and take the first 16. Retain one exact condition_id per selected pert_id x cell_id pair (if duplicate keys exist, take the lowest condition_id lexically). Freeze the resulting exactly 256 unique keyed rows and digest before optimizer work. If the 16-by-16 design cannot be formed from those train keys, do not relax it or read response values; return the key-coverage failure."
+    split_and_seed: "Train on all 256 frozen keys. Evaluate each epoch on the complete already frozen 4,954-key inner-development partition using its fixed official membership. One fixed seed: 20261001. Do not use any outer fold or locked_eval information."
+    baseline_fitting: "Fit one mean response vector per pert_id using only the 256 frozen training keys, then keep these vectors fixed for both train and inner-development scoring. Never fit means, imputations, or other baseline parameters from inner-development responses. Score the same-drug-mean baseline only on keys whose pert_id has a fitted train mean; report its exact train/dev support. On inner-dev, report model and zero-change metrics both over all 4,954 keys and on the same-drug-mean-supported subset so all comparisons use a common denominator."
+    diagnostic: "Before training, report observed input ranges/quantiles and scale; verify treated-expression and delta construction by keyed reconstruction; record separately the MSE terms for x1 reconstruction, x2 reconstruction, and delta prediction, and the KL terms for x1, x2, and perturbation condition; check tensor finiteness and gradient finiteness/norm and identify the first non-finite tensor/gradient if present. Compare same-drug-mean and zero-change baselines on the same train/dev keys. Save per-epoch train and inner-dev curves under one unchanged metric protocol."
+    stop: "Stop at 100 epochs or 30 minutes of GPU execution, whichever occurs first. The entire subtask, including any failed retry or one repair comparison, may charge at most 2.0 GPU-hours and 60 CPU minutes. Before every attempt, verify the remaining append-only EXP-050 GPU ledger, prospective runtime, and an idle approved RTX A5000; do not use the occupied/unattributed Quadro."
+    repair: "One GPT-6.1-Sol/medium-approved repair only: before epoch 1, calibrate the five official BatchNorm1d running-stat buffers once using only the frozen 256 train keys in selected_train_condition_keys.tsv order and x1, ECFP4, x2=x1+delta. Use model.train()+torch.no_grad(); call model(x1, ECFP4), encode_x2(x2), then decode_x2(z2) once on the full batch. Set BN momentum temporarily to 1.0 then restore the original 0.1. Isolate calibration RNG with fixed prediction seed 20261002 via fork_rng and restore formal training CPU/CUDA RNG. Verify only BN running buffers change: every parameter hash unchanged and optimizer state remains 0->0. This is a revised implementation, not an exact original-program reproduction. Then continue the same 256 keys, model, objective, seed, 100-epoch/30-GPU-minute cap, full inner-dev diagnostics, metrics, and baseline denominators; do not calibrate each epoch or use inner-dev to update stats. Original attempt and failure remain immutable. No additional repair, clipping, architecture change, loss change, or parameter search; stop on any nonfinite in this one repaired attempt."
+    inference_boundary: "This is a one-seed source-side fit diagnostic, not a performance/generalization estimate and not evidence of PDO response transfer, drug efficacy, or patient benefit. No selection from dev trajectories, no target PDO prediction, no direct-sensitivity ranking, and no wet-lab or external contact."
+    forbidden: [outer_fold_access, locked_eval_access, pdo_treated_label_access, target_pdo_prediction, efficacy_claim, drug_ranking, candidate_expansion, external_contact, wet_lab_execution, budget_increase]
+  resource_cap_gpu_hours: 2
+  cpu_preparation_cap_minutes: 60
+  gpu_hours: 0.018299603444724602
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_transigen_fit_diagnostic_v1
+    files: [protocol_snapshot.json, repair_protocol_snapshot.json, selected_train_condition_keys.tsv, cost_device_data_preflight.json, attempt_complete.json, attempts/repaired_20261001/batchnorm_calibration_receipt.json, attempts/repaired_20261001/attempt_summary.json, attempts/repaired_20261001/loss_components_by_epoch.tsv, attempts/repaired_20261001/train_dev_metrics_by_epoch.tsv, attempts/repaired_20261001/keyed_predictions.parquet, attempts/repaired_20261001/attempt_complete.json, attempts/repaired_20261001/gene_axis.json, attempts/repaired_20261001/transigen_last.pt, first_nonfinite_diagnostic.json, repair_diff.patch, fit_diagnostic_summary.json, fit_diagnostic_curves.png, epoch_progress_log.jsonl, run_id_reconciliation.json, run_manifest.json]
+
+xpert_independent_object_gate_v1:
+  run_id: 20261001_xpert_independent_object_gate_v1
+  status: registered_response_blind_identity_exposure_support_gate
+  purpose: "为方案3.5的来源域XPert响应迁移比较先核对完全排除药敏共同对象后的训练/开发身份、药物和精确暴露支持；本门只读身份及条件元数据，不读取转录响应或直接药敏数值，不训练。"
+  inputs:
+    prepared_conditions_metadata: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/conditions.parquet
+    prepared_split_membership: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared
+    frozen_identity_split: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+    frozen_source_pharmacology_identity_support: artifacts/experiments/EXP-050/20261001_lincs_ctrp_transfer_association_v3
+    chemical_identity: configs/experiments/EXP-050.yaml
+  protocol:
+    cohort: "只读取EXP-050已冻结许可train/val来源身份、细胞衍生对象和完整InChIKey；药敏标签完全不读。"
+    exposure: "唯一目标条件为精确10 uM x 24 h LINCS扰动；按condition_id/cell_id/pert_id/dose/time身份连接，不以标签或效果挑选。"
+    exclusion: "将最终共同队列全部source PatientID及其所有对应DepMap ModelID/细胞派生身份从XPert训练、开发、尺度拟合与选停中排除。不得复用在任一目标对象响应上训练、早停或定尺度的旧检查点。"
+    support_gate: "报告排除后训练/开发独立来源对象数、每药精确10 uM x 24 h训练和开发条件数、978轴/药物键覆盖及计算预估。任何目标对象泄漏、精确暴露缺失、轴不完整、训练无药物支持或无法构成非目标开发集时，停止于预检且不启动GPU。"
+    stop: "仅响应盲准入和成本预检，GPU上限0；通过后执行固定XPert拟合，累计子任务上限10 GPU小时，失败及必要工程重跑均计入；任何重跑前先诊断并记录原因/修复，不能盲目重试或越过EXP-050总48小时。"
+    forbidden: [transcript_response_value_read, direct_sensitivity_value_read, outer_fold_access, locked_eval_access, pdo_treated_label_access, target_pdo_prediction, candidate_expansion, drug_ranking, external_contact, wet_lab_execution]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_xpert_independent_object_gate_v1
+    files: [protocol_snapshot.json, common_object_exposure_support.tsv, excluded_source_identity_counts.json, train_dev_drug_support.tsv, cost_preflight.json, run_manifest.json]
+
+xpert_independent_object_response_fit_v1:
+  run_id: 20261001_xpert_independent_object_fit_v1
+  status: registered_response_blind_preflight_pending
+  role: "在门控排除药敏参照来源对象后，从头训练固定XPert，对独立来源对象的药物诱导转录变化进行预测；直接药敏仅为参照，不读取药敏数值。"
+  inputs:
+    gate_snapshot: artifacts/experiments/EXP-050/20261001_xpert_independent_object_gate_v1/protocol_snapshot.json
+    train_dev_drug_support: artifacts/experiments/EXP-050/20261001_xpert_independent_object_gate_v1/train_dev_drug_support.tsv
+    heldout_source_support: artifacts/experiments/EXP-050/20261001_xpert_independent_object_gate_v1/common_object_exposure_support.tsv
+    prepared_condition_metadata: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/conditions.parquet
+    train_membership: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/train121.npy
+    inner_dev_membership: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/validation.npy
+    depmap_model_identity: data/raw/depmap/24q2/Model.csv
+    lincs_perturbation_identity: data/raw/lincs/GSE92742/GSE92742_Broad_LINCS_pert_info.txt.gz
+  protocol:
+    training: "仅使用响应盲身份/暴露白名单内61个非目标PatientID对象的9,889个精确10 uM x 24 h条件，需逐条件具备完整InChIKey与XPert分子特征；训练全集不限于直接药敏参照药物。直接参照覆盖138个药物键，其中111个在train有支持。所有拟合尺度和逐药均值只由train拟合。"
+    inner_dev: "6个不与train或药敏目标交叉的PatientID来源对象，共2,402个合格条件；早停及模型选择仅用train/dev共有的78个完整结构键，其实际dev评分分母为244个条件；最低object-macro NMSE选轮，较低为好。"
+    heldout_source: "所有34个直接药敏参照PatientID从训练、内层开发、尺度拟合和选停排除；直接药物键上有精确10 uM x 24 h配对支持的462个对象-药物对共467个条件、分布于10个对象，仅在模型冻结并持久化预测后读取其响应，按独立对象评价迁移。13个对象有任意药物的精确LINCS暴露，不等同于直接药物键配对支持对象数。"
+    fixed_parameters: "seed=20260922; batch_size=16; max_epochs=100; patience=10; learning_rate=0.004; weight_decay=0.00001; loss_weights=[0.2,0.003,0.2,1.0]。只恢复已登记字段，不调参；不加载旧checkpoint。"
+    retry: "每次训练attempt使用独立不可覆盖目录并写入追加式GPU账本。失败后先定位原因；只有固定研究协议内的必要工程修复且记录说明时，才可用剩余预算重跑。非有限损失先诊断；不盲目重跑。禁止改变架构、损失、固定超参或按评价分数选择方向。成功完成后不再训练。"
+    boundary: "条件和结构键只能来自响应盲门控白名单。允许读取白名单train响应值用于训练、train/dev响应值用于内层选停；heldout来源响应值只能在模型冻结且预测已落盘后读取。PDO处理标签、直接药敏数值和outer/locked结果不读取。train/dev PatientID零交叉及34个药敏来源对象排除是硬门。"
+    stop: "累计XPert子任务GPU上限10小时，失败与重跑全计入；EXP-050全包上限48 GPU小时。预计完整attempt 8.152780639 GPU小时。预算不足不启动下一attempt，交付已发生attempt的失败证据。"
+  parameters:
+    source_protocol: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/xpert_121/protocol.json
+    source_sha256: 45b4f773636524f980854e598a988d539d92c159026fb4d06bcb9300aa4fdf72
+    cumulative_subtask_cap_gpu_hours: 10
+    complete_attempt_estimate_gpu_hours: 8.152780639016001
+  gpu_hours: 10
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_xpert_independent_object_fit_v1
+    files: [fit_condition_identity_key_map.tsv, drug_support_denominators.tsv, training_protocol_snapshot.json, preflight_receipt.json, attempts/attempt_NNN/attempt_receipt.json, attempts/attempt_NNN/training_curve.jsonl, attempts/attempt_NNN/fit_result.json, run_manifest.json]
+
+source_scale_treatment_response_v1:
+  run_id: 20261001_source_scale_treatment_response_v1
+  status: registered_limited_development_description
+  role: "在来源侧把现有仿射输入尺度适配器、冻结TranSiGen检查点和真实处理响应串成端到端比较；限定于MDAMB231的内层开发响应，只作开发期诊断，不声称独立验证"
+  inputs:
+    source_scale_adapter: artifacts/experiments/EXP-050/20261001_source_scale_mapping_v1/model_parameters.npz
+    frozen_representative_checkpoint: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/transigen_121/transigen_best.pt
+    frozen_checkpoint_preprocessing: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/transigen_121/transigen_preprocess.npz
+    prepared_conditions: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/conditions.parquet
+    prepared_control_and_delta: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared
+    eligible_eval_keys: "精确cell_id=MDAMB231的537个既有inner-dev condition键；已核验adapter训练范围和TranSiGen inner-dev早停使用范围"
+  protocol:
+    scope: "使用同一537个精确condition_id/pert_id/cell_id/dose/time键、978基因轴和同一模型第13轮检查点；固定现有adapter参数，不重拟合；仅比较adapter前原始输入与adapter后输入。"
+    response: "目标为prepared登记的真实处理delta=x2-x1；每条件检查控制/处理行、条件键和delta构造均精确绑定。预测分别由同一冻结模型输入原始control和映射后的control得到。"
+    metrics: "沿用已冻结来源验证评分的共同条件指标：978基因条件等权的训练侧尺度标准化NMSE、基因维Pearson/Spearman、变化符号一致率与绝对响应幅度比；同一分母报告零变化与仅由获准来源训练键拟合的逐药均值基线。缺失/非法指标保留未定义，不转零。"
+    boundary: "严格独立验证因adapter验证对象(BT20/HEPG2)与模型inner-dev响应无共同键（0对象/0条件）而局部NO-GO。仅MDAMB231的537条件允许做开发期描述；该对象参与adapter拟合，且同一inner-dev响应参与模型第13轮早停。结果带开发期选择偏倚，无独立验证、泛化或PDO迁移含义。"
+    forbidden: [adapter_refit, checkpoint_or_epoch_selection, outer_fold_access, locked_eval_access, pdo_treated_label_access, target_pdo_prediction, drug_ranking, external_contact, wet_lab_execution]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_source_scale_treatment_response_v1
+    files: [protocol_snapshot.json, keyed_overlap.tsv, paired_condition_predictions.tsv, summary.json, run_manifest.json]
+
+cross_generated_response_drug_effect_v1:
+  run_id: 20261001_cross_generated_response_drug_effect_v1
+  status: registered_single_object_descriptive_comparison
+  role: "复用对被评价细胞排除训练的XPert扰动delta预测，与该来源对象实测delta及精确药物身份的CTRPv2/PRISM直接敏感性参照作共同对象描述；不声称未偏倚的泛化或药效因果"
+  inputs:
+    frozen_predictions: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/xpert_121/validation_prediction.npy
+    keyed_prediction_conditions: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/xpert_121/validation_prediction_keys.parquet
+    source_observed_delta: artifacts/experiments/EXP-037/20260928_lincs_scale_16_121/prepared/delta.npy
+    exact_cell_identity: artifacts/experiments/EXP-007/CCLE_CONTEXT_IDENTITY_SPLIT.json
+    exact_drug_identity: configs/experiments/EXP-050.yaml
+    ctrp_sensitivity: data/processed/exp013/ctrp_v2/responses.csv
+    prism_sensitivity: data/processed/exp012/prism_extended_primary_pairs.parquet
+    protocol_decision: "GPT-6.1-Sol/medium read-only GO, scoped to one-object exploratory description; see experiments/records/EXP-050.md."
+  protocol:
+    prediction_exclusion: "XPert以121个模型训练细胞拟合；按冻结预测键审计，仅8个inner-dev细胞有预测。对同一对象的预测虽排除在权重训练之外，但整个inner-dev响应参与第23轮早停，所以该比较为开发期选择偏倚描述。"
+    common_object: "只用精确DepMap ModelID/PatientID身份映射后进入已许可train/inner-dev标签范围的MDAMB231一个来源对象；其他7个预测对象不并入。对条件按精确condition_id与cell/pert/dose/time键回连实测delta。药物只按完整InChIKey匹配：CTRPv2当前覆盖22个对象×药物键，PRISM覆盖8个；两终点分开分析。"
+    condition_feature: "在MDAMB231的冻结10uM×24h条件上，分别计算预测delta与观测delta的978基因mean-absolute-response magnitude；使用同键逐基因误差、相关、符号一致率作为模型响应描述。Direct-sensitivity端点按现有EXP-050冻结合同在对象×完整InChIKey内取中位数。"
+    drug_effect_association: "分别在同一对象内跨精确共同药物键，计算预测delta magnitude、观测delta magnitude及已冻结训练侧同药均值响应magnitude与CTRPv2 AAC或PRISM -LFC的Spearman描述性关联；报告药物n和有效分母。零变化magnitude为常数时Spearman记为未定义。"
+    secondary_controls: "复用本EXP-050既有功能增量协议中事先冻结的6个Hallmark增殖/应激控制（E2F targets、G2M checkpoint、MYC targets V1、unfolded-protein response、TNFA/NFKB signaling、reactive-oxygen response），在同一对象、同一键和同一药物分母上作为次要描述特征；不筛选控制，不作推断检验或模型选择。"
+    exposure_mismatch: "当前药物交集存在，但LINCS 10uM×24h与CTRPv2/PRISM具体测量剂量/时间不存在精确暴露键重合；药敏只作直接敏感性参照，需披露跨测量协议。不得挑选最佳暴露。"
+    inference_boundary: "独立对象分母n=1；22个CTRPv2与8个PRISM药物对为一对象内的药物案例，不是患者/细胞的独立重复。无置信区间、显著性、因果、PDO或临床结论；不得据此改候选排序。"
+    forbidden: [outer_fold_access, locked_eval_access, pdo_treated_label_access, model_training, checkpoint_selection, hyperparameter_selection, drug_ranking, efficacy_or_clinical_claim, external_contact, wet_lab_execution]
+  gpu_hours: 0
+  outputs:
+    directory: artifacts/experiments/EXP-050/20261001_cross_generated_response_drug_effect_v1
+    files: [protocol_snapshot.json, exact_key_support.tsv, paired_response_drug_effect.tsv, summary.json, run_manifest.json]

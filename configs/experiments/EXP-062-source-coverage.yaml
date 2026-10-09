@@ -1,0 +1,87 @@
+experiment_id: EXP-062
+run_id: 20261008_exp062_coverage20_fixed_v3
+record: experiments/records/EXP-062.md
+purpose: >-
+  Test whether the prior five-drug source panel constrained the closed EXP-058 state-residual development result by
+  expanding response-blind drug coverage within the official XPert source dataset; fixed development comparison only.
+authorization:
+  basis: user_direct_authorization_source_coverage_EXP062_SOURCE_COVERAGE_0312
+  owner: root_coordinator
+  implementation_model: gpt-6-luna
+  reasoning_effort: xhigh
+data:
+  h5ad_path: /mnt/d/Code/XPert/processed_data/l1000_sdst_78453.h5ad
+  h5ad_authority: official_XPert_source_asset_as_registered_in_EXP051
+  metadata_phase_reads: [obs, var, file_metadata]
+  metadata_phase_forbidden: [X, layers, obsm.X_ctl]
+  value_phase_arrays: [X, obsm.X_ctl]
+  source_gene_info: /mnt/d/Code/XPert/processed_data/l1000_gene_info_978.csv
+  source_drug_info: /mnt/d/Code/XPert/processed_data/l1000_sdst_drugs_info_8432.csv
+  morgan_fingerprint_contract: EXP051_verified_RDKit_ECFP4_from_author_canonical_smiles_radius2_2048; do_not_read_unverified_XPert_object_array
+  fixed_dose_uM: 10
+  fixed_time_hours: 24
+  max_drugs: 20
+  min_train_objects_per_drug: 8
+  max_conditions_per_drug: 100
+  max_total_conditions: 2000
+  selection_seed: 62062
+  selection_hash: SHA256(UTF8(seed|full_InChIKey|condition_key)), ascending_hex
+  roles: >-
+    preserve official split_cold_cell_1 and legacy roles; inner_dev priority for legacy evaluation,
+    official test, or exact cell-name overlap with prior evaluated PANACEA objects; only remaining
+    official train objects are TRAIN; exact PANACEA name overlaps currently DU145 and LNCAP
+  allowed_roles: [train, dev]
+  prohibited_numeric_roles: [pdo, outer, locked, panacea, cdsdb]
+split:
+  group_unit: source_object_id
+  old_evaluation_exposure_is_permanent_development: true
+  shared_controls_must_not_cross_roles: true
+models:
+  state_residual_candidate:
+    source_recipe: EXP-058 fixed nonlinear state residual
+    train_pretreatment_state: source_object_mean_X_ctl
+    state_pca_components: 16
+    fingerprint_bits: 2048
+    drug_embedding_dimensions: 16
+    hidden_width: 32
+    hidden_layers: 1
+    activation: relu
+    output_genes: 978
+    seed: 58058
+    optimizer: Adam
+    learning_rate: 0.001
+    weight_decay: 0.001
+    batch_size: 64
+    max_epochs: 300
+    early_stopping: inner_dev_object_macro_nmse_patience_30
+  controls:
+    - zero_change
+    - exact_full_inchikey_train_mean
+    - exp053_ridge_alpha_1
+    - parameter_matched_drug_only_mlp_hidden_33
+    - whole_source_object_state_derangement
+metrics:
+  primary: inner_dev_source_object_macro_nmse_gain_over_strongest_fixed_control
+  secondary: [object_macro_mae, gene_correlation, direction_agreement, amplitude_ratio]
+  aggregation: conditions_within_object_then_objects_equally_weighted
+  paired_interval: source_object_bootstrap_20000_seed_62063
+  undefined: null_with_effective_denominator
+  expansion_gate:
+    relative_nmse_gain_minimum: 0.05
+    paired_ci_lower_bound_greater_than_zero: true
+    fraction_objects_improved_minimum: 0.60
+    amplitude_ratio_range: [0.5, 2.0]
+    must_beat: [drug_only_mlp, whole_source_object_state_derangement]
+resources:
+  cpu_hard_cap_seconds: 3600
+  inherited_exp055_cpu_cap_seconds: 7200
+  inherited_exp055_cpu_settled_seconds: 3214.485736
+  inherited_exp055_cpu_remaining_seconds: 3985.514264
+  gpu_hours_cap: 0
+  margin_fraction: 0.20
+  require_full_package_projection_before_continuation: true
+output:
+  root: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3
+  metadata_freeze_manifest: metadata_freeze_manifest.json
+  keyed_predictions: keyed_predictions.npz
+  independent_root_readback: true

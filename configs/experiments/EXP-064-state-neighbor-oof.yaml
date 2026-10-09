@@ -1,0 +1,80 @@
+experiment_id: EXP-064
+run_id: coverage20_oof_v1
+protocol_id: EXP064-TRAIN-STATE-NEIGHBOR-OOF-64064
+predecessor: EXP-062
+
+data:
+  h5ad_path: /mnt/d/Code/XPert/processed_data/l1000_sdst_78453.h5ad
+  frozen_root: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3
+  condition_keys: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3/response_blind_conditions.tsv
+  metadata_freeze: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3/metadata_freeze_manifest.json
+  metadata_root_receipt: artifacts/experiments/EXP-062/20261008_exp062_coverage20_fixed_v3/root_metadata_readback.json
+  gene_axis: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/gene_axis_mapping.tsv
+  train_role: train
+  condition_count: 1291
+  object_count: 93
+  drug_count: 20
+  genes: 978
+  response: X_minus_X_ctl
+  allowed_numeric_arrays: [TRAIN_rows_X, TRAIN_rows_obsm_X_ctl]
+  forbidden_numeric_roles: [inner_dev, DEV, outer, locked, PDO, PANACEA, CDSDB]
+
+split:
+  group_unit: source_object_id
+  folds: 5
+  object_hash_seed: 64064
+  assignment: SHA256(seed|source_object_id), big-endian first 8 bytes modulo 5
+  paired_conditions_keep_object_fold: true
+
+preprocessing:
+  fit_scope: other_fold_train_objects_only
+  pretreatment_source: per_object_mean_X_ctl
+  standardization: train_object_gene_mean_and_sd
+  pca_components: 16
+  distance: euclidean_in_fold_fitted_pca_space
+  response_gene_variance: fold_train_condition_deltas_population_variance
+  zero_variance_threshold: 1.0e-12
+
+arms:
+  - zero_change
+  - per_drug_train_object_mean
+  - pretreatment_state_nearest_3_same_drug_train_objects
+  - fixed_hash_random_3_same_drug_train_objects
+neighbor_selection:
+  neighbors: 3
+  unique_object_unit: true
+  distance_inputs: [pretreatment_X_ctl_only]
+  response_values_used_for_selection: false
+  insufficient_candidates: record_missing_and_exclude_from_common_denominator
+  random_hash_seed: 64064
+
+metrics:
+  primary: common_denominator_object_macro_fold_train_gene_variance_nmse
+  secondary: [object_macro_mae, gene_correlation, direction_agreement, amplitude_ratio]
+  aggregation: condition_within_object_then_objects_equally_weighted
+  paired_object_bootstrap_replicates: 20000
+  paired_object_bootstrap_seed: 64065
+  contrasts:
+    - nearest_3_vs_per_drug_mean
+    - nearest_3_vs_random_3
+  report_full_denominator_baselines: true
+  undefined: null_with_effective_denominator
+
+resources:
+  cpu_package_cap_seconds: 900
+  inherited_exp055_cpu_cap_seconds: 7200
+  inherited_exp055_cpu_settled_start_seconds: 5975.298222
+  inherited_exp055_cpu_remaining_start_seconds: 1224.701778
+  gpu_hours_cap: 0
+  first_complete_fold_cost_gate: true
+  full_schedule_margin_fraction: 0.20
+
+output:
+  root: artifacts/experiments/EXP-064/coverage20_oof_v1
+  run_attempt: fit_attempt_001
+  keyed_predictions: keyed_oof_predictions.npz
+  fold_preprocessing: fold_preprocessing.npz
+  neighbor_manifest: neighbor_selection.tsv
+  missing_candidates_by_fold_drug: missing_candidates_by_fold_drug.tsv
+  object_metrics: object_metrics.tsv
+  independent_readback: true

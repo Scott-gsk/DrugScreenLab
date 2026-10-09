@@ -2,16 +2,13 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict
 import hashlib
 import json
 from pathlib import Path
+import re
 
 import numpy as np
 import pandas as pd
-
-from drug_screen.transfer.chemistry import standardize_smiles
-
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -32,6 +29,11 @@ def _frame_equal(left: pd.DataFrame, right: pd.DataFrame) -> bool:
     except AssertionError:
         return False
     return True
+
+
+def _normalized_drug_name(value: object) -> str:
+    """Conservative fallback for punctuation-only legacy alias differences."""
+    return re.sub(r"[^a-z0-9]", "", str(value).lower())
 
 
 def audit_gdsc_source(root: Path) -> dict:
@@ -119,20 +121,45 @@ def audit_gdsc_source(root: Path) -> dict:
     structures: dict[str, list[dict]] = {}
     for row in structure_rows:
         structures.setdefault(str(row.get("source_name")), []).append(row)
+    normalized_structures: dict[str, list[dict]] = {}
+    for name, rows in structures.items():
+        normalized_structures.setdefault(_normalized_drug_name(name), []).extend(rows)
     source_drug_names = set(raw_response.DRUG_NAME.astype(str))
+    bundle_by_id = drugs.set_index("drug_id", verify_integrity=True)
     mapped: dict[str, str] = {}
+    alias_matches: list[dict[str, str]] = []
     structure_issues: list[dict] = []
     for name in sorted(source_drug_names):
         rows = structures.get(name, [])
+        if not rows:
+            normalized = _normalized_drug_name(name)
+            candidates = normalized_structures.get(normalized, [])
+            if len(candidates) == 1:
+                rows = candidates
+                alias_matches.append({"source_name": name,
+                                      "bridge_name": str(candidates[0].get("source_name")),
+                                      "rule": "casefold_remove_non_alphanumeric"})
         if len(rows) != 1:
             structure_issues.append({"drug_name": name, "reason": "missing_or_ambiguous_structure_row", "rows": len(rows)})
             continue
         row = rows[0]
-        identity = standardize_smiles(row.get("canonical_smiles"))
-        if not identity.accepted or identity.inchikey != row.get("inchikey"):
-            structure_issues.append({"drug_name": name, "reason": "source_structure_invalid_or_key_conflict", **asdict(identity)})
+        key = str(row.get("inchikey"))
+        if key not in bundle_by_id.index:
+            structure_issues.append({"drug_name": name, "reason": "source_structure_key_not_in_bundle",
+                                     "inchikey": key})
             continue
-        mapped[name] = identity.inchikey
+        bundle_row = bundle_by_id.loc[key]
+        if (str(row.get("canonical_smiles")) != str(bundle_row["canonical_smiles"])
+                or key != str(bundle_row["inchikey"])):
+            structure_issues.append({"drug_name": name,
+                                     "reason": "registered_bridge_disagrees_with_bundle",
+                                     "inchikey": key})
+            continue
+        # This audit verifies exact correspondence to the registered legacy
+        # bridge, including compound-level salts/complexes.  Model-specific
+        # structure standardization is a later train-side contract and must
+        # not erase otherwise traceable raw response rows.
+        mapped[name] = key
     bundle_drugs = set(drugs.drug_id.astype(str))
     source_to_bundle = {name: key for name, key in mapped.items() if key in bundle_drugs}
     if len(source_to_bundle) != len(bundle_drugs):
@@ -168,7 +195,7 @@ def audit_gdsc_source(root: Path) -> dict:
         "response": {"status": "PASS" if missing_source_pairs == 0 and unmatched_response_pairs == 0 and response_error is not None and response_error <= 1e-12 and endpoint_ok else "CONFLICT", "raw_rows": len(raw_response), "processed_rows": len(fitted), "indexed_pairs": len(pairs), "endpoint": "1_minus_auc", "higher_is_sensitive": True, "source_pairs_missing": missing_source_pairs, "source_key_duplicates": duplicate_source_pairs, "unmatched_indexed_response_pairs": unmatched_response_pairs, "max_abs_transform_error": response_error},
         "expression": {"status": "PASS", "source_shape": list(expression.shape), "indexed_shape": list(indexed_expression.shape), "transform": "log2(CMP TPM+1)", "max_abs_transform_error": expression_error, "missing_value_mask_matches": True},
         "cell_identity": {"status": "PASS" if not missing_source_samples and tissue_conflicts == 0 else "CONFLICT", "indexed_samples": len(samples), "fitted_response_identity_key": "SANGER_MODEL_ID", "source_identity_missing": missing_source_samples, "tcga_desc_conflicts": tissue_conflicts, "cell_details_name_coverage": metadata_coverage, "cell_details_name_total": len(cell_details)},
-        "drug_identity": {"status": "PASS" if not bundle_structure_issues else "CONFLICT", "source_drug_names": len(source_drug_names), "bundle_drugs": len(bundle_drugs), "resolved_source_to_bundle_drugs": len(source_to_bundle), "bundle_issues": bundle_structure_issues, "excluded_source_name_issues": [issue for issue in structure_issues if "drug_name" in issue]},
+        "drug_identity": {"status": "PASS" if not bundle_structure_issues else "CONFLICT", "source_drug_names": len(source_drug_names), "bundle_drugs": len(bundle_drugs), "resolved_source_to_bundle_drugs": len(source_to_bundle), "bundle_issues": bundle_structure_issues, "explicit_alias_matches": alias_matches, "excluded_source_name_issues": [issue for issue in structure_issues if "drug_name" in issue]},
         "unmeasured_metadata": ["batch", "culture_condition", "dose/time at individual response level", "technical-repeat QC"],
         "split_assessment": {"status": "NOT_ASSESSED", "reason": "No frozen EXP-014 GDSC2 source train/validation/cold-cell assignment was supplied to this audit; it must be checked when the concrete source configuration is frozen."},
         "scientific_admission": "PENDING_PROTOCOL_OWNER_G0_REVIEW",

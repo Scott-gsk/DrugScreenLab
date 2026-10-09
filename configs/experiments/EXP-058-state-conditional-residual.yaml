@@ -1,0 +1,108 @@
+experiment_id: EXP-058
+run_id: 20261007_exp058_state_conditional_residual_v1
+attempt_id: fit_attempt_001
+record: experiments/records/EXP-058.md
+purpose: Fixed one-seed source-development comparison of nonlinear pretreatment-state residual beyond a TRAIN-only exact-InChIKey drug mean
+retention: Bounded development candidate only; cannot replace EXP-055 original architecture or establish independent/PDO transfer
+
+authorization:
+  basis: continuous_breast_transfer_research_authorization_and_supervisor_frozen_candidate_20261007
+  owner: root_coordinator
+  implementation_model: gpt-6-luna
+  reasoning_effort: xhigh
+
+data:
+  source_experiment_id: EXP-051
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_key_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+  source_values: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/frozen_train_inner_values.npz
+  source_drug_features: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/transigen_ecfp4_features.npz
+  train_conditions: 419
+  train_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_objects: 24
+  full_inchikeys: 5
+  exact_full_inchikeys: 5
+  genes: 978
+  state: TRAIN object-mean X_ctl only
+  allowed_roles: [train, inner_dev]
+  inner_dev_use: early stopping and final frozen development scoring only
+  forbidden: [pdo_numeric_drug_sensitivity, pdo_transcript_response, outer_numeric_values, locked_numeric_values, panacea_values]
+
+models:
+  baseline_anchor:
+    type: per_full_inchikey_mean_delta
+    fit_role: train_only
+  prior_linear:
+    type: exp053_state_residual_ridge
+    state: object_mean_X_ctl_978
+    state_scaling: fit_on_train_objects
+    ridge_alpha: 1.0
+    train_object_weighting: equal_total_weight_per_object
+  nonlinear_state_candidate:
+    state_pca_components: 16
+    state_pca_fit_role: train_objects_only
+    drug_fingerprint_bits: 2048
+    drug_embedding_dimensions: 16
+    hidden_width: 32
+    hidden_layers: 1
+    activation: relu
+    output_genes: 978
+    target: train_only_residual_from_per_drug_mean
+  capacity_matched_drug_only:
+    state_input: excluded
+    drug_fingerprint_bits: 2048
+    drug_embedding_dimensions: 16
+    hidden_width: 33
+    hidden_layers: 1
+    activation: relu
+    output_genes: 978
+    parameter_count_at_least_candidate: true
+  object_block_shuffled_state:
+    type: same_candidate_architecture
+    shuffle_unit: source_object_id
+    train_and_inner_dev_permuted_separately: true
+    mapping: deterministic_seeded_derangement_without_fixed_points
+
+training:
+  seed: 58058
+  optimizer: Adam
+  learning_rate: 0.001
+  weight_decay: 0.001
+  batch_size: 64
+  shuffle_train: true
+  objective: train_object_balanced_per_gene_variance_normalized_residual_mse
+  max_epochs: 300
+  inner_dev_early_stopping_metric: source_object_macro_nmse
+  patience: 30
+  hyperparameter_search: false
+  additional_seeds: false
+
+metrics:
+  primary: inner_dev_source_object_macro_nmse
+  baseline: train_only_per_full_inchikey_mean_delta
+  secondary: [object_macro_mae, object_macro_gene_correlation, direction_agreement, amplitude_ratio]
+  aggregation: conditions_within_object_then_objects_equally_weighted
+  zero_variance_genes: exclude_and_report_count
+  undefined_values: null_with_effective_denominator
+  expansion_gate:
+    minimum_relative_nmse_gain_over_strongest_control: 0.05
+    minimum_correct_direction_objects: 15
+    inner_dev_objects: 24
+    amplitude_ratio_range: [0.5, 2.0]
+    must_beat: [capacity_matched_drug_only, object_block_shuffled_state]
+
+resources:
+  cpu_wall_cap_minutes: 120
+  gpu_hours_cap: 0
+  cuda_visible_devices: ""
+  first_complete_epoch_full_package_cost_gate: true
+  margin_fraction: 0.20
+  stop_without_shortening_if_full_schedule_with_margin_exceeds_cap: true
+
+output:
+  root: artifacts/experiments/EXP-058/20261007_exp058_state_conditional_residual_v1
+  per_condition_predictions: true
+  per_object_metrics: true
+  per_drug_metrics: true
+  root_independent_readback: true

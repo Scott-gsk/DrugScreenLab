@@ -1,0 +1,99 @@
+experiment_id: EXP-049
+title: Exploratory cold-start Hallmark topology diagnostic in PDO drug ranking
+status: REGISTERED_EXPLORATORY_PROTOCOL_FROZEN_BUDGET_APPROVAL_PENDING
+predecessor: EXP-046
+protocol_authority:
+  - user_2026_09_27_cold_start_pathway_diagnostic_request
+  - actual_gpt_6_sol_medium_decision_EXP049_protocol_20260927
+  - docs/exec-plans/active/双路线算法研究与验证方案_20260922.md#16
+linkage:
+  original_question: EXP-046 Hallmark pathway branch source-to-organoid transfer
+  relationship: independent_cold_start_topology_diagnostic
+  replaces_or_closes_EXP046: false
+  source_transfer_claim: prohibited
+  confirmatory_generalization_claim: prohibited
+cohort:
+  input_contract: data/processed/dual_route/EXP-036/pharmaformer_inputs_source_fold0_v1
+  contract_manifest_sha256: ee0dfe17cb4963232230eff73b6b6e08be9cd2b9cc64b46123c2be98e6c1eeba
+  split: data/splits/dual_route_splits_20260922_v1.json
+  split_sha256: 9bfeeb4e0982421cc188a54e2a65f348709043c05529e641c7dd11ffc0635be8
+  outer_fold: 0
+  label_fraction: 0.5
+  permitted_outer_train_patients: 20
+  inner_patient_splits:
+    - {inner_fold: 0, train_patients: 13, validation_patients: 7}
+    - {inner_fold: 1, train_patients: 13, validation_patients: 7}
+    - {inner_fold: 2, train_patients: 14, validation_patients: 6}
+  outer_test_patients: 11
+  outer_test_patient_inputs_and_labels: prohibited_from_experiment_process
+  response_endpoint: DSS_higher_is_sensitive
+  drug_panel: EXP-036_frozen_14_InChIKey_axis
+  patient_aggregation: already_frozen_sample_equal_expression_and_patient_drug_mean_response
+  response_key_filtering: read_only_rows_for_the_20_permitted_training_patients
+arms:
+  P-A: cold_start_official_PharmaFormer_backbone_without_pathway_branch
+  P-C: same_cold_start_backbone_plus_equal_capacity_ordinary_sparse_map
+  P-H: same_cold_start_backbone_plus_true_MSigDB_Hallmark_map
+  P-R:
+    maps:
+      - {seed: 20260922, sha256: 5163bb6b0821ed65bc962baf743bc35b9c688b211dc6f6f33c8bafc979826232}
+      - {seed: 20260923, sha256: 3202bb8581d2b73adea075c662c829303d7aa0b31ea8e7508c9b7ab8c83645f8}
+      - {seed: 20260924, sha256: 26f6d700f1f1093ca76a0bdf908bb3f7beaabfd3f43933b996e51df04efc5e6c}
+    rule: train_and_report_each_registered_map_separately_no_map_selection
+  B0: training_side_per_drug_mean_fit_separately_inside_each_inner_split
+pathway_resource:
+  id: MSigDB_Hallmark
+  version: h.all.v2023.2.Hs.symbols
+  gmt_sha256: 8ff1f036f0988c99d42cf9e5ea24d355f10b8ece5e0d4f6edf26a0458f480780
+  gene_axis_sha256: bf023d7b110bd820b3b41c67ab9ce5ea6b2381ab5753c3ec6440ee2a61340610
+  control_map_archive_sha256: 96cbba6625e1a0f85b961644225ec82f21259891e1d3b4f8b9d235ea38a47f53
+  mapped_genes: 4366
+  pathways: 50
+training:
+  device: cuda
+  backbone_initialization: fresh_random_initialization_no_source_checkpoint_or_source_labels
+  initialization_seed: 20260922
+  pathway_branch_rank: 8
+  branch_zero_initialization: true
+  optimizer: AdamW
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  patient_ranking_loss_weight: 0.1
+  batch_size: 16
+  max_epochs: 100
+  early_stopping_patience: 10
+  minimum_improvement: 0.0
+  candidate_count: 1
+  model_initialization_seed_count: 1
+  fit_schedule: 6_model_configurations_times_3_fixed_inner_folds_equals_18_fits
+  preprocessing: frozen_EXP036_source_only_expression_and_drug_tokenizer_transform; no_outer_data_fit
+endpoint_and_statistics:
+  primary: patient_equal_mean_within_patient_spearman_on_shared_observed_drug_keys
+  minimum_observed_drugs_per_patient: 3
+  paired_unit: unique_patient
+  primary_contrast: P-H_minus_equal_mean_of_three_P-R_map_patient_scores
+  secondary_contrasts: [P-H_minus_P-C, P-H_minus_P-A, P-H_minus_training_side_per_drug_mean]
+  random_map_reporting: each_registered_map_and_equal_weight_mean; map_seeds_are_not_biological_units
+  patient_bootstrap_replicates: 2000
+  paired_sign_flip_replicates: 10000
+  p_value_correction: Holm_across_four_registered_contrasts
+  undefined_or_missing: retain_reason_and_denominator; no_zero_imputation_or_result_based_patient_exclusion
+  estimate_scope: inner_validation_is_used_for_early_stopping; result_is_exploratory_and_optimistic
+resource:
+  budget_proposal_id: EXP049_SHARED_CONTINGENCY_REALLOCATION_001
+  shared_tranche_cap_gpu_hours: 40
+  package_cap_gpu_hours: 1.25
+  single_run_wall_cap_gpu_hours: 1.25
+  training_stop_timer_gpu_hours: 1.20
+  shutdown_and_ledger_close_reserve_gpu_hours: 0.05
+  device_uuid_requested: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+  device_class: NVIDIA_RTX_A5000
+  budget_source: proposed_reallocation_from_existing_SHARED_EMERGENCY_contingency
+  active_reservations_at_proposal_gpu_hours: 0
+  shared_settled_at_proposal_gpu_hours: 25.0647977224689
+  shared_unreserved_at_proposal_gpu_hours: 14.9352022775311
+  historical_EXP037_48h_usage: UNKNOWN_UNRECOVERED
+  retry_policy: one_attempt_only; failures_and_stops_charge_actual_elapsed_GPU_hours; no_retry_without_new_user_approval
+  accounting: append_only_attempt_events_in_existing_shared_ledger_and_EXP049_mirror; reserve_cap_before_spawn; charge_actual_wall_clock_without_clamping; stop_training_at_1.20h_to_leave_0.05h_for_shutdown_and_ledger_close
+  stop_conditions: [shared_cap_or_suballocation_exceeded, 1.25_GPU_hour_run_cap, wrong_GPU_or_unavailable_CUDA, outer_test_access_detected, nonfinite_loss_or_prediction, incomplete_arm_or_inner_split]
+  continuation: no_auto_resume; preserve_completed_arm_fold_predictions_and_hashes; remaining_budget_is_not_automatically_reused

@@ -1,0 +1,7 @@
+model = "gpt-6-luna"
+model_reasoning_effort = "xhigh"
+sandbox_mode = "workspace-write"
+
+model_verbosity = "medium"
+[sandbox_workspace_write]
+network_access = true

@@ -23,6 +23,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Mapping, Optional, Protocol, Sequence, runtime_checkable
 
+import pandas as pd
+
 
 class StructureEncodingStatus(str, Enum):
     """Whether a drug has a usable structure encoding for modeling."""
@@ -39,6 +41,68 @@ class IdentityConfidence(str, Enum):
     CONFIRMED = "confirmed"
     NAME_INFERRED = "name_inferred"
     UNKNOWN = "unknown"
+
+
+# --------------------------- 身份字段语义统一（2026-09-22 数据与身份对齐修复）--
+#
+# 审计背景（docs/reports/audit_repair_wave3_20260922.md，W3-37 相关工程）：
+# ``model_id`` 在预测 / 评估长表中存在与算法身份、运行身份混用的二义风险
+# （评估层统一 schema 将 ``model_id`` 列与 run_id/seed 等运行字段并列必填，
+# 且不要求算法身份列，见 src/drug_screen/evaluation/exp031_eval.py）。
+#
+# 数据层统一约定（与 src/drug_screen/{data,transfer} 既有用法一致化）：
+#   - ``patient_id``：患者身份（划分隔离单元）；
+#   - ``model_id``：生物模型身份（PDO / 细胞系），绝不表示算法或运行身份；
+#   - 算法身份：独立字段（``algorithm`` / ``arm`` / ``algorithm_id``）；
+#   - 运行身份：独立字段（``run_id`` / ``seed`` / ``init_seed``）。
+
+IDENTITY_FIELD_SEMANTICS: Mapping[str, str] = {
+    "patient_id": "患者身份（划分隔离单元）",
+    "model_id": "生物模型身份（PDO/细胞系）；绝不表示算法或运行身份",
+    "algorithm": "算法身份（与 model_id 分离）",
+    "algorithm_id": "算法身份（与 model_id 分离）",
+    "arm": "算法/条件身份（与 model_id 分离）",
+    "run_id": "运行身份（与 model_id 分离）",
+    "seed": "运行身份（与 model_id 分离）",
+    "init_seed": "运行身份（与 model_id 分离）",
+}
+
+
+def assert_model_id_is_biological(
+    frame: pd.DataFrame,
+    *,
+    patient_column: str = "patient_id",
+    model_column: str = "model_id",
+) -> None:
+    """守卫 ``model_id`` 的生物语义：一个生物模型不得跨患者。
+
+    若 ``model_id`` 被误用作算法 / 运行身份（取值如 ``"M3"``、
+    ``"ridge"``），同一取值必然出现在多个患者之下，本守卫立即失败。
+    这是 ``transfer.metrics_v2`` 既有不变式（"model_id assigned to
+    multiple patients"）在数据层的固化。
+
+    缺 ``model_column`` 或 ``patient_column`` 时为无操作（如细胞系来源表
+    无患者列，无法校验，由调用方按约定使用）。
+
+    Raises
+    ------
+    ValueError
+        同一 ``model_id`` 映射到多个 ``patient_id`` 时抛出。
+    """
+    if model_column not in frame.columns or patient_column not in frame.columns:
+        return
+    pairs = frame[[model_column, patient_column]].dropna()
+    if pairs.empty:
+        return
+    patients_per_model = pairs.groupby(model_column)[patient_column].nunique()
+    offenders = patients_per_model[patients_per_model > 1]
+    if not offenders.empty:
+        raise ValueError(
+            f"{model_column} spans multiple {patient_column} values — "
+            f"{model_column} must be a biological model identity, never an "
+            "algorithm/run identity (use algorithm/arm/algorithm_id columns "
+            "for algorithm identity); offenders: "
+            f"{offenders.head(10).to_dict()}")
 
 
 @dataclass(frozen=True)

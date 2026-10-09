@@ -1,0 +1,85 @@
+experiment_id: EXP-052
+title: TranSiGen one-shot low-learning-rate stability candidate
+status: registered_one_shot_training_side_candidate
+record: experiments/records/EXP-052.md
+plan: docs/exec-plans/active/乳腺癌转录响应持续算法研究方案_20261006.md
+run_id: 20261007_exp052_transigen_lr_stability_v2
+authorization:
+  user_scope: continuous_algorithm_research_until_goal_complete
+  authorization_basis: current_plan_one_evidence_based_repair_and_shared_repair_reserve
+  internal_scientific_decision: gpt-6.1-sol/medium_one_shot_lr_stability_candidate
+  registration_status: registered_before_run
+  package_gpu_cap_hours: 1.05
+  smoke_gpu_cap_hours: 0.05
+  projected_full_run_cap_with_20pct_margin_gpu_hours: 1.0
+  existing_repair_reserve_gpu_hours: 5.415169945565845
+  repair_reserve_suballocation_gpu_hours: 1.05
+  repair_reserve_after_suballocation_gpu_hours: 4.365169945565845
+  other_package_caps_moved: false
+  total_exp_cap_gpu_hours: 48.0
+  settled_before_run_gpu_hours: 1.223878605611392
+  available_before_run_gpu_hours: 46.77612139438861
+  prior_settlement_includes_exp051_attempts: true
+  current_gpu_reserved_gpu_hours: 0.0
+  training_device_policy: approved_A5000_only
+data:
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_artifacts:
+    key_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+    frozen_values: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/frozen_train_inner_values.npz
+    value_contract_receipt: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/value_contract_receipt.json
+    root_value_readback: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/root_values_readback_receipt.json
+    gene_axis_receipt: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/gene_axis_receipt.json
+    ecfp4_identity_receipt: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/transigen_ecfp4_feature_audit_receipt.json
+  training_role: TRAIN_only_until_terminal_fit_gate
+  train_denominator: {conditions: 419, objects: 110, complete_inchikeys: 5, genes: 978}
+  inner_development_role: score_once_only_if_train_gate_passes
+  inner_development_denominator: {conditions: 93, objects: 24}
+  forbidden_inputs:
+    - PDO_numeric_drug_sensitivity
+    - outer_fold_or_locked_response_labels
+    - PANACEA_or_CDSDB_response_values
+    - any response/test label not in the frozen TRAIN or conditional inner-development roles
+model:
+  architecture: upstream_original_TranSiGen
+  initialization: scratch
+  objective: raw_sum_official_components_and_weights
+  optimizer: Adam
+  learning_rate: 0.0001
+  changed_factor_from_failed_attempt007: learning_rate_only_0.001_to_0.0001
+  weight_decay: 0.00001
+  batch_size: 64
+  shuffle: true
+  epochs: 300
+  gradient_clipping: none
+  batchnorm: ordinary_training_updates_only_no_calibration
+  seed: 20261006
+  gene_axis: fixed_978
+metrics:
+  primary: train_object_macro_response_nmse_978_at_epoch_300
+  train_fit_gate:
+    strongest_baseline: best_of_zero_change_and_train_per_drug_mean
+    minimum_relative_nmse_reduction: 0.10
+    approximate_nmse_ceiling: 0.9398439
+    amplitude_ratio_range: [0.5, 2.0]
+  inner_development_gate_if_train_passes:
+    comparator: train_fitted_per_drug_mean
+    approximate_nmse_ceiling: 1.0063065
+    minimum_objects_improved: 15
+    objects_total: 24
+    amplitude_ratio_range: [0.5, 2.0]
+stopping:
+  smoke_epochs: 20
+  smoke_is_part_of_same_run: true
+  stop_if_smoke_charge_exceeds_gpu_hours: 0.05
+  stop_if_300_epoch_projection_with_20pct_exceeds_gpu_hours: 1.0
+  absolute_attempt_cap_gpu_hours: 1.05
+  stop_on_any_nonfinite: true
+  stop_if_gradient_norm_prediction_abs_or_batchnorm_running_variance_exceeds: 1000000
+  exactly_one_attempt: true
+  no_retry_or_parameter_search: true
+reporting:
+  interpretation: single_stability_candidate_development_evidence_only
+  no_pdo_generalization_claim: true
+  preserve_incomplete_original_model_evaluation_if_candidate_fails: true
+  root_independent_readback_required: true

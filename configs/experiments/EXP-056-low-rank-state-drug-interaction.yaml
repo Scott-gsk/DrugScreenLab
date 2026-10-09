@@ -1,0 +1,61 @@
+experiment_id: EXP-056
+run_id: 20261007_exp056_low_rank_state_drug_interaction_v1
+purpose: fixed-split train-fit and inner-development comparison of a low-rank pre-treatment-state by drug interaction residual beyond a per-drug mean anchor
+retention: one bounded development comparison; retain negative result and implementation; cannot replace EXP-055 original TranSiGen/XPert architecture comparison or demonstrate PDO efficacy
+data:
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_key_table: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/response_blind_conditions.tsv
+  source_values: artifacts/experiments/EXP-051/20261006_exp051_contract_fit_smoke_v1/frozen_train_inner_values.npz
+  allowed_roles: [train, inner_dev]
+  train_conditions: 419
+  train_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_objects: 24
+  genes: 978
+  exact_full_inchikeys: 5
+  group_key: source_object_id
+  overlap_required: 0
+  forbidden: [PDO_numeric_drug_sensitivity, outer_fold_labels_or_responses, locked_response_labels_or_responses, external_response_matrices]
+models:
+  per_drug_mean:
+    estimator: fold-safe mean delta by exact full InChIKey, fit on TRAIN only
+  low_rank_state_drug_interaction:
+    ranks: [4, 8]
+    anchor: train_only_per_full_inchikey_mean_delta
+    state: source_object_mean_X_ctl
+    state_preprocessing: train_object_only_gene_standardization_and_rank_r_pca
+    interaction: drug_specific_ridge_residual_coefficients_on_shared_rank_r_state_scores
+    ridge_alpha: 1.0
+    sample_weight: equal_total_weight_per_source_object
+    rank_selection: inner_dev_only_then_single_rank_selected
+    hyperparameter_search: false
+  parameter_matched_no_state_control:
+    state_features: deterministic_seeded_object_id_keyed_random_rank_r_embeddings
+    condition_on_expression_state: false
+    same_rank_and_regression_estimator: true
+  object_block_shuffled_state_control:
+    state_features: source_object_state_vectors_permuted_as_whole_objects_within_train_and_inner_dev
+    mapping: deterministic_seeded_derangement_without_fixed_points
+    labels_used_for_mapping: false
+metrics:
+  primary: source_object_macro_response_nmse_978
+  secondary: [source_object_macro_mae, condition_gene_correlation, direction_agreement, amplitude_ratio]
+  normalizer_fit_role: train_only
+  paired_resampling_unit: source_object_id
+  bootstrap_replicates: 20000
+  bootstrap_seed: 56056
+  advance_gate: "selected interaction must improve NMSE by at least 5% over the strongest control, improve at least 15 of 24 evaluable inner-dev objects, have paired object-bootstrap 95% CI for improvement above zero, and amplitude ratio in [0.5,2.0]"
+resources:
+  gpu_hours_max: 2.0
+  cpu_minutes_max: 240
+  gpu_device_if_needed: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+stopping:
+  ranks_exactly: [4, 8]
+  one_seed_initial_comparison: true
+  stop_and_retain_negative_if_gate_fails: true
+  no_additional_seed_or_rank_search_without_new_registered_package: true
+reporting:
+  full_keyed_train_and_inner_dev_predictions: true
+  independent_root_readback: true
+  disclose_prior_exp053_exp055_train_source_exposure: true
+  pdo_or_independent_domain_claim: false

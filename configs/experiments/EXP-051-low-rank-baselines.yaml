@@ -1,0 +1,37 @@
+experiment_id: EXP-051
+run_id: 20261007_exp051_low_rank_baselines_v1
+source_run_id: 20261006_exp051_contract_fit_smoke_v1
+purpose: TRAIN-only-fit structural and expression-plus-structure strong baselines on the already frozen EXP-051 split
+retention: Keep as a separate CPU-only additive comparison; do not alter the representative-model run or any closed attempt.
+data:
+  allowed_roles: [train, inner_dev]
+  train_conditions: 419
+  train_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_objects: 24
+  genes: 978
+  exact_full_inchikeys: 5
+  require_full_keyed_readback: true
+  forbidden: [PDO_numeric_drug_sensitivity, outer_fold_labels, locked_response_labels, external_response_matrices]
+features:
+  structure: source-matched_RDKit_ECFP4_radius2_2048_full_InChIKey_audited
+  pre_treatment_state: paired_source_H5AD_X_ctl_from_frozen_train_inner_values
+models:
+  structural_only:
+    estimator: standardized_input_ridge_to_reduced_rank_target_PCA
+    ridge_alpha: 1.0
+    target_variance_fraction: 0.95
+  state_plus_structure:
+    estimator: train_standardized_X_ctl_concatenated_with_ECFP4_ridge_to_reduced_rank_target_PCA
+    ridge_alpha: 1.0
+    target_variance_fraction: 0.95
+metrics:
+  primary: object_macro_response_nmse_978
+  secondary: [object_macro_mae, object_macro_gene_correlation, object_macro_direction_agreement, object_macro_amplitude_ratio]
+  normalizer_fit_role: train_only
+  paired_resampling_unit: source_object_id
+  bootstrap_replicates: 20000
+  seed: 51051
+resources:
+  gpu_hours: 0
+  cpu_cap_minutes: 120

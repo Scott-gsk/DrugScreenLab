@@ -1,0 +1,61 @@
+experiment_id: EXP-067
+title: Cross-fitted transcript-response benefit for drug-sensitivity prediction
+authority: user_authorized_parallel_transcript_prediction_and_drug_sensitivity
+shared_contract: artifacts/experiments/EXP-066/EXP-067/20261008_exp066067_shared_metadata_v2
+metadata_gate_status: PASS
+metadata_gate_receipt_sha256: dc4b649d960a326916bb53c1734c0204f67bd877e4cce9467f35a255779633c9
+target_axis_hash: b4e2fca877c5cfdcc1c712ad0fd67e97a88b6f7566b013e4bab065f699ebb623
+labels:
+  source: data/processed/exp013/ctrp_v2/responses.csv
+  endpoint: AAC
+  aggregation: cell_id_by_exact_full_InChIKey; fold-local aggregation only
+data_boundary:
+  include_development_roles: [TRAIN, DEV]
+  exclude_roles: [LOCKED, PDO, OUTER, PANACEA, CDS-B]
+  max_conditions: 20000
+  exact_gene_axis: 978
+  treatment_response_input: EXP-066 fold-trained response prediction only
+  measured_post_rna_labels_for_inference: false
+splits:
+  outer_folds: 5
+  group: PatientID
+  inner_response_model_folds: 4
+  nested_crossfit_required: true
+  seed: 670067
+models:
+  estimator: ridge
+  alpha: 1.0
+  capacity_match_seed: 670067
+  capacity_match_random_fourier:
+    algorithm: RBFSampler_RBF
+    n_components: 978
+    gamma: 0.00033046926635822867
+  arms:
+    - pretreatment_rna_plus_structure
+    - pretreatment_rna_plus_structure_plus_crossfitted_predicted_response
+    - equal_capacity_direct_rff
+    - object_shuffled_crossfitted_response
+metrics:
+  primary: PatientID_macro_within_cell_drug_spearman
+  bootstrap_seed: 670067
+  bootstrap_iterations: 2000
+  practical_gate: rmse_relative_improvement_at_least_5pct_vs_direct_and_capacity_matched_direct_with_positive_paired_object_ci
+  object_improvement_fraction_minimum: 0.60
+resources:
+  cpu_threads: 1
+  cpu_budget_enforcement: false
+  cpu_seconds_package_cap: null
+  cpu_seconds_shared_AB_absolute_cap: null
+  historical_cpu_seconds_package_cap: 1800
+  historical_cpu_seconds_shared_AB_absolute_cap: 3600
+  a_b_cpu_spent_before_seconds: 2555.5639088
+  b_package_cpu_spent_before_seconds: 1605.5639088
+  root_readback_cpu_allowance_seconds: 60
+  gpu_hours_package_cap: 1.0
+  gpu_hours_single_run_cap: 20.0
+  total_candidate_gpu_pool_hours: 10.0
+  global_gpu_cap_hours: 48.0
+  cost_gate: one full outer fold including nested response crossfit, closeout/readback, full 5-fold extrapolation and 20 percent margin
+  never_shorten_folds_or_remove_controls: true
+outputs:
+  root_dir: artifacts/experiments/EXP-067

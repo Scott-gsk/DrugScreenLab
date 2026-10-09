@@ -1,0 +1,82 @@
+experiment_id: EXP-059
+title: TranSiGen learning-rate stability and fixed-300 fit comparison
+record: experiments/records/EXP-059.md
+run_id: 20261008_exp059_transigen_lr1e4_bindingfix_v2
+source_experiment_id: EXP-051
+source_run_id: 20261006_exp051_contract_fit_smoke_v1
+fit_kind: representative
+artifact_root: artifacts/experiments/EXP-059
+
+authorization:
+  user_scope: EXP059-BINDING-FIX-0003
+  authorization_basis: "The user authorized an in-scope engineering repair and necessary fresh run under the standing EXP-059 package; this does not alter the scientific protocol or budget."
+  training_device_policy: cpu_only_zero_gpu
+  allowed_device_uuid: GPU-9c366c2e-bfa5-c7b3-b16a-1117c40e6871
+  cpu_total_cap_minutes: 120
+  prior_cpu_charged_seconds: 1582.999912906989
+  previous_bindingfix_run_id: 20261008_exp059_transigen_lr1e4_bindingfix_v1
+  previous_bindingfix_failure_sha256: 6320001d316e761b1035aea151bc7622e4046204503116881fae3234d51e6418
+  gpu_hours_cap: 0
+  mechanism_replay_cap_seconds: 600
+  mechanism_replay_checkpoint: artifacts/experiments/EXP-055/20261007_exp055_transigen_cpu_norm_recovery_v1/fit_attempt_001/TranSiGen_last_finite.pt
+  mechanism_replay_checkpoint_sha256: 5555e4f0aa3a85c34d075c9211a494862ccb35b65c766b559919ab7f60bc2dfb
+  mechanism_replay_evidence_run_id: 20261007_exp059_transigen_lr1e4_fixed300_v1
+
+data:
+  source_run_id: 20261006_exp051_contract_fit_smoke_v1
+  source_run_root: artifacts/experiments/EXP-051
+  source_files_read_only: true
+  frozen_conditions: 512
+  genes: 978
+  train_conditions: 419
+  train_objects: 110
+  inner_dev_conditions: 93
+  inner_dev_objects: 24
+  full_inchikeys: 5
+  roles: [TRAIN, inner_dev]
+  forbidden_inputs: [PDO_numeric_sensitivity, PDO_transcript_response, outer_labels, locked_labels, PANACEA_numeric_values]
+  inner_dev_numeric_access: after_epoch_300_checkpoint_freeze_only
+
+model:
+  architecture: upstream_original_TranSiGen
+  initialization: fresh_author_initialization_from_scratch
+  seed: 20261006
+  objective: raw_sum
+  gradient_clipping: false
+  learning_rate: 0.0001
+  weight_decay: 0.00001
+  batch_size: 64
+  batch_sizes: [64, 64, 64, 64, 64, 64, 35]
+  shuffle_train: true
+  normal_batchnorm_updates: true
+  max_epochs: 300
+  diagnostic_epoch: 100
+  main_endpoint_epoch: 300
+  model_selection: none
+
+evaluation:
+  train_evaluation: every_epoch_all_419_conditions
+  pre_epoch100_nonfinite_main_delta: null_full_denominator_continue_to_fixed_checkpoint
+  epoch100_nonfinite_main_delta: close_without_valid_score
+  epoch300_nonfinite_main_delta: close_without_valid_score
+  inner_dev: only_after_epoch_300_checkpoint_freeze
+  baselines: [zero_change, per_full_inchikey_drug_mean_delta_fitted_on_train]
+  prediction_keys: [full_condition_key, source_object_id, full_inchikey, genes]
+  object_weighting: equal_object
+  require_exact_checkpoint_readback: true
+  require_exact_keyed_prediction_readback: true
+
+resource:
+  run_id: 20261008_exp059_transigen_lr1e4_bindingfix_v2
+  cpu_total_cap_seconds: 7200
+  cumulative_prior_cpu_seconds: 1582.999912906989
+  gpu_hours_cap: 0
+  fixed_schedule_epochs: 300
+  margin_fraction: 0.20
+  required_gate: measured_full_epoch_and_mechanism_replay_plus_root_readback_and_fixed300_schedule_with_margin_within_total_cap
+
+reproducibility:
+  cpu_gpu_rng_float_trajectory_equivalence_claimed: false
+  parent_failed_checkpoints_immutable: true
+  formal_candidate_initialization: fresh_from_seed_20261006
+  mechanism_shadow_state_reused_for_formal_fit: false
